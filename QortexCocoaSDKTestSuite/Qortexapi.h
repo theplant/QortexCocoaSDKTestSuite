@@ -8,9 +8,7 @@
 @property (nonatomic, assign) BOOL Verbose;
 + (Qortexapi *) get;
 + (NSDictionary *) request:(NSURL*)url req:(NSDictionary *)req error:(NSError **)error;
-@end
-
-@interface Error : NSObject
++ (NSError *)errorWithDictionary:(NSDictionary *)dict;
 @end
 
 @interface Validated : NSObject
@@ -3440,7 +3438,6 @@
 @interface PublicServiceGetSessionResults : NSObject
 
 @property (nonatomic, strong) NSString * Session;
-@property (nonatomic, strong) Validated * Validated;
 @property (nonatomic, strong) NSError * Err;
 
 - (id) initWithDictionary:(NSDictionary*)dict;

@@ -31,7 +31,8 @@
 - (void)testGetSessionWithWrongLogin {
 	PublicServiceGetSessionResults *r = [_publicService GetSession:@"user@gmail.com" password:@"wrongpassword"];
 	STAssertTrue([r.Session isEqualToString:@""], @"session not nil for wrong password %@", r.Session);
-	STAssertTrue(r.Err != nil, @"err is nil");
+	STAssertTrue(r.Err != nil, @"err is nil %@", r.Err);
+	STAssertTrue(r.Err.code == 405, @"Error code is wrong %@", r.Err);
 }
 
 @end
