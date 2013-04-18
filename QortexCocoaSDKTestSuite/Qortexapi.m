@@ -11229,7 +11229,7 @@ static Qortexapi * _qortexapi;
 // --- SwitchOrganization ---
 - (NSError *) SwitchOrganization:(NSString *)orgId {
 	
-	AuthMemberServiceSwitchOrganizationResults *results = [[AuthMemberServiceSwitchOrganizationResults alloc] init];
+	AuthMemberServiceSwitchOrganizationResults *results = [AuthMemberServiceSwitchOrganizationResults alloc];
 	AuthMemberServiceSwitchOrganizationParams *params = [[AuthMemberServiceSwitchOrganizationParams alloc] init];
 	[params setOrgId:orgId];
 	
@@ -11244,6 +11244,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results.Err;
 	}
@@ -11255,7 +11256,7 @@ static Qortexapi * _qortexapi;
 // --- GetAbandonInfo ---
 - (AuthMemberServiceGetAbandonInfoResults *) GetAbandonInfo:(NSString *)abandonOrgId memberId:(NSString *)memberId {
 	
-	AuthMemberServiceGetAbandonInfoResults *results = [[AuthMemberServiceGetAbandonInfoResults alloc] init];
+	AuthMemberServiceGetAbandonInfoResults *results = [AuthMemberServiceGetAbandonInfoResults alloc];
 	AuthMemberServiceGetAbandonInfoParams *params = [[AuthMemberServiceGetAbandonInfoParams alloc] init];
 	[params setAbandonOrgId:abandonOrgId];
 	[params setMemberId:memberId];
@@ -11271,6 +11272,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results;
 	}
@@ -11282,7 +11284,7 @@ static Qortexapi * _qortexapi;
 // --- GetSharingInviationByToken ---
 - (AuthMemberServiceGetSharingInviationByTokenResults *) GetSharingInviationByToken:(NSString *)sharingInviationToken {
 	
-	AuthMemberServiceGetSharingInviationByTokenResults *results = [[AuthMemberServiceGetSharingInviationByTokenResults alloc] init];
+	AuthMemberServiceGetSharingInviationByTokenResults *results = [AuthMemberServiceGetSharingInviationByTokenResults alloc];
 	AuthMemberServiceGetSharingInviationByTokenParams *params = [[AuthMemberServiceGetSharingInviationByTokenParams alloc] init];
 	[params setSharingInviationToken:sharingInviationToken];
 	
@@ -11297,6 +11299,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results;
 	}
@@ -11308,7 +11311,7 @@ static Qortexapi * _qortexapi;
 // --- RejectSharingBeforeForwarding ---
 - (NSError *) RejectSharingBeforeForwarding:(NSString *)groupId email:(NSString *)email {
 	
-	AuthMemberServiceRejectSharingBeforeForwardingResults *results = [[AuthMemberServiceRejectSharingBeforeForwardingResults alloc] init];
+	AuthMemberServiceRejectSharingBeforeForwardingResults *results = [AuthMemberServiceRejectSharingBeforeForwardingResults alloc];
 	AuthMemberServiceRejectSharingBeforeForwardingParams *params = [[AuthMemberServiceRejectSharingBeforeForwardingParams alloc] init];
 	[params setGroupId:groupId];
 	[params setEmail:email];
@@ -11324,6 +11327,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results.Err;
 	}
@@ -11335,7 +11339,7 @@ static Qortexapi * _qortexapi;
 // --- RespondSharingRequest ---
 - (AuthMemberServiceRespondSharingRequestResults *) RespondSharingRequest:(NSString *)token fromOrgId:(NSString *)fromOrgId fromUserId:(NSString *)fromUserId forSharingOrgId:(NSString *)forSharingOrgId groupId:(NSString *)groupId {
 	
-	AuthMemberServiceRespondSharingRequestResults *results = [[AuthMemberServiceRespondSharingRequestResults alloc] init];
+	AuthMemberServiceRespondSharingRequestResults *results = [AuthMemberServiceRespondSharingRequestResults alloc];
 	AuthMemberServiceRespondSharingRequestParams *params = [[AuthMemberServiceRespondSharingRequestParams alloc] init];
 	[params setToken:token];
 	[params setFromOrgId:fromOrgId];
@@ -11354,6 +11358,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results;
 	}
@@ -11394,7 +11399,7 @@ static Qortexapi * _qortexapi;
 // --- GetNewEntry ---
 - (AuthUserServiceGetNewEntryResults *) GetNewEntry:(NSString *)groupId {
 	
-	AuthUserServiceGetNewEntryResults *results = [[AuthUserServiceGetNewEntryResults alloc] init];
+	AuthUserServiceGetNewEntryResults *results = [AuthUserServiceGetNewEntryResults alloc];
 	AuthUserServiceGetNewEntryParams *params = [[AuthUserServiceGetNewEntryParams alloc] init];
 	[params setGroupId:groupId];
 	
@@ -11409,6 +11414,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results;
 	}
@@ -11420,7 +11426,7 @@ static Qortexapi * _qortexapi;
 // --- GetQortexMessages ---
 - (AuthUserServiceGetQortexMessagesResults *) GetQortexMessages:(NSString *)messsageType before:(NSString *)before limit:(NSNumber *)limit {
 	
-	AuthUserServiceGetQortexMessagesResults *results = [[AuthUserServiceGetQortexMessagesResults alloc] init];
+	AuthUserServiceGetQortexMessagesResults *results = [AuthUserServiceGetQortexMessagesResults alloc];
 	AuthUserServiceGetQortexMessagesParams *params = [[AuthUserServiceGetQortexMessagesParams alloc] init];
 	[params setMesssageType:messsageType];
 	[params setBefore:before];
@@ -11437,6 +11443,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results;
 	}
@@ -11448,7 +11455,7 @@ static Qortexapi * _qortexapi;
 // --- CreateBroadcast ---
 - (AuthUserServiceCreateBroadcastResults *) CreateBroadcast:(BroadcastInput *)input {
 	
-	AuthUserServiceCreateBroadcastResults *results = [[AuthUserServiceCreateBroadcastResults alloc] init];
+	AuthUserServiceCreateBroadcastResults *results = [AuthUserServiceCreateBroadcastResults alloc];
 	AuthUserServiceCreateBroadcastParams *params = [[AuthUserServiceCreateBroadcastParams alloc] init];
 	[params setInput:input];
 	
@@ -11463,6 +11470,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results;
 	}
@@ -11474,7 +11482,7 @@ static Qortexapi * _qortexapi;
 // --- CreateBroadcastComment ---
 - (AuthUserServiceCreateBroadcastCommentResults *) CreateBroadcastComment:(BroadcastInput *)input {
 	
-	AuthUserServiceCreateBroadcastCommentResults *results = [[AuthUserServiceCreateBroadcastCommentResults alloc] init];
+	AuthUserServiceCreateBroadcastCommentResults *results = [AuthUserServiceCreateBroadcastCommentResults alloc];
 	AuthUserServiceCreateBroadcastCommentParams *params = [[AuthUserServiceCreateBroadcastCommentParams alloc] init];
 	[params setInput:input];
 	
@@ -11489,6 +11497,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results;
 	}
@@ -11500,7 +11509,7 @@ static Qortexapi * _qortexapi;
 // --- GetSharingRequestEntry ---
 - (AuthUserServiceGetSharingRequestEntryResults *) GetSharingRequestEntry:(NSString *)entryId {
 	
-	AuthUserServiceGetSharingRequestEntryResults *results = [[AuthUserServiceGetSharingRequestEntryResults alloc] init];
+	AuthUserServiceGetSharingRequestEntryResults *results = [AuthUserServiceGetSharingRequestEntryResults alloc];
 	AuthUserServiceGetSharingRequestEntryParams *params = [[AuthUserServiceGetSharingRequestEntryParams alloc] init];
 	[params setEntryId:entryId];
 	
@@ -11515,6 +11524,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results;
 	}
@@ -11526,7 +11536,7 @@ static Qortexapi * _qortexapi;
 // --- GetBroadcast ---
 - (AuthUserServiceGetBroadcastResults *) GetBroadcast:(NSString *)entryId {
 	
-	AuthUserServiceGetBroadcastResults *results = [[AuthUserServiceGetBroadcastResults alloc] init];
+	AuthUserServiceGetBroadcastResults *results = [AuthUserServiceGetBroadcastResults alloc];
 	AuthUserServiceGetBroadcastParams *params = [[AuthUserServiceGetBroadcastParams alloc] init];
 	[params setEntryId:entryId];
 	
@@ -11541,6 +11551,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results;
 	}
@@ -11552,7 +11563,7 @@ static Qortexapi * _qortexapi;
 // --- GetBroadcastComment ---
 - (AuthUserServiceGetBroadcastCommentResults *) GetBroadcastComment:(NSString *)entryId {
 	
-	AuthUserServiceGetBroadcastCommentResults *results = [[AuthUserServiceGetBroadcastCommentResults alloc] init];
+	AuthUserServiceGetBroadcastCommentResults *results = [AuthUserServiceGetBroadcastCommentResults alloc];
 	AuthUserServiceGetBroadcastCommentParams *params = [[AuthUserServiceGetBroadcastCommentParams alloc] init];
 	[params setEntryId:entryId];
 	
@@ -11567,6 +11578,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results;
 	}
@@ -11578,7 +11590,7 @@ static Qortexapi * _qortexapi;
 // --- UpdateBroadcast ---
 - (AuthUserServiceUpdateBroadcastResults *) UpdateBroadcast:(BroadcastInput *)input {
 	
-	AuthUserServiceUpdateBroadcastResults *results = [[AuthUserServiceUpdateBroadcastResults alloc] init];
+	AuthUserServiceUpdateBroadcastResults *results = [AuthUserServiceUpdateBroadcastResults alloc];
 	AuthUserServiceUpdateBroadcastParams *params = [[AuthUserServiceUpdateBroadcastParams alloc] init];
 	[params setInput:input];
 	
@@ -11593,6 +11605,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results;
 	}
@@ -11604,7 +11617,7 @@ static Qortexapi * _qortexapi;
 // --- UpdateBroadcastComment ---
 - (AuthUserServiceUpdateBroadcastCommentResults *) UpdateBroadcastComment:(BroadcastInput *)input {
 	
-	AuthUserServiceUpdateBroadcastCommentResults *results = [[AuthUserServiceUpdateBroadcastCommentResults alloc] init];
+	AuthUserServiceUpdateBroadcastCommentResults *results = [AuthUserServiceUpdateBroadcastCommentResults alloc];
 	AuthUserServiceUpdateBroadcastCommentParams *params = [[AuthUserServiceUpdateBroadcastCommentParams alloc] init];
 	[params setInput:input];
 	
@@ -11619,6 +11632,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results;
 	}
@@ -11630,7 +11644,7 @@ static Qortexapi * _qortexapi;
 // --- CreateEntry ---
 - (AuthUserServiceCreateEntryResults *) CreateEntry:(EntryInput *)input {
 	
-	AuthUserServiceCreateEntryResults *results = [[AuthUserServiceCreateEntryResults alloc] init];
+	AuthUserServiceCreateEntryResults *results = [AuthUserServiceCreateEntryResults alloc];
 	AuthUserServiceCreateEntryParams *params = [[AuthUserServiceCreateEntryParams alloc] init];
 	[params setInput:input];
 	
@@ -11645,6 +11659,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results;
 	}
@@ -11656,7 +11671,7 @@ static Qortexapi * _qortexapi;
 // --- CreateTask ---
 - (AuthUserServiceCreateTaskResults *) CreateTask:(EntryInput *)input {
 	
-	AuthUserServiceCreateTaskResults *results = [[AuthUserServiceCreateTaskResults alloc] init];
+	AuthUserServiceCreateTaskResults *results = [AuthUserServiceCreateTaskResults alloc];
 	AuthUserServiceCreateTaskParams *params = [[AuthUserServiceCreateTaskParams alloc] init];
 	[params setInput:input];
 	
@@ -11671,6 +11686,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results;
 	}
@@ -11682,7 +11698,7 @@ static Qortexapi * _qortexapi;
 // --- CloseTask ---
 - (AuthUserServiceCloseTaskResults *) CloseTask:(NSString *)entryId groupId:(NSString *)groupId {
 	
-	AuthUserServiceCloseTaskResults *results = [[AuthUserServiceCloseTaskResults alloc] init];
+	AuthUserServiceCloseTaskResults *results = [AuthUserServiceCloseTaskResults alloc];
 	AuthUserServiceCloseTaskParams *params = [[AuthUserServiceCloseTaskParams alloc] init];
 	[params setEntryId:entryId];
 	[params setGroupId:groupId];
@@ -11698,6 +11714,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results;
 	}
@@ -11709,7 +11726,7 @@ static Qortexapi * _qortexapi;
 // --- CreateComment ---
 - (AuthUserServiceCreateCommentResults *) CreateComment:(EntryInput *)input {
 	
-	AuthUserServiceCreateCommentResults *results = [[AuthUserServiceCreateCommentResults alloc] init];
+	AuthUserServiceCreateCommentResults *results = [AuthUserServiceCreateCommentResults alloc];
 	AuthUserServiceCreateCommentParams *params = [[AuthUserServiceCreateCommentParams alloc] init];
 	[params setInput:input];
 	
@@ -11724,6 +11741,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results;
 	}
@@ -11735,7 +11753,7 @@ static Qortexapi * _qortexapi;
 // --- GetComment ---
 - (AuthUserServiceGetCommentResults *) GetComment:(NSString *)entryId groupId:(NSString *)groupId {
 	
-	AuthUserServiceGetCommentResults *results = [[AuthUserServiceGetCommentResults alloc] init];
+	AuthUserServiceGetCommentResults *results = [AuthUserServiceGetCommentResults alloc];
 	AuthUserServiceGetCommentParams *params = [[AuthUserServiceGetCommentParams alloc] init];
 	[params setEntryId:entryId];
 	[params setGroupId:groupId];
@@ -11751,6 +11769,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results;
 	}
@@ -11762,7 +11781,7 @@ static Qortexapi * _qortexapi;
 // --- UpdateComment ---
 - (AuthUserServiceUpdateCommentResults *) UpdateComment:(EntryInput *)input {
 	
-	AuthUserServiceUpdateCommentResults *results = [[AuthUserServiceUpdateCommentResults alloc] init];
+	AuthUserServiceUpdateCommentResults *results = [AuthUserServiceUpdateCommentResults alloc];
 	AuthUserServiceUpdateCommentParams *params = [[AuthUserServiceUpdateCommentParams alloc] init];
 	[params setInput:input];
 	
@@ -11777,6 +11796,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results;
 	}
@@ -11788,7 +11808,7 @@ static Qortexapi * _qortexapi;
 // --- UpdateEntry ---
 - (AuthUserServiceUpdateEntryResults *) UpdateEntry:(EntryInput *)input {
 	
-	AuthUserServiceUpdateEntryResults *results = [[AuthUserServiceUpdateEntryResults alloc] init];
+	AuthUserServiceUpdateEntryResults *results = [AuthUserServiceUpdateEntryResults alloc];
 	AuthUserServiceUpdateEntryParams *params = [[AuthUserServiceUpdateEntryParams alloc] init];
 	[params setInput:input];
 	
@@ -11803,6 +11823,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results;
 	}
@@ -11814,7 +11835,7 @@ static Qortexapi * _qortexapi;
 // --- GetLatestUpdatedEntryIdByTitle ---
 - (AuthUserServiceGetLatestUpdatedEntryIdByTitleResults *) GetLatestUpdatedEntryIdByTitle:(NSString *)title groupId:(NSString *)groupId {
 	
-	AuthUserServiceGetLatestUpdatedEntryIdByTitleResults *results = [[AuthUserServiceGetLatestUpdatedEntryIdByTitleResults alloc] init];
+	AuthUserServiceGetLatestUpdatedEntryIdByTitleResults *results = [AuthUserServiceGetLatestUpdatedEntryIdByTitleResults alloc];
 	AuthUserServiceGetLatestUpdatedEntryIdByTitleParams *params = [[AuthUserServiceGetLatestUpdatedEntryIdByTitleParams alloc] init];
 	[params setTitle:title];
 	[params setGroupId:groupId];
@@ -11830,6 +11851,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results;
 	}
@@ -11841,7 +11863,7 @@ static Qortexapi * _qortexapi;
 // --- GetEntry ---
 - (AuthUserServiceGetEntryResults *) GetEntry:(NSString *)entryId groupId:(NSString *)groupId updateAtUnixNanoForVersion:(NSString *)updateAtUnixNanoForVersion hightlightKeywords:(NSString *)hightlightKeywords {
 	
-	AuthUserServiceGetEntryResults *results = [[AuthUserServiceGetEntryResults alloc] init];
+	AuthUserServiceGetEntryResults *results = [AuthUserServiceGetEntryResults alloc];
 	AuthUserServiceGetEntryParams *params = [[AuthUserServiceGetEntryParams alloc] init];
 	[params setEntryId:entryId];
 	[params setGroupId:groupId];
@@ -11859,6 +11881,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results;
 	}
@@ -11870,7 +11893,7 @@ static Qortexapi * _qortexapi;
 // --- DeleteEntry ---
 - (AuthUserServiceDeleteEntryResults *) DeleteEntry:(NSString *)entryId groupId:(NSString *)groupId dType:(NSString *)dType {
 	
-	AuthUserServiceDeleteEntryResults *results = [[AuthUserServiceDeleteEntryResults alloc] init];
+	AuthUserServiceDeleteEntryResults *results = [AuthUserServiceDeleteEntryResults alloc];
 	AuthUserServiceDeleteEntryParams *params = [[AuthUserServiceDeleteEntryParams alloc] init];
 	[params setEntryId:entryId];
 	[params setGroupId:groupId];
@@ -11887,6 +11910,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results;
 	}
@@ -11898,7 +11922,7 @@ static Qortexapi * _qortexapi;
 // --- MuteEntry ---
 - (NSError *) MuteEntry:(NSString *)entryId groupId:(NSString *)groupId {
 	
-	AuthUserServiceMuteEntryResults *results = [[AuthUserServiceMuteEntryResults alloc] init];
+	AuthUserServiceMuteEntryResults *results = [AuthUserServiceMuteEntryResults alloc];
 	AuthUserServiceMuteEntryParams *params = [[AuthUserServiceMuteEntryParams alloc] init];
 	[params setEntryId:entryId];
 	[params setGroupId:groupId];
@@ -11914,6 +11938,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results.Err;
 	}
@@ -11925,7 +11950,7 @@ static Qortexapi * _qortexapi;
 // --- UndoMuteEntry ---
 - (NSError *) UndoMuteEntry:(NSString *)entryId groupId:(NSString *)groupId {
 	
-	AuthUserServiceUndoMuteEntryResults *results = [[AuthUserServiceUndoMuteEntryResults alloc] init];
+	AuthUserServiceUndoMuteEntryResults *results = [AuthUserServiceUndoMuteEntryResults alloc];
 	AuthUserServiceUndoMuteEntryParams *params = [[AuthUserServiceUndoMuteEntryParams alloc] init];
 	[params setEntryId:entryId];
 	[params setGroupId:groupId];
@@ -11941,6 +11966,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results.Err;
 	}
@@ -11952,7 +11978,7 @@ static Qortexapi * _qortexapi;
 // --- GetEntryAttachments ---
 - (AuthUserServiceGetEntryAttachmentsResults *) GetEntryAttachments:(NSString *)entryId groupId:(NSString *)groupId {
 	
-	AuthUserServiceGetEntryAttachmentsResults *results = [[AuthUserServiceGetEntryAttachmentsResults alloc] init];
+	AuthUserServiceGetEntryAttachmentsResults *results = [AuthUserServiceGetEntryAttachmentsResults alloc];
 	AuthUserServiceGetEntryAttachmentsParams *params = [[AuthUserServiceGetEntryAttachmentsParams alloc] init];
 	[params setEntryId:entryId];
 	[params setGroupId:groupId];
@@ -11968,6 +11994,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results;
 	}
@@ -11979,7 +12006,7 @@ static Qortexapi * _qortexapi;
 // --- GetOtherVersionsComments ---
 - (AuthUserServiceGetOtherVersionsCommentsResults *) GetOtherVersionsComments:(NSString *)entryId groupId:(NSString *)groupId updateAtUnixNanoForVersion:(NSString *)updateAtUnixNanoForVersion hightlightKeywords:(NSString *)hightlightKeywords {
 	
-	AuthUserServiceGetOtherVersionsCommentsResults *results = [[AuthUserServiceGetOtherVersionsCommentsResults alloc] init];
+	AuthUserServiceGetOtherVersionsCommentsResults *results = [AuthUserServiceGetOtherVersionsCommentsResults alloc];
 	AuthUserServiceGetOtherVersionsCommentsParams *params = [[AuthUserServiceGetOtherVersionsCommentsParams alloc] init];
 	[params setEntryId:entryId];
 	[params setGroupId:groupId];
@@ -11997,6 +12024,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results;
 	}
@@ -12008,7 +12036,7 @@ static Qortexapi * _qortexapi;
 // --- GetGroupEntries ---
 - (AuthUserServiceGetGroupEntriesResults *) GetGroupEntries:(NSString *)groupId entryType:(NSString *)entryType before:(NSString *)before limit:(NSNumber *)limit {
 	
-	AuthUserServiceGetGroupEntriesResults *results = [[AuthUserServiceGetGroupEntriesResults alloc] init];
+	AuthUserServiceGetGroupEntriesResults *results = [AuthUserServiceGetGroupEntriesResults alloc];
 	AuthUserServiceGetGroupEntriesParams *params = [[AuthUserServiceGetGroupEntriesParams alloc] init];
 	[params setGroupId:groupId];
 	[params setEntryType:entryType];
@@ -12026,6 +12054,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results;
 	}
@@ -12037,7 +12066,7 @@ static Qortexapi * _qortexapi;
 // --- GetMyFeedEntries ---
 - (AuthUserServiceGetMyFeedEntriesResults *) GetMyFeedEntries:(NSString *)entryType before:(NSString *)before limit:(NSNumber *)limit {
 	
-	AuthUserServiceGetMyFeedEntriesResults *results = [[AuthUserServiceGetMyFeedEntriesResults alloc] init];
+	AuthUserServiceGetMyFeedEntriesResults *results = [AuthUserServiceGetMyFeedEntriesResults alloc];
 	AuthUserServiceGetMyFeedEntriesParams *params = [[AuthUserServiceGetMyFeedEntriesParams alloc] init];
 	[params setEntryType:entryType];
 	[params setBefore:before];
@@ -12054,6 +12083,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results;
 	}
@@ -12065,7 +12095,7 @@ static Qortexapi * _qortexapi;
 // --- GetNewFeedEntries ---
 - (AuthUserServiceGetNewFeedEntriesResults *) GetNewFeedEntries:(NSString *)entryType From:(NSString *)From limit:(NSNumber *)limit {
 	
-	AuthUserServiceGetNewFeedEntriesResults *results = [[AuthUserServiceGetNewFeedEntriesResults alloc] init];
+	AuthUserServiceGetNewFeedEntriesResults *results = [AuthUserServiceGetNewFeedEntriesResults alloc];
 	AuthUserServiceGetNewFeedEntriesParams *params = [[AuthUserServiceGetNewFeedEntriesParams alloc] init];
 	[params setEntryType:entryType];
 	[params setFrom:From];
@@ -12082,6 +12112,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results;
 	}
@@ -12093,7 +12124,7 @@ static Qortexapi * _qortexapi;
 // --- GetMyTaskEntries ---
 - (AuthUserServiceGetMyTaskEntriesResults *) GetMyTaskEntries:(BOOL)active before:(NSString *)before limit:(NSNumber *)limit {
 	
-	AuthUserServiceGetMyTaskEntriesResults *results = [[AuthUserServiceGetMyTaskEntriesResults alloc] init];
+	AuthUserServiceGetMyTaskEntriesResults *results = [AuthUserServiceGetMyTaskEntriesResults alloc];
 	AuthUserServiceGetMyTaskEntriesParams *params = [[AuthUserServiceGetMyTaskEntriesParams alloc] init];
 	[params setActive:active];
 	[params setBefore:before];
@@ -12110,6 +12141,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results;
 	}
@@ -12121,7 +12153,7 @@ static Qortexapi * _qortexapi;
 // --- GetUserEntries ---
 - (AuthUserServiceGetUserEntriesResults *) GetUserEntries:(NSString *)userId entryType:(NSString *)entryType before:(NSString *)before limit:(NSNumber *)limit {
 	
-	AuthUserServiceGetUserEntriesResults *results = [[AuthUserServiceGetUserEntriesResults alloc] init];
+	AuthUserServiceGetUserEntriesResults *results = [AuthUserServiceGetUserEntriesResults alloc];
 	AuthUserServiceGetUserEntriesParams *params = [[AuthUserServiceGetUserEntriesParams alloc] init];
 	[params setUserId:userId];
 	[params setEntryType:entryType];
@@ -12139,6 +12171,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results;
 	}
@@ -12150,7 +12183,7 @@ static Qortexapi * _qortexapi;
 // --- GetMyChatEntries ---
 - (AuthUserServiceGetMyChatEntriesResults *) GetMyChatEntries:(NSString *)before limit:(NSNumber *)limit {
 	
-	AuthUserServiceGetMyChatEntriesResults *results = [[AuthUserServiceGetMyChatEntriesResults alloc] init];
+	AuthUserServiceGetMyChatEntriesResults *results = [AuthUserServiceGetMyChatEntriesResults alloc];
 	AuthUserServiceGetMyChatEntriesParams *params = [[AuthUserServiceGetMyChatEntriesParams alloc] init];
 	[params setBefore:before];
 	[params setLimit:limit];
@@ -12166,6 +12199,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results;
 	}
@@ -12177,7 +12211,7 @@ static Qortexapi * _qortexapi;
 // --- GetMyNotificationItems ---
 - (AuthUserServiceGetMyNotificationItemsResults *) GetMyNotificationItems:(NSString *)before limit:(NSNumber *)limit {
 	
-	AuthUserServiceGetMyNotificationItemsResults *results = [[AuthUserServiceGetMyNotificationItemsResults alloc] init];
+	AuthUserServiceGetMyNotificationItemsResults *results = [AuthUserServiceGetMyNotificationItemsResults alloc];
 	AuthUserServiceGetMyNotificationItemsParams *params = [[AuthUserServiceGetMyNotificationItemsParams alloc] init];
 	[params setBefore:before];
 	[params setLimit:limit];
@@ -12193,6 +12227,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results;
 	}
@@ -12204,7 +12239,7 @@ static Qortexapi * _qortexapi;
 // --- MarkAllAsRead ---
 - (AuthUserServiceMarkAllAsReadResults *) MarkAllAsRead:(NSString *)groupId {
 	
-	AuthUserServiceMarkAllAsReadResults *results = [[AuthUserServiceMarkAllAsReadResults alloc] init];
+	AuthUserServiceMarkAllAsReadResults *results = [AuthUserServiceMarkAllAsReadResults alloc];
 	AuthUserServiceMarkAllAsReadParams *params = [[AuthUserServiceMarkAllAsReadParams alloc] init];
 	[params setGroupId:groupId];
 	
@@ -12219,6 +12254,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results;
 	}
@@ -12230,7 +12266,7 @@ static Qortexapi * _qortexapi;
 // --- GetWatchList ---
 - (AuthUserServiceGetWatchListResults *) GetWatchList:(NSDate *)before limit:(NSNumber *)limit {
 	
-	AuthUserServiceGetWatchListResults *results = [[AuthUserServiceGetWatchListResults alloc] init];
+	AuthUserServiceGetWatchListResults *results = [AuthUserServiceGetWatchListResults alloc];
 	AuthUserServiceGetWatchListParams *params = [[AuthUserServiceGetWatchListParams alloc] init];
 	[params setBefore:before];
 	[params setLimit:limit];
@@ -12246,6 +12282,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results;
 	}
@@ -12257,7 +12294,7 @@ static Qortexapi * _qortexapi;
 // --- AddToWatchList ---
 - (AuthUserServiceAddToWatchListResults *) AddToWatchList:(NSString *)entryId groupId:(NSString *)groupId {
 	
-	AuthUserServiceAddToWatchListResults *results = [[AuthUserServiceAddToWatchListResults alloc] init];
+	AuthUserServiceAddToWatchListResults *results = [AuthUserServiceAddToWatchListResults alloc];
 	AuthUserServiceAddToWatchListParams *params = [[AuthUserServiceAddToWatchListParams alloc] init];
 	[params setEntryId:entryId];
 	[params setGroupId:groupId];
@@ -12273,6 +12310,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results;
 	}
@@ -12284,7 +12322,7 @@ static Qortexapi * _qortexapi;
 // --- StopWatching ---
 - (AuthUserServiceStopWatchingResults *) StopWatching:(NSString *)entryId groupId:(NSString *)groupId {
 	
-	AuthUserServiceStopWatchingResults *results = [[AuthUserServiceStopWatchingResults alloc] init];
+	AuthUserServiceStopWatchingResults *results = [AuthUserServiceStopWatchingResults alloc];
 	AuthUserServiceStopWatchingParams *params = [[AuthUserServiceStopWatchingParams alloc] init];
 	[params setEntryId:entryId];
 	[params setGroupId:groupId];
@@ -12300,6 +12338,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results;
 	}
@@ -12311,7 +12350,7 @@ static Qortexapi * _qortexapi;
 // --- ReadWatching ---
 - (NSError *) ReadWatching:(NSString *)entryId groupId:(NSString *)groupId {
 	
-	AuthUserServiceReadWatchingResults *results = [[AuthUserServiceReadWatchingResults alloc] init];
+	AuthUserServiceReadWatchingResults *results = [AuthUserServiceReadWatchingResults alloc];
 	AuthUserServiceReadWatchingParams *params = [[AuthUserServiceReadWatchingParams alloc] init];
 	[params setEntryId:entryId];
 	[params setGroupId:groupId];
@@ -12327,6 +12366,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results.Err;
 	}
@@ -12338,7 +12378,7 @@ static Qortexapi * _qortexapi;
 // --- UpdateLike ---
 - (AuthUserServiceUpdateLikeResults *) UpdateLike:(LikeInput *)input {
 	
-	AuthUserServiceUpdateLikeResults *results = [[AuthUserServiceUpdateLikeResults alloc] init];
+	AuthUserServiceUpdateLikeResults *results = [AuthUserServiceUpdateLikeResults alloc];
 	AuthUserServiceUpdateLikeParams *params = [[AuthUserServiceUpdateLikeParams alloc] init];
 	[params setInput:input];
 	
@@ -12353,6 +12393,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results;
 	}
@@ -12364,7 +12405,7 @@ static Qortexapi * _qortexapi;
 // --- GetDraftList ---
 - (AuthUserServiceGetDraftListResults *) GetDraftList:(NSDate *)before limit:(NSNumber *)limit {
 	
-	AuthUserServiceGetDraftListResults *results = [[AuthUserServiceGetDraftListResults alloc] init];
+	AuthUserServiceGetDraftListResults *results = [AuthUserServiceGetDraftListResults alloc];
 	AuthUserServiceGetDraftListParams *params = [[AuthUserServiceGetDraftListParams alloc] init];
 	[params setBefore:before];
 	[params setLimit:limit];
@@ -12380,6 +12421,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results;
 	}
@@ -12391,7 +12433,7 @@ static Qortexapi * _qortexapi;
 // --- GetDraft ---
 - (AuthUserServiceGetDraftResults *) GetDraft:(NSString *)entryId groupId:(NSString *)groupId {
 	
-	AuthUserServiceGetDraftResults *results = [[AuthUserServiceGetDraftResults alloc] init];
+	AuthUserServiceGetDraftResults *results = [AuthUserServiceGetDraftResults alloc];
 	AuthUserServiceGetDraftParams *params = [[AuthUserServiceGetDraftParams alloc] init];
 	[params setEntryId:entryId];
 	[params setGroupId:groupId];
@@ -12407,6 +12449,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results;
 	}
@@ -12418,7 +12461,7 @@ static Qortexapi * _qortexapi;
 // --- DeleteDraft ---
 - (NSError *) DeleteDraft:(NSString *)entryId groupId:(NSString *)groupId {
 	
-	AuthUserServiceDeleteDraftResults *results = [[AuthUserServiceDeleteDraftResults alloc] init];
+	AuthUserServiceDeleteDraftResults *results = [AuthUserServiceDeleteDraftResults alloc];
 	AuthUserServiceDeleteDraftParams *params = [[AuthUserServiceDeleteDraftParams alloc] init];
 	[params setEntryId:entryId];
 	[params setGroupId:groupId];
@@ -12434,6 +12477,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results.Err;
 	}
@@ -12445,7 +12489,7 @@ static Qortexapi * _qortexapi;
 // --- GetNewGroup ---
 - (AuthUserServiceGetNewGroupResults *) GetNewGroup {
 	
-	AuthUserServiceGetNewGroupResults *results = [[AuthUserServiceGetNewGroupResults alloc] init];
+	AuthUserServiceGetNewGroupResults *results = [AuthUserServiceGetNewGroupResults alloc];
 	AuthUserServiceGetNewGroupParams *params = [[AuthUserServiceGetNewGroupParams alloc] init];
 	
 	Qortexapi * _api = [Qortexapi get];
@@ -12459,6 +12503,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results;
 	}
@@ -12470,7 +12515,7 @@ static Qortexapi * _qortexapi;
 // --- GetGroup ---
 - (AuthUserServiceGetGroupResults *) GetGroup:(NSString *)groupId {
 	
-	AuthUserServiceGetGroupResults *results = [[AuthUserServiceGetGroupResults alloc] init];
+	AuthUserServiceGetGroupResults *results = [AuthUserServiceGetGroupResults alloc];
 	AuthUserServiceGetGroupParams *params = [[AuthUserServiceGetGroupParams alloc] init];
 	[params setGroupId:groupId];
 	
@@ -12485,6 +12530,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results;
 	}
@@ -12496,7 +12542,7 @@ static Qortexapi * _qortexapi;
 // --- CreateGroup ---
 - (AuthUserServiceCreateGroupResults *) CreateGroup:(GroupInput *)input {
 	
-	AuthUserServiceCreateGroupResults *results = [[AuthUserServiceCreateGroupResults alloc] init];
+	AuthUserServiceCreateGroupResults *results = [AuthUserServiceCreateGroupResults alloc];
 	AuthUserServiceCreateGroupParams *params = [[AuthUserServiceCreateGroupParams alloc] init];
 	[params setInput:input];
 	
@@ -12511,6 +12557,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results;
 	}
@@ -12522,7 +12569,7 @@ static Qortexapi * _qortexapi;
 // --- UpdateGroup ---
 - (AuthUserServiceUpdateGroupResults *) UpdateGroup:(GroupInput *)input {
 	
-	AuthUserServiceUpdateGroupResults *results = [[AuthUserServiceUpdateGroupResults alloc] init];
+	AuthUserServiceUpdateGroupResults *results = [AuthUserServiceUpdateGroupResults alloc];
 	AuthUserServiceUpdateGroupParams *params = [[AuthUserServiceUpdateGroupParams alloc] init];
 	[params setInput:input];
 	
@@ -12537,6 +12584,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results;
 	}
@@ -12548,7 +12596,7 @@ static Qortexapi * _qortexapi;
 // --- UpdateGroupLogo ---
 - (NSError *) UpdateGroupLogo:(NSString *)groupId logoURL:(NSString *)logoURL {
 	
-	AuthUserServiceUpdateGroupLogoResults *results = [[AuthUserServiceUpdateGroupLogoResults alloc] init];
+	AuthUserServiceUpdateGroupLogoResults *results = [AuthUserServiceUpdateGroupLogoResults alloc];
 	AuthUserServiceUpdateGroupLogoParams *params = [[AuthUserServiceUpdateGroupLogoParams alloc] init];
 	[params setGroupId:groupId];
 	[params setLogoURL:logoURL];
@@ -12564,6 +12612,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results.Err;
 	}
@@ -12575,7 +12624,7 @@ static Qortexapi * _qortexapi;
 // --- DeleteGroup ---
 - (NSError *) DeleteGroup:(NSString *)groupId {
 	
-	AuthUserServiceDeleteGroupResults *results = [[AuthUserServiceDeleteGroupResults alloc] init];
+	AuthUserServiceDeleteGroupResults *results = [AuthUserServiceDeleteGroupResults alloc];
 	AuthUserServiceDeleteGroupParams *params = [[AuthUserServiceDeleteGroupParams alloc] init];
 	[params setGroupId:groupId];
 	
@@ -12590,6 +12639,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results.Err;
 	}
@@ -12601,7 +12651,7 @@ static Qortexapi * _qortexapi;
 // --- GetGroupBySlug ---
 - (AuthUserServiceGetGroupBySlugResults *) GetGroupBySlug:(NSString *)slug {
 	
-	AuthUserServiceGetGroupBySlugResults *results = [[AuthUserServiceGetGroupBySlugResults alloc] init];
+	AuthUserServiceGetGroupBySlugResults *results = [AuthUserServiceGetGroupBySlugResults alloc];
 	AuthUserServiceGetGroupBySlugParams *params = [[AuthUserServiceGetGroupBySlugParams alloc] init];
 	[params setSlug:slug];
 	
@@ -12616,6 +12666,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results;
 	}
@@ -12627,7 +12678,7 @@ static Qortexapi * _qortexapi;
 // --- GetGroups ---
 - (AuthUserServiceGetGroupsResults *) GetGroups:(NSString *)keyword {
 	
-	AuthUserServiceGetGroupsResults *results = [[AuthUserServiceGetGroupsResults alloc] init];
+	AuthUserServiceGetGroupsResults *results = [AuthUserServiceGetGroupsResults alloc];
 	AuthUserServiceGetGroupsParams *params = [[AuthUserServiceGetGroupsParams alloc] init];
 	[params setKeyword:keyword];
 	
@@ -12642,6 +12693,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results;
 	}
@@ -12653,7 +12705,7 @@ static Qortexapi * _qortexapi;
 // --- GetPublicGroups ---
 - (AuthUserServiceGetPublicGroupsResults *) GetPublicGroups:(NSString *)keyword {
 	
-	AuthUserServiceGetPublicGroupsResults *results = [[AuthUserServiceGetPublicGroupsResults alloc] init];
+	AuthUserServiceGetPublicGroupsResults *results = [AuthUserServiceGetPublicGroupsResults alloc];
 	AuthUserServiceGetPublicGroupsParams *params = [[AuthUserServiceGetPublicGroupsParams alloc] init];
 	[params setKeyword:keyword];
 	
@@ -12668,6 +12720,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results;
 	}
@@ -12679,7 +12732,7 @@ static Qortexapi * _qortexapi;
 // --- AddUserToGroup ---
 - (NSError *) AddUserToGroup:(NSString *)groupId userId:(NSString *)userId {
 	
-	AuthUserServiceAddUserToGroupResults *results = [[AuthUserServiceAddUserToGroupResults alloc] init];
+	AuthUserServiceAddUserToGroupResults *results = [AuthUserServiceAddUserToGroupResults alloc];
 	AuthUserServiceAddUserToGroupParams *params = [[AuthUserServiceAddUserToGroupParams alloc] init];
 	[params setGroupId:groupId];
 	[params setUserId:userId];
@@ -12695,6 +12748,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results.Err;
 	}
@@ -12706,7 +12760,7 @@ static Qortexapi * _qortexapi;
 // --- RemoveUserFromGroup ---
 - (NSError *) RemoveUserFromGroup:(NSString *)groupId userId:(NSString *)userId {
 	
-	AuthUserServiceRemoveUserFromGroupResults *results = [[AuthUserServiceRemoveUserFromGroupResults alloc] init];
+	AuthUserServiceRemoveUserFromGroupResults *results = [AuthUserServiceRemoveUserFromGroupResults alloc];
 	AuthUserServiceRemoveUserFromGroupParams *params = [[AuthUserServiceRemoveUserFromGroupParams alloc] init];
 	[params setGroupId:groupId];
 	[params setUserId:userId];
@@ -12722,6 +12776,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results.Err;
 	}
@@ -12733,7 +12788,7 @@ static Qortexapi * _qortexapi;
 // --- GetGroupHeader ---
 - (AuthUserServiceGetGroupHeaderResults *) GetGroupHeader:(NSString *)groupId {
 	
-	AuthUserServiceGetGroupHeaderResults *results = [[AuthUserServiceGetGroupHeaderResults alloc] init];
+	AuthUserServiceGetGroupHeaderResults *results = [AuthUserServiceGetGroupHeaderResults alloc];
 	AuthUserServiceGetGroupHeaderParams *params = [[AuthUserServiceGetGroupHeaderParams alloc] init];
 	[params setGroupId:groupId];
 	
@@ -12748,6 +12803,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results;
 	}
@@ -12759,7 +12815,7 @@ static Qortexapi * _qortexapi;
 // --- GetClassifiedGroups ---
 - (AuthUserServiceGetClassifiedGroupsResults *) GetClassifiedGroups {
 	
-	AuthUserServiceGetClassifiedGroupsResults *results = [[AuthUserServiceGetClassifiedGroupsResults alloc] init];
+	AuthUserServiceGetClassifiedGroupsResults *results = [AuthUserServiceGetClassifiedGroupsResults alloc];
 	AuthUserServiceGetClassifiedGroupsParams *params = [[AuthUserServiceGetClassifiedGroupsParams alloc] init];
 	
 	Qortexapi * _api = [Qortexapi get];
@@ -12773,6 +12829,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results;
 	}
@@ -12784,7 +12841,7 @@ static Qortexapi * _qortexapi;
 // --- GetOrgUsers ---
 - (AuthUserServiceGetOrgUsersResults *) GetOrgUsers:(NSString *)keyword startFullName:(NSString *)startFullName limit:(NSNumber *)limit {
 	
-	AuthUserServiceGetOrgUsersResults *results = [[AuthUserServiceGetOrgUsersResults alloc] init];
+	AuthUserServiceGetOrgUsersResults *results = [AuthUserServiceGetOrgUsersResults alloc];
 	AuthUserServiceGetOrgUsersParams *params = [[AuthUserServiceGetOrgUsersParams alloc] init];
 	[params setKeyword:keyword];
 	[params setStartFullName:startFullName];
@@ -12801,6 +12858,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results;
 	}
@@ -12812,7 +12870,7 @@ static Qortexapi * _qortexapi;
 // --- GetGroupUsers ---
 - (AuthUserServiceGetGroupUsersResults *) GetGroupUsers:(NSString *)groupId keyword:(NSString *)keyword onlyFollowers:(BOOL)onlyFollowers startFullName:(NSString *)startFullName limit:(NSNumber *)limit {
 	
-	AuthUserServiceGetGroupUsersResults *results = [[AuthUserServiceGetGroupUsersResults alloc] init];
+	AuthUserServiceGetGroupUsersResults *results = [AuthUserServiceGetGroupUsersResults alloc];
 	AuthUserServiceGetGroupUsersParams *params = [[AuthUserServiceGetGroupUsersParams alloc] init];
 	[params setGroupId:groupId];
 	[params setKeyword:keyword];
@@ -12831,6 +12889,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results;
 	}
@@ -12842,7 +12901,7 @@ static Qortexapi * _qortexapi;
 // --- GetUser ---
 - (AuthUserServiceGetUserResults *) GetUser:(NSString *)userId {
 	
-	AuthUserServiceGetUserResults *results = [[AuthUserServiceGetUserResults alloc] init];
+	AuthUserServiceGetUserResults *results = [AuthUserServiceGetUserResults alloc];
 	AuthUserServiceGetUserParams *params = [[AuthUserServiceGetUserParams alloc] init];
 	[params setUserId:userId];
 	
@@ -12857,6 +12916,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results;
 	}
@@ -12868,7 +12928,7 @@ static Qortexapi * _qortexapi;
 // --- EnableUser ---
 - (NSError *) EnableUser:(NSString *)userId {
 	
-	AuthUserServiceEnableUserResults *results = [[AuthUserServiceEnableUserResults alloc] init];
+	AuthUserServiceEnableUserResults *results = [AuthUserServiceEnableUserResults alloc];
 	AuthUserServiceEnableUserParams *params = [[AuthUserServiceEnableUserParams alloc] init];
 	[params setUserId:userId];
 	
@@ -12883,6 +12943,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results.Err;
 	}
@@ -12894,7 +12955,7 @@ static Qortexapi * _qortexapi;
 // --- DisableUser ---
 - (NSError *) DisableUser:(NSString *)userId {
 	
-	AuthUserServiceDisableUserResults *results = [[AuthUserServiceDisableUserResults alloc] init];
+	AuthUserServiceDisableUserResults *results = [AuthUserServiceDisableUserResults alloc];
 	AuthUserServiceDisableUserParams *params = [[AuthUserServiceDisableUserParams alloc] init];
 	[params setUserId:userId];
 	
@@ -12909,6 +12970,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results.Err;
 	}
@@ -12920,7 +12982,7 @@ static Qortexapi * _qortexapi;
 // --- DeleteUser ---
 - (NSError *) DeleteUser:(NSString *)userId {
 	
-	AuthUserServiceDeleteUserResults *results = [[AuthUserServiceDeleteUserResults alloc] init];
+	AuthUserServiceDeleteUserResults *results = [AuthUserServiceDeleteUserResults alloc];
 	AuthUserServiceDeleteUserParams *params = [[AuthUserServiceDeleteUserParams alloc] init];
 	[params setUserId:userId];
 	
@@ -12935,6 +12997,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results.Err;
 	}
@@ -12946,7 +13009,7 @@ static Qortexapi * _qortexapi;
 // --- PromoteToSuperUser ---
 - (NSError *) PromoteToSuperUser:(NSString *)userId {
 	
-	AuthUserServicePromoteToSuperUserResults *results = [[AuthUserServicePromoteToSuperUserResults alloc] init];
+	AuthUserServicePromoteToSuperUserResults *results = [AuthUserServicePromoteToSuperUserResults alloc];
 	AuthUserServicePromoteToSuperUserParams *params = [[AuthUserServicePromoteToSuperUserParams alloc] init];
 	[params setUserId:userId];
 	
@@ -12961,6 +13024,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results.Err;
 	}
@@ -12972,7 +13036,7 @@ static Qortexapi * _qortexapi;
 // --- DemoteFromSuperUser ---
 - (NSError *) DemoteFromSuperUser:(NSString *)userId {
 	
-	AuthUserServiceDemoteFromSuperUserResults *results = [[AuthUserServiceDemoteFromSuperUserResults alloc] init];
+	AuthUserServiceDemoteFromSuperUserResults *results = [AuthUserServiceDemoteFromSuperUserResults alloc];
 	AuthUserServiceDemoteFromSuperUserParams *params = [[AuthUserServiceDemoteFromSuperUserParams alloc] init];
 	[params setUserId:userId];
 	
@@ -12987,6 +13051,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results.Err;
 	}
@@ -12998,7 +13063,7 @@ static Qortexapi * _qortexapi;
 // --- FollowUser ---
 - (NSError *) FollowUser:(NSString *)userId {
 	
-	AuthUserServiceFollowUserResults *results = [[AuthUserServiceFollowUserResults alloc] init];
+	AuthUserServiceFollowUserResults *results = [AuthUserServiceFollowUserResults alloc];
 	AuthUserServiceFollowUserParams *params = [[AuthUserServiceFollowUserParams alloc] init];
 	[params setUserId:userId];
 	
@@ -13013,6 +13078,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results.Err;
 	}
@@ -13024,7 +13090,7 @@ static Qortexapi * _qortexapi;
 // --- UnfollowUser ---
 - (NSError *) UnfollowUser:(NSString *)userId {
 	
-	AuthUserServiceUnfollowUserResults *results = [[AuthUserServiceUnfollowUserResults alloc] init];
+	AuthUserServiceUnfollowUserResults *results = [AuthUserServiceUnfollowUserResults alloc];
 	AuthUserServiceUnfollowUserParams *params = [[AuthUserServiceUnfollowUserParams alloc] init];
 	[params setUserId:userId];
 	
@@ -13039,6 +13105,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results.Err;
 	}
@@ -13050,7 +13117,7 @@ static Qortexapi * _qortexapi;
 // --- GetMyFollowingUsers ---
 - (AuthUserServiceGetMyFollowingUsersResults *) GetMyFollowingUsers {
 	
-	AuthUserServiceGetMyFollowingUsersResults *results = [[AuthUserServiceGetMyFollowingUsersResults alloc] init];
+	AuthUserServiceGetMyFollowingUsersResults *results = [AuthUserServiceGetMyFollowingUsersResults alloc];
 	AuthUserServiceGetMyFollowingUsersParams *params = [[AuthUserServiceGetMyFollowingUsersParams alloc] init];
 	
 	Qortexapi * _api = [Qortexapi get];
@@ -13064,6 +13131,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results;
 	}
@@ -13075,7 +13143,7 @@ static Qortexapi * _qortexapi;
 // --- GetPanelStatus ---
 - (AuthUserServiceGetPanelStatusResults *) GetPanelStatus {
 	
-	AuthUserServiceGetPanelStatusResults *results = [[AuthUserServiceGetPanelStatusResults alloc] init];
+	AuthUserServiceGetPanelStatusResults *results = [AuthUserServiceGetPanelStatusResults alloc];
 	AuthUserServiceGetPanelStatusParams *params = [[AuthUserServiceGetPanelStatusParams alloc] init];
 	
 	Qortexapi * _api = [Qortexapi get];
@@ -13089,6 +13157,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results;
 	}
@@ -13100,7 +13169,7 @@ static Qortexapi * _qortexapi;
 // --- GetUserPreferences ---
 - (AuthUserServiceGetUserPreferencesResults *) GetUserPreferences {
 	
-	AuthUserServiceGetUserPreferencesResults *results = [[AuthUserServiceGetUserPreferencesResults alloc] init];
+	AuthUserServiceGetUserPreferencesResults *results = [AuthUserServiceGetUserPreferencesResults alloc];
 	AuthUserServiceGetUserPreferencesParams *params = [[AuthUserServiceGetUserPreferencesParams alloc] init];
 	
 	Qortexapi * _api = [Qortexapi get];
@@ -13114,6 +13183,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results;
 	}
@@ -13125,7 +13195,7 @@ static Qortexapi * _qortexapi;
 // --- UpdateUserPreferences ---
 - (AuthUserServiceUpdateUserPreferencesResults *) UpdateUserPreferences:(PreferencesInput *)input {
 	
-	AuthUserServiceUpdateUserPreferencesResults *results = [[AuthUserServiceUpdateUserPreferencesResults alloc] init];
+	AuthUserServiceUpdateUserPreferencesResults *results = [AuthUserServiceUpdateUserPreferencesResults alloc];
 	AuthUserServiceUpdateUserPreferencesParams *params = [[AuthUserServiceUpdateUserPreferencesParams alloc] init];
 	[params setInput:input];
 	
@@ -13140,6 +13210,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results;
 	}
@@ -13151,7 +13222,7 @@ static Qortexapi * _qortexapi;
 // --- GetOrgEmbedUsers ---
 - (AuthUserServiceGetOrgEmbedUsersResults *) GetOrgEmbedUsers {
 	
-	AuthUserServiceGetOrgEmbedUsersResults *results = [[AuthUserServiceGetOrgEmbedUsersResults alloc] init];
+	AuthUserServiceGetOrgEmbedUsersResults *results = [AuthUserServiceGetOrgEmbedUsersResults alloc];
 	AuthUserServiceGetOrgEmbedUsersParams *params = [[AuthUserServiceGetOrgEmbedUsersParams alloc] init];
 	
 	Qortexapi * _api = [Qortexapi get];
@@ -13165,6 +13236,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results;
 	}
@@ -13176,7 +13248,7 @@ static Qortexapi * _qortexapi;
 // --- GetNonStandardGroupEmbedUsers ---
 - (AuthUserServiceGetNonStandardGroupEmbedUsersResults *) GetNonStandardGroupEmbedUsers {
 	
-	AuthUserServiceGetNonStandardGroupEmbedUsersResults *results = [[AuthUserServiceGetNonStandardGroupEmbedUsersResults alloc] init];
+	AuthUserServiceGetNonStandardGroupEmbedUsersResults *results = [AuthUserServiceGetNonStandardGroupEmbedUsersResults alloc];
 	AuthUserServiceGetNonStandardGroupEmbedUsersParams *params = [[AuthUserServiceGetNonStandardGroupEmbedUsersParams alloc] init];
 	
 	Qortexapi * _api = [Qortexapi get];
@@ -13190,6 +13262,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results;
 	}
@@ -13201,7 +13274,7 @@ static Qortexapi * _qortexapi;
 // --- UpdateUserProfile ---
 - (AuthUserServiceUpdateUserProfileResults *) UpdateUserProfile:(UserProfileInput *)input {
 	
-	AuthUserServiceUpdateUserProfileResults *results = [[AuthUserServiceUpdateUserProfileResults alloc] init];
+	AuthUserServiceUpdateUserProfileResults *results = [AuthUserServiceUpdateUserProfileResults alloc];
 	AuthUserServiceUpdateUserProfileParams *params = [[AuthUserServiceUpdateUserProfileParams alloc] init];
 	[params setInput:input];
 	
@@ -13216,6 +13289,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results;
 	}
@@ -13227,7 +13301,7 @@ static Qortexapi * _qortexapi;
 // --- GetMyCount ---
 - (AuthUserServiceGetMyCountResults *) GetMyCount {
 	
-	AuthUserServiceGetMyCountResults *results = [[AuthUserServiceGetMyCountResults alloc] init];
+	AuthUserServiceGetMyCountResults *results = [AuthUserServiceGetMyCountResults alloc];
 	AuthUserServiceGetMyCountParams *params = [[AuthUserServiceGetMyCountParams alloc] init];
 	
 	Qortexapi * _api = [Qortexapi get];
@@ -13241,6 +13315,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results;
 	}
@@ -13252,7 +13327,7 @@ static Qortexapi * _qortexapi;
 // --- ReadEntry ---
 - (AuthUserServiceReadEntryResults *) ReadEntry:(NSString *)entryId groupId:(NSString *)groupId {
 	
-	AuthUserServiceReadEntryResults *results = [[AuthUserServiceReadEntryResults alloc] init];
+	AuthUserServiceReadEntryResults *results = [AuthUserServiceReadEntryResults alloc];
 	AuthUserServiceReadEntryParams *params = [[AuthUserServiceReadEntryParams alloc] init];
 	[params setEntryId:entryId];
 	[params setGroupId:groupId];
@@ -13268,6 +13343,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results;
 	}
@@ -13279,7 +13355,7 @@ static Qortexapi * _qortexapi;
 // --- GetJoinOrgInvitations ---
 - (AuthUserServiceGetJoinOrgInvitationsResults *) GetJoinOrgInvitations {
 	
-	AuthUserServiceGetJoinOrgInvitationsResults *results = [[AuthUserServiceGetJoinOrgInvitationsResults alloc] init];
+	AuthUserServiceGetJoinOrgInvitationsResults *results = [AuthUserServiceGetJoinOrgInvitationsResults alloc];
 	AuthUserServiceGetJoinOrgInvitationsParams *params = [[AuthUserServiceGetJoinOrgInvitationsParams alloc] init];
 	
 	Qortexapi * _api = [Qortexapi get];
@@ -13293,6 +13369,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results;
 	}
@@ -13304,7 +13381,7 @@ static Qortexapi * _qortexapi;
 // --- GetOrganization ---
 - (AuthUserServiceGetOrganizationResults *) GetOrganization:(NSString *)orgId {
 	
-	AuthUserServiceGetOrganizationResults *results = [[AuthUserServiceGetOrganizationResults alloc] init];
+	AuthUserServiceGetOrganizationResults *results = [AuthUserServiceGetOrganizationResults alloc];
 	AuthUserServiceGetOrganizationParams *params = [[AuthUserServiceGetOrganizationParams alloc] init];
 	[params setOrgId:orgId];
 	
@@ -13319,6 +13396,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results;
 	}
@@ -13330,7 +13408,7 @@ static Qortexapi * _qortexapi;
 // --- GetOrganizations ---
 - (AuthUserServiceGetOrganizationsResults *) GetOrganizations:(NSArray *)orgIds {
 	
-	AuthUserServiceGetOrganizationsResults *results = [[AuthUserServiceGetOrganizationsResults alloc] init];
+	AuthUserServiceGetOrganizationsResults *results = [AuthUserServiceGetOrganizationsResults alloc];
 	AuthUserServiceGetOrganizationsParams *params = [[AuthUserServiceGetOrganizationsParams alloc] init];
 	[params setOrgIds:orgIds];
 	
@@ -13345,6 +13423,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results;
 	}
@@ -13356,7 +13435,7 @@ static Qortexapi * _qortexapi;
 // --- SearchOrganizations ---
 - (AuthUserServiceSearchOrganizationsResults *) SearchOrganizations:(NSString *)keyword {
 	
-	AuthUserServiceSearchOrganizationsResults *results = [[AuthUserServiceSearchOrganizationsResults alloc] init];
+	AuthUserServiceSearchOrganizationsResults *results = [AuthUserServiceSearchOrganizationsResults alloc];
 	AuthUserServiceSearchOrganizationsParams *params = [[AuthUserServiceSearchOrganizationsParams alloc] init];
 	[params setKeyword:keyword];
 	
@@ -13371,6 +13450,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results;
 	}
@@ -13382,7 +13462,7 @@ static Qortexapi * _qortexapi;
 // --- UpdateOrganization ---
 - (AuthUserServiceUpdateOrganizationResults *) UpdateOrganization:(OrganizationInput *)input {
 	
-	AuthUserServiceUpdateOrganizationResults *results = [[AuthUserServiceUpdateOrganizationResults alloc] init];
+	AuthUserServiceUpdateOrganizationResults *results = [AuthUserServiceUpdateOrganizationResults alloc];
 	AuthUserServiceUpdateOrganizationParams *params = [[AuthUserServiceUpdateOrganizationParams alloc] init];
 	[params setInput:input];
 	
@@ -13397,6 +13477,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results;
 	}
@@ -13408,7 +13489,7 @@ static Qortexapi * _qortexapi;
 // --- SwitchOrganization ---
 - (NSError *) SwitchOrganization:(NSString *)orgId {
 	
-	AuthUserServiceSwitchOrganizationResults *results = [[AuthUserServiceSwitchOrganizationResults alloc] init];
+	AuthUserServiceSwitchOrganizationResults *results = [AuthUserServiceSwitchOrganizationResults alloc];
 	AuthUserServiceSwitchOrganizationParams *params = [[AuthUserServiceSwitchOrganizationParams alloc] init];
 	[params setOrgId:orgId];
 	
@@ -13423,6 +13504,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results.Err;
 	}
@@ -13434,7 +13516,7 @@ static Qortexapi * _qortexapi;
 // --- AcceptSharedGroupRequest ---
 - (AuthUserServiceAcceptSharedGroupRequestResults *) AcceptSharedGroupRequest:(NSString *)fromOrgId sharedOrgId:(NSString *)sharedOrgId sharedGroupId:(NSString *)sharedGroupId fromUserId:(NSString *)fromUserId {
 	
-	AuthUserServiceAcceptSharedGroupRequestResults *results = [[AuthUserServiceAcceptSharedGroupRequestResults alloc] init];
+	AuthUserServiceAcceptSharedGroupRequestResults *results = [AuthUserServiceAcceptSharedGroupRequestResults alloc];
 	AuthUserServiceAcceptSharedGroupRequestParams *params = [[AuthUserServiceAcceptSharedGroupRequestParams alloc] init];
 	[params setFromOrgId:fromOrgId];
 	[params setSharedOrgId:sharedOrgId];
@@ -13452,6 +13534,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results;
 	}
@@ -13463,7 +13546,7 @@ static Qortexapi * _qortexapi;
 // --- RejectSharedGroupRequest ---
 - (AuthUserServiceRejectSharedGroupRequestResults *) RejectSharedGroupRequest:(NSString *)fromOrgId sharedOrgId:(NSString *)sharedOrgId sharedGroupId:(NSString *)sharedGroupId fromUserId:(NSString *)fromUserId {
 	
-	AuthUserServiceRejectSharedGroupRequestResults *results = [[AuthUserServiceRejectSharedGroupRequestResults alloc] init];
+	AuthUserServiceRejectSharedGroupRequestResults *results = [AuthUserServiceRejectSharedGroupRequestResults alloc];
 	AuthUserServiceRejectSharedGroupRequestParams *params = [[AuthUserServiceRejectSharedGroupRequestParams alloc] init];
 	[params setFromOrgId:fromOrgId];
 	[params setSharedOrgId:sharedOrgId];
@@ -13481,6 +13564,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results;
 	}
@@ -13492,7 +13576,7 @@ static Qortexapi * _qortexapi;
 // --- GetOrgSettings ---
 - (AuthUserServiceGetOrgSettingsResults *) GetOrgSettings {
 	
-	AuthUserServiceGetOrgSettingsResults *results = [[AuthUserServiceGetOrgSettingsResults alloc] init];
+	AuthUserServiceGetOrgSettingsResults *results = [AuthUserServiceGetOrgSettingsResults alloc];
 	AuthUserServiceGetOrgSettingsParams *params = [[AuthUserServiceGetOrgSettingsParams alloc] init];
 	
 	Qortexapi * _api = [Qortexapi get];
@@ -13506,6 +13590,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results;
 	}
@@ -13517,7 +13602,7 @@ static Qortexapi * _qortexapi;
 // --- UpdateOrgSettings ---
 - (NSError *) UpdateOrgSettings:(OrgSettingsInput *)orgSettingInput {
 	
-	AuthUserServiceUpdateOrgSettingsResults *results = [[AuthUserServiceUpdateOrgSettingsResults alloc] init];
+	AuthUserServiceUpdateOrgSettingsResults *results = [AuthUserServiceUpdateOrgSettingsResults alloc];
 	AuthUserServiceUpdateOrgSettingsParams *params = [[AuthUserServiceUpdateOrgSettingsParams alloc] init];
 	[params setOrgSettingInput:orgSettingInput];
 	
@@ -13532,6 +13617,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results.Err;
 	}
@@ -13543,7 +13629,7 @@ static Qortexapi * _qortexapi;
 // --- CanCreateGroup ---
 - (AuthUserServiceCanCreateGroupResults *) CanCreateGroup {
 	
-	AuthUserServiceCanCreateGroupResults *results = [[AuthUserServiceCanCreateGroupResults alloc] init];
+	AuthUserServiceCanCreateGroupResults *results = [AuthUserServiceCanCreateGroupResults alloc];
 	AuthUserServiceCanCreateGroupParams *params = [[AuthUserServiceCanCreateGroupParams alloc] init];
 	
 	Qortexapi * _api = [Qortexapi get];
@@ -13557,6 +13643,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results;
 	}
@@ -13568,7 +13655,7 @@ static Qortexapi * _qortexapi;
 // --- CanInvitePeople ---
 - (AuthUserServiceCanInvitePeopleResults *) CanInvitePeople {
 	
-	AuthUserServiceCanInvitePeopleResults *results = [[AuthUserServiceCanInvitePeopleResults alloc] init];
+	AuthUserServiceCanInvitePeopleResults *results = [AuthUserServiceCanInvitePeopleResults alloc];
 	AuthUserServiceCanInvitePeopleParams *params = [[AuthUserServiceCanInvitePeopleParams alloc] init];
 	
 	Qortexapi * _api = [Qortexapi get];
@@ -13582,6 +13669,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results;
 	}
@@ -13593,7 +13681,7 @@ static Qortexapi * _qortexapi;
 // --- InvitePeople ---
 - (AuthUserServiceInvitePeopleResults *) InvitePeople:(NSArray *)emails {
 	
-	AuthUserServiceInvitePeopleResults *results = [[AuthUserServiceInvitePeopleResults alloc] init];
+	AuthUserServiceInvitePeopleResults *results = [AuthUserServiceInvitePeopleResults alloc];
 	AuthUserServiceInvitePeopleParams *params = [[AuthUserServiceInvitePeopleParams alloc] init];
 	[params setEmails:emails];
 	
@@ -13608,6 +13696,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results;
 	}
@@ -13619,7 +13708,7 @@ static Qortexapi * _qortexapi;
 // --- CancelInvitation ---
 - (NSError *) CancelInvitation:(NSString *)email {
 	
-	AuthUserServiceCancelInvitationResults *results = [[AuthUserServiceCancelInvitationResults alloc] init];
+	AuthUserServiceCancelInvitationResults *results = [AuthUserServiceCancelInvitationResults alloc];
 	AuthUserServiceCancelInvitationParams *params = [[AuthUserServiceCancelInvitationParams alloc] init];
 	[params setEmail:email];
 	
@@ -13634,6 +13723,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results.Err;
 	}
@@ -13645,7 +13735,7 @@ static Qortexapi * _qortexapi;
 // --- ResendInvitation ---
 - (NSError *) ResendInvitation:(NSString *)email {
 	
-	AuthUserServiceResendInvitationResults *results = [[AuthUserServiceResendInvitationResults alloc] init];
+	AuthUserServiceResendInvitationResults *results = [AuthUserServiceResendInvitationResults alloc];
 	AuthUserServiceResendInvitationParams *params = [[AuthUserServiceResendInvitationParams alloc] init];
 	[params setEmail:email];
 	
@@ -13660,6 +13750,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results.Err;
 	}
@@ -13671,7 +13762,7 @@ static Qortexapi * _qortexapi;
 // --- UpdateMailUpdates ---
 - (NSError *) UpdateMailUpdates:(MailUpdatesInput *)input {
 	
-	AuthUserServiceUpdateMailUpdatesResults *results = [[AuthUserServiceUpdateMailUpdatesResults alloc] init];
+	AuthUserServiceUpdateMailUpdatesResults *results = [AuthUserServiceUpdateMailUpdatesResults alloc];
 	AuthUserServiceUpdateMailUpdatesParams *params = [[AuthUserServiceUpdateMailUpdatesParams alloc] init];
 	[params setInput:input];
 	
@@ -13686,6 +13777,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results.Err;
 	}
@@ -13697,7 +13789,7 @@ static Qortexapi * _qortexapi;
 // --- PrepareChangingEmail ---
 - (AuthUserServicePrepareChangingEmailResults *) PrepareChangingEmail:(NSString *)newEmail {
 	
-	AuthUserServicePrepareChangingEmailResults *results = [[AuthUserServicePrepareChangingEmailResults alloc] init];
+	AuthUserServicePrepareChangingEmailResults *results = [AuthUserServicePrepareChangingEmailResults alloc];
 	AuthUserServicePrepareChangingEmailParams *params = [[AuthUserServicePrepareChangingEmailParams alloc] init];
 	[params setNewEmail:newEmail];
 	
@@ -13712,6 +13804,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results;
 	}
@@ -13723,7 +13816,7 @@ static Qortexapi * _qortexapi;
 // --- ConfirmChangingEmail ---
 - (NSError *) ConfirmChangingEmail:(NSString *)token {
 	
-	AuthUserServiceConfirmChangingEmailResults *results = [[AuthUserServiceConfirmChangingEmailResults alloc] init];
+	AuthUserServiceConfirmChangingEmailResults *results = [AuthUserServiceConfirmChangingEmailResults alloc];
 	AuthUserServiceConfirmChangingEmailParams *params = [[AuthUserServiceConfirmChangingEmailParams alloc] init];
 	[params setToken:token];
 	
@@ -13738,6 +13831,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results.Err;
 	}
@@ -13749,7 +13843,7 @@ static Qortexapi * _qortexapi;
 // --- UpdateAccount ---
 - (AuthUserServiceUpdateAccountResults *) UpdateAccount:(MemberAccountInput *)input {
 	
-	AuthUserServiceUpdateAccountResults *results = [[AuthUserServiceUpdateAccountResults alloc] init];
+	AuthUserServiceUpdateAccountResults *results = [AuthUserServiceUpdateAccountResults alloc];
 	AuthUserServiceUpdateAccountParams *params = [[AuthUserServiceUpdateAccountParams alloc] init];
 	[params setInput:input];
 	
@@ -13764,6 +13858,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results;
 	}
@@ -13775,7 +13870,7 @@ static Qortexapi * _qortexapi;
 // --- SendSharingInvitation ---
 - (AuthUserServiceSendSharingInvitationResults *) SendSharingInvitation:(NSString *)groupId email:(NSString *)email isResend:(BOOL)isResend {
 	
-	AuthUserServiceSendSharingInvitationResults *results = [[AuthUserServiceSendSharingInvitationResults alloc] init];
+	AuthUserServiceSendSharingInvitationResults *results = [AuthUserServiceSendSharingInvitationResults alloc];
 	AuthUserServiceSendSharingInvitationParams *params = [[AuthUserServiceSendSharingInvitationParams alloc] init];
 	[params setGroupId:groupId];
 	[params setEmail:email];
@@ -13792,6 +13887,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results;
 	}
@@ -13803,7 +13899,7 @@ static Qortexapi * _qortexapi;
 // --- GetSharingInvitations ---
 - (AuthUserServiceGetSharingInvitationsResults *) GetSharingInvitations:(NSString *)groupId {
 	
-	AuthUserServiceGetSharingInvitationsResults *results = [[AuthUserServiceGetSharingInvitationsResults alloc] init];
+	AuthUserServiceGetSharingInvitationsResults *results = [AuthUserServiceGetSharingInvitationsResults alloc];
 	AuthUserServiceGetSharingInvitationsParams *params = [[AuthUserServiceGetSharingInvitationsParams alloc] init];
 	[params setGroupId:groupId];
 	
@@ -13818,6 +13914,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results;
 	}
@@ -13829,7 +13926,7 @@ static Qortexapi * _qortexapi;
 // --- CancelSharingInvitation ---
 - (NSError *) CancelSharingInvitation:(NSString *)groupId email:(NSString *)email {
 	
-	AuthUserServiceCancelSharingInvitationResults *results = [[AuthUserServiceCancelSharingInvitationResults alloc] init];
+	AuthUserServiceCancelSharingInvitationResults *results = [AuthUserServiceCancelSharingInvitationResults alloc];
 	AuthUserServiceCancelSharingInvitationParams *params = [[AuthUserServiceCancelSharingInvitationParams alloc] init];
 	[params setGroupId:groupId];
 	[params setEmail:email];
@@ -13845,6 +13942,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results.Err;
 	}
@@ -13856,7 +13954,7 @@ static Qortexapi * _qortexapi;
 // --- StopSharedGroup ---
 - (NSError *) StopSharedGroup:(NSString *)groupId toStopOrgId:(NSString *)toStopOrgId {
 	
-	AuthUserServiceStopSharedGroupResults *results = [[AuthUserServiceStopSharedGroupResults alloc] init];
+	AuthUserServiceStopSharedGroupResults *results = [AuthUserServiceStopSharedGroupResults alloc];
 	AuthUserServiceStopSharedGroupParams *params = [[AuthUserServiceStopSharedGroupParams alloc] init];
 	[params setGroupId:groupId];
 	[params setToStopOrgId:toStopOrgId];
@@ -13872,6 +13970,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results.Err;
 	}
@@ -13883,7 +13982,7 @@ static Qortexapi * _qortexapi;
 // --- LeaveSharedGroup ---
 - (NSError *) LeaveSharedGroup:(NSString *)groupId {
 	
-	AuthUserServiceLeaveSharedGroupResults *results = [[AuthUserServiceLeaveSharedGroupResults alloc] init];
+	AuthUserServiceLeaveSharedGroupResults *results = [AuthUserServiceLeaveSharedGroupResults alloc];
 	AuthUserServiceLeaveSharedGroupParams *params = [[AuthUserServiceLeaveSharedGroupParams alloc] init];
 	[params setGroupId:groupId];
 	
@@ -13898,6 +13997,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results.Err;
 	}
@@ -13909,7 +14009,7 @@ static Qortexapi * _qortexapi;
 // --- ShareChat ---
 - (AuthUserServiceShareChatResults *) ShareChat:(ShareChatInput *)input {
 	
-	AuthUserServiceShareChatResults *results = [[AuthUserServiceShareChatResults alloc] init];
+	AuthUserServiceShareChatResults *results = [AuthUserServiceShareChatResults alloc];
 	AuthUserServiceShareChatParams *params = [[AuthUserServiceShareChatParams alloc] init];
 	[params setInput:input];
 	
@@ -13924,6 +14024,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results;
 	}
@@ -13943,7 +14044,7 @@ static Qortexapi * _qortexapi;
 // --- GetSession ---
 - (PublicServiceGetSessionResults *) GetSession:(NSString *)email password:(NSString *)password {
 	
-	PublicServiceGetSessionResults *results = [[PublicServiceGetSessionResults alloc] init];
+	PublicServiceGetSessionResults *results = [PublicServiceGetSessionResults alloc];
 	PublicServiceGetSessionParams *params = [[PublicServiceGetSessionParams alloc] init];
 	[params setEmail:email];
 	[params setPassword:password];
@@ -13959,6 +14060,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results;
 	}
@@ -13970,7 +14072,7 @@ static Qortexapi * _qortexapi;
 // --- GetAuthUserService ---
 - (AuthUserService *) GetAuthUserService:(NSString *)session {
 	
-	AuthUserService *results = [[AuthUserService alloc] init];
+	AuthUserService *results = [AuthUserService alloc];
 	[results setSession:session];
 	
 	return results;
@@ -13979,7 +14081,7 @@ static Qortexapi * _qortexapi;
 // --- PrepareChangingEmail ---
 - (PublicServicePrepareChangingEmailResults *) PrepareChangingEmail:(NSString *)memberId newEmail:(NSString *)newEmail {
 	
-	PublicServicePrepareChangingEmailResults *results = [[PublicServicePrepareChangingEmailResults alloc] init];
+	PublicServicePrepareChangingEmailResults *results = [PublicServicePrepareChangingEmailResults alloc];
 	PublicServicePrepareChangingEmailParams *params = [[PublicServicePrepareChangingEmailParams alloc] init];
 	[params setMemberId:memberId];
 	[params setNewEmail:newEmail];
@@ -13995,6 +14097,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results;
 	}
@@ -14006,7 +14109,7 @@ static Qortexapi * _qortexapi;
 // --- ConfirmChangingEmail ---
 - (PublicServiceConfirmChangingEmailResults *) ConfirmChangingEmail:(NSString *)token {
 	
-	PublicServiceConfirmChangingEmailResults *results = [[PublicServiceConfirmChangingEmailResults alloc] init];
+	PublicServiceConfirmChangingEmailResults *results = [PublicServiceConfirmChangingEmailResults alloc];
 	PublicServiceConfirmChangingEmailParams *params = [[PublicServiceConfirmChangingEmailParams alloc] init];
 	[params setToken:token];
 	
@@ -14021,6 +14124,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results;
 	}
@@ -14032,7 +14136,7 @@ static Qortexapi * _qortexapi;
 // --- CancelChangingEmail ---
 - (NSError *) CancelChangingEmail:(NSString *)token {
 	
-	PublicServiceCancelChangingEmailResults *results = [[PublicServiceCancelChangingEmailResults alloc] init];
+	PublicServiceCancelChangingEmailResults *results = [PublicServiceCancelChangingEmailResults alloc];
 	PublicServiceCancelChangingEmailParams *params = [[PublicServiceCancelChangingEmailParams alloc] init];
 	[params setToken:token];
 	
@@ -14047,6 +14151,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results.Err;
 	}
@@ -14058,7 +14163,7 @@ static Qortexapi * _qortexapi;
 // --- ChangeEmailToAcceptSharing ---
 - (PublicServiceChangeEmailToAcceptSharingResults *) ChangeEmailToAcceptSharing:(NSString *)token newEmail:(NSString *)newEmail {
 	
-	PublicServiceChangeEmailToAcceptSharingResults *results = [[PublicServiceChangeEmailToAcceptSharingResults alloc] init];
+	PublicServiceChangeEmailToAcceptSharingResults *results = [PublicServiceChangeEmailToAcceptSharingResults alloc];
 	PublicServiceChangeEmailToAcceptSharingParams *params = [[PublicServiceChangeEmailToAcceptSharingParams alloc] init];
 	[params setToken:token];
 	[params setNewEmail:newEmail];
@@ -14074,6 +14179,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results;
 	}
@@ -14085,7 +14191,7 @@ static Qortexapi * _qortexapi;
 // --- GetSharingInviation ---
 - (PublicServiceGetSharingInviationResults *) GetSharingInviation:(NSString *)sharingInviationToken memberId:(NSString *)memberId {
 	
-	PublicServiceGetSharingInviationResults *results = [[PublicServiceGetSharingInviationResults alloc] init];
+	PublicServiceGetSharingInviationResults *results = [PublicServiceGetSharingInviationResults alloc];
 	PublicServiceGetSharingInviationParams *params = [[PublicServiceGetSharingInviationParams alloc] init];
 	[params setSharingInviationToken:sharingInviationToken];
 	[params setMemberId:memberId];
@@ -14101,6 +14207,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results;
 	}
@@ -14112,7 +14219,7 @@ static Qortexapi * _qortexapi;
 // --- ContactUs ---
 - (PublicServiceContactUsResults *) ContactUs:(ContactInput *)input {
 	
-	PublicServiceContactUsResults *results = [[PublicServiceContactUsResults alloc] init];
+	PublicServiceContactUsResults *results = [PublicServiceContactUsResults alloc];
 	PublicServiceContactUsParams *params = [[PublicServiceContactUsParams alloc] init];
 	[params setInput:input];
 	
@@ -14127,6 +14234,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results;
 	}
@@ -14138,7 +14246,7 @@ static Qortexapi * _qortexapi;
 // --- GetBlogEntries ---
 - (PublicServiceGetBlogEntriesResults *) GetBlogEntries:(NSString *)doi pageNum:(NSNumber *)pageNum limit:(NSNumber *)limit {
 	
-	PublicServiceGetBlogEntriesResults *results = [[PublicServiceGetBlogEntriesResults alloc] init];
+	PublicServiceGetBlogEntriesResults *results = [PublicServiceGetBlogEntriesResults alloc];
 	PublicServiceGetBlogEntriesParams *params = [[PublicServiceGetBlogEntriesParams alloc] init];
 	[params setDoi:doi];
 	[params setPageNum:pageNum];
@@ -14155,6 +14263,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results;
 	}
@@ -14166,7 +14275,7 @@ static Qortexapi * _qortexapi;
 // --- GetBlogEntryBySlug ---
 - (PublicServiceGetBlogEntryBySlugResults *) GetBlogEntryBySlug:(NSString *)doi slug:(NSString *)slug {
 	
-	PublicServiceGetBlogEntryBySlugResults *results = [[PublicServiceGetBlogEntryBySlugResults alloc] init];
+	PublicServiceGetBlogEntryBySlugResults *results = [PublicServiceGetBlogEntryBySlugResults alloc];
 	PublicServiceGetBlogEntryBySlugParams *params = [[PublicServiceGetBlogEntryBySlugParams alloc] init];
 	[params setDoi:doi];
 	[params setSlug:slug];
@@ -14182,6 +14291,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results;
 	}
@@ -14193,7 +14303,7 @@ static Qortexapi * _qortexapi;
 // --- CreateExternalComment ---
 - (PublicServiceCreateExternalCommentResults *) CreateExternalComment:(NSString *)doi input:(EntryInput *)input {
 	
-	PublicServiceCreateExternalCommentResults *results = [[PublicServiceCreateExternalCommentResults alloc] init];
+	PublicServiceCreateExternalCommentResults *results = [PublicServiceCreateExternalCommentResults alloc];
 	PublicServiceCreateExternalCommentParams *params = [[PublicServiceCreateExternalCommentParams alloc] init];
 	[params setDoi:doi];
 	[params setInput:input];
@@ -14209,6 +14319,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results;
 	}
@@ -14220,7 +14331,7 @@ static Qortexapi * _qortexapi;
 // --- GenerateBlogEntrySlug ---
 - (PublicServiceGenerateBlogEntrySlugResults *) GenerateBlogEntrySlug:(NSString *)doi slug:(NSString *)slug {
 	
-	PublicServiceGenerateBlogEntrySlugResults *results = [[PublicServiceGenerateBlogEntrySlugResults alloc] init];
+	PublicServiceGenerateBlogEntrySlugResults *results = [PublicServiceGenerateBlogEntrySlugResults alloc];
 	PublicServiceGenerateBlogEntrySlugParams *params = [[PublicServiceGenerateBlogEntrySlugParams alloc] init];
 	[params setDoi:doi];
 	[params setSlug:slug];
@@ -14236,6 +14347,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results;
 	}
@@ -14247,7 +14359,7 @@ static Qortexapi * _qortexapi;
 // --- CreateNewsletter ---
 - (PublicServiceCreateNewsletterResults *) CreateNewsletter:(NewsletterInput *)input {
 	
-	PublicServiceCreateNewsletterResults *results = [[PublicServiceCreateNewsletterResults alloc] init];
+	PublicServiceCreateNewsletterResults *results = [PublicServiceCreateNewsletterResults alloc];
 	PublicServiceCreateNewsletterParams *params = [[PublicServiceCreateNewsletterParams alloc] init];
 	[params setInput:input];
 	
@@ -14262,6 +14374,7 @@ static Qortexapi * _qortexapi;
 		if([_api Verbose]) {
 			NSLog(@"Error: %@", error);
 		}
+		results = [results init];
 		[results setErr:error];
 		return results;
 	}
