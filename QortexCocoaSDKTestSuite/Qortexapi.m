@@ -4,12 +4,22 @@
 #import "qortexapi.h"
 
 static Qortexapi * _qortexapi;
+static NSDateFormatter * _dateFormatter;
+
 @implementation Qortexapi : NSObject
 + (Qortexapi *)get {
 	if(!_qortexapi) {
 		_qortexapi = [[Qortexapi alloc] init];
 	}
 	return _qortexapi;
+}
+
++ (NSDateFormatter *)dateFormatter {
+	if(!_dateFormatter) {
+		_dateFormatter = [[NSDateFormatter alloc] init];
+		[_dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ"];
+	}
+	return _dateFormatter;
 }
 
 + (NSDictionary *) request:(NSURL*)url req:(NSDictionary *)req error:(NSError **)error {
@@ -101,47 +111,26 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setIndividualIsOn:[[dict valueForKey:@"IndividualIsOn"] boolValue]];
-	
 	[self setSendLag:[dict valueForKey:@"SendLag"]];
-	
 	[self setAckRequest:[[dict valueForKey:@"AckRequest"] boolValue]];
-	
 	[self setAckConfirmation:[[dict valueForKey:@"AckConfirmation"] boolValue]];
-	
 	[self setTodo:[[dict valueForKey:@"Todo"] boolValue]];
-	
 	[self setTodoConfirmation:[[dict valueForKey:@"TodoConfirmation"] boolValue]];
-	
 	[self setSystemMessage:[[dict valueForKey:@"SystemMessage"] boolValue]];
-	
 	[self setEntryNotification:[[dict valueForKey:@"EntryNotification"] boolValue]];
-	
 	[self setLike:[[dict valueForKey:@"Like"] boolValue]];
-	
 	[self setSendTimeIsOn:[[dict valueForKey:@"SendTimeIsOn"] boolValue]];
-	
 	[self setMon:[[dict valueForKey:@"Mon"] boolValue]];
-	
 	[self setTue:[[dict valueForKey:@"Tue"] boolValue]];
-	
 	[self setWed:[[dict valueForKey:@"Wed"] boolValue]];
-	
 	[self setThu:[[dict valueForKey:@"Thu"] boolValue]];
-	
 	[self setFri:[[dict valueForKey:@"Fri"] boolValue]];
-	
 	[self setSat:[[dict valueForKey:@"Sat"] boolValue]];
-	
 	[self setSun:[[dict valueForKey:@"Sun"] boolValue]];
-	
 	[self setSendHoursIsOn:[[dict valueForKey:@"SendHoursIsOn"] boolValue]];
-	
 	[self setStartAt:[dict valueForKey:@"StartAt"]];
-	
 	[self setEndAt:[dict valueForKey:@"EndAt"]];
-	
 	[self setDailyIsOn:[[dict valueForKey:@"DailyIsOn"] boolValue]];
-	
 
 	return self;
 }
@@ -198,25 +187,15 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setId:[dict valueForKey:@"Id"]];
-	
 	[self setName:[dict valueForKey:@"Name"]];
-	
 	[self setQortexURL:[dict valueForKey:@"QortexURL"]];
-	
 	[self setSummary:[dict valueForKey:@"Summary"]];
-	
 	[self setLogoURL:[dict valueForKey:@"LogoURL"]];
-	
 	[self setAddress:[dict valueForKey:@"Address"]];
-	
 	[self setPhone:[dict valueForKey:@"Phone"]];
-	
 	[self setWebsite:[dict valueForKey:@"Website"]];
-	
 	[self setDomains:[dict valueForKey:@"Domains"]];
-	
 	[self setRestrictSubscriptionMail:[[dict valueForKey:@"RestrictSubscriptionMail"] boolValue]];
-	
 
 	return self;
 }
@@ -255,11 +234,8 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setTitle:[dict valueForKey:@"Title"]];
-	
 	[self setDescription:[dict valueForKey:@"Description"]];
-	
 	[self setSideContent:[dict valueForKey:@"SideContent"]];
-	
 
 	return self;
 }
@@ -301,31 +277,18 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setId:[dict valueForKey:@"Id"]];
-	
 	[self setEmail:[dict valueForKey:@"Email"]];
-	
 	[self setName:[dict valueForKey:@"Name"]];
-	
 	[self setTitle:[dict valueForKey:@"Title"]];
-	
 	[self setAvatar16:[dict valueForKey:@"Avatar16"]];
-	
 	[self setAvatar32:[dict valueForKey:@"Avatar32"]];
-	
 	[self setJID:[dict valueForKey:@"JID"]];
-	
 	[self setTimezone:[dict valueForKey:@"Timezone"]];
-	
 	[self setIsSuperUser:[[dict valueForKey:@"IsSuperUser"] boolValue]];
-	
 	[self setIsShare:[[dict valueForKey:@"IsShare"] boolValue]];
-	
 	[self setOrganizationId:[dict valueForKey:@"OrganizationId"]];
-	
 	[self setOriginalOrgId:[dict valueForKey:@"OriginalOrgId"]];
-	
 	[self setProfileURL:[dict valueForKey:@"ProfileURL"]];
-	
 
 	return self;
 }
@@ -371,19 +334,12 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setAsideGroupsCollapse:[[dict valueForKey:@"AsideGroupsCollapse"] boolValue]];
-	
 	[self setAsideOtherGroupsCollapse:[[dict valueForKey:@"AsideOtherGroupsCollapse"] boolValue]];
-	
 	[self setHasToDo:[[dict valueForKey:@"HasToDo"] boolValue]];
-	
 	[self setHasDraft:[[dict valueForKey:@"HasDraft"] boolValue]];
-	
 	[self setHasWatchList:[[dict valueForKey:@"HasWatchList"] boolValue]];
-	
 	[self setHasChat:[[dict valueForKey:@"HasChat"] boolValue]];
-	
 	[self setShowMarkUnreadThreshold:[dict valueForKey:@"ShowMarkUnreadThreshold"]];
-	
 
 	return self;
 }
@@ -436,45 +392,25 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setId:[dict valueForKey:@"Id"]];
-	
 	[self setOwnerId:[dict valueForKey:@"OwnerId"]];
-	
 	[self setCategory:[dict valueForKey:@"Category"]];
-	
 	[self setFilename:[dict valueForKey:@"Filename"]];
-	
 	[self setShortFilename:[dict valueForKey:@"ShortFilename"]];
-	
 	[self setContentType:[dict valueForKey:@"ContentType"]];
-	
 	[self setContentId:[dict valueForKey:@"ContentId"]];
-	
 	[self setMD5:[dict valueForKey:@"MD5"]];
-	
 	[self setContentLength:[dict valueForKey:@"ContentLength"]];
-	
 	[self setError:[dict valueForKey:@"Error"]];
-	
 	[self setGroupId:[dict valueForKey:@"GroupId"]];
-	
-	[self setUploadTime:[NSDate dateWithString:[dict valueForKey:@"UploadTime"]]];
-	
+	[self setUploadTime:[[Qortexapi dateFormatter] dateFromString:[dict valueForKey:@"UploadTime"]]];
 	[self setWidth:[dict valueForKey:@"Width"]];
-	
 	[self setHeight:[dict valueForKey:@"Height"]];
-	
 	[self setURL:[dict valueForKey:@"URL"]];
-	
 	[self setImageIconURL:[dict valueForKey:@"ImageIconURL"]];
-	
 	[self setFileIconURL:[dict valueForKey:@"FileIconURL"]];
-	
 	[self setHumanSize:[dict valueForKey:@"HumanSize"]];
-	
 	[self setIsImage:[[dict valueForKey:@"IsImage"] boolValue]];
-	
 	[self setFileKind:[dict valueForKey:@"FileKind"]];
-	
 
 	return self;
 }
@@ -492,7 +428,7 @@ static Qortexapi * _qortexapi;
 	[dict setValue:self.ContentLength forKey:@"ContentLength"];
 	[dict setValue:self.Error forKey:@"Error"];
 	[dict setValue:self.GroupId forKey:@"GroupId"];
-	[dict setValue:self.UploadTime forKey:@"UploadTime"];
+	[dict setValue:[[Qortexapi dateFormatter] stringFromDate:self.UploadTime] forKey:@"UploadTime"];
 	[dict setValue:self.Width forKey:@"Width"];
 	[dict setValue:self.Height forKey:@"Height"];
 	[dict setValue:self.URL forKey:@"URL"];
@@ -529,23 +465,14 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setId:[dict valueForKey:@"Id"]];
-	
 	[self setEType:[dict valueForKey:@"EType"]];
-	
 	[self setTitle:[dict valueForKey:@"Title"]];
-	
 	[self setGroupId:[dict valueForKey:@"GroupId"]];
-	
 	[self setAuthorId:[dict valueForKey:@"AuthorId"]];
-	
 	[self setIsRoot:[[dict valueForKey:@"IsRoot"] boolValue]];
-	
 	[self setRootId:[dict valueForKey:@"RootId"]];
-	
 	[self setRootEntryTitle:[dict valueForKey:@"RootEntryTitle"]];
-	
 	[self setLink:[dict valueForKey:@"Link"]];
-	
 
 	return self;
 }
@@ -587,19 +514,12 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setHasToFollow:[[dict valueForKey:@"HasToFollow"] boolValue]];
-	
 	[self setIsFollowing:[[dict valueForKey:@"IsFollowing"] boolValue]];
-	
 	[self setIsManaging:[[dict valueForKey:@"IsManaging"] boolValue]];
-	
 	[self setHasFileTab:[[dict valueForKey:@"HasFileTab"] boolValue]];
-	
 	[self setHasToDoTab:[[dict valueForKey:@"HasToDoTab"] boolValue]];
-	
 	[self setIsSystemMessage:[[dict valueForKey:@"IsSystemMessage"] boolValue]];
-	
 	[self setSelectedGroup:[[dict valueForKey:@"SelectedGroup"] boolValue]];
-	
 
 	return self;
 }
@@ -635,11 +555,8 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setId:[dict valueForKey:@"Id"]];
-	
 	[self setName:[dict valueForKey:@"Name"]];
-	
 	[self setIsSelected:[[dict valueForKey:@"IsSelected"] boolValue]];
-	
 
 	return self;
 }
@@ -670,9 +587,7 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setGroupId:[dict valueForKey:@"GroupId"]];
-	
 	[self setUnreadCount:[dict valueForKey:@"UnreadCount"]];
-	
 
 	return self;
 }
@@ -710,25 +625,15 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setWhatFeed:[[dict valueForKey:@"WhatFeed"] boolValue]];
-	
 	[self setWhatGroup:[[dict valueForKey:@"WhatGroup"] boolValue]];
-	
 	[self setWhatNext:[[dict valueForKey:@"WhatNext"] boolValue]];
-	
 	[self setWhatChats:[[dict valueForKey:@"WhatChats"] boolValue]];
-	
 	[self setWhatWatchList:[[dict valueForKey:@"WhatWatchList"] boolValue]];
-	
 	[self setAboutTodos:[[dict valueForKey:@"AboutTodos"] boolValue]];
-	
 	[self setGettingOut:[[dict valueForKey:@"GettingOut"] boolValue]];
-	
 	[self setInviteOthersURL:[dict valueForKey:@"InviteOthersURL"]];
-	
 	[self setWhatNextURL:[dict valueForKey:@"WhatNextURL"]];
-	
 	[self setWhatChatsURL:[dict valueForKey:@"WhatChatsURL"]];
-	
 
 	return self;
 }
@@ -766,9 +671,7 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setToken:[dict valueForKey:@"Token"]];
-	
 	[self setEmail:[dict valueForKey:@"Email"]];
-	
 
 	return self;
 }
@@ -797,7 +700,6 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setEmail:[dict valueForKey:@"Email"]];
-	
 
 	return self;
 }
@@ -833,23 +735,14 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setFirstName:[dict valueForKey:@"FirstName"]];
-	
 	[self setLastName:[dict valueForKey:@"LastName"]];
-	
 	[self setCompanyName:[dict valueForKey:@"CompanyName"]];
-	
 	[self setCompanySize:[dict valueForKey:@"CompanySize"]];
-	
 	[self setEmail:[dict valueForKey:@"Email"]];
-	
 	[self setPhone:[dict valueForKey:@"Phone"]];
-	
 	[self setCountry:[dict valueForKey:@"Country"]];
-	
 	[self setCity:[dict valueForKey:@"City"]];
-	
 	[self setHelpContent:[dict valueForKey:@"HelpContent"]];
-	
 
 	return self;
 }
@@ -908,53 +801,29 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setId:[dict valueForKey:@"Id"]];
-	
 	[self setEType:[dict valueForKey:@"EType"]];
-	
 	[self setTitle:[dict valueForKey:@"Title"]];
-	
 	[self setSlug:[dict valueForKey:@"Slug"]];
-	
 	[self setContent:[dict valueForKey:@"Content"]];
-	
 	[self setGroupId:[dict valueForKey:@"GroupId"]];
-	
 	[self setIsToGroup:[dict valueForKey:@"IsToGroup"]];
-	
 	[self setToUserIds:[dict valueForKey:@"ToUserIds"]];
-	
 	[self setMentionedUserIds:[dict valueForKey:@"MentionedUserIds"]];
-	
 	[self setIsPublished:[dict valueForKey:@"IsPublished"]];
-	
 	[self setIsAcknowledgement:[dict valueForKey:@"IsAcknowledgement"]];
-	
 	[self setTaskRequireType:[dict valueForKey:@"TaskRequireType"]];
-	
 	[self setTaskDue:[dict valueForKey:@"TaskDue"]];
-	
 	[self setRootId:[dict valueForKey:@"RootId"]];
-	
 	[self setIsCommentAcknowledgement:[dict valueForKey:@"IsCommentAcknowledgement"]];
-	
 	[self setBaseOnEntryId:[dict valueForKey:@"BaseOnEntryId"]];
-	
 	[self setNewVersion:[dict valueForKey:@"NewVersion"]];
-	
 	[self setOldGroupId:[dict valueForKey:@"OldGroupId"]];
-	
 	[self setKnowledgeBase:[[dict valueForKey:@"KnowledgeBase"] boolValue]];
-	
 	[self setAnyoneCanEdit:[[dict valueForKey:@"AnyoneCanEdit"] boolValue]];
-	
 	[self setPresentation:[[dict valueForKey:@"Presentation"] boolValue]];
-	
 	[self setIsFromEmail:[[dict valueForKey:@"IsFromEmail"] boolValue]];
-	
 	[self setEmail:[dict valueForKey:@"Email"]];
-	
 	[self setName:[dict valueForKey:@"Name"]];
-	
 
 	return self;
 }
@@ -1010,17 +879,11 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setId:[dict valueForKey:@"Id"]];
-	
 	[self setTitle:[dict valueForKey:@"Title"]];
-	
 	[self setContent:[dict valueForKey:@"Content"]];
-	
 	[self setToOrgIds:[dict valueForKey:@"ToOrgIds"]];
-	
 	[self setBroadcastType:[dict valueForKey:@"BroadcastType"]];
-	
 	[self setRootId:[dict valueForKey:@"RootId"]];
-	
 
 	return self;
 }
@@ -1064,29 +927,17 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setId:[dict valueForKey:@"Id"]];
-	
 	[self setName:[dict valueForKey:@"Name"]];
-	
 	[self setDescription:[dict valueForKey:@"Description"]];
-	
 	[self setType:[dict valueForKey:@"Type"]];
-	
 	[self setLogoURL:[dict valueForKey:@"LogoURL"]];
-	
 	[self setIconName:[dict valueForKey:@"IconName"]];
-	
 	[self setSlug:[dict valueForKey:@"Slug"]];
-	
 	[self setIsPrivate:[[dict valueForKey:@"IsPrivate"] boolValue]];
-	
 	[self setIsShared:[[dict valueForKey:@"IsShared"] boolValue]];
-	
 	[self setGroupOwners:[dict valueForKey:@"GroupOwners"]];
-	
 	[self setInvitedOrgIds:[dict valueForKey:@"InvitedOrgIds"]];
-	
 	[self setActionOrgId:[dict valueForKey:@"ActionOrgId"]];
-	
 
 	return self;
 }
@@ -1126,9 +977,7 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setAllowUsersCreateGroups:[[dict valueForKey:@"AllowUsersCreateGroups"] boolValue]];
-	
 	[self setAllowUsersInvitePeople:[[dict valueForKey:@"AllowUsersInvitePeople"] boolValue]];
-	
 
 	return self;
 }
@@ -1173,39 +1022,22 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setId:[dict valueForKey:@"Id"]];
-	
 	[self setOType:[dict valueForKey:@"OType"]];
-	
 	[self setName:[dict valueForKey:@"Name"]];
-	
 	[self setSummary:[dict valueForKey:@"Summary"]];
-	
 	[self setAddress:[dict valueForKey:@"Address"]];
-	
 	[self setPhone:[dict valueForKey:@"Phone"]];
-	
 	[self setWebsite:[dict valueForKey:@"Website"]];
-	
 	[self setDomain:[dict valueForKey:@"Domain"]];
-	
 	[self setDomains:[dict valueForKey:@"Domains"]];
-	
 	[self setRestrictSubscriptionMail:[[dict valueForKey:@"RestrictSubscriptionMail"] boolValue]];
-	
 	[self setAuthorId:[dict valueForKey:@"AuthorId"]];
-	
 	[self setMemberIds:[dict valueForKey:@"MemberIds"]];
-	
 	[self setGroupIds:[dict valueForKey:@"GroupIds"]];
-	
 	[self setQortexURL:[dict valueForKey:@"QortexURL"]];
-	
 	[self setLogoURL:[dict valueForKey:@"LogoURL"]];
-	
 	[self setChatToken:[dict valueForKey:@"ChatToken"]];
-	
 	[self setRegistrationMode:[dict valueForKey:@"RegistrationMode"]];
-	
 
 	return self;
 }
@@ -1251,11 +1083,8 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setEntryId:[dict valueForKey:@"EntryId"]];
-	
 	[self setGroupId:[dict valueForKey:@"GroupId"]];
-	
 	[self setLike:[dict valueForKey:@"Like"]];
-	
 
 	return self;
 }
@@ -1294,25 +1123,15 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setTimezone:[dict valueForKey:@"Timezone"]];
-	
 	[self setTimezoneOffset:[dict valueForKey:@"TimezoneOffset"]];
-	
 	[self setPreferFullName:[dict valueForKey:@"PreferFullName"]];
-	
 	[self setEnterForNewLine:[dict valueForKey:@"EnterForNewLine"]];
-	
 	[self setAsideGroupsCollapse:[dict valueForKey:@"AsideGroupsCollapse"]];
-	
 	[self setAsideOtherGroupsCollapse:[dict valueForKey:@"AsideOtherGroupsCollapse"]];
-	
 	[self setShowMarkUnreadThreshold:[dict valueForKey:@"ShowMarkUnreadThreshold"]];
-	
 	[self setAdminModeOn:[dict valueForKey:@"AdminModeOn"]];
-	
 	[self setPreferMarkdown:[dict valueForKey:@"PreferMarkdown"]];
-	
 	[self setAutoFollowPublicGroup:[dict valueForKey:@"AutoFollowPublicGroup"]];
-	
 
 	return self;
 }
@@ -1351,11 +1170,8 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setFirstName:[dict valueForKey:@"FirstName"]];
-	
 	[self setLastName:[dict valueForKey:@"LastName"]];
-	
 	[self setAvatarURL:[dict valueForKey:@"AvatarURL"]];
-	
 
 	return self;
 }
@@ -1385,7 +1201,6 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setEmail:[dict valueForKey:@"Email"]];
-	
 
 	return self;
 }
@@ -1417,15 +1232,10 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setTitle:[dict valueForKey:@"Title"]];
-	
 	[self setContent:[dict valueForKey:@"Content"]];
-	
 	[self setBasedConvId:[dict valueForKey:@"BasedConvId"]];
-	
 	[self setBaseOnEntryId:[dict valueForKey:@"BaseOnEntryId"]];
-	
 	[self setGroupId:[dict valueForKey:@"GroupId"]];
-	
 
 	return self;
 }
@@ -1465,23 +1275,14 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setFirstName:[dict valueForKey:@"FirstName"]];
-	
 	[self setLastName:[dict valueForKey:@"LastName"]];
-	
 	[self setCompanyName:[dict valueForKey:@"CompanyName"]];
-	
 	[self setCompanySize:[dict valueForKey:@"CompanySize"]];
-	
 	[self setEmail:[dict valueForKey:@"Email"]];
-	
 	[self setPhone:[dict valueForKey:@"Phone"]];
-	
 	[self setCountry:[dict valueForKey:@"Country"]];
-	
 	[self setCity:[dict valueForKey:@"City"]];
-	
 	[self setHelpContent:[dict valueForKey:@"HelpContent"]];
-	
 
 	return self;
 }
@@ -1530,33 +1331,19 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setSummary:[dict valueForKey:@"Summary"]];
-	
 	[self setTitle:[dict valueForKey:@"Title"]];
-	
 	[self setDepartment:[dict valueForKey:@"Department"]];
-	
 	[self setLocation:[dict valueForKey:@"Location"]];
-	
 	[self setExpertise:[dict valueForKey:@"Expertise"]];
-	
 	[self setInterests:[dict valueForKey:@"Interests"]];
-	
 	[self setBirthMonth:[dict valueForKey:@"BirthMonth"]];
-	
 	[self setBirthDay:[dict valueForKey:@"BirthDay"]];
-	
 	[self setWorkPhone:[dict valueForKey:@"WorkPhone"]];
-	
 	[self setMobile:[dict valueForKey:@"Mobile"]];
-	
 	[self setTwitter:[dict valueForKey:@"Twitter"]];
-	
 	[self setSkype:[dict valueForKey:@"Skype"]];
-	
 	[self setFacebook:[dict valueForKey:@"Facebook"]];
-	
 	[self setOtherWebsites:[dict valueForKey:@"OtherWebsites"]];
-	
 
 	return self;
 }
@@ -1598,9 +1385,7 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setAllowUsersCreateGroups:[[dict valueForKey:@"AllowUsersCreateGroups"] boolValue]];
-	
 	[self setAllowUsersInvitePeople:[[dict valueForKey:@"AllowUsersInvitePeople"] boolValue]];
-	
 
 	return self;
 }
@@ -1638,25 +1423,15 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setTimezone:[dict valueForKey:@"Timezone"]];
-	
 	[self setTimezoneOffset:[dict valueForKey:@"TimezoneOffset"]];
-	
 	[self setPreferFullName:[[dict valueForKey:@"PreferFullName"] boolValue]];
-	
 	[self setEnterForNewLine:[[dict valueForKey:@"EnterForNewLine"] boolValue]];
-	
 	[self setAsideGroupsCollapse:[[dict valueForKey:@"AsideGroupsCollapse"] boolValue]];
-	
 	[self setAsideOtherGroupsCollapse:[[dict valueForKey:@"AsideOtherGroupsCollapse"] boolValue]];
-	
 	[self setShowMarkUnreadThreshold:[dict valueForKey:@"ShowMarkUnreadThreshold"]];
-	
 	[self setAdminModeOn:[[dict valueForKey:@"AdminModeOn"] boolValue]];
-	
 	[self setPreferMarkdown:[[dict valueForKey:@"PreferMarkdown"] boolValue]];
-	
 	[self setAutoFollowPublicGroup:[[dict valueForKey:@"AutoFollowPublicGroup"] boolValue]];
-	
 
 	return self;
 }
@@ -1696,13 +1471,9 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setId:[dict valueForKey:@"Id"]];
-	
 	[self setName:[dict valueForKey:@"Name"]];
-	
 	[self setLogoURL:[dict valueForKey:@"LogoURL"]];
-	
 	[self setNoNeedToShare:[[dict valueForKey:@"NoNeedToShare"] boolValue]];
-	
 
 	return self;
 }
@@ -1742,31 +1513,23 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setId:[dict valueForKey:@"Id"]];
-	
 	[self setTitle:[dict valueForKey:@"Title"]];
-	
 	[self setSlug:[dict valueForKey:@"Slug"]];
-	
-	[self setCreatedAt:[NSDate dateWithString:[dict valueForKey:@"CreatedAt"]]];
-	
-	[self setUpdatedAt:[NSDate dateWithString:[dict valueForKey:@"UpdatedAt"]]];
-	
+	[self setCreatedAt:[[Qortexapi dateFormatter] dateFromString:[dict valueForKey:@"CreatedAt"]]];
+	[self setUpdatedAt:[[Qortexapi dateFormatter] dateFromString:[dict valueForKey:@"UpdatedAt"]]];
 	[self setPermalink:[dict valueForKey:@"Permalink"]];
-	
 	[self setCreateCommentURL:[dict valueForKey:@"CreateCommentURL"]];
-	
 	[self setHtmlContent:[dict valueForKey:@"HtmlContent"]];
-	
 	[self setAuthor:[[EmbedUser alloc] initWithDictionary:[dict valueForKey:@"Author"]]];
-	
 
 	NSMutableArray * mComments = [[NSMutableArray alloc] init];
 	NSArray * lComments = [dict valueForKey:@"Comments"];
-	for (NSDictionary * d in lComments) {
-		[mComments addObject: [[BlogEntry alloc] initWithDictionary:d]];
+	if ([lComments isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lComments) {
+			[mComments addObject: [[BlogEntry alloc] initWithDictionary:d]];
+		}
 	}
 	[self setComments:mComments];
-	
 
 	return self;
 }
@@ -1776,8 +1539,8 @@ static Qortexapi * _qortexapi;
 	[dict setValue:self.Id forKey:@"Id"];
 	[dict setValue:self.Title forKey:@"Title"];
 	[dict setValue:self.Slug forKey:@"Slug"];
-	[dict setValue:self.CreatedAt forKey:@"CreatedAt"];
-	[dict setValue:self.UpdatedAt forKey:@"UpdatedAt"];
+	[dict setValue:[[Qortexapi dateFormatter] stringFromDate:self.CreatedAt] forKey:@"CreatedAt"];
+	[dict setValue:[[Qortexapi dateFormatter] stringFromDate:self.UpdatedAt] forKey:@"UpdatedAt"];
 	[dict setValue:self.Permalink forKey:@"Permalink"];
 	[dict setValue:self.CreateCommentURL forKey:@"CreateCommentURL"];
 	[dict setValue:self.HtmlContent forKey:@"HtmlContent"];
@@ -1811,15 +1574,15 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setAbandonFromOrg:[[EmbedOrg alloc] initWithDictionary:[dict valueForKey:@"AbandonFromOrg"]]];
-	
 
 	NSMutableArray * mAvailableOrgs = [[NSMutableArray alloc] init];
 	NSArray * lAvailableOrgs = [dict valueForKey:@"AvailableOrgs"];
-	for (NSDictionary * d in lAvailableOrgs) {
-		[mAvailableOrgs addObject: [[EmbedOrg alloc] initWithDictionary:d]];
+	if ([lAvailableOrgs isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lAvailableOrgs) {
+			[mAvailableOrgs addObject: [[EmbedOrg alloc] initWithDictionary:d]];
+		}
 	}
 	[self setAvailableOrgs:mAvailableOrgs];
-	
 
 	return self;
 }
@@ -1859,21 +1622,18 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setUserId:[dict valueForKey:@"UserId"]];
-	
 	[self setFollowedUnreadCount:[dict valueForKey:@"FollowedUnreadCount"]];
-	
 	[self setNotificationUnreadCount:[dict valueForKey:@"NotificationUnreadCount"]];
-	
 	[self setActiveTasksCount:[dict valueForKey:@"ActiveTasksCount"]];
-	
 
 	NSMutableArray * mGroupCounts = [[NSMutableArray alloc] init];
 	NSArray * lGroupCounts = [dict valueForKey:@"GroupCounts"];
-	for (NSDictionary * d in lGroupCounts) {
-		[mGroupCounts addObject: [[GroupCount alloc] initWithDictionary:d]];
+	if ([lGroupCounts isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lGroupCounts) {
+			[mGroupCounts addObject: [[GroupCount alloc] initWithDictionary:d]];
+		}
 	}
 	[self setGroupCounts:mGroupCounts];
-	
 
 	return self;
 }
@@ -1933,57 +1693,36 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setId:[dict valueForKey:@"Id"]];
-	
 	[self setName:[dict valueForKey:@"Name"]];
-	
 	[self setDescription:[dict valueForKey:@"Description"]];
-	
 	[self setGType:[dict valueForKey:@"GType"]];
-	
 	[self setLogoURL:[dict valueForKey:@"LogoURL"]];
-	
 	[self setIconName:[dict valueForKey:@"IconName"]];
-	
 	[self setLink:[dict valueForKey:@"Link"]];
-	
 	[self setSlug:[dict valueForKey:@"Slug"]];
-	
 	[self setAuthor:[[EmbedUser alloc] initWithDictionary:[dict valueForKey:@"Author"]]];
-	
 	[self setIsAdmin:[[dict valueForKey:@"IsAdmin"] boolValue]];
-	
 	[self setIsPrivate:[[dict valueForKey:@"IsPrivate"] boolValue]];
-	
 	[self setEditable:[[dict valueForKey:@"Editable"] boolValue]];
-	
 	[self setManagable:[[dict valueForKey:@"Managable"] boolValue]];
-	
 	[self setFollowedByMe:[[dict valueForKey:@"FollowedByMe"] boolValue]];
-	
 	[self setAdministratedByMe:[[dict valueForKey:@"AdministratedByMe"] boolValue]];
-	
 	[self setIsShared:[[dict valueForKey:@"IsShared"] boolValue]];
-	
 	[self setIsDefaultLogoURL:[[dict valueForKey:@"IsDefaultLogoURL"] boolValue]];
-	
 	[self setHostOrgName:[dict valueForKey:@"HostOrgName"]];
-	
 	[self setIsDispayHostOrgName:[[dict valueForKey:@"IsDispayHostOrgName"] boolValue]];
-	
 	[self setEntriesCount:[dict valueForKey:@"EntriesCount"]];
-	
 	[self setFollowersCount:[dict valueForKey:@"FollowersCount"]];
-	
 	[self setIsAnnoucement:[[dict valueForKey:@"IsAnnoucement"] boolValue]];
-	
 
 	NSMutableArray * mGroupOwners = [[NSMutableArray alloc] init];
 	NSArray * lGroupOwners = [dict valueForKey:@"GroupOwners"];
-	for (NSDictionary * d in lGroupOwners) {
-		[mGroupOwners addObject: [[EmbedUser alloc] initWithDictionary:d]];
+	if ([lGroupOwners isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lGroupOwners) {
+			[mGroupOwners addObject: [[EmbedUser alloc] initWithDictionary:d]];
+		}
 	}
 	[self setGroupOwners:mGroupOwners];
-	
 
 	return self;
 }
@@ -2041,15 +1780,15 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setGroupId:[dict valueForKey:@"GroupId"]];
-	
 
 	NSMutableArray * mEmbedUsers = [[NSMutableArray alloc] init];
 	NSArray * lEmbedUsers = [dict valueForKey:@"EmbedUsers"];
-	for (NSDictionary * d in lEmbedUsers) {
-		[mEmbedUsers addObject: [[EmbedUser alloc] initWithDictionary:d]];
+	if ([lEmbedUsers isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lEmbedUsers) {
+			[mEmbedUsers addObject: [[EmbedUser alloc] initWithDictionary:d]];
+		}
 	}
 	[self setEmbedUsers:mEmbedUsers];
-	
 
 	return self;
 }
@@ -2088,27 +1827,26 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setHeader:[dict valueForKey:@"Header"]];
-	
 	[self setSelectedGroupId:[dict valueForKey:@"SelectedGroupId"]];
-	
 	[self setSysMessage:[[GroupSelectorItem alloc] initWithDictionary:[dict valueForKey:@"SysMessage"]]];
-	
 
 	NSMutableArray * mFollowingGroups = [[NSMutableArray alloc] init];
 	NSArray * lFollowingGroups = [dict valueForKey:@"FollowingGroups"];
-	for (NSDictionary * d in lFollowingGroups) {
-		[mFollowingGroups addObject: [[GroupSelectorItem alloc] initWithDictionary:d]];
+	if ([lFollowingGroups isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lFollowingGroups) {
+			[mFollowingGroups addObject: [[GroupSelectorItem alloc] initWithDictionary:d]];
+		}
 	}
 	[self setFollowingGroups:mFollowingGroups];
-	
 
 	NSMutableArray * mUnFollowingGroups = [[NSMutableArray alloc] init];
 	NSArray * lUnFollowingGroups = [dict valueForKey:@"UnFollowingGroups"];
-	for (NSDictionary * d in lUnFollowingGroups) {
-		[mUnFollowingGroups addObject: [[GroupSelectorItem alloc] initWithDictionary:d]];
+	if ([lUnFollowingGroups isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lUnFollowingGroups) {
+			[mUnFollowingGroups addObject: [[GroupSelectorItem alloc] initWithDictionary:d]];
+		}
 	}
 	[self setUnFollowingGroups:mUnFollowingGroups];
-	
 
 	return self;
 }
@@ -2161,23 +1899,14 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setId:[dict valueForKey:@"Id"]];
-	
 	[self setConversationId:[dict valueForKey:@"ConversationId"]];
-	
 	[self setUserId:[dict valueForKey:@"UserId"]];
-	
 	[self setContent:[dict valueForKey:@"Content"]];
-	
 	[self setHtmlContent:[dict valueForKey:@"HtmlContent"]];
-	
-	[self setCreatedAt:[NSDate dateWithString:[dict valueForKey:@"CreatedAt"]]];
-	
+	[self setCreatedAt:[[Qortexapi dateFormatter] dateFromString:[dict valueForKey:@"CreatedAt"]]];
 	[self setEmbedUser:[[EmbedUser alloc] initWithDictionary:[dict valueForKey:@"EmbedUser"]]];
-	
 	[self setShowUser:[[dict valueForKey:@"ShowUser"] boolValue]];
-	
 	[self setHighlightedContent:[dict valueForKey:@"HighlightedContent"]];
-	
 
 	return self;
 }
@@ -2189,7 +1918,7 @@ static Qortexapi * _qortexapi;
 	[dict setValue:self.UserId forKey:@"UserId"];
 	[dict setValue:self.Content forKey:@"Content"];
 	[dict setValue:self.HtmlContent forKey:@"HtmlContent"];
-	[dict setValue:self.CreatedAt forKey:@"CreatedAt"];
+	[dict setValue:[[Qortexapi dateFormatter] stringFromDate:self.CreatedAt] forKey:@"CreatedAt"];
 	[dict setValue:[self.EmbedUser dictionary] forKey:@"EmbedUser"];
 	
 	[dict setValue:[NSNumber numberWithBool:self.ShowUser] forKey:@"ShowUser"];
@@ -2240,77 +1969,56 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setIsTaskOwner:[[dict valueForKey:@"IsTaskOwner"] boolValue]];
-	
 	[self setIsTaskAssignee:[[dict valueForKey:@"IsTaskAssignee"] boolValue]];
-	
 	[self setIsOthers:[[dict valueForKey:@"IsOthers"] boolValue]];
-	
 	[self setIsCurrentUserDone:[[dict valueForKey:@"IsCurrentUserDone"] boolValue]];
-	
 	[self setIsAcknowledgement:[[dict valueForKey:@"IsAcknowledgement"] boolValue]];
-	
 	[self setIsTodoForOne:[[dict valueForKey:@"IsTodoForOne"] boolValue]];
-	
 	[self setIsTodoForAll:[[dict valueForKey:@"IsTodoForAll"] boolValue]];
-	
 	[self setIsCompleted:[[dict valueForKey:@"IsCompleted"] boolValue]];
-	
 	[self setIsClosed:[[dict valueForKey:@"IsClosed"] boolValue]];
-	
 	[self setIsDueToday:[[dict valueForKey:@"IsDueToday"] boolValue]];
-	
 	[self setIsOverDue:[[dict valueForKey:@"IsOverDue"] boolValue]];
-	
-	[self setCreatedAt:[NSDate dateWithString:[dict valueForKey:@"CreatedAt"]]];
-	
-	[self setDue:[NSDate dateWithString:[dict valueForKey:@"Due"]]];
-	
-	[self setCompletedAt:[NSDate dateWithString:[dict valueForKey:@"CompletedAt"]]];
-	
+	[self setCreatedAt:[[Qortexapi dateFormatter] dateFromString:[dict valueForKey:@"CreatedAt"]]];
+	[self setDue:[[Qortexapi dateFormatter] dateFromString:[dict valueForKey:@"Due"]]];
+	[self setCompletedAt:[[Qortexapi dateFormatter] dateFromString:[dict valueForKey:@"CompletedAt"]]];
 	[self setLocalCreatedDate:[dict valueForKey:@"LocalCreatedDate"]];
-	
 	[self setLocalDue:[dict valueForKey:@"LocalDue"]];
-	
 	[self setLocalDueShortDate:[dict valueForKey:@"LocalDueShortDate"]];
-	
 	[self setDueInputValue:[dict valueForKey:@"DueInputValue"]];
-	
 	[self setTotalUsersCount:[dict valueForKey:@"TotalUsersCount"]];
-	
 	[self setCompletedUsersCount:[dict valueForKey:@"CompletedUsersCount"]];
-	
 	[self setPendingUsersCount:[dict valueForKey:@"PendingUsersCount"]];
-	
 	[self setOwner:[[EmbedUser alloc] initWithDictionary:[dict valueForKey:@"Owner"]]];
-	
 
 	NSMutableArray * mToUsers = [[NSMutableArray alloc] init];
 	NSArray * lToUsers = [dict valueForKey:@"ToUsers"];
-	for (NSDictionary * d in lToUsers) {
-		[mToUsers addObject: [[EmbedUser alloc] initWithDictionary:d]];
+	if ([lToUsers isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lToUsers) {
+			[mToUsers addObject: [[EmbedUser alloc] initWithDictionary:d]];
+		}
 	}
 	[self setToUsers:mToUsers];
-	
 
 	NSMutableArray * mPendingUsers = [[NSMutableArray alloc] init];
 	NSArray * lPendingUsers = [dict valueForKey:@"PendingUsers"];
-	for (NSDictionary * d in lPendingUsers) {
-		[mPendingUsers addObject: [[EmbedUser alloc] initWithDictionary:d]];
+	if ([lPendingUsers isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lPendingUsers) {
+			[mPendingUsers addObject: [[EmbedUser alloc] initWithDictionary:d]];
+		}
 	}
 	[self setPendingUsers:mPendingUsers];
-	
 
 	NSMutableArray * mCompletedUsers = [[NSMutableArray alloc] init];
 	NSArray * lCompletedUsers = [dict valueForKey:@"CompletedUsers"];
-	for (NSDictionary * d in lCompletedUsers) {
-		[mCompletedUsers addObject: [[EmbedUser alloc] initWithDictionary:d]];
+	if ([lCompletedUsers isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lCompletedUsers) {
+			[mCompletedUsers addObject: [[EmbedUser alloc] initWithDictionary:d]];
+		}
 	}
 	[self setCompletedUsers:mCompletedUsers];
-	
 	[self setColorCssClass:[dict valueForKey:@"ColorCssClass"]];
-	
 	[self setTaskBarHtml:[dict valueForKey:@"TaskBarHtml"]];
-	
 
 	return self;
 }
@@ -2328,9 +2036,9 @@ static Qortexapi * _qortexapi;
 	[dict setValue:[NSNumber numberWithBool:self.IsClosed] forKey:@"IsClosed"];
 	[dict setValue:[NSNumber numberWithBool:self.IsDueToday] forKey:@"IsDueToday"];
 	[dict setValue:[NSNumber numberWithBool:self.IsOverDue] forKey:@"IsOverDue"];
-	[dict setValue:self.CreatedAt forKey:@"CreatedAt"];
-	[dict setValue:self.Due forKey:@"Due"];
-	[dict setValue:self.CompletedAt forKey:@"CompletedAt"];
+	[dict setValue:[[Qortexapi dateFormatter] stringFromDate:self.CreatedAt] forKey:@"CreatedAt"];
+	[dict setValue:[[Qortexapi dateFormatter] stringFromDate:self.Due] forKey:@"Due"];
+	[dict setValue:[[Qortexapi dateFormatter] stringFromDate:self.CompletedAt] forKey:@"CompletedAt"];
 	[dict setValue:self.LocalCreatedDate forKey:@"LocalCreatedDate"];
 	[dict setValue:self.LocalDue forKey:@"LocalDue"];
 	[dict setValue:self.LocalDueShortDate forKey:@"LocalDueShortDate"];
@@ -2389,19 +2097,12 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setId:[dict valueForKey:@"Id"]];
-	
 	[self setGroupId:[dict valueForKey:@"GroupId"]];
-	
-	[self setUpdatedAt:[NSDate dateWithString:[dict valueForKey:@"UpdatedAt"]]];
-	
+	[self setUpdatedAt:[[Qortexapi dateFormatter] dateFromString:[dict valueForKey:@"UpdatedAt"]]];
 	[self setLocalUpdatedAt:[dict valueForKey:@"LocalUpdatedAt"]];
-	
 	[self setUpdatedAtUnixNano:[dict valueForKey:@"UpdatedAtUnixNano"]];
-	
 	[self setCurrentVersionEditor:[[EmbedUser alloc] initWithDictionary:[dict valueForKey:@"CurrentVersionEditor"]]];
-	
 	[self setIsNewVersion:[[dict valueForKey:@"IsNewVersion"] boolValue]];
-	
 
 	return self;
 }
@@ -2410,7 +2111,7 @@ static Qortexapi * _qortexapi;
 	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
 	[dict setValue:self.Id forKey:@"Id"];
 	[dict setValue:self.GroupId forKey:@"GroupId"];
-	[dict setValue:self.UpdatedAt forKey:@"UpdatedAt"];
+	[dict setValue:[[Qortexapi dateFormatter] stringFromDate:self.UpdatedAt] forKey:@"UpdatedAt"];
 	[dict setValue:self.LocalUpdatedAt forKey:@"LocalUpdatedAt"];
 	[dict setValue:self.UpdatedAtUnixNano forKey:@"UpdatedAtUnixNano"];
 	[dict setValue:[self.CurrentVersionEditor dictionary] forKey:@"CurrentVersionEditor"];
@@ -2439,13 +2140,9 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setEmail:[dict valueForKey:@"Email"]];
-	
 	[self setToken:[dict valueForKey:@"Token"]];
-	
 	[self setSentAgo:[dict valueForKey:@"SentAgo"]];
-	
 	[self setByUser:[[EmbedUser alloc] initWithDictionary:[dict valueForKey:@"ByUser"]]];
-	
 
 	return self;
 }
@@ -2484,27 +2181,21 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setId:[dict valueForKey:@"Id"]];
-	
 	[self setGroupId:[dict valueForKey:@"GroupId"]];
-	
 	[self setTitle:[dict valueForKey:@"Title"]];
-	
 	[self setHtmlTitle:[dict valueForKey:@"HtmlTitle"]];
-	
 	[self setEType:[dict valueForKey:@"EType"]];
-	
 	[self setAuthor:[[EmbedUser alloc] initWithDictionary:[dict valueForKey:@"Author"]]];
-	
 
 	NSMutableArray * mToUsers = [[NSMutableArray alloc] init];
 	NSArray * lToUsers = [dict valueForKey:@"ToUsers"];
-	for (NSDictionary * d in lToUsers) {
-		[mToUsers addObject: [[EmbedUser alloc] initWithDictionary:d]];
+	if ([lToUsers isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lToUsers) {
+			[mToUsers addObject: [[EmbedUser alloc] initWithDictionary:d]];
+		}
 	}
 	[self setToUsers:mToUsers];
-	
 	[self setLink:[dict valueForKey:@"Link"]];
-	
 
 	return self;
 }
@@ -2561,43 +2252,29 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setFromOrg:[[EmbedOrg alloc] initWithDictionary:[dict valueForKey:@"FromOrg"]]];
-	
 	[self setFromUserId:[dict valueForKey:@"FromUserId"]];
-	
 	[self setSharedGroup:[[Group alloc] initWithDictionary:[dict valueForKey:@"SharedGroup"]]];
-	
 	[self setIsNewAccount:[[dict valueForKey:@"IsNewAccount"] boolValue]];
-	
 	[self setEmail:[dict valueForKey:@"Email"]];
-	
 	[self setToken:[dict valueForKey:@"Token"]];
-	
 
 	NSMutableArray * mJoinedOrgs = [[NSMutableArray alloc] init];
 	NSArray * lJoinedOrgs = [dict valueForKey:@"JoinedOrgs"];
-	for (NSDictionary * d in lJoinedOrgs) {
-		[mJoinedOrgs addObject: [[EmbedOrg alloc] initWithDictionary:d]];
+	if ([lJoinedOrgs isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lJoinedOrgs) {
+			[mJoinedOrgs addObject: [[EmbedOrg alloc] initWithDictionary:d]];
+		}
 	}
 	[self setJoinedOrgs:mJoinedOrgs];
-	
 	[self setIsAccepted:[[dict valueForKey:@"IsAccepted"] boolValue]];
-	
 	[self setIsRejected:[[dict valueForKey:@"IsRejected"] boolValue]];
-	
 	[self setIsPending:[[dict valueForKey:@"IsPending"] boolValue]];
-	
 	[self setIsForwarded:[[dict valueForKey:@"IsForwarded"] boolValue]];
-	
 	[self setIsCanceled:[[dict valueForKey:@"IsCanceled"] boolValue]];
-	
 	[self setIsStopped:[[dict valueForKey:@"IsStopped"] boolValue]];
-	
 	[self setPendingDuration:[dict valueForKey:@"PendingDuration"]];
-	
 	[self setToOrgName:[dict valueForKey:@"ToOrgName"]];
-	
 	[self setToOrgId:[dict valueForKey:@"ToOrgId"]];
-	
 
 	return self;
 }
@@ -2660,31 +2337,18 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setCurrentPrefixURL:[dict valueForKey:@"CurrentPrefixURL"]];
-	
 	[self setInfo:[dict valueForKey:@"Info"]];
-	
 	[self setActionButton:[dict valueForKey:@"ActionButton"]];
-	
 	[self setFromOrg:[[EmbedOrg alloc] initWithDictionary:[dict valueForKey:@"FromOrg"]]];
-	
 	[self setToOrg:[[EmbedOrg alloc] initWithDictionary:[dict valueForKey:@"ToOrg"]]];
-	
 	[self setSharedGroup:[[Group alloc] initWithDictionary:[dict valueForKey:@"SharedGroup"]]];
-	
 	[self setSharedOrgIdHex:[dict valueForKey:@"SharedOrgIdHex"]];
-	
 	[self setFromUserIdHex:[dict valueForKey:@"FromUserIdHex"]];
-	
 	[self setSharedInvitee:[[EmbedUser alloc] initWithDictionary:[dict valueForKey:@"SharedInvitee"]]];
-	
 	[self setSharedInviter:[[EmbedUser alloc] initWithDictionary:[dict valueForKey:@"SharedInviter"]]];
-	
 	[self setSharedResponsor:[[EmbedUser alloc] initWithDictionary:[dict valueForKey:@"SharedResponsor"]]];
-	
 	[self setToEmail:[dict valueForKey:@"ToEmail"]];
-	
 	[self setState:[dict valueForKey:@"State"]];
-	
 
 	return self;
 }
@@ -2758,69 +2422,42 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setId:[dict valueForKey:@"Id"]];
-	
 	[self setEmail:[dict valueForKey:@"Email"]];
-	
 	[self setFirstame:[dict valueForKey:@"Firstame"]];
-	
 	[self setLastName:[dict valueForKey:@"LastName"]];
-	
 	[self setName:[dict valueForKey:@"Name"]];
-	
 	[self setTitle:[dict valueForKey:@"Title"]];
-	
 	[self setAvatar:[dict valueForKey:@"Avatar"]];
-	
 	[self setJID:[dict valueForKey:@"JID"]];
-	
 	[self setTimezone:[dict valueForKey:@"Timezone"]];
-	
 	[self setIsSuperUser:[[dict valueForKey:@"IsSuperUser"] boolValue]];
-	
 	[self setIsSharedUser:[[dict valueForKey:@"IsSharedUser"] boolValue]];
-	
 	[self setOrgId:[dict valueForKey:@"OrgId"]];
-	
 	[self setOriginalOrgId:[dict valueForKey:@"OriginalOrgId"]];
-	
 	[self setPrefixURL:[dict valueForKey:@"PrefixURL"]];
-	
 	[self setProfileURL:[dict valueForKey:@"ProfileURL"]];
-	
 	[self setIsLoggedInUser:[[dict valueForKey:@"IsLoggedInUser"] boolValue]];
-	
 	[self setIsAvailable:[[dict valueForKey:@"IsAvailable"] boolValue]];
-	
 	[self setIsDisabled:[[dict valueForKey:@"IsDisabled"] boolValue]];
-	
 	[self setIsDeleted:[[dict valueForKey:@"IsDeleted"] boolValue]];
-	
 	[self setFromSharedGroup:[[dict valueForKey:@"FromSharedGroup"] boolValue]];
-	
 	[self setFromOrganizationName:[dict valueForKey:@"FromOrganizationName"]];
-	
 	[self setEditable:[[dict valueForKey:@"Editable"] boolValue]];
-	
 	[self setFollowable:[[dict valueForKey:@"Followable"] boolValue]];
-	
 	[self setFollowedByMe:[[dict valueForKey:@"FollowedByMe"] boolValue]];
-	
 	[self setFollowingTheGroup:[[dict valueForKey:@"FollowingTheGroup"] boolValue]];
-	
 	[self setDepartment:[dict valueForKey:@"Department"]];
-	
 	[self setLocation:[dict valueForKey:@"Location"]];
-	
 
 	NSMutableArray * mFollowingGroups = [[NSMutableArray alloc] init];
 	NSArray * lFollowingGroups = [dict valueForKey:@"FollowingGroups"];
-	for (NSDictionary * d in lFollowingGroups) {
-		[mFollowingGroups addObject: [[Group alloc] initWithDictionary:d]];
+	if ([lFollowingGroups isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lFollowingGroups) {
+			[mFollowingGroups addObject: [[Group alloc] initWithDictionary:d]];
+		}
 	}
 	[self setFollowingGroups:mFollowingGroups];
-	
 	[self setPreferences:[[Preferences alloc] initWithDictionary:[dict valueForKey:@"Preferences"]]];
-	
 
 	return self;
 }
@@ -2896,45 +2533,35 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setId:[dict valueForKey:@"Id"]];
-	
 	[self setTitle:[dict valueForKey:@"Title"]];
-	
 	[self setUserIds:[dict valueForKey:@"UserIds"]];
-	
 
 	NSMutableArray * mParticipants = [[NSMutableArray alloc] init];
 	NSArray * lParticipants = [dict valueForKey:@"Participants"];
-	for (NSDictionary * d in lParticipants) {
-		[mParticipants addObject: [[EmbedUser alloc] initWithDictionary:d]];
+	if ([lParticipants isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lParticipants) {
+			[mParticipants addObject: [[EmbedUser alloc] initWithDictionary:d]];
+		}
 	}
 	[self setParticipants:mParticipants];
-	
-	[self setCreatedAt:[NSDate dateWithString:[dict valueForKey:@"CreatedAt"]]];
-	
-	[self setEndedAt:[NSDate dateWithString:[dict valueForKey:@"EndedAt"]]];
-	
+	[self setCreatedAt:[[Qortexapi dateFormatter] dateFromString:[dict valueForKey:@"CreatedAt"]]];
+	[self setEndedAt:[[Qortexapi dateFormatter] dateFromString:[dict valueForKey:@"EndedAt"]]];
 	[self setLocalHumanCreatedAt:[dict valueForKey:@"LocalHumanCreatedAt"]];
-	
 	[self setTopic:[dict valueForKey:@"Topic"]];
-	
 	[self setPrivate:[[dict valueForKey:@"Private"] boolValue]];
-	
 	[self setIsClose:[[dict valueForKey:@"IsClose"] boolValue]];
-	
 	[self setIsShared:[[dict valueForKey:@"IsShared"] boolValue]];
-	
 	[self setSharedMessageIds:[dict valueForKey:@"SharedMessageIds"]];
-	
 	[self setMessagesCount:[dict valueForKey:@"MessagesCount"]];
-	
 
 	NSMutableArray * mMessages = [[NSMutableArray alloc] init];
 	NSArray * lMessages = [dict valueForKey:@"Messages"];
-	for (NSDictionary * d in lMessages) {
-		[mMessages addObject: [[Message alloc] initWithDictionary:d]];
+	if ([lMessages isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lMessages) {
+			[mMessages addObject: [[Message alloc] initWithDictionary:d]];
+		}
 	}
 	[self setMessages:mMessages];
-	
 
 	return self;
 }
@@ -2951,8 +2578,8 @@ static Qortexapi * _qortexapi;
 	}
 	[dict setValue:mParticipants forKey:@"Participants"];
 	
-	[dict setValue:self.CreatedAt forKey:@"CreatedAt"];
-	[dict setValue:self.EndedAt forKey:@"EndedAt"];
+	[dict setValue:[[Qortexapi dateFormatter] stringFromDate:self.CreatedAt] forKey:@"CreatedAt"];
+	[dict setValue:[[Qortexapi dateFormatter] stringFromDate:self.EndedAt] forKey:@"EndedAt"];
 	[dict setValue:self.LocalHumanCreatedAt forKey:@"LocalHumanCreatedAt"];
 	[dict setValue:self.Topic forKey:@"Topic"];
 	[dict setValue:[NSNumber numberWithBool:self.Private] forKey:@"Private"];
@@ -2999,31 +2626,18 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setId:[dict valueForKey:@"Id"]];
-	
 	[self setGroupId:[dict valueForKey:@"GroupId"]];
-	
 	[self setToUser:[[EmbedUser alloc] initWithDictionary:[dict valueForKey:@"ToUser"]]];
-	
 	[self setForEntry:[[EmbedEntry alloc] initWithDictionary:[dict valueForKey:@"ForEntry"]]];
-	
 	[self setFromUser:[[EmbedUser alloc] initWithDictionary:[dict valueForKey:@"FromUser"]]];
-	
 	[self setFromOrg:[[EmbedOrg alloc] initWithDictionary:[dict valueForKey:@"FromOrg"]]];
-	
 	[self setCausedByEntry:[[EmbedEntry alloc] initWithDictionary:[dict valueForKey:@"CausedByEntry"]]];
-	
-	[self setNotifiedAt:[NSDate dateWithString:[dict valueForKey:@"NotifiedAt"]]];
-	
-	[self setReadAt:[NSDate dateWithString:[dict valueForKey:@"ReadAt"]]];
-	
+	[self setNotifiedAt:[[Qortexapi dateFormatter] dateFromString:[dict valueForKey:@"NotifiedAt"]]];
+	[self setReadAt:[[Qortexapi dateFormatter] dateFromString:[dict valueForKey:@"ReadAt"]]];
 	[self setReaded:[[dict valueForKey:@"Readed"] boolValue]];
-	
 	[self setType:[dict valueForKey:@"Type"]];
-	
 	[self setLink:[dict valueForKey:@"Link"]];
-	
 	[self setSharingRequestToEmail:[dict valueForKey:@"SharingRequestToEmail"]];
-	
 
 	return self;
 }
@@ -3042,8 +2656,8 @@ static Qortexapi * _qortexapi;
 	
 	[dict setValue:[self.CausedByEntry dictionary] forKey:@"CausedByEntry"];
 	
-	[dict setValue:self.NotifiedAt forKey:@"NotifiedAt"];
-	[dict setValue:self.ReadAt forKey:@"ReadAt"];
+	[dict setValue:[[Qortexapi dateFormatter] stringFromDate:self.NotifiedAt] forKey:@"NotifiedAt"];
+	[dict setValue:[[Qortexapi dateFormatter] stringFromDate:self.ReadAt] forKey:@"ReadAt"];
 	[dict setValue:[NSNumber numberWithBool:self.Readed] forKey:@"Readed"];
 	[dict setValue:self.Type forKey:@"Type"];
 	[dict setValue:self.Link forKey:@"Link"];
@@ -3072,15 +2686,14 @@ static Qortexapi * _qortexapi;
 
 	NSMutableArray * mNotificationItems = [[NSMutableArray alloc] init];
 	NSArray * lNotificationItems = [dict valueForKey:@"NotificationItems"];
-	for (NSDictionary * d in lNotificationItems) {
-		[mNotificationItems addObject: [[NotificationItem alloc] initWithDictionary:d]];
+	if ([lNotificationItems isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lNotificationItems) {
+			[mNotificationItems addObject: [[NotificationItem alloc] initWithDictionary:d]];
+		}
 	}
 	[self setNotificationItems:mNotificationItems];
-	
 	[self setHasMore:[[dict valueForKey:@"HasMore"] boolValue]];
-	
 	[self setLatestNotifyTime:[dict valueForKey:@"LatestNotifyTime"]];
-	
 
 	return self;
 }
@@ -3215,271 +2828,193 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setId:[dict valueForKey:@"Id"]];
-	
 	[self setEType:[dict valueForKey:@"EType"]];
-	
 	[self setTitle:[dict valueForKey:@"Title"]];
-	
 	[self setSlug:[dict valueForKey:@"Slug"]];
-	
 	[self setContent:[dict valueForKey:@"Content"]];
-	
 	[self setTypeTitle:[dict valueForKey:@"TypeTitle"]];
-	
 	[self setRootId:[dict valueForKey:@"RootId"]];
-	
 	[self setGroupId:[dict valueForKey:@"GroupId"]];
-	
 	[self setAuthorId:[dict valueForKey:@"AuthorId"]];
-	
-	[self setCreatedAt:[NSDate dateWithString:[dict valueForKey:@"CreatedAt"]]];
-	
-	[self setUpdatedAt:[NSDate dateWithString:[dict valueForKey:@"UpdatedAt"]]];
-	
-	[self setBumpedUpAt:[NSDate dateWithString:[dict valueForKey:@"BumpedUpAt"]]];
-	
+	[self setCreatedAt:[[Qortexapi dateFormatter] dateFromString:[dict valueForKey:@"CreatedAt"]]];
+	[self setUpdatedAt:[[Qortexapi dateFormatter] dateFromString:[dict valueForKey:@"UpdatedAt"]]];
+	[self setBumpedUpAt:[[Qortexapi dateFormatter] dateFromString:[dict valueForKey:@"BumpedUpAt"]]];
 	[self setAllAttachmentsURL:[dict valueForKey:@"AllAttachmentsURL"]];
-	
 	[self setPermalink:[dict valueForKey:@"Permalink"]];
-	
 	[self setIconName:[dict valueForKey:@"IconName"]];
-	
 	[self setLocalHumanCreatedAt:[dict valueForKey:@"LocalHumanCreatedAt"]];
-	
 	[self setLocalHumanUpdatedAt:[dict valueForKey:@"LocalHumanUpdatedAt"]];
-	
 	[self setWholeLastUpdateAtAgo:[dict valueForKey:@"WholeLastUpdateAtAgo"]];
-	
 	[self setLastUpdateAtAgo:[dict valueForKey:@"LastUpdateAtAgo"]];
-	
 	[self setMentionedUserIds:[dict valueForKey:@"MentionedUserIds"]];
-	
 	[self setDomainURL:[dict valueForKey:@"DomainURL"]];
-	
 	[self setUpdatedAtUnixNano:[dict valueForKey:@"UpdatedAtUnixNano"]];
-	
 	[self setHtmlTitle:[dict valueForKey:@"HtmlTitle"]];
-	
 	[self setHtmlContent:[dict valueForKey:@"HtmlContent"]];
-	
 	[self setHtmlContentPart:[dict valueForKey:@"HtmlContentPart"]];
-	
 	[self setTaskHtmlContentPart:[dict valueForKey:@"TaskHtmlContentPart"]];
-	
 	[self setWatchlistHtml:[dict valueForKey:@"WatchlistHtml"]];
-	
 	[self setToUsersHtml:[dict valueForKey:@"ToUsersHtml"]];
-	
 	[self setLikedByUsersHtml:[dict valueForKey:@"LikedByUsersHtml"]];
-	
 	[self setNotifyOptionsHtml:[dict valueForKey:@"NotifyOptionsHtml"]];
-	
 	[self setLink:[dict valueForKey:@"Link"]];
-	
 	[self setPresentationLink:[dict valueForKey:@"PresentationLink"]];
-	
 	[self setUploadURL:[dict valueForKey:@"UploadURL"]];
-	
 	[self setIsShared:[[dict valueForKey:@"IsShared"] boolValue]];
-	
 	[self setIsPublished:[[dict valueForKey:@"IsPublished"] boolValue]];
-	
 	[self setIsCanPublish:[[dict valueForKey:@"IsCanPublish"] boolValue]];
-	
 	[self setIsMuted:[[dict valueForKey:@"IsMuted"] boolValue]];
-	
 	[self setIsSystemMessage:[[dict valueForKey:@"IsSystemMessage"] boolValue]];
-	
 	[self setSystemMessageType:[dict valueForKey:@"SystemMessageType"]];
-	
 	[self setBroadcastType:[dict valueForKey:@"BroadcastType"]];
-	
 	[self setIsBroadcast:[[dict valueForKey:@"IsBroadcast"] boolValue]];
-	
 	[self setIsBroadcastTypeToAllAdmins:[[dict valueForKey:@"IsBroadcastTypeToAllAdmins"] boolValue]];
-	
 	[self setIsBroadcastTypeToAllUsers:[[dict valueForKey:@"IsBroadcastTypeToAllUsers"] boolValue]];
-	
 	[self setIsBroadcastTypeToSomeOrgs:[[dict valueForKey:@"IsBroadcastTypeToSomeOrgs"] boolValue]];
-	
 	[self setIsFromSuperOrg:[[dict valueForKey:@"IsFromSuperOrg"] boolValue]];
-	
 	[self setIsFeedback:[[dict valueForKey:@"IsFeedback"] boolValue]];
-	
 	[self setFromOrg:[[EmbedOrg alloc] initWithDictionary:[dict valueForKey:@"FromOrg"]]];
-	
 
 	NSMutableArray * mToOrgs = [[NSMutableArray alloc] init];
 	NSArray * lToOrgs = [dict valueForKey:@"ToOrgs"];
-	for (NSDictionary * d in lToOrgs) {
-		[mToOrgs addObject: [[EmbedOrg alloc] initWithDictionary:d]];
+	if ([lToOrgs isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lToOrgs) {
+			[mToOrgs addObject: [[EmbedOrg alloc] initWithDictionary:d]];
+		}
 	}
 	[self setToOrgs:mToOrgs];
-	
 	[self setToOrgsHtml:[dict valueForKey:@"ToOrgsHtml"]];
-	
 	[self setIsRequest:[[dict valueForKey:@"IsRequest"] boolValue]];
-	
 	[self setRequest:[[Request alloc] initWithDictionary:[dict valueForKey:@"Request"]]];
-	
 	[self setVisibleForSuperUserInSuperOrg:[[dict valueForKey:@"VisibleForSuperUserInSuperOrg"] boolValue]];
-	
 	[self setVisibleForSuperOrg:[[dict valueForKey:@"VisibleForSuperOrg"] boolValue]];
-	
 	[self setIsKnowledgeBase:[[dict valueForKey:@"IsKnowledgeBase"] boolValue]];
-	
 	[self setIsPost:[[dict valueForKey:@"IsPost"] boolValue]];
-	
 	[self setIsComment:[[dict valueForKey:@"IsComment"] boolValue]];
-	
 	[self setIsTask:[[dict valueForKey:@"IsTask"] boolValue]];
-	
 	[self setIsChat:[[dict valueForKey:@"IsChat"] boolValue]];
-	
 	[self setIsTaskToDo:[[dict valueForKey:@"IsTaskToDo"] boolValue]];
-	
 	[self setIsTaskAck:[[dict valueForKey:@"IsTaskAck"] boolValue]];
-	
 	[self setIsInWatchList:[[dict valueForKey:@"IsInWatchList"] boolValue]];
-	
 	[self setIsToGroup:[dict valueForKey:@"IsToGroup"]];
-	
 	[self setCurrentUserCanEdit:[[dict valueForKey:@"CurrentUserCanEdit"] boolValue]];
-	
 	[self setCanEdit:[[dict valueForKey:@"CanEdit"] boolValue]];
-	
 	[self setCanReply:[[dict valueForKey:@"CanReply"] boolValue]];
-	
 	[self setManagerCanEdit:[[dict valueForKey:@"ManagerCanEdit"] boolValue]];
-	
 	[self setLikedByMe:[[dict valueForKey:@"LikedByMe"] boolValue]];
-	
 	[self setHasInlineTask:[[dict valueForKey:@"HasInlineTask"] boolValue]];
-	
 	[self setTaskIsCompleted:[[dict valueForKey:@"TaskIsCompleted"] boolValue]];
-	
 	[self setIsRoot:[[dict valueForKey:@"IsRoot"] boolValue]];
-	
 	[self setIsUnread:[[dict valueForKey:@"IsUnread"] boolValue]];
-	
 	[self setIsUpdated:[[dict valueForKey:@"IsUpdated"] boolValue]];
-	
 	[self setIsLastVersion:[[dict valueForKey:@"IsLastVersion"] boolValue]];
-	
 	[self setPresentation:[[dict valueForKey:@"Presentation"] boolValue]];
-	
 	[self setAnyoneCanEdit:[[dict valueForKey:@"AnyoneCanEdit"] boolValue]];
-	
 	[self setIsInGroup:[[dict valueForKey:@"IsInGroup"] boolValue]];
-	
 	[self setIsFromEmail:[[dict valueForKey:@"IsFromEmail"] boolValue]];
-	
 	[self setAllAttachmentsCount:[dict valueForKey:@"AllAttachmentsCount"]];
-	
 	[self setCommentsCount:[dict valueForKey:@"CommentsCount"]];
-	
 	[self setAllLikesCount:[dict valueForKey:@"AllLikesCount"]];
-	
 	[self setVersionCount:[dict valueForKey:@"VersionCount"]];
-	
 	[self setAuthor:[[EmbedUser alloc] initWithDictionary:[dict valueForKey:@"Author"]]];
-	
 	[self setCurrentVersionEditor:[[EmbedUser alloc] initWithDictionary:[dict valueForKey:@"CurrentVersionEditor"]]];
-	
 	[self setGroup:[[Group alloc] initWithDictionary:[dict valueForKey:@"Group"]]];
-	
 	[self setTask:[[Task alloc] initWithDictionary:[dict valueForKey:@"Task"]]];
-	
 	[self setConversation:[[Conversation alloc] initWithDictionary:[dict valueForKey:@"Conversation"]]];
-	
 
 	NSMutableArray * mLinkedEntries = [[NSMutableArray alloc] init];
 	NSArray * lLinkedEntries = [dict valueForKey:@"LinkedEntries"];
-	for (NSDictionary * d in lLinkedEntries) {
-		[mLinkedEntries addObject: [[LinkedEntry alloc] initWithDictionary:d]];
+	if ([lLinkedEntries isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lLinkedEntries) {
+			[mLinkedEntries addObject: [[LinkedEntry alloc] initWithDictionary:d]];
+		}
 	}
 	[self setLinkedEntries:mLinkedEntries];
-	
 
 	NSMutableArray * mVersions = [[NSMutableArray alloc] init];
 	NSArray * lVersions = [dict valueForKey:@"Versions"];
-	for (NSDictionary * d in lVersions) {
-		[mVersions addObject: [[EntryVersion alloc] initWithDictionary:d]];
+	if ([lVersions isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lVersions) {
+			[mVersions addObject: [[EntryVersion alloc] initWithDictionary:d]];
+		}
 	}
 	[self setVersions:mVersions];
-	
 
 	NSMutableArray * mToUsers = [[NSMutableArray alloc] init];
 	NSArray * lToUsers = [dict valueForKey:@"ToUsers"];
-	for (NSDictionary * d in lToUsers) {
-		[mToUsers addObject: [[EmbedUser alloc] initWithDictionary:d]];
+	if ([lToUsers isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lToUsers) {
+			[mToUsers addObject: [[EmbedUser alloc] initWithDictionary:d]];
+		}
 	}
 	[self setToUsers:mToUsers];
-	
 
 	NSMutableArray * mMentionedUsers = [[NSMutableArray alloc] init];
 	NSArray * lMentionedUsers = [dict valueForKey:@"MentionedUsers"];
-	for (NSDictionary * d in lMentionedUsers) {
-		[mMentionedUsers addObject: [[EmbedUser alloc] initWithDictionary:d]];
+	if ([lMentionedUsers isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lMentionedUsers) {
+			[mMentionedUsers addObject: [[EmbedUser alloc] initWithDictionary:d]];
+		}
 	}
 	[self setMentionedUsers:mMentionedUsers];
-	
 
 	NSMutableArray * mLikedByUsers = [[NSMutableArray alloc] init];
 	NSArray * lLikedByUsers = [dict valueForKey:@"LikedByUsers"];
-	for (NSDictionary * d in lLikedByUsers) {
-		[mLikedByUsers addObject: [[EmbedUser alloc] initWithDictionary:d]];
+	if ([lLikedByUsers isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lLikedByUsers) {
+			[mLikedByUsers addObject: [[EmbedUser alloc] initWithDictionary:d]];
+		}
 	}
 	[self setLikedByUsers:mLikedByUsers];
-	
 
 	NSMutableArray * mAttachments = [[NSMutableArray alloc] init];
 	NSArray * lAttachments = [dict valueForKey:@"Attachments"];
-	for (NSDictionary * d in lAttachments) {
-		[mAttachments addObject: [[Attachment alloc] initWithDictionary:d]];
+	if ([lAttachments isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lAttachments) {
+			[mAttachments addObject: [[Attachment alloc] initWithDictionary:d]];
+		}
 	}
 	[self setAttachments:mAttachments];
-	
 	[self setFirstPicture:[[Attachment alloc] initWithDictionary:[dict valueForKey:@"FirstPicture"]]];
-	
 
 	NSMutableArray * mComments = [[NSMutableArray alloc] init];
 	NSArray * lComments = [dict valueForKey:@"Comments"];
-	for (NSDictionary * d in lComments) {
-		[mComments addObject: [[Entry alloc] initWithDictionary:d]];
+	if ([lComments isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lComments) {
+			[mComments addObject: [[Entry alloc] initWithDictionary:d]];
+		}
 	}
 	[self setComments:mComments];
-	
 
 	NSMutableArray * mExternalComments = [[NSMutableArray alloc] init];
 	NSArray * lExternalComments = [dict valueForKey:@"ExternalComments"];
-	for (NSDictionary * d in lExternalComments) {
-		[mExternalComments addObject: [[Entry alloc] initWithDictionary:d]];
+	if ([lExternalComments isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lExternalComments) {
+			[mExternalComments addObject: [[Entry alloc] initWithDictionary:d]];
+		}
 	}
 	[self setExternalComments:mExternalComments];
-	
 
 	NSMutableArray * mCurrentVersionComments = [[NSMutableArray alloc] init];
 	NSArray * lCurrentVersionComments = [dict valueForKey:@"CurrentVersionComments"];
-	for (NSDictionary * d in lCurrentVersionComments) {
-		[mCurrentVersionComments addObject: [[Entry alloc] initWithDictionary:d]];
+	if ([lCurrentVersionComments isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lCurrentVersionComments) {
+			[mCurrentVersionComments addObject: [[Entry alloc] initWithDictionary:d]];
+		}
 	}
 	[self setCurrentVersionComments:mCurrentVersionComments];
-	
 
 	NSMutableArray * mOtherVersionsComments = [[NSMutableArray alloc] init];
 	NSArray * lOtherVersionsComments = [dict valueForKey:@"OtherVersionsComments"];
-	for (NSDictionary * d in lOtherVersionsComments) {
-		[mOtherVersionsComments addObject: [[Entry alloc] initWithDictionary:d]];
+	if ([lOtherVersionsComments isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lOtherVersionsComments) {
+			[mOtherVersionsComments addObject: [[Entry alloc] initWithDictionary:d]];
+		}
 	}
 	[self setOtherVersionsComments:mOtherVersionsComments];
-	
 	[self setNewComment:[[Entry alloc] initWithDictionary:[dict valueForKey:@"NewComment"]]];
-	
 	[self setNewEntry:[[Entry alloc] initWithDictionary:[dict valueForKey:@"NewEntry"]]];
-	
 	[self setGroupSlector:[[GroupSelector alloc] initWithDictionary:[dict valueForKey:@"GroupSlector"]]];
-	
 
 	return self;
 }
@@ -3495,9 +3030,9 @@ static Qortexapi * _qortexapi;
 	[dict setValue:self.RootId forKey:@"RootId"];
 	[dict setValue:self.GroupId forKey:@"GroupId"];
 	[dict setValue:self.AuthorId forKey:@"AuthorId"];
-	[dict setValue:self.CreatedAt forKey:@"CreatedAt"];
-	[dict setValue:self.UpdatedAt forKey:@"UpdatedAt"];
-	[dict setValue:self.BumpedUpAt forKey:@"BumpedUpAt"];
+	[dict setValue:[[Qortexapi dateFormatter] stringFromDate:self.CreatedAt] forKey:@"CreatedAt"];
+	[dict setValue:[[Qortexapi dateFormatter] stringFromDate:self.UpdatedAt] forKey:@"UpdatedAt"];
+	[dict setValue:[[Qortexapi dateFormatter] stringFromDate:self.BumpedUpAt] forKey:@"BumpedUpAt"];
 	[dict setValue:self.AllAttachmentsURL forKey:@"AllAttachmentsURL"];
 	[dict setValue:self.Permalink forKey:@"Permalink"];
 	[dict setValue:self.IconName forKey:@"IconName"];
@@ -3690,21 +3225,13 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setAttachCnt:[dict valueForKey:@"AttachCnt"]];
-	
 	[self setCommentCnt:[dict valueForKey:@"CommentCnt"]];
-	
 	[self setLikeCnt:[dict valueForKey:@"LikeCnt"]];
-	
 	[self setAttachCntStr:[dict valueForKey:@"AttachCntStr"]];
-	
 	[self setCommentCntStr:[dict valueForKey:@"CommentCntStr"]];
-	
 	[self setLikeCntStr:[dict valueForKey:@"LikeCntStr"]];
-	
-	[self setWatchTime:[NSDate dateWithString:[dict valueForKey:@"WatchTime"]]];
-	
+	[self setWatchTime:[[Qortexapi dateFormatter] dateFromString:[dict valueForKey:@"WatchTime"]]];
 	[self setWatchEntry:[[Entry alloc] initWithDictionary:[dict valueForKey:@"WatchEntry"]]];
-	
 
 	return self;
 }
@@ -3717,7 +3244,7 @@ static Qortexapi * _qortexapi;
 	[dict setValue:self.AttachCntStr forKey:@"AttachCntStr"];
 	[dict setValue:self.CommentCntStr forKey:@"CommentCntStr"];
 	[dict setValue:self.LikeCntStr forKey:@"LikeCntStr"];
-	[dict setValue:self.WatchTime forKey:@"WatchTime"];
+	[dict setValue:[[Qortexapi dateFormatter] stringFromDate:self.WatchTime] forKey:@"WatchTime"];
 	[dict setValue:[self.WatchEntry dictionary] forKey:@"WatchEntry"];
 	
 
@@ -3746,19 +3273,16 @@ static Qortexapi * _qortexapi;
 
 	NSMutableArray * mChatEntries = [[NSMutableArray alloc] init];
 	NSArray * lChatEntries = [dict valueForKey:@"ChatEntries"];
-	for (NSDictionary * d in lChatEntries) {
-		[mChatEntries addObject: [[Entry alloc] initWithDictionary:d]];
+	if ([lChatEntries isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lChatEntries) {
+			[mChatEntries addObject: [[Entry alloc] initWithDictionary:d]];
+		}
 	}
 	[self setChatEntries:mChatEntries];
-	
 	[self setHasMore:[[dict valueForKey:@"HasMore"] boolValue]];
-	
 	[self setLatestCreateTime:[dict valueForKey:@"LatestCreateTime"]];
-	
 	[self setWhatChats:[[dict valueForKey:@"WhatChats"] boolValue]];
-	
 	[self setPrefixURL:[dict valueForKey:@"PrefixURL"]];
-	
 
 	return self;
 }
@@ -3798,11 +3322,12 @@ static Qortexapi * _qortexapi;
 
 	NSMutableArray * mDraftItems = [[NSMutableArray alloc] init];
 	NSArray * lDraftItems = [dict valueForKey:@"DraftItems"];
-	for (NSDictionary * d in lDraftItems) {
-		[mDraftItems addObject: [[Entry alloc] initWithDictionary:d]];
+	if ([lDraftItems isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lDraftItems) {
+			[mDraftItems addObject: [[Entry alloc] initWithDictionary:d]];
+		}
 	}
 	[self setDraftItems:mDraftItems];
-	
 
 	return self;
 }
@@ -3840,21 +3365,22 @@ static Qortexapi * _qortexapi;
 
 	NSMutableArray * mTasksForMe = [[NSMutableArray alloc] init];
 	NSArray * lTasksForMe = [dict valueForKey:@"TasksForMe"];
-	for (NSDictionary * d in lTasksForMe) {
-		[mTasksForMe addObject: [[Entry alloc] initWithDictionary:d]];
+	if ([lTasksForMe isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lTasksForMe) {
+			[mTasksForMe addObject: [[Entry alloc] initWithDictionary:d]];
+		}
 	}
 	[self setTasksForMe:mTasksForMe];
-	
 
 	NSMutableArray * mMyCreatedTasks = [[NSMutableArray alloc] init];
 	NSArray * lMyCreatedTasks = [dict valueForKey:@"MyCreatedTasks"];
-	for (NSDictionary * d in lMyCreatedTasks) {
-		[mMyCreatedTasks addObject: [[Entry alloc] initWithDictionary:d]];
+	if ([lMyCreatedTasks isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lMyCreatedTasks) {
+			[mMyCreatedTasks addObject: [[Entry alloc] initWithDictionary:d]];
+		}
 	}
 	[self setMyCreatedTasks:mMyCreatedTasks];
-	
 	[self setAboutTodos:[[dict valueForKey:@"AboutTodos"] boolValue]];
-	
 
 	return self;
 }
@@ -3899,13 +3425,13 @@ static Qortexapi * _qortexapi;
 
 	NSMutableArray * mItems = [[NSMutableArray alloc] init];
 	NSArray * lItems = [dict valueForKey:@"Items"];
-	for (NSDictionary * d in lItems) {
-		[mItems addObject: [[WatchItem alloc] initWithDictionary:d]];
+	if ([lItems isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lItems) {
+			[mItems addObject: [[WatchItem alloc] initWithDictionary:d]];
+		}
 	}
 	[self setItems:mItems];
-	
 	[self setWhatWatchList:[[dict valueForKey:@"WhatWatchList"] boolValue]];
-	
 
 	return self;
 }
@@ -3945,7 +3471,6 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setOrgId:[dict valueForKey:@"OrgId"]];
-	
 
 	return self;
 }
@@ -4001,9 +3526,7 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setAbandonOrgId:[dict valueForKey:@"AbandonOrgId"]];
-	
 	[self setMemberId:[dict valueForKey:@"MemberId"]];
-	
 
 	return self;
 }
@@ -4033,7 +3556,6 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setInfo:[[AbandonInfo alloc] initWithDictionary:[dict valueForKey:@"Info"]]];
-	
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -4064,7 +3586,6 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setSharingInviationToken:[dict valueForKey:@"SharingInviationToken"]];
-	
 
 	return self;
 }
@@ -4093,7 +3614,6 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setInvitation:[[SharingInvitation alloc] initWithDictionary:[dict valueForKey:@"Invitation"]]];
-	
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -4125,9 +3645,7 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setGroupId:[dict valueForKey:@"GroupId"]];
-	
 	[self setEmail:[dict valueForKey:@"Email"]];
-	
 
 	return self;
 }
@@ -4187,15 +3705,10 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setToken:[dict valueForKey:@"Token"]];
-	
 	[self setFromOrgId:[dict valueForKey:@"FromOrgId"]];
-	
 	[self setFromUserId:[dict valueForKey:@"FromUserId"]];
-	
 	[self setForSharingOrgId:[dict valueForKey:@"ForSharingOrgId"]];
-	
 	[self setGroupId:[dict valueForKey:@"GroupId"]];
-	
 
 	return self;
 }
@@ -4229,9 +3742,7 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setPrefixURL:[dict valueForKey:@"PrefixURL"]];
-	
 	[self setValidated:[dict valueForKey:@"Validated"]];
-	
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -4263,7 +3774,6 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setGroupId:[dict valueForKey:@"GroupId"]];
-	
 
 	return self;
 }
@@ -4292,7 +3802,6 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setEntry:[[Entry alloc] initWithDictionary:[dict valueForKey:@"Entry"]]];
-	
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -4325,11 +3834,8 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setMesssageType:[dict valueForKey:@"MesssageType"]];
-	
 	[self setBefore:[dict valueForKey:@"Before"]];
-	
 	[self setLimit:[dict valueForKey:@"Limit"]];
-	
 
 	return self;
 }
@@ -4362,11 +3868,12 @@ static Qortexapi * _qortexapi;
 
 	NSMutableArray * mEntries = [[NSMutableArray alloc] init];
 	NSArray * lEntries = [dict valueForKey:@"Entries"];
-	for (NSDictionary * d in lEntries) {
-		[mEntries addObject: [[Entry alloc] initWithDictionary:d]];
+	if ([lEntries isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lEntries) {
+			[mEntries addObject: [[Entry alloc] initWithDictionary:d]];
+		}
 	}
 	[self setEntries:mEntries];
-	
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -4402,7 +3909,6 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setInput:[[BroadcastInput alloc] initWithDictionary:[dict valueForKey:@"Input"]]];
-	
 
 	return self;
 }
@@ -4433,9 +3939,7 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setEntry:[[Entry alloc] initWithDictionary:[dict valueForKey:@"Entry"]]];
-	
 	[self setValidated:[dict valueForKey:@"Validated"]];
-	
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -4467,7 +3971,6 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setInput:[[BroadcastInput alloc] initWithDictionary:[dict valueForKey:@"Input"]]];
-	
 
 	return self;
 }
@@ -4498,9 +4001,7 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setEntry:[[Entry alloc] initWithDictionary:[dict valueForKey:@"Entry"]]];
-	
 	[self setValidated:[dict valueForKey:@"Validated"]];
-	
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -4532,7 +4033,6 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setEntryId:[dict valueForKey:@"EntryId"]];
-	
 
 	return self;
 }
@@ -4561,7 +4061,6 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setEntry:[[Entry alloc] initWithDictionary:[dict valueForKey:@"Entry"]]];
-	
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -4592,7 +4091,6 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setEntryId:[dict valueForKey:@"EntryId"]];
-	
 
 	return self;
 }
@@ -4621,7 +4119,6 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setEntry:[[Entry alloc] initWithDictionary:[dict valueForKey:@"Entry"]]];
-	
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -4652,7 +4149,6 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setEntryId:[dict valueForKey:@"EntryId"]];
-	
 
 	return self;
 }
@@ -4681,7 +4177,6 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setEntry:[[Entry alloc] initWithDictionary:[dict valueForKey:@"Entry"]]];
-	
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -4712,7 +4207,6 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setInput:[[BroadcastInput alloc] initWithDictionary:[dict valueForKey:@"Input"]]];
-	
 
 	return self;
 }
@@ -4743,9 +4237,7 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setEntry:[[Entry alloc] initWithDictionary:[dict valueForKey:@"Entry"]]];
-	
 	[self setValidated:[dict valueForKey:@"Validated"]];
-	
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -4777,7 +4269,6 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setInput:[[BroadcastInput alloc] initWithDictionary:[dict valueForKey:@"Input"]]];
-	
 
 	return self;
 }
@@ -4808,9 +4299,7 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setEntry:[[Entry alloc] initWithDictionary:[dict valueForKey:@"Entry"]]];
-	
 	[self setValidated:[dict valueForKey:@"Validated"]];
-	
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -4842,7 +4331,6 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setInput:[[EntryInput alloc] initWithDictionary:[dict valueForKey:@"Input"]]];
-	
 
 	return self;
 }
@@ -4873,9 +4361,7 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setEntry:[[Entry alloc] initWithDictionary:[dict valueForKey:@"Entry"]]];
-	
 	[self setValidated:[dict valueForKey:@"Validated"]];
-	
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -4907,7 +4393,6 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setInput:[[EntryInput alloc] initWithDictionary:[dict valueForKey:@"Input"]]];
-	
 
 	return self;
 }
@@ -4938,9 +4423,7 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setEntry:[[Entry alloc] initWithDictionary:[dict valueForKey:@"Entry"]]];
-	
 	[self setValidated:[dict valueForKey:@"Validated"]];
-	
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -4973,9 +4456,7 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setEntryId:[dict valueForKey:@"EntryId"]];
-	
 	[self setGroupId:[dict valueForKey:@"GroupId"]];
-	
 
 	return self;
 }
@@ -5005,7 +4486,6 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setEntry:[[Task alloc] initWithDictionary:[dict valueForKey:@"Entry"]]];
-	
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -5036,7 +4516,6 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setInput:[[EntryInput alloc] initWithDictionary:[dict valueForKey:@"Input"]]];
-	
 
 	return self;
 }
@@ -5067,9 +4546,7 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setEntry:[[Entry alloc] initWithDictionary:[dict valueForKey:@"Entry"]]];
-	
 	[self setValidated:[dict valueForKey:@"Validated"]];
-	
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -5102,9 +4579,7 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setEntryId:[dict valueForKey:@"EntryId"]];
-	
 	[self setGroupId:[dict valueForKey:@"GroupId"]];
-	
 
 	return self;
 }
@@ -5134,7 +4609,6 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setEntry:[[Entry alloc] initWithDictionary:[dict valueForKey:@"Entry"]]];
-	
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -5165,7 +4639,6 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setInput:[[EntryInput alloc] initWithDictionary:[dict valueForKey:@"Input"]]];
-	
 
 	return self;
 }
@@ -5196,9 +4669,7 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setEntry:[[Entry alloc] initWithDictionary:[dict valueForKey:@"Entry"]]];
-	
 	[self setValidated:[dict valueForKey:@"Validated"]];
-	
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -5230,7 +4701,6 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setInput:[[EntryInput alloc] initWithDictionary:[dict valueForKey:@"Input"]]];
-	
 
 	return self;
 }
@@ -5261,9 +4731,7 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setEntry:[[Entry alloc] initWithDictionary:[dict valueForKey:@"Entry"]]];
-	
 	[self setValidated:[dict valueForKey:@"Validated"]];
-	
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -5296,9 +4764,7 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setTitle:[dict valueForKey:@"Title"]];
-	
 	[self setGroupId:[dict valueForKey:@"GroupId"]];
-	
 
 	return self;
 }
@@ -5328,7 +4794,6 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setEntryId:[dict valueForKey:@"EntryId"]];
-	
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -5361,13 +4826,9 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setEntryId:[dict valueForKey:@"EntryId"]];
-	
 	[self setGroupId:[dict valueForKey:@"GroupId"]];
-	
 	[self setUpdateAtUnixNanoForVersion:[dict valueForKey:@"UpdateAtUnixNanoForVersion"]];
-	
 	[self setHightlightKeywords:[dict valueForKey:@"HightlightKeywords"]];
-	
 
 	return self;
 }
@@ -5399,7 +4860,6 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setEntry:[[Entry alloc] initWithDictionary:[dict valueForKey:@"Entry"]]];
-	
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -5432,11 +4892,8 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setEntryId:[dict valueForKey:@"EntryId"]];
-	
 	[self setGroupId:[dict valueForKey:@"GroupId"]];
-	
 	[self setDType:[dict valueForKey:@"DType"]];
-	
 
 	return self;
 }
@@ -5467,7 +4924,6 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setDelType:[dict valueForKey:@"DelType"]];
-	
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -5498,9 +4954,7 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setEntryId:[dict valueForKey:@"EntryId"]];
-	
 	[self setGroupId:[dict valueForKey:@"GroupId"]];
-	
 
 	return self;
 }
@@ -5557,9 +5011,7 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setEntryId:[dict valueForKey:@"EntryId"]];
-	
 	[self setGroupId:[dict valueForKey:@"GroupId"]];
-	
 
 	return self;
 }
@@ -5616,9 +5068,7 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setEntryId:[dict valueForKey:@"EntryId"]];
-	
 	[self setGroupId:[dict valueForKey:@"GroupId"]];
-	
 
 	return self;
 }
@@ -5650,11 +5100,12 @@ static Qortexapi * _qortexapi;
 
 	NSMutableArray * mAttachments = [[NSMutableArray alloc] init];
 	NSArray * lAttachments = [dict valueForKey:@"Attachments"];
-	for (NSDictionary * d in lAttachments) {
-		[mAttachments addObject: [[Attachment alloc] initWithDictionary:d]];
+	if ([lAttachments isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lAttachments) {
+			[mAttachments addObject: [[Attachment alloc] initWithDictionary:d]];
+		}
 	}
 	[self setAttachments:mAttachments];
-	
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -5693,13 +5144,9 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setEntryId:[dict valueForKey:@"EntryId"]];
-	
 	[self setGroupId:[dict valueForKey:@"GroupId"]];
-	
 	[self setUpdateAtUnixNanoForVersion:[dict valueForKey:@"UpdateAtUnixNanoForVersion"]];
-	
 	[self setHightlightKeywords:[dict valueForKey:@"HightlightKeywords"]];
-	
 
 	return self;
 }
@@ -5733,11 +5180,12 @@ static Qortexapi * _qortexapi;
 
 	NSMutableArray * mComments = [[NSMutableArray alloc] init];
 	NSArray * lComments = [dict valueForKey:@"Comments"];
-	for (NSDictionary * d in lComments) {
-		[mComments addObject: [[Entry alloc] initWithDictionary:d]];
+	if ([lComments isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lComments) {
+			[mComments addObject: [[Entry alloc] initWithDictionary:d]];
+		}
 	}
 	[self setComments:mComments];
-	
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -5776,13 +5224,9 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setGroupId:[dict valueForKey:@"GroupId"]];
-	
 	[self setEntryType:[dict valueForKey:@"EntryType"]];
-	
 	[self setBefore:[dict valueForKey:@"Before"]];
-	
 	[self setLimit:[dict valueForKey:@"Limit"]];
-	
 
 	return self;
 }
@@ -5816,11 +5260,12 @@ static Qortexapi * _qortexapi;
 
 	NSMutableArray * mEntries = [[NSMutableArray alloc] init];
 	NSArray * lEntries = [dict valueForKey:@"Entries"];
-	for (NSDictionary * d in lEntries) {
-		[mEntries addObject: [[Entry alloc] initWithDictionary:d]];
+	if ([lEntries isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lEntries) {
+			[mEntries addObject: [[Entry alloc] initWithDictionary:d]];
+		}
 	}
 	[self setEntries:mEntries];
-	
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -5858,11 +5303,8 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setEntryType:[dict valueForKey:@"EntryType"]];
-	
 	[self setBefore:[dict valueForKey:@"Before"]];
-	
 	[self setLimit:[dict valueForKey:@"Limit"]];
-	
 
 	return self;
 }
@@ -5895,11 +5337,12 @@ static Qortexapi * _qortexapi;
 
 	NSMutableArray * mEntries = [[NSMutableArray alloc] init];
 	NSArray * lEntries = [dict valueForKey:@"Entries"];
-	for (NSDictionary * d in lEntries) {
-		[mEntries addObject: [[Entry alloc] initWithDictionary:d]];
+	if ([lEntries isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lEntries) {
+			[mEntries addObject: [[Entry alloc] initWithDictionary:d]];
+		}
 	}
 	[self setEntries:mEntries];
-	
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -5937,11 +5380,8 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setEntryType:[dict valueForKey:@"EntryType"]];
-	
 	[self setFrom:[dict valueForKey:@"From"]];
-	
 	[self setLimit:[dict valueForKey:@"Limit"]];
-	
 
 	return self;
 }
@@ -5974,11 +5414,12 @@ static Qortexapi * _qortexapi;
 
 	NSMutableArray * mEntries = [[NSMutableArray alloc] init];
 	NSArray * lEntries = [dict valueForKey:@"Entries"];
-	for (NSDictionary * d in lEntries) {
-		[mEntries addObject: [[Entry alloc] initWithDictionary:d]];
+	if ([lEntries isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lEntries) {
+			[mEntries addObject: [[Entry alloc] initWithDictionary:d]];
+		}
 	}
 	[self setEntries:mEntries];
-	
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -6016,11 +5457,8 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setActive:[[dict valueForKey:@"Active"] boolValue]];
-	
 	[self setBefore:[dict valueForKey:@"Before"]];
-	
 	[self setLimit:[dict valueForKey:@"Limit"]];
-	
 
 	return self;
 }
@@ -6054,19 +5492,21 @@ static Qortexapi * _qortexapi;
 
 	NSMutableArray * mTasksForMe = [[NSMutableArray alloc] init];
 	NSArray * lTasksForMe = [dict valueForKey:@"TasksForMe"];
-	for (NSDictionary * d in lTasksForMe) {
-		[mTasksForMe addObject: [[Entry alloc] initWithDictionary:d]];
+	if ([lTasksForMe isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lTasksForMe) {
+			[mTasksForMe addObject: [[Entry alloc] initWithDictionary:d]];
+		}
 	}
 	[self setTasksForMe:mTasksForMe];
-	
 
 	NSMutableArray * mMyCreatedTasks = [[NSMutableArray alloc] init];
 	NSArray * lMyCreatedTasks = [dict valueForKey:@"MyCreatedTasks"];
-	for (NSDictionary * d in lMyCreatedTasks) {
-		[mMyCreatedTasks addObject: [[Entry alloc] initWithDictionary:d]];
+	if ([lMyCreatedTasks isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lMyCreatedTasks) {
+			[mMyCreatedTasks addObject: [[Entry alloc] initWithDictionary:d]];
+		}
 	}
 	[self setMyCreatedTasks:mMyCreatedTasks];
-	
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -6112,13 +5552,9 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setUserId:[dict valueForKey:@"UserId"]];
-	
 	[self setEntryType:[dict valueForKey:@"EntryType"]];
-	
 	[self setBefore:[dict valueForKey:@"Before"]];
-	
 	[self setLimit:[dict valueForKey:@"Limit"]];
-	
 
 	return self;
 }
@@ -6152,11 +5588,12 @@ static Qortexapi * _qortexapi;
 
 	NSMutableArray * mEntries = [[NSMutableArray alloc] init];
 	NSArray * lEntries = [dict valueForKey:@"Entries"];
-	for (NSDictionary * d in lEntries) {
-		[mEntries addObject: [[Entry alloc] initWithDictionary:d]];
+	if ([lEntries isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lEntries) {
+			[mEntries addObject: [[Entry alloc] initWithDictionary:d]];
+		}
 	}
 	[self setEntries:mEntries];
-	
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -6193,9 +5630,7 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setBefore:[dict valueForKey:@"Before"]];
-	
 	[self setLimit:[dict valueForKey:@"Limit"]];
-	
 
 	return self;
 }
@@ -6227,11 +5662,12 @@ static Qortexapi * _qortexapi;
 
 	NSMutableArray * mEntries = [[NSMutableArray alloc] init];
 	NSArray * lEntries = [dict valueForKey:@"Entries"];
-	for (NSDictionary * d in lEntries) {
-		[mEntries addObject: [[Entry alloc] initWithDictionary:d]];
+	if ([lEntries isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lEntries) {
+			[mEntries addObject: [[Entry alloc] initWithDictionary:d]];
+		}
 	}
 	[self setEntries:mEntries];
-	
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -6268,9 +5704,7 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setBefore:[dict valueForKey:@"Before"]];
-	
 	[self setLimit:[dict valueForKey:@"Limit"]];
-	
 
 	return self;
 }
@@ -6302,11 +5736,12 @@ static Qortexapi * _qortexapi;
 
 	NSMutableArray * mNotificationItems = [[NSMutableArray alloc] init];
 	NSArray * lNotificationItems = [dict valueForKey:@"NotificationItems"];
-	for (NSDictionary * d in lNotificationItems) {
-		[mNotificationItems addObject: [[NotificationItem alloc] initWithDictionary:d]];
+	if ([lNotificationItems isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lNotificationItems) {
+			[mNotificationItems addObject: [[NotificationItem alloc] initWithDictionary:d]];
+		}
 	}
 	[self setNotificationItems:mNotificationItems];
-	
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -6342,7 +5777,6 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setGroupId:[dict valueForKey:@"GroupId"]];
-	
 
 	return self;
 }
@@ -6371,7 +5805,6 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setMycount:[[MyCount alloc] initWithDictionary:[dict valueForKey:@"Mycount"]]];
-	
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -6402,17 +5835,15 @@ static Qortexapi * _qortexapi;
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
-	[self setBefore:[NSDate dateWithString:[dict valueForKey:@"Before"]]];
-	
+	[self setBefore:[[Qortexapi dateFormatter] dateFromString:[dict valueForKey:@"Before"]]];
 	[self setLimit:[dict valueForKey:@"Limit"]];
-	
 
 	return self;
 }
 
 - (NSDictionary*) dictionary {
 	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
-	[dict setValue:self.Before forKey:@"Before"];
+	[dict setValue:[[Qortexapi dateFormatter] stringFromDate:self.Before] forKey:@"Before"];
 	[dict setValue:self.Limit forKey:@"Limit"];
 
 	return dict;
@@ -6435,7 +5866,6 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setWatchlist:[[WatchList alloc] initWithDictionary:[dict valueForKey:@"Watchlist"]]];
-	
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -6467,9 +5897,7 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setEntryId:[dict valueForKey:@"EntryId"]];
-	
 	[self setGroupId:[dict valueForKey:@"GroupId"]];
-	
 
 	return self;
 }
@@ -6499,7 +5927,6 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setAdded:[[dict valueForKey:@"Added"] boolValue]];
-	
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -6530,9 +5957,7 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setEntryId:[dict valueForKey:@"EntryId"]];
-	
 	[self setGroupId:[dict valueForKey:@"GroupId"]];
-	
 
 	return self;
 }
@@ -6562,7 +5987,6 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setStopped:[[dict valueForKey:@"Stopped"] boolValue]];
-	
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -6593,9 +6017,7 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setEntryId:[dict valueForKey:@"EntryId"]];
-	
 	[self setGroupId:[dict valueForKey:@"GroupId"]];
-	
 
 	return self;
 }
@@ -6651,7 +6073,6 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setInput:[[LikeInput alloc] initWithDictionary:[dict valueForKey:@"Input"]]];
-	
 
 	return self;
 }
@@ -6681,7 +6102,6 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setEntry:[[Entry alloc] initWithDictionary:[dict valueForKey:@"Entry"]]];
-	
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -6712,17 +6132,15 @@ static Qortexapi * _qortexapi;
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
-	[self setBefore:[NSDate dateWithString:[dict valueForKey:@"Before"]]];
-	
+	[self setBefore:[[Qortexapi dateFormatter] dateFromString:[dict valueForKey:@"Before"]]];
 	[self setLimit:[dict valueForKey:@"Limit"]];
-	
 
 	return self;
 }
 
 - (NSDictionary*) dictionary {
 	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
-	[dict setValue:self.Before forKey:@"Before"];
+	[dict setValue:[[Qortexapi dateFormatter] stringFromDate:self.Before] forKey:@"Before"];
 	[dict setValue:self.Limit forKey:@"Limit"];
 
 	return dict;
@@ -6745,7 +6163,6 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setDraftlist:[[DraftList alloc] initWithDictionary:[dict valueForKey:@"Draftlist"]]];
-	
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -6777,9 +6194,7 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setEntryId:[dict valueForKey:@"EntryId"]];
-	
 	[self setGroupId:[dict valueForKey:@"GroupId"]];
-	
 
 	return self;
 }
@@ -6809,7 +6224,6 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setEntry:[[Entry alloc] initWithDictionary:[dict valueForKey:@"Entry"]]];
-	
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -6841,9 +6255,7 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setEntryId:[dict valueForKey:@"EntryId"]];
-	
 	[self setGroupId:[dict valueForKey:@"GroupId"]];
-	
 
 	return self;
 }
@@ -6924,7 +6336,6 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setGroup:[[Group alloc] initWithDictionary:[dict valueForKey:@"Group"]]];
-	
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -6955,7 +6366,6 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setGroupId:[dict valueForKey:@"GroupId"]];
-	
 
 	return self;
 }
@@ -6984,7 +6394,6 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setGroup:[[Group alloc] initWithDictionary:[dict valueForKey:@"Group"]]];
-	
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -7015,7 +6424,6 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setInput:[[GroupInput alloc] initWithDictionary:[dict valueForKey:@"Input"]]];
-	
 
 	return self;
 }
@@ -7046,9 +6454,7 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setGroup:[[Group alloc] initWithDictionary:[dict valueForKey:@"Group"]]];
-	
 	[self setValidated:[dict valueForKey:@"Validated"]];
-	
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -7080,7 +6486,6 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setInput:[[GroupInput alloc] initWithDictionary:[dict valueForKey:@"Input"]]];
-	
 
 	return self;
 }
@@ -7110,7 +6515,6 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setValidated:[dict valueForKey:@"Validated"]];
-	
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -7141,9 +6545,7 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setGroupId:[dict valueForKey:@"GroupId"]];
-	
 	[self setLogoURL:[dict valueForKey:@"LogoURL"]];
-	
 
 	return self;
 }
@@ -7199,7 +6601,6 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setGroupId:[dict valueForKey:@"GroupId"]];
-	
 
 	return self;
 }
@@ -7254,7 +6655,6 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setSlug:[dict valueForKey:@"Slug"]];
-	
 
 	return self;
 }
@@ -7283,7 +6683,6 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setGroup:[[Group alloc] initWithDictionary:[dict valueForKey:@"Group"]]];
-	
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -7314,7 +6713,6 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setKeyword:[dict valueForKey:@"Keyword"]];
-	
 
 	return self;
 }
@@ -7345,11 +6743,12 @@ static Qortexapi * _qortexapi;
 
 	NSMutableArray * mGroups = [[NSMutableArray alloc] init];
 	NSArray * lGroups = [dict valueForKey:@"Groups"];
-	for (NSDictionary * d in lGroups) {
-		[mGroups addObject: [[Group alloc] initWithDictionary:d]];
+	if ([lGroups isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lGroups) {
+			[mGroups addObject: [[Group alloc] initWithDictionary:d]];
+		}
 	}
 	[self setGroups:mGroups];
-	
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -7385,7 +6784,6 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setKeyword:[dict valueForKey:@"Keyword"]];
-	
 
 	return self;
 }
@@ -7416,11 +6814,12 @@ static Qortexapi * _qortexapi;
 
 	NSMutableArray * mGroups = [[NSMutableArray alloc] init];
 	NSArray * lGroups = [dict valueForKey:@"Groups"];
-	for (NSDictionary * d in lGroups) {
-		[mGroups addObject: [[Group alloc] initWithDictionary:d]];
+	if ([lGroups isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lGroups) {
+			[mGroups addObject: [[Group alloc] initWithDictionary:d]];
+		}
 	}
 	[self setGroups:mGroups];
-	
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -7457,9 +6856,7 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setGroupId:[dict valueForKey:@"GroupId"]];
-	
 	[self setUserId:[dict valueForKey:@"UserId"]];
-	
 
 	return self;
 }
@@ -7516,9 +6913,7 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setGroupId:[dict valueForKey:@"GroupId"]];
-	
 	[self setUserId:[dict valueForKey:@"UserId"]];
-	
 
 	return self;
 }
@@ -7574,7 +6969,6 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setGroupId:[dict valueForKey:@"GroupId"]];
-	
 
 	return self;
 }
@@ -7603,7 +6997,6 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setHeader:[[GroupHeader alloc] initWithDictionary:[dict valueForKey:@"Header"]]];
-	
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -7661,23 +7054,24 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setAnouncementGroup:[[Group alloc] initWithDictionary:[dict valueForKey:@"AnouncementGroup"]]];
-	
 
 	NSMutableArray * mFollowedGroups = [[NSMutableArray alloc] init];
 	NSArray * lFollowedGroups = [dict valueForKey:@"FollowedGroups"];
-	for (NSDictionary * d in lFollowedGroups) {
-		[mFollowedGroups addObject: [[Group alloc] initWithDictionary:d]];
+	if ([lFollowedGroups isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lFollowedGroups) {
+			[mFollowedGroups addObject: [[Group alloc] initWithDictionary:d]];
+		}
 	}
 	[self setFollowedGroups:mFollowedGroups];
-	
 
 	NSMutableArray * mUnFollowedGroups = [[NSMutableArray alloc] init];
 	NSArray * lUnFollowedGroups = [dict valueForKey:@"UnFollowedGroups"];
-	for (NSDictionary * d in lUnFollowedGroups) {
-		[mUnFollowedGroups addObject: [[Group alloc] initWithDictionary:d]];
+	if ([lUnFollowedGroups isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lUnFollowedGroups) {
+			[mUnFollowedGroups addObject: [[Group alloc] initWithDictionary:d]];
+		}
 	}
 	[self setUnFollowedGroups:mUnFollowedGroups];
-	
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -7724,11 +7118,8 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setKeyword:[dict valueForKey:@"Keyword"]];
-	
 	[self setStartFullName:[dict valueForKey:@"StartFullName"]];
-	
 	[self setLimit:[dict valueForKey:@"Limit"]];
-	
 
 	return self;
 }
@@ -7762,13 +7153,13 @@ static Qortexapi * _qortexapi;
 
 	NSMutableArray * mUsers = [[NSMutableArray alloc] init];
 	NSArray * lUsers = [dict valueForKey:@"Users"];
-	for (NSDictionary * d in lUsers) {
-		[mUsers addObject: [[User alloc] initWithDictionary:d]];
+	if ([lUsers isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lUsers) {
+			[mUsers addObject: [[User alloc] initWithDictionary:d]];
+		}
 	}
 	[self setUsers:mUsers];
-	
 	[self setNextFullName:[dict valueForKey:@"NextFullName"]];
-	
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -7809,15 +7200,10 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setGroupId:[dict valueForKey:@"GroupId"]];
-	
 	[self setKeyword:[dict valueForKey:@"Keyword"]];
-	
 	[self setOnlyFollowers:[[dict valueForKey:@"OnlyFollowers"] boolValue]];
-	
 	[self setStartFullName:[dict valueForKey:@"StartFullName"]];
-	
 	[self setLimit:[dict valueForKey:@"Limit"]];
-	
 
 	return self;
 }
@@ -7853,13 +7239,13 @@ static Qortexapi * _qortexapi;
 
 	NSMutableArray * mUsers = [[NSMutableArray alloc] init];
 	NSArray * lUsers = [dict valueForKey:@"Users"];
-	for (NSDictionary * d in lUsers) {
-		[mUsers addObject: [[User alloc] initWithDictionary:d]];
+	if ([lUsers isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lUsers) {
+			[mUsers addObject: [[User alloc] initWithDictionary:d]];
+		}
 	}
 	[self setUsers:mUsers];
-	
 	[self setNextFullName:[dict valueForKey:@"NextFullName"]];
-	
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -7896,7 +7282,6 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setUserId:[dict valueForKey:@"UserId"]];
-	
 
 	return self;
 }
@@ -7925,7 +7310,6 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setUser:[[User alloc] initWithDictionary:[dict valueForKey:@"User"]]];
-	
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -7956,7 +7340,6 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setUserId:[dict valueForKey:@"UserId"]];
-	
 
 	return self;
 }
@@ -8011,7 +7394,6 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setUserId:[dict valueForKey:@"UserId"]];
-	
 
 	return self;
 }
@@ -8066,7 +7448,6 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setUserId:[dict valueForKey:@"UserId"]];
-	
 
 	return self;
 }
@@ -8121,7 +7502,6 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setUserId:[dict valueForKey:@"UserId"]];
-	
 
 	return self;
 }
@@ -8176,7 +7556,6 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setUserId:[dict valueForKey:@"UserId"]];
-	
 
 	return self;
 }
@@ -8231,7 +7610,6 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setUserId:[dict valueForKey:@"UserId"]];
-	
 
 	return self;
 }
@@ -8286,7 +7664,6 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setUserId:[dict valueForKey:@"UserId"]];
-	
 
 	return self;
 }
@@ -8368,11 +7745,12 @@ static Qortexapi * _qortexapi;
 
 	NSMutableArray * mFollowingUsers = [[NSMutableArray alloc] init];
 	NSArray * lFollowingUsers = [dict valueForKey:@"FollowingUsers"];
-	for (NSDictionary * d in lFollowingUsers) {
-		[mFollowingUsers addObject: [[User alloc] initWithDictionary:d]];
+	if ([lFollowingUsers isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lFollowingUsers) {
+			[mFollowingUsers addObject: [[User alloc] initWithDictionary:d]];
+		}
 	}
 	[self setFollowingUsers:mFollowingUsers];
-	
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -8433,7 +7811,6 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setPanelStatus:[[PanelStatus alloc] initWithDictionary:[dict valueForKey:@"PanelStatus"]]];
-	
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -8489,7 +7866,6 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setPreferences:[[Preferences alloc] initWithDictionary:[dict valueForKey:@"Preferences"]]];
-	
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -8520,7 +7896,6 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setInput:[[PreferencesInput alloc] initWithDictionary:[dict valueForKey:@"Input"]]];
-	
 
 	return self;
 }
@@ -8551,9 +7926,7 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setPreferences:[[Preferences alloc] initWithDictionary:[dict valueForKey:@"Preferences"]]];
-	
 	[self setValidated:[dict valueForKey:@"Validated"]];
-	
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -8612,11 +7985,12 @@ static Qortexapi * _qortexapi;
 
 	NSMutableArray * mUsers = [[NSMutableArray alloc] init];
 	NSArray * lUsers = [dict valueForKey:@"Users"];
-	for (NSDictionary * d in lUsers) {
-		[mUsers addObject: [[EmbedUser alloc] initWithDictionary:d]];
+	if ([lUsers isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lUsers) {
+			[mUsers addObject: [[EmbedUser alloc] initWithDictionary:d]];
+		}
 	}
 	[self setUsers:mUsers];
-	
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -8679,11 +8053,12 @@ static Qortexapi * _qortexapi;
 
 	NSMutableArray * mGroupUsers = [[NSMutableArray alloc] init];
 	NSArray * lGroupUsers = [dict valueForKey:@"GroupUsers"];
-	for (NSDictionary * d in lGroupUsers) {
-		[mGroupUsers addObject: [[GroupUsers alloc] initWithDictionary:d]];
+	if ([lGroupUsers isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lGroupUsers) {
+			[mGroupUsers addObject: [[GroupUsers alloc] initWithDictionary:d]];
+		}
 	}
 	[self setGroupUsers:mGroupUsers];
-	
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -8719,7 +8094,6 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setInput:[[UserProfileInput alloc] initWithDictionary:[dict valueForKey:@"Input"]]];
-	
 
 	return self;
 }
@@ -8749,7 +8123,6 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setValidated:[dict valueForKey:@"Validated"]];
-	
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -8804,7 +8177,6 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setMyCount:[[MyCount alloc] initWithDictionary:[dict valueForKey:@"MyCount"]]];
-	
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -8836,9 +8208,7 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setEntryId:[dict valueForKey:@"EntryId"]];
-	
 	[self setGroupId:[dict valueForKey:@"GroupId"]];
-	
 
 	return self;
 }
@@ -8868,7 +8238,6 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setMyCount:[[MyCount alloc] initWithDictionary:[dict valueForKey:@"MyCount"]]];
-	
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -8926,11 +8295,12 @@ static Qortexapi * _qortexapi;
 
 	NSMutableArray * mInvitations = [[NSMutableArray alloc] init];
 	NSArray * lInvitations = [dict valueForKey:@"Invitations"];
-	for (NSDictionary * d in lInvitations) {
-		[mInvitations addObject: [[Invitation alloc] initWithDictionary:d]];
+	if ([lInvitations isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lInvitations) {
+			[mInvitations addObject: [[Invitation alloc] initWithDictionary:d]];
+		}
 	}
 	[self setInvitations:mInvitations];
-	
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -8966,7 +8336,6 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setOrgId:[dict valueForKey:@"OrgId"]];
-	
 
 	return self;
 }
@@ -8995,7 +8364,6 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setOrg:[[Organization alloc] initWithDictionary:[dict valueForKey:@"Org"]]];
-	
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -9026,7 +8394,6 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setOrgIds:[dict valueForKey:@"OrgIds"]];
-	
 
 	return self;
 }
@@ -9057,11 +8424,12 @@ static Qortexapi * _qortexapi;
 
 	NSMutableArray * mOrgs = [[NSMutableArray alloc] init];
 	NSArray * lOrgs = [dict valueForKey:@"Orgs"];
-	for (NSDictionary * d in lOrgs) {
-		[mOrgs addObject: [[Organization alloc] initWithDictionary:d]];
+	if ([lOrgs isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lOrgs) {
+			[mOrgs addObject: [[Organization alloc] initWithDictionary:d]];
+		}
 	}
 	[self setOrgs:mOrgs];
-	
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -9097,7 +8465,6 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setKeyword:[dict valueForKey:@"Keyword"]];
-	
 
 	return self;
 }
@@ -9128,11 +8495,12 @@ static Qortexapi * _qortexapi;
 
 	NSMutableArray * mOrgs = [[NSMutableArray alloc] init];
 	NSArray * lOrgs = [dict valueForKey:@"Orgs"];
-	for (NSDictionary * d in lOrgs) {
-		[mOrgs addObject: [[Organization alloc] initWithDictionary:d]];
+	if ([lOrgs isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lOrgs) {
+			[mOrgs addObject: [[Organization alloc] initWithDictionary:d]];
+		}
 	}
 	[self setOrgs:mOrgs];
-	
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -9168,7 +8536,6 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setInput:[[OrganizationInput alloc] initWithDictionary:[dict valueForKey:@"Input"]]];
-	
 
 	return self;
 }
@@ -9199,9 +8566,7 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setOrg:[[Organization alloc] initWithDictionary:[dict valueForKey:@"Org"]]];
-	
 	[self setValidated:[dict valueForKey:@"Validated"]];
-	
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -9233,7 +8598,6 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setOrgId:[dict valueForKey:@"OrgId"]];
-	
 
 	return self;
 }
@@ -9291,13 +8655,9 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setFromOrgId:[dict valueForKey:@"FromOrgId"]];
-	
 	[self setSharedOrgId:[dict valueForKey:@"SharedOrgId"]];
-	
 	[self setSharedGroupId:[dict valueForKey:@"SharedGroupId"]];
-	
 	[self setFromUserId:[dict valueForKey:@"FromUserId"]];
-	
 
 	return self;
 }
@@ -9329,7 +8689,6 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setReq:[[Request alloc] initWithDictionary:[dict valueForKey:@"Req"]]];
-	
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -9363,13 +8722,9 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setFromOrgId:[dict valueForKey:@"FromOrgId"]];
-	
 	[self setSharedOrgId:[dict valueForKey:@"SharedOrgId"]];
-	
 	[self setSharedGroupId:[dict valueForKey:@"SharedGroupId"]];
-	
 	[self setFromUserId:[dict valueForKey:@"FromUserId"]];
-	
 
 	return self;
 }
@@ -9401,7 +8756,6 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setReq:[[Request alloc] initWithDictionary:[dict valueForKey:@"Req"]]];
-	
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -9457,7 +8811,6 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setOrgSetting:[[OrgSettings alloc] initWithDictionary:[dict valueForKey:@"OrgSetting"]]];
-	
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -9488,7 +8841,6 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setOrgSettingInput:[[OrgSettingsInput alloc] initWithDictionary:[dict valueForKey:@"OrgSettingInput"]]];
-	
 
 	return self;
 }
@@ -9569,7 +8921,6 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setOk:[[dict valueForKey:@"Ok"] boolValue]];
-	
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -9624,7 +8975,6 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setOk:[[dict valueForKey:@"Ok"] boolValue]];
-	
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -9654,7 +9004,6 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setEmails:[dict valueForKey:@"Emails"]];
-	
 
 	return self;
 }
@@ -9683,7 +9032,6 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setValidated:[dict valueForKey:@"Validated"]];
-	
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -9713,7 +9061,6 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setEmail:[dict valueForKey:@"Email"]];
-	
 
 	return self;
 }
@@ -9768,7 +9115,6 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setEmail:[dict valueForKey:@"Email"]];
-	
 
 	return self;
 }
@@ -9823,7 +9169,6 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setInput:[[MailUpdatesInput alloc] initWithDictionary:[dict valueForKey:@"Input"]]];
-	
 
 	return self;
 }
@@ -9879,7 +9224,6 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setNewEmail:[dict valueForKey:@"NewEmail"]];
-	
 
 	return self;
 }
@@ -9909,9 +9253,7 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setChanger:[[EmailChanger alloc] initWithDictionary:[dict valueForKey:@"Changer"]]];
-	
 	[self setValidated:[dict valueForKey:@"Validated"]];
-	
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -9943,7 +9285,6 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setToken:[dict valueForKey:@"Token"]];
-	
 
 	return self;
 }
@@ -9998,7 +9339,6 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setInput:[[MemberAccountInput alloc] initWithDictionary:[dict valueForKey:@"Input"]]];
-	
 
 	return self;
 }
@@ -10028,7 +9368,6 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setValidated:[dict valueForKey:@"Validated"]];
-	
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -10060,11 +9399,8 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setGroupId:[dict valueForKey:@"GroupId"]];
-	
 	[self setEmail:[dict valueForKey:@"Email"]];
-	
 	[self setIsResend:[[dict valueForKey:@"IsResend"] boolValue]];
-	
 
 	return self;
 }
@@ -10096,9 +9432,7 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setSi:[[SharingInvitation alloc] initWithDictionary:[dict valueForKey:@"Si"]]];
-	
 	[self setValidated:[dict valueForKey:@"Validated"]];
-	
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -10130,7 +9464,6 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setGroupId:[dict valueForKey:@"GroupId"]];
-	
 
 	return self;
 }
@@ -10161,11 +9494,12 @@ static Qortexapi * _qortexapi;
 
 	NSMutableArray * mSis = [[NSMutableArray alloc] init];
 	NSArray * lSis = [dict valueForKey:@"Sis"];
-	for (NSDictionary * d in lSis) {
-		[mSis addObject: [[SharingInvitation alloc] initWithDictionary:d]];
+	if ([lSis isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lSis) {
+			[mSis addObject: [[SharingInvitation alloc] initWithDictionary:d]];
+		}
 	}
 	[self setSis:mSis];
-	
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -10202,9 +9536,7 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setGroupId:[dict valueForKey:@"GroupId"]];
-	
 	[self setEmail:[dict valueForKey:@"Email"]];
-	
 
 	return self;
 }
@@ -10261,9 +9593,7 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setGroupId:[dict valueForKey:@"GroupId"]];
-	
 	[self setToStopOrgId:[dict valueForKey:@"ToStopOrgId"]];
-	
 
 	return self;
 }
@@ -10319,7 +9649,6 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setGroupId:[dict valueForKey:@"GroupId"]];
-	
 
 	return self;
 }
@@ -10374,7 +9703,6 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setInput:[[ShareChatInput alloc] initWithDictionary:[dict valueForKey:@"Input"]]];
-	
 
 	return self;
 }
@@ -10405,9 +9733,7 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setChatEntry:[[Entry alloc] initWithDictionary:[dict valueForKey:@"ChatEntry"]]];
-	
 	[self setValidated:[dict valueForKey:@"Validated"]];
-	
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -10441,9 +9767,7 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setEmail:[dict valueForKey:@"Email"]];
-	
 	[self setPassword:[dict valueForKey:@"Password"]];
-	
 
 	return self;
 }
@@ -10473,7 +9797,6 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setSession:[dict valueForKey:@"Session"]];
-	
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -10504,9 +9827,7 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setMemberId:[dict valueForKey:@"MemberId"]];
-	
 	[self setNewEmail:[dict valueForKey:@"NewEmail"]];
-	
 
 	return self;
 }
@@ -10537,9 +9858,7 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setChanger:[[EmailChanger alloc] initWithDictionary:[dict valueForKey:@"Changer"]]];
-	
 	[self setValidated:[dict valueForKey:@"Validated"]];
-	
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -10571,7 +9890,6 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setToken:[dict valueForKey:@"Token"]];
-	
 
 	return self;
 }
@@ -10600,7 +9918,6 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setActivationToken:[dict valueForKey:@"ActivationToken"]];
-	
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -10630,7 +9947,6 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setToken:[dict valueForKey:@"Token"]];
-	
 
 	return self;
 }
@@ -10686,9 +10002,7 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setToken:[dict valueForKey:@"Token"]];
-	
 	[self setNewEmail:[dict valueForKey:@"NewEmail"]];
-	
 
 	return self;
 }
@@ -10718,7 +10032,6 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setValidated:[dict valueForKey:@"Validated"]];
-	
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -10749,9 +10062,7 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setSharingInviationToken:[dict valueForKey:@"SharingInviationToken"]];
-	
 	[self setMemberId:[dict valueForKey:@"MemberId"]];
-	
 
 	return self;
 }
@@ -10781,7 +10092,6 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setInvitation:[[SharingInvitation alloc] initWithDictionary:[dict valueForKey:@"Invitation"]]];
-	
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -10812,7 +10122,6 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setInput:[[ContactInput alloc] initWithDictionary:[dict valueForKey:@"Input"]]];
-	
 
 	return self;
 }
@@ -10843,9 +10152,7 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setContact:[[ContactInfo alloc] initWithDictionary:[dict valueForKey:@"Contact"]]];
-	
 	[self setValidated:[dict valueForKey:@"Validated"]];
-	
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -10879,11 +10186,8 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setDoi:[dict valueForKey:@"Doi"]];
-	
 	[self setPageNum:[dict valueForKey:@"PageNum"]];
-	
 	[self setLimit:[dict valueForKey:@"Limit"]];
-	
 
 	return self;
 }
@@ -10916,17 +10220,16 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setBlog:[[Blog alloc] initWithDictionary:[dict valueForKey:@"Blog"]]];
-	
 
 	NSMutableArray * mBlogEntries = [[NSMutableArray alloc] init];
 	NSArray * lBlogEntries = [dict valueForKey:@"BlogEntries"];
-	for (NSDictionary * d in lBlogEntries) {
-		[mBlogEntries addObject: [[BlogEntry alloc] initWithDictionary:d]];
+	if ([lBlogEntries isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lBlogEntries) {
+			[mBlogEntries addObject: [[BlogEntry alloc] initWithDictionary:d]];
+		}
 	}
 	[self setBlogEntries:mBlogEntries];
-	
 	[self setTotalPageNum:[dict valueForKey:@"TotalPageNum"]];
-	
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -10966,9 +10269,7 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setDoi:[dict valueForKey:@"Doi"]];
-	
 	[self setSlug:[dict valueForKey:@"Slug"]];
-	
 
 	return self;
 }
@@ -10999,9 +10300,7 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setBlog:[[Blog alloc] initWithDictionary:[dict valueForKey:@"Blog"]]];
-	
 	[self setBlogEntry:[[BlogEntry alloc] initWithDictionary:[dict valueForKey:@"BlogEntry"]]];
-	
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -11035,9 +10334,7 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setDoi:[dict valueForKey:@"Doi"]];
-	
 	[self setInput:[[EntryInput alloc] initWithDictionary:[dict valueForKey:@"Input"]]];
-	
 
 	return self;
 }
@@ -11069,9 +10366,7 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setBlogEntry:[[BlogEntry alloc] initWithDictionary:[dict valueForKey:@"BlogEntry"]]];
-	
 	[self setValidated:[dict valueForKey:@"Validated"]];
-	
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -11104,9 +10399,7 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setDoi:[dict valueForKey:@"Doi"]];
-	
 	[self setSlug:[dict valueForKey:@"Slug"]];
-	
 
 	return self;
 }
@@ -11136,7 +10429,6 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setValidSlug:[dict valueForKey:@"ValidSlug"]];
-	
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -11166,7 +10458,6 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setInput:[[NewsletterInput alloc] initWithDictionary:[dict valueForKey:@"Input"]]];
-	
 
 	return self;
 }
@@ -11197,9 +10488,7 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setNewsletter:[[Newsletter alloc] initWithDictionary:[dict valueForKey:@"Newsletter"]]];
-	
 	[self setValidated:[dict valueForKey:@"Validated"]];
-	
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -11382,7 +10671,6 @@ static Qortexapi * _qortexapi;
 		return self;
 	}
 	[self setSession:[dict valueForKey:@"Session"]];
-	
 
 	return self;
 }

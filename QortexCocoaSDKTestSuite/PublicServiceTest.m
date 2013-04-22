@@ -35,4 +35,13 @@
 	STAssertTrue(r.Err.code == 405, @"Error code is wrong %@", r.Err);
 }
 
+- (void)testGetBlogEntries {
+	PublicServiceGetBlogEntriesResults *r = [_publicService GetBlogEntries:@"theplant" pageNum:@1 limit:@10];
+	STAssertTrue(r.Err == nil, @"has error %@", r.Err);
+	STAssertTrue([r.BlogEntries count] > 0, @"blog entries count is %d", [r.BlogEntries count]);
+	BlogEntry *be = r.BlogEntries[0];
+	STAssertTrue(be.CreatedAt != nil, @"created at is %@", be.CreatedAt);
+	STAssertEqualObjects(@"Anatole Varin", be.Author.Name, @"author is %@", be.Author.Name);
+}
+
 @end

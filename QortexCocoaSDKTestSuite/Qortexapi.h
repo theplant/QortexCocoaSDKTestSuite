@@ -7,8 +7,6 @@
 @property (nonatomic, strong) NSString * BaseURL;
 @property (nonatomic, assign) BOOL Verbose;
 + (Qortexapi *) get;
-+ (NSDictionary *) request:(NSURL*)url req:(NSDictionary *)req error:(NSError **)error;
-+ (NSError *)errorWithDictionary:(NSDictionary *)dict;
 @end
 
 @interface Validated : NSObject
