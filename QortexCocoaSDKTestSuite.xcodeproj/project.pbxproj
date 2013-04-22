@@ -18,6 +18,8 @@
 		B58DA3A4172544C500816CA3 /* PublicServiceTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B58DA3A0172544C500816CA3 /* PublicServiceTest.m */; };
 		B58DA3A5172544C500816CA3 /* Qortexapi.m in Sources */ = {isa = PBXBuildFile; fileRef = B58DA3A2172544C500816CA3 /* Qortexapi.m */; };
 		B58DA3A6172544C500816CA3 /* Qortexapi.m in Sources */ = {isa = PBXBuildFile; fileRef = B58DA3A2172544C500816CA3 /* Qortexapi.m */; };
+		B58DA3A9172575E000816CA3 /* AuthUserServiceTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B58DA3A8172575E000816CA3 /* AuthUserServiceTest.m */; };
+		B58DA3AA172575E000816CA3 /* AuthUserServiceTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B58DA3A8172575E000816CA3 /* AuthUserServiceTest.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +42,8 @@
 		B58DA3A0172544C500816CA3 /* PublicServiceTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublicServiceTest.m; sourceTree = "<group>"; };
 		B58DA3A1172544C500816CA3 /* Qortexapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Qortexapi.h; sourceTree = "<group>"; };
 		B58DA3A2172544C500816CA3 /* Qortexapi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Qortexapi.m; sourceTree = "<group>"; };
+		B58DA3A7172575E000816CA3 /* AuthUserServiceTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuthUserServiceTest.h; sourceTree = "<group>"; };
+		B58DA3A8172575E000816CA3 /* AuthUserServiceTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuthUserServiceTest.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,6 +118,8 @@
 				B58DA3A0172544C500816CA3 /* PublicServiceTest.m */,
 				B58DA3A1172544C500816CA3 /* Qortexapi.h */,
 				B58DA3A2172544C500816CA3 /* Qortexapi.m */,
+				B58DA3A7172575E000816CA3 /* AuthUserServiceTest.h */,
+				B58DA3A8172575E000816CA3 /* AuthUserServiceTest.m */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -274,6 +280,7 @@
 			files = (
 				B58DA3A3172544C500816CA3 /* PublicServiceTest.m in Sources */,
 				B58DA3A5172544C500816CA3 /* Qortexapi.m in Sources */,
+				B58DA3A9172575E000816CA3 /* AuthUserServiceTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -283,6 +290,7 @@
 			files = (
 				B58DA3A4172544C500816CA3 /* PublicServiceTest.m in Sources */,
 				B58DA3A6172544C500816CA3 /* Qortexapi.m in Sources */,
+				B58DA3AA172575E000816CA3 /* AuthUserServiceTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
