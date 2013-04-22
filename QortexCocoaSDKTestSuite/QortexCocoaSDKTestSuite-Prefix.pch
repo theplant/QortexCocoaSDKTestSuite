@@ -1,8 +1,0 @@
-//
-// Prefix header for all source files of the 'PublicServiceTest' target in the 'PublicServiceTest' project
-//
-
-#ifdef __OBJC__
-    #import <Cocoa/Cocoa.h>
-
-#endif
