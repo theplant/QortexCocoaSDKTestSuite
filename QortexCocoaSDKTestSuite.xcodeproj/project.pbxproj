@@ -7,36 +7,58 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		9151B1FE52814A0213E1A98D /* PublicServiceTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 9151B352ABB3A92228BB810D /* PublicServiceTest.m */; };
-		9151B2EA9635B5D4FE5AA2E5 /* Qortexapi.m in Sources */ = {isa = PBXBuildFile; fileRef = 9151B59295C2FF264982A50B /* Qortexapi.m */; };
-		9151B407682AB6E7459790D6 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9151B9EC42D3C1FAA589C98B /* InfoPlist.strings */; };
-		9151B4E32437D095908C5827 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9151B6A7BA7F9A9453452BEB /* Cocoa.framework */; };
-		9151BD46AB0B434003F41A45 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9151B339B235C36E2C3E5BFA /* SenTestingKit.framework */; };
+		B58DA37A172540AF00816CA3 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9151B339B235C36E2C3E5BFA /* SenTestingKit.framework */; };
+		B58DA37B172540AF00816CA3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B58DA35517253CD500816CA3 /* UIKit.framework */; };
+		B58DA37C172540AF00816CA3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B58DA35717253CD500816CA3 /* Foundation.framework */; };
+		B58DA382172540AF00816CA3 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B58DA380172540AF00816CA3 /* InfoPlist.strings */; };
+		B58DA3901725449E00816CA3 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9151B339B235C36E2C3E5BFA /* SenTestingKit.framework */; };
+		B58DA3911725449E00816CA3 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9151B6A7BA7F9A9453452BEB /* Cocoa.framework */; };
+		B58DA3971725449E00816CA3 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B58DA3951725449E00816CA3 /* InfoPlist.strings */; };
+		B58DA3A3172544C500816CA3 /* PublicServiceTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B58DA3A0172544C500816CA3 /* PublicServiceTest.m */; };
+		B58DA3A4172544C500816CA3 /* PublicServiceTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B58DA3A0172544C500816CA3 /* PublicServiceTest.m */; };
+		B58DA3A5172544C500816CA3 /* Qortexapi.m in Sources */ = {isa = PBXBuildFile; fileRef = B58DA3A2172544C500816CA3 /* Qortexapi.m */; };
+		B58DA3A6172544C500816CA3 /* Qortexapi.m in Sources */ = {isa = PBXBuildFile; fileRef = B58DA3A2172544C500816CA3 /* Qortexapi.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		9151B00FF7B2C895DB5AA08C /* PublicServiceTest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PublicServiceTest.h; sourceTree = "<group>"; };
-		9151B06FF7692CF7659A7F07 /* QortexCocoaSDKTestSuite-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.info; path = "QortexCocoaSDKTestSuite-Info.plist"; sourceTree = "<group>"; };
 		9151B339B235C36E2C3E5BFA /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
-		9151B352ABB3A92228BB810D /* PublicServiceTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PublicServiceTest.m; sourceTree = "<group>"; };
-		9151B59295C2FF264982A50B /* Qortexapi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Qortexapi.m; sourceTree = "<group>"; };
 		9151B609FF560B9355EB4D45 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		9151B6A7BA7F9A9453452BEB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
-		9151BA3B72EA461B5DB0BC91 /* QortexCocoaSDKTestSuite-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "QortexCocoaSDKTestSuite-Prefix.pch"; sourceTree = "<group>"; };
-		9151BA6B4ADD877D9E8CE1C8 /* Qortexapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Qortexapi.h; sourceTree = "<group>"; };
-		9151BB321AE207548D83DCD2 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		9151BCECC2AEC5315F0C67FA /* QortexCocoaSDKTestSuite.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QortexCocoaSDKTestSuite.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9151BF41C62DF841AD3D8275 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		9151BF69D5E03A09487E74AC /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		B58DA35517253CD500816CA3 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
+		B58DA35717253CD500816CA3 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		B58DA379172540AF00816CA3 /* iOSTestSuite.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iOSTestSuite.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		B58DA37F172540AF00816CA3 /* iOSTestSuite-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "iOSTestSuite-Info.plist"; sourceTree = "<group>"; };
+		B58DA381172540AF00816CA3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		B58DA386172540AF00816CA3 /* iOSTestSuite-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "iOSTestSuite-Prefix.pch"; sourceTree = "<group>"; };
+		B58DA38F1725449E00816CA3 /* CocoaTestSuite.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CocoaTestSuite.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		B58DA3941725449E00816CA3 /* CocoaTestSuite-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CocoaTestSuite-Info.plist"; sourceTree = "<group>"; };
+		B58DA3961725449E00816CA3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		B58DA39B1725449E00816CA3 /* CocoaTestSuite-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CocoaTestSuite-Prefix.pch"; sourceTree = "<group>"; };
+		B58DA39F172544C500816CA3 /* PublicServiceTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublicServiceTest.h; sourceTree = "<group>"; };
+		B58DA3A0172544C500816CA3 /* PublicServiceTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublicServiceTest.m; sourceTree = "<group>"; };
+		B58DA3A1172544C500816CA3 /* Qortexapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Qortexapi.h; sourceTree = "<group>"; };
+		B58DA3A2172544C500816CA3 /* Qortexapi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Qortexapi.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		9151BAF2270383403F904804 /* Frameworks */ = {
+		B58DA375172540AF00816CA3 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9151BD46AB0B434003F41A45 /* SenTestingKit.framework in Frameworks */,
-				9151B4E32437D095908C5827 /* Cocoa.framework in Frameworks */,
+				B58DA37A172540AF00816CA3 /* SenTestingKit.framework in Frameworks */,
+				B58DA37B172540AF00816CA3 /* UIKit.framework in Frameworks */,
+				B58DA37C172540AF00816CA3 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B58DA38B1725449E00816CA3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B58DA3901725449E00816CA3 /* SenTestingKit.framework in Frameworks */,
+				B58DA3911725449E00816CA3 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -53,42 +75,23 @@
 			name = "Other Frameworks";
 			sourceTree = "<group>";
 		};
-		9151B1CEF461202283E43F8E /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				9151B06FF7692CF7659A7F07 /* QortexCocoaSDKTestSuite-Info.plist */,
-				9151B9EC42D3C1FAA589C98B /* InfoPlist.strings */,
-				9151BA3B72EA461B5DB0BC91 /* QortexCocoaSDKTestSuite-Prefix.pch */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
 		9151B26D7A93F2619C8495CD /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				9151BCECC2AEC5315F0C67FA /* QortexCocoaSDKTestSuite.octest */,
+				B58DA379172540AF00816CA3 /* iOSTestSuite.octest */,
+				B58DA38F1725449E00816CA3 /* CocoaTestSuite.octest */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		9151B435A41E7F48EA0A5C40 /* QortexCocoaSDKTestSuite */ = {
-			isa = PBXGroup;
-			children = (
-				9151B1CEF461202283E43F8E /* Supporting Files */,
-				9151B00FF7B2C895DB5AA08C /* PublicServiceTest.h */,
-				9151B352ABB3A92228BB810D /* PublicServiceTest.m */,
-				9151BA6B4ADD877D9E8CE1C8 /* Qortexapi.h */,
-				9151B59295C2FF264982A50B /* Qortexapi.m */,
-			);
-			path = QortexCocoaSDKTestSuite;
 			sourceTree = "<group>";
 		};
 		9151BA9DF8A0EC0FBC01C1F1 = {
 			isa = PBXGroup;
 			children = (
+				B58DA36D1725400800816CA3 /* Tests */,
+				B58DA37D172540AF00816CA3 /* iOSTestSuite */,
+				B58DA3921725449E00816CA3 /* CocoaTestSuite */,
 				9151B26D7A93F2619C8495CD /* Products */,
 				9151BE2B95F7D9AD3285CD8E /* Frameworks */,
-				9151B435A41E7F48EA0A5C40 /* QortexCocoaSDKTestSuite */,
 			);
 			sourceTree = "<group>";
 		};
@@ -97,30 +100,97 @@
 			children = (
 				9151B339B235C36E2C3E5BFA /* SenTestingKit.framework */,
 				9151B6A7BA7F9A9453452BEB /* Cocoa.framework */,
+				B58DA35517253CD500816CA3 /* UIKit.framework */,
+				B58DA35717253CD500816CA3 /* Foundation.framework */,
 				9151B12D058EC5003A6F764F /* Other Frameworks */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		B58DA36D1725400800816CA3 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				B58DA39F172544C500816CA3 /* PublicServiceTest.h */,
+				B58DA3A0172544C500816CA3 /* PublicServiceTest.m */,
+				B58DA3A1172544C500816CA3 /* Qortexapi.h */,
+				B58DA3A2172544C500816CA3 /* Qortexapi.m */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
+		B58DA37D172540AF00816CA3 /* iOSTestSuite */ = {
+			isa = PBXGroup;
+			children = (
+				B58DA37E172540AF00816CA3 /* Supporting Files */,
+			);
+			path = iOSTestSuite;
+			sourceTree = "<group>";
+		};
+		B58DA37E172540AF00816CA3 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				B58DA37F172540AF00816CA3 /* iOSTestSuite-Info.plist */,
+				B58DA380172540AF00816CA3 /* InfoPlist.strings */,
+				B58DA386172540AF00816CA3 /* iOSTestSuite-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		B58DA3921725449E00816CA3 /* CocoaTestSuite */ = {
+			isa = PBXGroup;
+			children = (
+				B58DA3931725449E00816CA3 /* Supporting Files */,
+			);
+			path = CocoaTestSuite;
+			sourceTree = "<group>";
+		};
+		B58DA3931725449E00816CA3 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				B58DA3941725449E00816CA3 /* CocoaTestSuite-Info.plist */,
+				B58DA3951725449E00816CA3 /* InfoPlist.strings */,
+				B58DA39B1725449E00816CA3 /* CocoaTestSuite-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		9151B80B446106BE46D63FEB /* QortexCocoaSDKTestSuite */ = {
+		B58DA378172540AF00816CA3 /* iOSTestSuite */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 9151B3825963B24B6DF97BC7 /* Build configuration list for PBXNativeTarget "QortexCocoaSDKTestSuite" */;
+			buildConfigurationList = B58DA387172540AF00816CA3 /* Build configuration list for PBXNativeTarget "iOSTestSuite" */;
 			buildPhases = (
-				9151BA9E81530A47304CF45A /* Sources */,
-				9151BAF2270383403F904804 /* Frameworks */,
-				9151BEAC1F2EEFB3A415951C /* Resources */,
-				9151B12FC9D71EB4D0A72DF1 /* ShellScript */,
+				B58DA374172540AF00816CA3 /* Sources */,
+				B58DA375172540AF00816CA3 /* Frameworks */,
+				B58DA376172540AF00816CA3 /* Resources */,
+				B58DA377172540AF00816CA3 /* ShellScript */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = QortexCocoaSDKTestSuite;
-			productName = QortexCocoaSDKTestSuite;
-			productReference = 9151BCECC2AEC5315F0C67FA /* QortexCocoaSDKTestSuite.octest */;
+			name = iOSTestSuite;
+			productName = iOSTestSuite;
+			productReference = B58DA379172540AF00816CA3 /* iOSTestSuite.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
+		B58DA38E1725449E00816CA3 /* CocoaTestSuite */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B58DA39C1725449E00816CA3 /* Build configuration list for PBXNativeTarget "CocoaTestSuite" */;
+			buildPhases = (
+				B58DA38A1725449E00816CA3 /* Sources */,
+				B58DA38B1725449E00816CA3 /* Frameworks */,
+				B58DA38C1725449E00816CA3 /* Resources */,
+				B58DA38D1725449E00816CA3 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CocoaTestSuite;
+			productName = CocoaTestSuite;
+			productReference = B58DA38F1725449E00816CA3 /* CocoaTestSuite.octest */;
 			productType = "com.apple.product-type.bundle";
 		};
 /* End PBXNativeTarget section */
@@ -143,24 +213,46 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				9151B80B446106BE46D63FEB /* QortexCocoaSDKTestSuite */,
+				B58DA378172540AF00816CA3 /* iOSTestSuite */,
+				B58DA38E1725449E00816CA3 /* CocoaTestSuite */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		9151BEAC1F2EEFB3A415951C /* Resources */ = {
+		B58DA376172540AF00816CA3 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9151B407682AB6E7459790D6 /* InfoPlist.strings in Resources */,
+				B58DA382172540AF00816CA3 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B58DA38C1725449E00816CA3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B58DA3971725449E00816CA3 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		9151B12FC9D71EB4D0A72DF1 /* ShellScript */ = {
+		B58DA377172540AF00816CA3 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+		B58DA38D1725449E00816CA3 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -176,22 +268,39 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		9151BA9E81530A47304CF45A /* Sources */ = {
+		B58DA374172540AF00816CA3 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9151B1FE52814A0213E1A98D /* PublicServiceTest.m in Sources */,
-				9151B2EA9635B5D4FE5AA2E5 /* Qortexapi.m in Sources */,
+				B58DA3A3172544C500816CA3 /* PublicServiceTest.m in Sources */,
+				B58DA3A5172544C500816CA3 /* Qortexapi.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B58DA38A1725449E00816CA3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B58DA3A4172544C500816CA3 /* PublicServiceTest.m in Sources */,
+				B58DA3A6172544C500816CA3 /* Qortexapi.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		9151B9EC42D3C1FAA589C98B /* InfoPlist.strings */ = {
+		B58DA380172540AF00816CA3 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				9151BB321AE207548D83DCD2 /* en */,
+				B58DA381172540AF00816CA3 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		B58DA3951725449E00816CA3 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B58DA3961725449E00816CA3 /* en */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -199,19 +308,6 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		9151B0C4C90471799652030D /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = "\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"";
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "QortexCocoaSDKTestSuite/QortexCocoaSDKTestSuite-Prefix.pch";
-				INFOPLIST_FILE = "QortexCocoaSDKTestSuite/QortexCocoaSDKTestSuite-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				WRAPPER_EXTENSION = octest;
-			};
-			name = Debug;
-		};
 		9151B373F229A0111BBC1F53 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -271,30 +367,70 @@
 			};
 			name = Debug;
 		};
-		9151BA2943919EA21F95C262 /* Release */ = {
+		B58DA388172540AF00816CA3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
+					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "iOSTestSuite/iOSTestSuite-Prefix.pch";
+				INFOPLIST_FILE = "iOSTestSuite/iOSTestSuite-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Release;
+		};
+		B58DA389172540AF00816CA3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
+					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "iOSTestSuite/iOSTestSuite-Prefix.pch";
+				INFOPLIST_FILE = "iOSTestSuite/iOSTestSuite-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		B58DA39D1725449E00816CA3 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = "\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "QortexCocoaSDKTestSuite/QortexCocoaSDKTestSuite-Prefix.pch";
-				INFOPLIST_FILE = "QortexCocoaSDKTestSuite/QortexCocoaSDKTestSuite-Info.plist";
+				GCC_PREFIX_HEADER = "CocoaTestSuite/CocoaTestSuite-Prefix.pch";
+				INFOPLIST_FILE = "CocoaTestSuite/CocoaTestSuite-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = octest;
 			};
 			name = Release;
 		};
+		B58DA39E1725449E00816CA3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = "\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CocoaTestSuite/CocoaTestSuite-Prefix.pch";
+				INFOPLIST_FILE = "CocoaTestSuite/CocoaTestSuite-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		9151B3825963B24B6DF97BC7 /* Build configuration list for PBXNativeTarget "QortexCocoaSDKTestSuite" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				9151BA2943919EA21F95C262 /* Release */,
-				9151B0C4C90471799652030D /* Debug */,
-			);
-			defaultConfigurationIsVisible = 0;
-		};
 		9151BA855E5B33790BB94136 /* Build configuration list for PBXProject "QortexCocoaSDKTestSuite" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -303,6 +439,22 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		B58DA387172540AF00816CA3 /* Build configuration list for PBXNativeTarget "iOSTestSuite" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B58DA388172540AF00816CA3 /* Release */,
+				B58DA389172540AF00816CA3 /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		B58DA39C1725449E00816CA3 /* Build configuration list for PBXNativeTarget "CocoaTestSuite" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B58DA39D1725449E00816CA3 /* Release */,
+				B58DA39E1725449E00816CA3 /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};
