@@ -7,19 +7,39 @@ static Qortexapi * _qortexapi;
 static NSDateFormatter * _dateFormatter;
 
 @implementation Qortexapi : NSObject
-+ (Qortexapi *)get {
++ (Qortexapi *) get {
 	if(!_qortexapi) {
 		_qortexapi = [[Qortexapi alloc] init];
 	}
 	return _qortexapi;
 }
 
-+ (NSDateFormatter *)dateFormatter {
++ (NSDateFormatter *) dateFormatter {
 	if(!_dateFormatter) {
 		_dateFormatter = [[NSDateFormatter alloc] init];
-		[_dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ"];
+		[_dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSSZZZZ"];
 	}
 	return _dateFormatter;
+}
+
++ (NSDate *) dateFromString:(NSString *)dateString {
+	if(!dateString) {
+		return nil;
+	}
+	NSRange range = [dateString rangeOfString:@":" options:NSBackwardsSearch];
+	if (range.location != NSNotFound && range.location >= dateString.length - 4) {
+		dateString = [dateString stringByReplacingCharactersInRange:range withString:@""];
+	}
+	return [[Qortexapi dateFormatter] dateFromString:dateString];
+}
+
++ (NSString *) stringFromDate:(NSDate *) date {
+	if(!date) {
+		return nil;
+	}
+	NSString * dateString = [[Qortexapi dateFormatter] stringFromDate:date];
+	dateString = [[[dateString substringToIndex:(dateString.length - 3)] stringByAppendingString:@":"] stringByAppendingString:[dateString substringFromIndex:(dateString.length - 2)]];
+	return dateString;
 }
 
 + (NSDictionary *) request:(NSURL*)url req:(NSDictionary *)req error:(NSError **)error {
@@ -402,7 +422,7 @@ static NSDateFormatter * _dateFormatter;
 	[self setContentLength:[dict valueForKey:@"ContentLength"]];
 	[self setError:[dict valueForKey:@"Error"]];
 	[self setGroupId:[dict valueForKey:@"GroupId"]];
-	[self setUploadTime:[[Qortexapi dateFormatter] dateFromString:[dict valueForKey:@"UploadTime"]]];
+	[self setUploadTime:[Qortexapi dateFromString:[dict valueForKey:@"UploadTime"]]];
 	[self setWidth:[dict valueForKey:@"Width"]];
 	[self setHeight:[dict valueForKey:@"Height"]];
 	[self setURL:[dict valueForKey:@"URL"]];
@@ -428,7 +448,7 @@ static NSDateFormatter * _dateFormatter;
 	[dict setValue:self.ContentLength forKey:@"ContentLength"];
 	[dict setValue:self.Error forKey:@"Error"];
 	[dict setValue:self.GroupId forKey:@"GroupId"];
-	[dict setValue:[[Qortexapi dateFormatter] stringFromDate:self.UploadTime] forKey:@"UploadTime"];
+	[dict setValue:[Qortexapi stringFromDate:self.UploadTime] forKey:@"UploadTime"];
 	[dict setValue:self.Width forKey:@"Width"];
 	[dict setValue:self.Height forKey:@"Height"];
 	[dict setValue:self.URL forKey:@"URL"];
@@ -1515,8 +1535,8 @@ static NSDateFormatter * _dateFormatter;
 	[self setId:[dict valueForKey:@"Id"]];
 	[self setTitle:[dict valueForKey:@"Title"]];
 	[self setSlug:[dict valueForKey:@"Slug"]];
-	[self setCreatedAt:[[Qortexapi dateFormatter] dateFromString:[dict valueForKey:@"CreatedAt"]]];
-	[self setUpdatedAt:[[Qortexapi dateFormatter] dateFromString:[dict valueForKey:@"UpdatedAt"]]];
+	[self setCreatedAt:[Qortexapi dateFromString:[dict valueForKey:@"CreatedAt"]]];
+	[self setUpdatedAt:[Qortexapi dateFromString:[dict valueForKey:@"UpdatedAt"]]];
 	[self setPermalink:[dict valueForKey:@"Permalink"]];
 	[self setCreateCommentURL:[dict valueForKey:@"CreateCommentURL"]];
 	[self setHtmlContent:[dict valueForKey:@"HtmlContent"]];
@@ -1539,8 +1559,8 @@ static NSDateFormatter * _dateFormatter;
 	[dict setValue:self.Id forKey:@"Id"];
 	[dict setValue:self.Title forKey:@"Title"];
 	[dict setValue:self.Slug forKey:@"Slug"];
-	[dict setValue:[[Qortexapi dateFormatter] stringFromDate:self.CreatedAt] forKey:@"CreatedAt"];
-	[dict setValue:[[Qortexapi dateFormatter] stringFromDate:self.UpdatedAt] forKey:@"UpdatedAt"];
+	[dict setValue:[Qortexapi stringFromDate:self.CreatedAt] forKey:@"CreatedAt"];
+	[dict setValue:[Qortexapi stringFromDate:self.UpdatedAt] forKey:@"UpdatedAt"];
 	[dict setValue:self.Permalink forKey:@"Permalink"];
 	[dict setValue:self.CreateCommentURL forKey:@"CreateCommentURL"];
 	[dict setValue:self.HtmlContent forKey:@"HtmlContent"];
@@ -1903,7 +1923,7 @@ static NSDateFormatter * _dateFormatter;
 	[self setUserId:[dict valueForKey:@"UserId"]];
 	[self setContent:[dict valueForKey:@"Content"]];
 	[self setHtmlContent:[dict valueForKey:@"HtmlContent"]];
-	[self setCreatedAt:[[Qortexapi dateFormatter] dateFromString:[dict valueForKey:@"CreatedAt"]]];
+	[self setCreatedAt:[Qortexapi dateFromString:[dict valueForKey:@"CreatedAt"]]];
 	[self setEmbedUser:[[EmbedUser alloc] initWithDictionary:[dict valueForKey:@"EmbedUser"]]];
 	[self setShowUser:[[dict valueForKey:@"ShowUser"] boolValue]];
 	[self setHighlightedContent:[dict valueForKey:@"HighlightedContent"]];
@@ -1918,7 +1938,7 @@ static NSDateFormatter * _dateFormatter;
 	[dict setValue:self.UserId forKey:@"UserId"];
 	[dict setValue:self.Content forKey:@"Content"];
 	[dict setValue:self.HtmlContent forKey:@"HtmlContent"];
-	[dict setValue:[[Qortexapi dateFormatter] stringFromDate:self.CreatedAt] forKey:@"CreatedAt"];
+	[dict setValue:[Qortexapi stringFromDate:self.CreatedAt] forKey:@"CreatedAt"];
 	[dict setValue:[self.EmbedUser dictionary] forKey:@"EmbedUser"];
 	
 	[dict setValue:[NSNumber numberWithBool:self.ShowUser] forKey:@"ShowUser"];
@@ -1979,9 +1999,9 @@ static NSDateFormatter * _dateFormatter;
 	[self setIsClosed:[[dict valueForKey:@"IsClosed"] boolValue]];
 	[self setIsDueToday:[[dict valueForKey:@"IsDueToday"] boolValue]];
 	[self setIsOverDue:[[dict valueForKey:@"IsOverDue"] boolValue]];
-	[self setCreatedAt:[[Qortexapi dateFormatter] dateFromString:[dict valueForKey:@"CreatedAt"]]];
-	[self setDue:[[Qortexapi dateFormatter] dateFromString:[dict valueForKey:@"Due"]]];
-	[self setCompletedAt:[[Qortexapi dateFormatter] dateFromString:[dict valueForKey:@"CompletedAt"]]];
+	[self setCreatedAt:[Qortexapi dateFromString:[dict valueForKey:@"CreatedAt"]]];
+	[self setDue:[Qortexapi dateFromString:[dict valueForKey:@"Due"]]];
+	[self setCompletedAt:[Qortexapi dateFromString:[dict valueForKey:@"CompletedAt"]]];
 	[self setLocalCreatedDate:[dict valueForKey:@"LocalCreatedDate"]];
 	[self setLocalDue:[dict valueForKey:@"LocalDue"]];
 	[self setLocalDueShortDate:[dict valueForKey:@"LocalDueShortDate"]];
@@ -2036,9 +2056,9 @@ static NSDateFormatter * _dateFormatter;
 	[dict setValue:[NSNumber numberWithBool:self.IsClosed] forKey:@"IsClosed"];
 	[dict setValue:[NSNumber numberWithBool:self.IsDueToday] forKey:@"IsDueToday"];
 	[dict setValue:[NSNumber numberWithBool:self.IsOverDue] forKey:@"IsOverDue"];
-	[dict setValue:[[Qortexapi dateFormatter] stringFromDate:self.CreatedAt] forKey:@"CreatedAt"];
-	[dict setValue:[[Qortexapi dateFormatter] stringFromDate:self.Due] forKey:@"Due"];
-	[dict setValue:[[Qortexapi dateFormatter] stringFromDate:self.CompletedAt] forKey:@"CompletedAt"];
+	[dict setValue:[Qortexapi stringFromDate:self.CreatedAt] forKey:@"CreatedAt"];
+	[dict setValue:[Qortexapi stringFromDate:self.Due] forKey:@"Due"];
+	[dict setValue:[Qortexapi stringFromDate:self.CompletedAt] forKey:@"CompletedAt"];
 	[dict setValue:self.LocalCreatedDate forKey:@"LocalCreatedDate"];
 	[dict setValue:self.LocalDue forKey:@"LocalDue"];
 	[dict setValue:self.LocalDueShortDate forKey:@"LocalDueShortDate"];
@@ -2098,7 +2118,7 @@ static NSDateFormatter * _dateFormatter;
 	}
 	[self setId:[dict valueForKey:@"Id"]];
 	[self setGroupId:[dict valueForKey:@"GroupId"]];
-	[self setUpdatedAt:[[Qortexapi dateFormatter] dateFromString:[dict valueForKey:@"UpdatedAt"]]];
+	[self setUpdatedAt:[Qortexapi dateFromString:[dict valueForKey:@"UpdatedAt"]]];
 	[self setLocalUpdatedAt:[dict valueForKey:@"LocalUpdatedAt"]];
 	[self setUpdatedAtUnixNano:[dict valueForKey:@"UpdatedAtUnixNano"]];
 	[self setCurrentVersionEditor:[[EmbedUser alloc] initWithDictionary:[dict valueForKey:@"CurrentVersionEditor"]]];
@@ -2111,7 +2131,7 @@ static NSDateFormatter * _dateFormatter;
 	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
 	[dict setValue:self.Id forKey:@"Id"];
 	[dict setValue:self.GroupId forKey:@"GroupId"];
-	[dict setValue:[[Qortexapi dateFormatter] stringFromDate:self.UpdatedAt] forKey:@"UpdatedAt"];
+	[dict setValue:[Qortexapi stringFromDate:self.UpdatedAt] forKey:@"UpdatedAt"];
 	[dict setValue:self.LocalUpdatedAt forKey:@"LocalUpdatedAt"];
 	[dict setValue:self.UpdatedAtUnixNano forKey:@"UpdatedAtUnixNano"];
 	[dict setValue:[self.CurrentVersionEditor dictionary] forKey:@"CurrentVersionEditor"];
@@ -2544,8 +2564,8 @@ static NSDateFormatter * _dateFormatter;
 		}
 	}
 	[self setParticipants:mParticipants];
-	[self setCreatedAt:[[Qortexapi dateFormatter] dateFromString:[dict valueForKey:@"CreatedAt"]]];
-	[self setEndedAt:[[Qortexapi dateFormatter] dateFromString:[dict valueForKey:@"EndedAt"]]];
+	[self setCreatedAt:[Qortexapi dateFromString:[dict valueForKey:@"CreatedAt"]]];
+	[self setEndedAt:[Qortexapi dateFromString:[dict valueForKey:@"EndedAt"]]];
 	[self setLocalHumanCreatedAt:[dict valueForKey:@"LocalHumanCreatedAt"]];
 	[self setTopic:[dict valueForKey:@"Topic"]];
 	[self setPrivate:[[dict valueForKey:@"Private"] boolValue]];
@@ -2578,8 +2598,8 @@ static NSDateFormatter * _dateFormatter;
 	}
 	[dict setValue:mParticipants forKey:@"Participants"];
 	
-	[dict setValue:[[Qortexapi dateFormatter] stringFromDate:self.CreatedAt] forKey:@"CreatedAt"];
-	[dict setValue:[[Qortexapi dateFormatter] stringFromDate:self.EndedAt] forKey:@"EndedAt"];
+	[dict setValue:[Qortexapi stringFromDate:self.CreatedAt] forKey:@"CreatedAt"];
+	[dict setValue:[Qortexapi stringFromDate:self.EndedAt] forKey:@"EndedAt"];
 	[dict setValue:self.LocalHumanCreatedAt forKey:@"LocalHumanCreatedAt"];
 	[dict setValue:self.Topic forKey:@"Topic"];
 	[dict setValue:[NSNumber numberWithBool:self.Private] forKey:@"Private"];
@@ -2632,8 +2652,8 @@ static NSDateFormatter * _dateFormatter;
 	[self setFromUser:[[EmbedUser alloc] initWithDictionary:[dict valueForKey:@"FromUser"]]];
 	[self setFromOrg:[[EmbedOrg alloc] initWithDictionary:[dict valueForKey:@"FromOrg"]]];
 	[self setCausedByEntry:[[EmbedEntry alloc] initWithDictionary:[dict valueForKey:@"CausedByEntry"]]];
-	[self setNotifiedAt:[[Qortexapi dateFormatter] dateFromString:[dict valueForKey:@"NotifiedAt"]]];
-	[self setReadAt:[[Qortexapi dateFormatter] dateFromString:[dict valueForKey:@"ReadAt"]]];
+	[self setNotifiedAt:[Qortexapi dateFromString:[dict valueForKey:@"NotifiedAt"]]];
+	[self setReadAt:[Qortexapi dateFromString:[dict valueForKey:@"ReadAt"]]];
 	[self setReaded:[[dict valueForKey:@"Readed"] boolValue]];
 	[self setType:[dict valueForKey:@"Type"]];
 	[self setLink:[dict valueForKey:@"Link"]];
@@ -2656,8 +2676,8 @@ static NSDateFormatter * _dateFormatter;
 	
 	[dict setValue:[self.CausedByEntry dictionary] forKey:@"CausedByEntry"];
 	
-	[dict setValue:[[Qortexapi dateFormatter] stringFromDate:self.NotifiedAt] forKey:@"NotifiedAt"];
-	[dict setValue:[[Qortexapi dateFormatter] stringFromDate:self.ReadAt] forKey:@"ReadAt"];
+	[dict setValue:[Qortexapi stringFromDate:self.NotifiedAt] forKey:@"NotifiedAt"];
+	[dict setValue:[Qortexapi stringFromDate:self.ReadAt] forKey:@"ReadAt"];
 	[dict setValue:[NSNumber numberWithBool:self.Readed] forKey:@"Readed"];
 	[dict setValue:self.Type forKey:@"Type"];
 	[dict setValue:self.Link forKey:@"Link"];
@@ -2836,9 +2856,9 @@ static NSDateFormatter * _dateFormatter;
 	[self setRootId:[dict valueForKey:@"RootId"]];
 	[self setGroupId:[dict valueForKey:@"GroupId"]];
 	[self setAuthorId:[dict valueForKey:@"AuthorId"]];
-	[self setCreatedAt:[[Qortexapi dateFormatter] dateFromString:[dict valueForKey:@"CreatedAt"]]];
-	[self setUpdatedAt:[[Qortexapi dateFormatter] dateFromString:[dict valueForKey:@"UpdatedAt"]]];
-	[self setBumpedUpAt:[[Qortexapi dateFormatter] dateFromString:[dict valueForKey:@"BumpedUpAt"]]];
+	[self setCreatedAt:[Qortexapi dateFromString:[dict valueForKey:@"CreatedAt"]]];
+	[self setUpdatedAt:[Qortexapi dateFromString:[dict valueForKey:@"UpdatedAt"]]];
+	[self setBumpedUpAt:[Qortexapi dateFromString:[dict valueForKey:@"BumpedUpAt"]]];
 	[self setAllAttachmentsURL:[dict valueForKey:@"AllAttachmentsURL"]];
 	[self setPermalink:[dict valueForKey:@"Permalink"]];
 	[self setIconName:[dict valueForKey:@"IconName"]];
@@ -3030,9 +3050,9 @@ static NSDateFormatter * _dateFormatter;
 	[dict setValue:self.RootId forKey:@"RootId"];
 	[dict setValue:self.GroupId forKey:@"GroupId"];
 	[dict setValue:self.AuthorId forKey:@"AuthorId"];
-	[dict setValue:[[Qortexapi dateFormatter] stringFromDate:self.CreatedAt] forKey:@"CreatedAt"];
-	[dict setValue:[[Qortexapi dateFormatter] stringFromDate:self.UpdatedAt] forKey:@"UpdatedAt"];
-	[dict setValue:[[Qortexapi dateFormatter] stringFromDate:self.BumpedUpAt] forKey:@"BumpedUpAt"];
+	[dict setValue:[Qortexapi stringFromDate:self.CreatedAt] forKey:@"CreatedAt"];
+	[dict setValue:[Qortexapi stringFromDate:self.UpdatedAt] forKey:@"UpdatedAt"];
+	[dict setValue:[Qortexapi stringFromDate:self.BumpedUpAt] forKey:@"BumpedUpAt"];
 	[dict setValue:self.AllAttachmentsURL forKey:@"AllAttachmentsURL"];
 	[dict setValue:self.Permalink forKey:@"Permalink"];
 	[dict setValue:self.IconName forKey:@"IconName"];
@@ -3230,7 +3250,7 @@ static NSDateFormatter * _dateFormatter;
 	[self setAttachCntStr:[dict valueForKey:@"AttachCntStr"]];
 	[self setCommentCntStr:[dict valueForKey:@"CommentCntStr"]];
 	[self setLikeCntStr:[dict valueForKey:@"LikeCntStr"]];
-	[self setWatchTime:[[Qortexapi dateFormatter] dateFromString:[dict valueForKey:@"WatchTime"]]];
+	[self setWatchTime:[Qortexapi dateFromString:[dict valueForKey:@"WatchTime"]]];
 	[self setWatchEntry:[[Entry alloc] initWithDictionary:[dict valueForKey:@"WatchEntry"]]];
 
 	return self;
@@ -3244,7 +3264,7 @@ static NSDateFormatter * _dateFormatter;
 	[dict setValue:self.AttachCntStr forKey:@"AttachCntStr"];
 	[dict setValue:self.CommentCntStr forKey:@"CommentCntStr"];
 	[dict setValue:self.LikeCntStr forKey:@"LikeCntStr"];
-	[dict setValue:[[Qortexapi dateFormatter] stringFromDate:self.WatchTime] forKey:@"WatchTime"];
+	[dict setValue:[Qortexapi stringFromDate:self.WatchTime] forKey:@"WatchTime"];
 	[dict setValue:[self.WatchEntry dictionary] forKey:@"WatchEntry"];
 	
 
@@ -5835,7 +5855,7 @@ static NSDateFormatter * _dateFormatter;
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
-	[self setBefore:[[Qortexapi dateFormatter] dateFromString:[dict valueForKey:@"Before"]]];
+	[self setBefore:[Qortexapi dateFromString:[dict valueForKey:@"Before"]]];
 	[self setLimit:[dict valueForKey:@"Limit"]];
 
 	return self;
@@ -5843,7 +5863,7 @@ static NSDateFormatter * _dateFormatter;
 
 - (NSDictionary*) dictionary {
 	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
-	[dict setValue:[[Qortexapi dateFormatter] stringFromDate:self.Before] forKey:@"Before"];
+	[dict setValue:[Qortexapi stringFromDate:self.Before] forKey:@"Before"];
 	[dict setValue:self.Limit forKey:@"Limit"];
 
 	return dict;
@@ -6132,7 +6152,7 @@ static NSDateFormatter * _dateFormatter;
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
-	[self setBefore:[[Qortexapi dateFormatter] dateFromString:[dict valueForKey:@"Before"]]];
+	[self setBefore:[Qortexapi dateFromString:[dict valueForKey:@"Before"]]];
 	[self setLimit:[dict valueForKey:@"Limit"]];
 
 	return self;
@@ -6140,7 +6160,7 @@ static NSDateFormatter * _dateFormatter;
 
 - (NSDictionary*) dictionary {
 	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
-	[dict setValue:[[Qortexapi dateFormatter] stringFromDate:self.Before] forKey:@"Before"];
+	[dict setValue:[Qortexapi stringFromDate:self.Before] forKey:@"Before"];
 	[dict setValue:self.Limit forKey:@"Limit"];
 
 	return dict;
