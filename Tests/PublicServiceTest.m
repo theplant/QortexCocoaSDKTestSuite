@@ -14,7 +14,7 @@
 - (void)setUp {
 	[super setUp];
 	[[Qortexapi get] setBaseURL:@"http://localhost:5000/api"];
-	[[Qortexapi get] setVerbose:YES];
+	[[Qortexapi get] setVerbose:NO];
 	[self setPublicService:[PublicService alloc]];
 }
 

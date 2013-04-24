@@ -1,0 +1,3 @@
+curl -d '{"This" : {"Session" : "Rm6CpViULDUQrKTea30IA\/69kjYAAAAADv+BBAEC\/4IAAQwBEAAAKv+CAAECaWQGc3RyaW5nDBoAGDRmYjRhYTNlNTU4ZmJlNzExMjAwMDAwMQ=="}, "Params" : { "Before" : "", "Limit" : 20, "EntryType" : ""}}' http://localhost:5000/api/AuthUserService/GetMyFeedEntries.json > ~/Desktop/myfeed.json
+
+curl -d '{"This" : {"Session" : "Rm6CpViULDUQrKTea30IA\/69kjYAAAAADv+BBAEC\/4IAAQwBEAAAKv+CAAECaWQGc3RyaW5nDBoAGDRmYjRhYTNlNTU4ZmJlNzExMjAwMDAwMQ=="}, "Params" : { "Before" : "", "Limit" : 20, "EntryType" : ""}}' http://localhost:5000/api/AuthUserService/GetMyFeedEntries.json > ~/Desktop/myfeed.json

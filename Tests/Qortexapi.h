@@ -160,16 +160,19 @@
 
 @end
 
-// --- GroupHeader ---
-@interface GroupHeader : NSObject
+// --- InlineHelp ---
+@interface InlineHelp : NSObject
 
-@property (nonatomic, assign) BOOL HasToFollow;
-@property (nonatomic, assign) BOOL IsFollowing;
-@property (nonatomic, assign) BOOL IsManaging;
-@property (nonatomic, assign) BOOL HasFileTab;
-@property (nonatomic, assign) BOOL HasToDoTab;
-@property (nonatomic, assign) BOOL IsSystemMessage;
-@property (nonatomic, assign) BOOL SelectedGroup;
+@property (nonatomic, assign) BOOL WhatFeed;
+@property (nonatomic, assign) BOOL WhatGroup;
+@property (nonatomic, assign) BOOL WhatNext;
+@property (nonatomic, assign) BOOL WhatChats;
+@property (nonatomic, assign) BOOL WhatWatchList;
+@property (nonatomic, assign) BOOL AboutTodos;
+@property (nonatomic, assign) BOOL GettingOut;
+@property (nonatomic, strong) NSString * InviteOthersURL;
+@property (nonatomic, strong) NSString * WhatNextURL;
+@property (nonatomic, strong) NSString * WhatChatsURL;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
 - (NSDictionary*) dictionary;
@@ -199,19 +202,16 @@
 
 @end
 
-// --- InlineHelp ---
-@interface InlineHelp : NSObject
+// --- GroupHeader ---
+@interface GroupHeader : NSObject
 
-@property (nonatomic, assign) BOOL WhatFeed;
-@property (nonatomic, assign) BOOL WhatGroup;
-@property (nonatomic, assign) BOOL WhatNext;
-@property (nonatomic, assign) BOOL WhatChats;
-@property (nonatomic, assign) BOOL WhatWatchList;
-@property (nonatomic, assign) BOOL AboutTodos;
-@property (nonatomic, assign) BOOL GettingOut;
-@property (nonatomic, strong) NSString * InviteOthersURL;
-@property (nonatomic, strong) NSString * WhatNextURL;
-@property (nonatomic, strong) NSString * WhatChatsURL;
+@property (nonatomic, assign) BOOL HasToFollow;
+@property (nonatomic, assign) BOOL IsFollowing;
+@property (nonatomic, assign) BOOL IsManaging;
+@property (nonatomic, assign) BOOL HasFileTab;
+@property (nonatomic, assign) BOOL HasToDoTab;
+@property (nonatomic, assign) BOOL IsSystemMessage;
+@property (nonatomic, assign) BOOL SelectedGroup;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
 - (NSDictionary*) dictionary;
@@ -251,6 +251,21 @@
 @property (nonatomic, strong) NSString * Country;
 @property (nonatomic, strong) NSString * City;
 @property (nonatomic, strong) NSString * HelpContent;
+
+- (id) initWithDictionary:(NSDictionary*)dict;
+- (NSDictionary*) dictionary;
+
+@end
+
+// --- TotalStats ---
+@interface TotalStats : NSObject
+
+@property (nonatomic, strong) NSNumber * OrgCount;
+@property (nonatomic, strong) NSNumber * MemberCount;
+@property (nonatomic, strong) NSNumber * GroupCount;
+@property (nonatomic, strong) NSNumber * EntryCount;
+@property (nonatomic, strong) NSNumber * CommentCount;
+@property (nonatomic, strong) NSNumber * ChatCount;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
 - (NSDictionary*) dictionary;
@@ -533,17 +548,6 @@
 
 @end
 
-// --- AbandonInfo ---
-@interface AbandonInfo : NSObject
-
-@property (nonatomic, strong) EmbedOrg * AbandonFromOrg;
-@property (nonatomic, strong) NSArray * AvailableOrgs;
-
-- (id) initWithDictionary:(NSDictionary*)dict;
-- (NSDictionary*) dictionary;
-
-@end
-
 // --- MyCount ---
 @interface MyCount : NSObject
 
@@ -552,6 +556,19 @@
 @property (nonatomic, strong) NSNumber * NotificationUnreadCount;
 @property (nonatomic, strong) NSNumber * ActiveTasksCount;
 @property (nonatomic, strong) NSArray * GroupCounts;
+
+- (id) initWithDictionary:(NSDictionary*)dict;
+- (NSDictionary*) dictionary;
+
+@end
+
+// --- Invitation ---
+@interface Invitation : NSObject
+
+@property (nonatomic, strong) NSString * Email;
+@property (nonatomic, strong) NSString * Token;
+@property (nonatomic, strong) NSString * SentAgo;
+@property (nonatomic, strong) EmbedUser * ByUser;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
 - (NSDictionary*) dictionary;
@@ -615,18 +632,11 @@
 
 @end
 
-// --- Message ---
-@interface Message : NSObject
+// --- AbandonInfo ---
+@interface AbandonInfo : NSObject
 
-@property (nonatomic, strong) NSString * Id;
-@property (nonatomic, strong) NSString * ConversationId;
-@property (nonatomic, strong) NSString * UserId;
-@property (nonatomic, strong) NSString * Content;
-@property (nonatomic, strong) NSString * HtmlContent;
-@property (nonatomic, strong) NSDate * CreatedAt;
-@property (nonatomic, strong) EmbedUser * EmbedUser;
-@property (nonatomic, assign) BOOL ShowUser;
-@property (nonatomic, strong) NSString * HighlightedContent;
+@property (nonatomic, strong) EmbedOrg * AbandonFromOrg;
+@property (nonatomic, strong) NSArray * AvailableOrgs;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
 - (NSDictionary*) dictionary;
@@ -685,13 +695,34 @@
 
 @end
 
-// --- Invitation ---
-@interface Invitation : NSObject
+// --- Message ---
+@interface Message : NSObject
 
-@property (nonatomic, strong) NSString * Email;
-@property (nonatomic, strong) NSString * Token;
-@property (nonatomic, strong) NSString * SentAgo;
-@property (nonatomic, strong) EmbedUser * ByUser;
+@property (nonatomic, strong) NSString * Id;
+@property (nonatomic, strong) NSString * ConversationId;
+@property (nonatomic, strong) NSString * UserId;
+@property (nonatomic, strong) NSString * Content;
+@property (nonatomic, strong) NSString * HtmlContent;
+@property (nonatomic, strong) NSDate * CreatedAt;
+@property (nonatomic, strong) EmbedUser * EmbedUser;
+@property (nonatomic, assign) BOOL ShowUser;
+@property (nonatomic, strong) NSString * HighlightedContent;
+
+- (id) initWithDictionary:(NSDictionary*)dict;
+- (NSDictionary*) dictionary;
+
+@end
+
+// --- OrgStats ---
+@interface OrgStats : NSObject
+
+@property (nonatomic, strong) Organization * Organization;
+@property (nonatomic, strong) NSNumber * UserCount;
+@property (nonatomic, strong) NSNumber * GroupCount;
+@property (nonatomic, strong) NSNumber * SharedGroupCount;
+@property (nonatomic, strong) NSNumber * EntryCount;
+@property (nonatomic, strong) NSNumber * CommentCount;
+@property (nonatomic, strong) NSNumber * ChatCount;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
 - (NSDictionary*) dictionary;
@@ -715,31 +746,6 @@
 
 @end
 
-// --- SharingInvitation ---
-@interface SharingInvitation : NSObject
-
-@property (nonatomic, strong) EmbedOrg * FromOrg;
-@property (nonatomic, strong) NSString * FromUserId;
-@property (nonatomic, strong) Group * SharedGroup;
-@property (nonatomic, assign) BOOL IsNewAccount;
-@property (nonatomic, strong) NSString * Email;
-@property (nonatomic, strong) NSString * Token;
-@property (nonatomic, strong) NSArray * JoinedOrgs;
-@property (nonatomic, assign) BOOL IsAccepted;
-@property (nonatomic, assign) BOOL IsRejected;
-@property (nonatomic, assign) BOOL IsPending;
-@property (nonatomic, assign) BOOL IsForwarded;
-@property (nonatomic, assign) BOOL IsCanceled;
-@property (nonatomic, assign) BOOL IsStopped;
-@property (nonatomic, strong) NSString * PendingDuration;
-@property (nonatomic, strong) NSString * ToOrgName;
-@property (nonatomic, strong) NSString * ToOrgId;
-
-- (id) initWithDictionary:(NSDictionary*)dict;
-- (NSDictionary*) dictionary;
-
-@end
-
 // --- Request ---
 @interface Request : NSObject
 
@@ -756,44 +762,6 @@
 @property (nonatomic, strong) EmbedUser * SharedResponsor;
 @property (nonatomic, strong) NSString * ToEmail;
 @property (nonatomic, strong) NSString * State;
-
-- (id) initWithDictionary:(NSDictionary*)dict;
-- (NSDictionary*) dictionary;
-
-@end
-
-// --- User ---
-@interface User : NSObject
-
-@property (nonatomic, strong) NSString * Id;
-@property (nonatomic, strong) NSString * Email;
-@property (nonatomic, strong) NSString * Firstame;
-@property (nonatomic, strong) NSString * LastName;
-@property (nonatomic, strong) NSString * Name;
-@property (nonatomic, strong) NSString * Title;
-@property (nonatomic, strong) NSString * Avatar;
-@property (nonatomic, strong) NSString * JID;
-@property (nonatomic, strong) NSString * Timezone;
-@property (nonatomic, assign) BOOL IsSuperUser;
-@property (nonatomic, assign) BOOL IsSharedUser;
-@property (nonatomic, strong) NSString * OrgId;
-@property (nonatomic, strong) NSString * OriginalOrgId;
-@property (nonatomic, strong) NSString * PrefixURL;
-@property (nonatomic, strong) NSString * ProfileURL;
-@property (nonatomic, assign) BOOL IsLoggedInUser;
-@property (nonatomic, assign) BOOL IsAvailable;
-@property (nonatomic, assign) BOOL IsDisabled;
-@property (nonatomic, assign) BOOL IsDeleted;
-@property (nonatomic, assign) BOOL FromSharedGroup;
-@property (nonatomic, strong) NSString * FromOrganizationName;
-@property (nonatomic, assign) BOOL Editable;
-@property (nonatomic, assign) BOOL Followable;
-@property (nonatomic, assign) BOOL FollowedByMe;
-@property (nonatomic, assign) BOOL FollowingTheGroup;
-@property (nonatomic, strong) NSString * Department;
-@property (nonatomic, strong) NSString * Location;
-@property (nonatomic, strong) NSArray * FollowingGroups;
-@property (nonatomic, strong) Preferences * Preferences;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
 - (NSDictionary*) dictionary;
@@ -845,12 +813,63 @@
 
 @end
 
-// --- MyNotifications ---
-@interface MyNotifications : NSObject
+// --- SharingInvitation ---
+@interface SharingInvitation : NSObject
 
-@property (nonatomic, strong) NSArray * NotificationItems;
-@property (nonatomic, assign) BOOL HasMore;
-@property (nonatomic, strong) NSNumber * LatestNotifyTime;
+@property (nonatomic, strong) EmbedOrg * FromOrg;
+@property (nonatomic, strong) NSString * FromUserId;
+@property (nonatomic, strong) Group * SharedGroup;
+@property (nonatomic, assign) BOOL IsNewAccount;
+@property (nonatomic, strong) NSString * Email;
+@property (nonatomic, strong) NSString * Token;
+@property (nonatomic, strong) NSArray * JoinedOrgs;
+@property (nonatomic, assign) BOOL IsAccepted;
+@property (nonatomic, assign) BOOL IsRejected;
+@property (nonatomic, assign) BOOL IsPending;
+@property (nonatomic, assign) BOOL IsForwarded;
+@property (nonatomic, assign) BOOL IsCanceled;
+@property (nonatomic, assign) BOOL IsStopped;
+@property (nonatomic, strong) NSString * PendingDuration;
+@property (nonatomic, strong) NSString * ToOrgName;
+@property (nonatomic, strong) NSString * ToOrgId;
+
+- (id) initWithDictionary:(NSDictionary*)dict;
+- (NSDictionary*) dictionary;
+
+@end
+
+// --- User ---
+@interface User : NSObject
+
+@property (nonatomic, strong) NSString * Id;
+@property (nonatomic, strong) NSString * Email;
+@property (nonatomic, strong) NSString * Firstame;
+@property (nonatomic, strong) NSString * LastName;
+@property (nonatomic, strong) NSString * Name;
+@property (nonatomic, strong) NSString * Title;
+@property (nonatomic, strong) NSString * Avatar;
+@property (nonatomic, strong) NSString * JID;
+@property (nonatomic, strong) NSString * Timezone;
+@property (nonatomic, assign) BOOL IsSuperUser;
+@property (nonatomic, assign) BOOL IsSharedUser;
+@property (nonatomic, strong) NSString * OrgId;
+@property (nonatomic, strong) NSString * OriginalOrgId;
+@property (nonatomic, strong) NSString * PrefixURL;
+@property (nonatomic, strong) NSString * ProfileURL;
+@property (nonatomic, assign) BOOL IsLoggedInUser;
+@property (nonatomic, assign) BOOL IsAvailable;
+@property (nonatomic, assign) BOOL IsDisabled;
+@property (nonatomic, assign) BOOL IsDeleted;
+@property (nonatomic, assign) BOOL FromSharedGroup;
+@property (nonatomic, strong) NSString * FromOrganizationName;
+@property (nonatomic, assign) BOOL Editable;
+@property (nonatomic, assign) BOOL Followable;
+@property (nonatomic, assign) BOOL FollowedByMe;
+@property (nonatomic, assign) BOOL FollowingTheGroup;
+@property (nonatomic, strong) NSString * Department;
+@property (nonatomic, strong) NSString * Location;
+@property (nonatomic, strong) NSArray * FollowingGroups;
+@property (nonatomic, strong) Preferences * Preferences;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
 - (NSDictionary*) dictionary;
@@ -966,17 +985,12 @@
 
 @end
 
-// --- WatchItem ---
-@interface WatchItem : NSObject
+// --- MyNotifications ---
+@interface MyNotifications : NSObject
 
-@property (nonatomic, strong) NSNumber * AttachCnt;
-@property (nonatomic, strong) NSNumber * CommentCnt;
-@property (nonatomic, strong) NSNumber * LikeCnt;
-@property (nonatomic, strong) NSString * AttachCntStr;
-@property (nonatomic, strong) NSString * CommentCntStr;
-@property (nonatomic, strong) NSString * LikeCntStr;
-@property (nonatomic, strong) NSDate * WatchTime;
-@property (nonatomic, strong) Entry * WatchEntry;
+@property (nonatomic, strong) NSArray * NotificationItems;
+@property (nonatomic, assign) BOOL HasMore;
+@property (nonatomic, strong) NSNumber * LatestNotifyTime;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
 - (NSDictionary*) dictionary;
@@ -991,6 +1005,23 @@
 @property (nonatomic, strong) NSNumber * LatestCreateTime;
 @property (nonatomic, assign) BOOL WhatChats;
 @property (nonatomic, strong) NSString * PrefixURL;
+
+- (id) initWithDictionary:(NSDictionary*)dict;
+- (NSDictionary*) dictionary;
+
+@end
+
+// --- WatchItem ---
+@interface WatchItem : NSObject
+
+@property (nonatomic, strong) NSNumber * AttachCnt;
+@property (nonatomic, strong) NSNumber * CommentCnt;
+@property (nonatomic, strong) NSNumber * LikeCnt;
+@property (nonatomic, strong) NSString * AttachCntStr;
+@property (nonatomic, strong) NSString * CommentCntStr;
+@property (nonatomic, strong) NSString * LikeCntStr;
+@property (nonatomic, strong) NSDate * WatchTime;
+@property (nonatomic, strong) Entry * WatchEntry;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
 - (NSDictionary*) dictionary;
@@ -1032,6 +1063,62 @@
 
 
 // === Interfaces ===
+
+
+// --- GetTotalStatsParams ---
+@interface AuthAdminServiceGetTotalStatsParams : NSObject
+
+
+- (id) initWithDictionary:(NSDictionary*)dict;
+- (NSDictionary*) dictionary;
+
+@end
+
+// --- GetTotalStatsResults ---
+@interface AuthAdminServiceGetTotalStatsResults : NSObject
+
+@property (nonatomic, strong) TotalStats * TotalStat;
+@property (nonatomic, strong) NSError * Err;
+
+- (id) initWithDictionary:(NSDictionary*)dict;
+- (NSDictionary*) dictionary;
+
+@end
+
+// --- GetOrgStatsParams ---
+@interface AuthAdminServiceGetOrgStatsParams : NSObject
+
+
+- (id) initWithDictionary:(NSDictionary*)dict;
+- (NSDictionary*) dictionary;
+
+@end
+
+// --- GetOrgStatsResults ---
+@interface AuthAdminServiceGetOrgStatsResults : NSObject
+
+@property (nonatomic, strong) NSArray * OrgStats;
+@property (nonatomic, strong) NSError * Err;
+
+- (id) initWithDictionary:(NSDictionary*)dict;
+- (NSDictionary*) dictionary;
+
+@end
+
+
+@interface AuthAdminService : NSObject
+
+@property (nonatomic, strong) NSString * Session;
+
+- (id) initWithDictionary:(NSDictionary*)dict;
+- (NSDictionary*) dictionary;
+
+
+
+- (AuthAdminServiceGetTotalStatsResults *) GetTotalStats;
+
+- (AuthAdminServiceGetOrgStatsResults *) GetOrgStats;
+@end
 
 
 // --- SwitchOrganizationParams ---
@@ -1122,10 +1209,7 @@
 @interface AuthMemberServiceRespondSharingRequestParams : NSObject
 
 @property (nonatomic, strong) NSString * Token;
-@property (nonatomic, strong) NSString * FromOrgId;
-@property (nonatomic, strong) NSString * FromUserId;
-@property (nonatomic, strong) NSString * ForSharingOrgId;
-@property (nonatomic, strong) NSString * GroupId;
+@property (nonatomic, strong) NSString * ToOrgId;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
 - (NSDictionary*) dictionary;
@@ -1157,7 +1241,7 @@
 
 - (NSError *) RejectSharingBeforeForwarding:(NSString *)groupId email:(NSString *)email;
 
-- (AuthMemberServiceRespondSharingRequestResults *) RespondSharingRequest:(NSString *)token fromOrgId:(NSString *)fromOrgId fromUserId:(NSString *)fromUserId forSharingOrgId:(NSString *)forSharingOrgId groupId:(NSString *)groupId;
+- (AuthMemberServiceRespondSharingRequestResults *) RespondSharingRequest:(NSString *)token toOrgId:(NSString *)toOrgId;
 @end
 
 
@@ -1188,6 +1272,7 @@
 @property (nonatomic, strong) NSString * MesssageType;
 @property (nonatomic, strong) NSString * Before;
 @property (nonatomic, strong) NSNumber * Limit;
+@property (nonatomic, assign) BOOL WithComments;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
 - (NSDictionary*) dictionary;
@@ -1674,6 +1759,7 @@
 @property (nonatomic, strong) NSString * EntryType;
 @property (nonatomic, strong) NSString * Before;
 @property (nonatomic, strong) NSNumber * Limit;
+@property (nonatomic, assign) BOOL WithComments;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
 - (NSDictionary*) dictionary;
@@ -1697,6 +1783,7 @@
 @property (nonatomic, strong) NSString * EntryType;
 @property (nonatomic, strong) NSString * Before;
 @property (nonatomic, strong) NSNumber * Limit;
+@property (nonatomic, assign) BOOL WithComments;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
 - (NSDictionary*) dictionary;
@@ -1718,7 +1805,7 @@
 @interface AuthUserServiceGetNewFeedEntriesParams : NSObject
 
 @property (nonatomic, strong) NSString * EntryType;
-@property (nonatomic, strong) NSString * From;
+@property (nonatomic, strong) NSString * FromTimeUnixNano;
 @property (nonatomic, strong) NSNumber * Limit;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
@@ -3230,7 +3317,7 @@
 
 - (AuthUserServiceGetNewEntryResults *) GetNewEntry:(NSString *)groupId;
 
-- (AuthUserServiceGetQortexMessagesResults *) GetQortexMessages:(NSString *)messsageType before:(NSString *)before limit:(NSNumber *)limit;
+- (AuthUserServiceGetQortexMessagesResults *) GetQortexMessages:(NSString *)messsageType before:(NSString *)before limit:(NSNumber *)limit withComments:(BOOL)withComments;
 
 - (AuthUserServiceCreateBroadcastResults *) CreateBroadcast:(BroadcastInput *)input;
 
@@ -3274,11 +3361,11 @@
 
 - (AuthUserServiceGetOtherVersionsCommentsResults *) GetOtherVersionsComments:(NSString *)entryId groupId:(NSString *)groupId updateAtUnixNanoForVersion:(NSString *)updateAtUnixNanoForVersion hightlightKeywords:(NSString *)hightlightKeywords;
 
-- (AuthUserServiceGetGroupEntriesResults *) GetGroupEntries:(NSString *)groupId entryType:(NSString *)entryType before:(NSString *)before limit:(NSNumber *)limit;
+- (AuthUserServiceGetGroupEntriesResults *) GetGroupEntries:(NSString *)groupId entryType:(NSString *)entryType before:(NSString *)before limit:(NSNumber *)limit withComments:(BOOL)withComments;
 
-- (AuthUserServiceGetMyFeedEntriesResults *) GetMyFeedEntries:(NSString *)entryType before:(NSString *)before limit:(NSNumber *)limit;
+- (AuthUserServiceGetMyFeedEntriesResults *) GetMyFeedEntries:(NSString *)entryType before:(NSString *)before limit:(NSNumber *)limit withComments:(BOOL)withComments;
 
-- (AuthUserServiceGetNewFeedEntriesResults *) GetNewFeedEntries:(NSString *)entryType From:(NSString *)From limit:(NSNumber *)limit;
+- (AuthUserServiceGetNewFeedEntriesResults *) GetNewFeedEntries:(NSString *)entryType fromTimeUnixNano:(NSString *)fromTimeUnixNano limit:(NSNumber *)limit;
 
 - (AuthUserServiceGetMyTaskEntriesResults *) GetMyTaskEntries:(BOOL)active before:(NSString *)before limit:(NSNumber *)limit;
 
@@ -3444,6 +3531,27 @@
 
 @end
 
+// --- GetAuthorizedAdminParams ---
+@interface PublicServiceGetAuthorizedAdminParams : NSObject
+
+@property (nonatomic, strong) NSString * Session;
+
+- (id) initWithDictionary:(NSDictionary*)dict;
+- (NSDictionary*) dictionary;
+
+@end
+
+// --- GetAuthorizedAdminResults ---
+@interface PublicServiceGetAuthorizedAdminResults : NSObject
+
+@property (nonatomic, strong) EmbedUser * ApiEmbedUser;
+@property (nonatomic, strong) NSError * Err;
+
+- (id) initWithDictionary:(NSDictionary*)dict;
+- (NSDictionary*) dictionary;
+
+@end
+
 // --- PrepareChangingEmailParams ---
 @interface PublicServicePrepareChangingEmailParams : NSObject
 
@@ -3500,6 +3608,28 @@
 
 // --- CancelChangingEmailResults ---
 @interface PublicServiceCancelChangingEmailResults : NSObject
+
+@property (nonatomic, strong) NSError * Err;
+
+- (id) initWithDictionary:(NSDictionary*)dict;
+- (NSDictionary*) dictionary;
+
+@end
+
+// --- UpdatePendingInvitationEmailParams ---
+@interface PublicServiceUpdatePendingInvitationEmailParams : NSObject
+
+@property (nonatomic, strong) NSString * OrgId;
+@property (nonatomic, strong) NSString * InvitationToken;
+@property (nonatomic, strong) NSString * NewEmail;
+
+- (id) initWithDictionary:(NSDictionary*)dict;
+- (NSDictionary*) dictionary;
+
+@end
+
+// --- UpdatePendingInvitationEmailResults ---
+@interface PublicServiceUpdatePendingInvitationEmailResults : NSObject
 
 @property (nonatomic, strong) NSError * Err;
 
@@ -3689,6 +3819,70 @@
 
 @end
 
+// --- RequestNewSignupTokenParams ---
+@interface PublicServiceRequestNewSignupTokenParams : NSObject
+
+@property (nonatomic, strong) NSString * Email;
+
+- (id) initWithDictionary:(NSDictionary*)dict;
+- (NSDictionary*) dictionary;
+
+@end
+
+// --- RequestNewSignupTokenResults ---
+@interface PublicServiceRequestNewSignupTokenResults : NSObject
+
+@property (nonatomic, strong) Validated * Validated;
+@property (nonatomic, strong) NSError * Err;
+
+- (id) initWithDictionary:(NSDictionary*)dict;
+- (NSDictionary*) dictionary;
+
+@end
+
+// --- RequestNewInvitationTokenParams ---
+@interface PublicServiceRequestNewInvitationTokenParams : NSObject
+
+@property (nonatomic, strong) NSString * OrgId;
+@property (nonatomic, strong) NSString * Email;
+
+- (id) initWithDictionary:(NSDictionary*)dict;
+- (NSDictionary*) dictionary;
+
+@end
+
+// --- RequestNewInvitationTokenResults ---
+@interface PublicServiceRequestNewInvitationTokenResults : NSObject
+
+@property (nonatomic, strong) Validated * Validated;
+@property (nonatomic, strong) NSError * Err;
+
+- (id) initWithDictionary:(NSDictionary*)dict;
+- (NSDictionary*) dictionary;
+
+@end
+
+// --- RequestNewSharingTokenParams ---
+@interface PublicServiceRequestNewSharingTokenParams : NSObject
+
+@property (nonatomic, strong) NSString * Email;
+
+- (id) initWithDictionary:(NSDictionary*)dict;
+- (NSDictionary*) dictionary;
+
+@end
+
+// --- RequestNewSharingTokenResults ---
+@interface PublicServiceRequestNewSharingTokenResults : NSObject
+
+@property (nonatomic, strong) Validated * Validated;
+@property (nonatomic, strong) NSError * Err;
+
+- (id) initWithDictionary:(NSDictionary*)dict;
+- (NSDictionary*) dictionary;
+
+@end
+
 
 @interface PublicService : NSObject
 - (NSDictionary*) dictionary;
@@ -3698,11 +3892,17 @@
 
 - (AuthUserService *) GetAuthUserService:(NSString *)session;
 
+- (PublicServiceGetAuthorizedAdminResults *) GetAuthorizedAdmin:(NSString *)session;
+
+- (AuthAdminService *) GetAuthAdminService:(NSString *)session;
+
 - (PublicServicePrepareChangingEmailResults *) PrepareChangingEmail:(NSString *)memberId newEmail:(NSString *)newEmail;
 
 - (PublicServiceConfirmChangingEmailResults *) ConfirmChangingEmail:(NSString *)token;
 
 - (NSError *) CancelChangingEmail:(NSString *)token;
+
+- (NSError *) UpdatePendingInvitationEmail:(NSString *)orgId invitationToken:(NSString *)invitationToken newEmail:(NSString *)newEmail;
 
 - (PublicServiceChangeEmailToAcceptSharingResults *) ChangeEmailToAcceptSharing:(NSString *)token newEmail:(NSString *)newEmail;
 
@@ -3719,5 +3919,11 @@
 - (PublicServiceGenerateBlogEntrySlugResults *) GenerateBlogEntrySlug:(NSString *)doi slug:(NSString *)slug;
 
 - (PublicServiceCreateNewsletterResults *) CreateNewsletter:(NewsletterInput *)input;
+
+- (PublicServiceRequestNewSignupTokenResults *) RequestNewSignupToken:(NSString *)email;
+
+- (PublicServiceRequestNewInvitationTokenResults *) RequestNewInvitationToken:(NSString *)orgId email:(NSString *)email;
+
+- (PublicServiceRequestNewSharingTokenResults *) RequestNewSharingToken:(NSString *)email;
 @end
 

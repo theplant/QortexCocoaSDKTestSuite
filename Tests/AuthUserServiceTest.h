@@ -10,5 +10,6 @@
 #import "Qortexapi.h"
 
 @interface AuthUserServiceTest : SenTestCase
-@property AuthUserService * authUserService;
+@property AuthUserService *felixAuthUserService;
+@property AuthUserService * aaronAuthUserService;
 @end
