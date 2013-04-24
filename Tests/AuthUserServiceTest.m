@@ -50,6 +50,21 @@
 - (void)testGetNewFeedEntries {
     AuthUserServiceGetMyFeedEntriesResults *lastEntriesResults = [_felixAuthUserService GetMyFeedEntries:@"" before:@"" limit:@1 withComments:NO];
 
+    AuthUserServiceCreateEntryResults *newCreatedResult = [self createEntry];
+
+
+    STAssertTrue(newCreatedResult.Err == nil, @"create entry error %@", newCreatedResult.Err);
+    Entry *lastEntry = lastEntriesResults.Entries[0];
+    NSString *nano = [NSString stringWithFormat:@"%.0f000000", [lastEntry.CreatedAt timeIntervalSince1970] * 1000 - 20000000];
+    AuthUserServiceGetNewFeedEntriesResults *r2 = [_felixAuthUserService GetNewFeedEntries:@""
+                                                                          fromTimeUnixNano:nano
+                                                                                     limit:@2];
+    Entry *newCreatedEntry = r2.Entries[0];
+    STAssertEqualObjects(newCreatedEntry.Id, newCreatedResult.Entry.Id, @"new created entry wrong: %@", newCreatedEntry);
+
+}
+
+- (AuthUserServiceCreateEntryResults *)createEntry {
     AuthUserServiceGetNewEntryResults *newEntry = [_aaronAuthUserService GetNewEntry:@"4fd78138558fbe76ff000028"];
     EntryInput *input = [EntryInput alloc];
 
@@ -60,14 +75,14 @@
     [input setGroupId:newEntry.Entry.GroupId];
 
     AuthUserServiceCreateEntryResults *newCreatedResult = [_aaronAuthUserService CreateEntry:input];
-    STAssertTrue(newCreatedResult.Err == nil, @"create entry error %@", newCreatedResult.Err);
-    Entry *lastEntry = lastEntriesResults.Entries[0];
-    NSString *nano = [NSString stringWithFormat:@"%.0f000000", [lastEntry.CreatedAt timeIntervalSince1970]*1000 - 20000000];
-    AuthUserServiceGetNewFeedEntriesResults *r2 = [_felixAuthUserService GetNewFeedEntries:@""
-                                                                          fromTimeUnixNano:nano
-                                                                                     limit:@2];
-    Entry *newCreatedEntry = r2.Entries[0];
-    STAssertEqualObjects(newCreatedEntry.Id, newCreatedResult.Entry.Id, @"new created entry wrong: %@", newCreatedEntry);
+    return newCreatedResult;
+}
 
+- (void)testDeleteEntry {
+    AuthUserServiceCreateEntryResults *newCreatedResult = [self createEntry];
+    AuthUserServiceDeleteEntryResults *r = [_aaronAuthUserService DeleteEntry:newCreatedResult.Entry.Id groupId:newCreatedResult.Entry.Id dType:@"all"];
+    STAssertTrue(r.Err == nil, @"error is %@", r.Err);
+    AuthUserServiceGetEntryResults *findR = [_aaronAuthUserService GetEntry:newCreatedResult.Entry.Id groupId:newCreatedResult.Entry.GroupId updateAtUnixNanoForVersion:@"" hightlightKeywords:@""];
+    STAssertTrue(findR.Entry == nil, @"delete failed entry is %@", findR.Entry);
 }
 @end

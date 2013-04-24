@@ -1582,7 +1582,10 @@ static NSDateFormatter * _dateFormatter;
 	[self setPermalink:[dict valueForKey:@"Permalink"]];
 	[self setCreateCommentURL:[dict valueForKey:@"CreateCommentURL"]];
 	[self setHtmlContent:[dict valueForKey:@"HtmlContent"]];
-	[self setAuthor:[[EmbedUser alloc] initWithDictionary:[dict valueForKey:@"Author"]]];
+	id dictAuthor = [dict valueForKey:@"Author"];
+	if ([dictAuthor isKindOfClass:[NSDictionary class]]){
+		[self setAuthor:[[EmbedUser alloc] initWithDictionary:dictAuthor]];
+	}
 
 	NSMutableArray * mComments = [[NSMutableArray alloc] init];
 	NSArray * lComments = [dict valueForKey:@"Comments"];
@@ -1693,7 +1696,10 @@ static NSDateFormatter * _dateFormatter;
 	[self setEmail:[dict valueForKey:@"Email"]];
 	[self setToken:[dict valueForKey:@"Token"]];
 	[self setSentAgo:[dict valueForKey:@"SentAgo"]];
-	[self setByUser:[[EmbedUser alloc] initWithDictionary:[dict valueForKey:@"ByUser"]]];
+	id dictByUser = [dict valueForKey:@"ByUser"];
+	if ([dictByUser isKindOfClass:[NSDictionary class]]){
+		[self setByUser:[[EmbedUser alloc] initWithDictionary:dictByUser]];
+	}
 
 	return self;
 }
@@ -1754,7 +1760,10 @@ static NSDateFormatter * _dateFormatter;
 	[self setIconName:[dict valueForKey:@"IconName"]];
 	[self setLink:[dict valueForKey:@"Link"]];
 	[self setSlug:[dict valueForKey:@"Slug"]];
-	[self setAuthor:[[EmbedUser alloc] initWithDictionary:[dict valueForKey:@"Author"]]];
+	id dictAuthor = [dict valueForKey:@"Author"];
+	if ([dictAuthor isKindOfClass:[NSDictionary class]]){
+		[self setAuthor:[[EmbedUser alloc] initWithDictionary:dictAuthor]];
+	}
 	[self setIsAdmin:[[dict valueForKey:@"IsAdmin"] boolValue]];
 	[self setIsPrivate:[[dict valueForKey:@"IsPrivate"] boolValue]];
 	[self setEditable:[[dict valueForKey:@"Editable"] boolValue]];
@@ -1882,7 +1891,10 @@ static NSDateFormatter * _dateFormatter;
 	}
 	[self setHeader:[dict valueForKey:@"Header"]];
 	[self setSelectedGroupId:[dict valueForKey:@"SelectedGroupId"]];
-	[self setSysMessage:[[GroupSelectorItem alloc] initWithDictionary:[dict valueForKey:@"SysMessage"]]];
+	id dictSysMessage = [dict valueForKey:@"SysMessage"];
+	if ([dictSysMessage isKindOfClass:[NSDictionary class]]){
+		[self setSysMessage:[[GroupSelectorItem alloc] initWithDictionary:dictSysMessage]];
+	}
 
 	NSMutableArray * mFollowingGroups = [[NSMutableArray alloc] init];
 	NSArray * lFollowingGroups = [dict valueForKey:@"FollowingGroups"];
@@ -1945,7 +1957,10 @@ static NSDateFormatter * _dateFormatter;
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
-	[self setAbandonFromOrg:[[EmbedOrg alloc] initWithDictionary:[dict valueForKey:@"AbandonFromOrg"]]];
+	id dictAbandonFromOrg = [dict valueForKey:@"AbandonFromOrg"];
+	if ([dictAbandonFromOrg isKindOfClass:[NSDictionary class]]){
+		[self setAbandonFromOrg:[[EmbedOrg alloc] initWithDictionary:dictAbandonFromOrg]];
+	}
 
 	NSMutableArray * mAvailableOrgs = [[NSMutableArray alloc] init];
 	NSArray * lAvailableOrgs = [dict valueForKey:@"AvailableOrgs"];
@@ -2036,7 +2051,10 @@ static NSDateFormatter * _dateFormatter;
 	[self setTotalUsersCount:[dict valueForKey:@"TotalUsersCount"]];
 	[self setCompletedUsersCount:[dict valueForKey:@"CompletedUsersCount"]];
 	[self setPendingUsersCount:[dict valueForKey:@"PendingUsersCount"]];
-	[self setOwner:[[EmbedUser alloc] initWithDictionary:[dict valueForKey:@"Owner"]]];
+	id dictOwner = [dict valueForKey:@"Owner"];
+	if ([dictOwner isKindOfClass:[NSDictionary class]]){
+		[self setOwner:[[EmbedUser alloc] initWithDictionary:dictOwner]];
+	}
 
 	NSMutableArray * mToUsers = [[NSMutableArray alloc] init];
 	NSArray * lToUsers = [dict valueForKey:@"ToUsers"];
@@ -2148,7 +2166,10 @@ static NSDateFormatter * _dateFormatter;
 	[self setUpdatedAt:[Qortexapi dateFromString:[dict valueForKey:@"UpdatedAt"]]];
 	[self setLocalUpdatedAt:[dict valueForKey:@"LocalUpdatedAt"]];
 	[self setUpdatedAtUnixNano:[dict valueForKey:@"UpdatedAtUnixNano"]];
-	[self setCurrentVersionEditor:[[EmbedUser alloc] initWithDictionary:[dict valueForKey:@"CurrentVersionEditor"]]];
+	id dictCurrentVersionEditor = [dict valueForKey:@"CurrentVersionEditor"];
+	if ([dictCurrentVersionEditor isKindOfClass:[NSDictionary class]]){
+		[self setCurrentVersionEditor:[[EmbedUser alloc] initWithDictionary:dictCurrentVersionEditor]];
+	}
 	[self setIsNewVersion:[[dict valueForKey:@"IsNewVersion"] boolValue]];
 
 	return self;
@@ -2197,7 +2218,10 @@ static NSDateFormatter * _dateFormatter;
 	[self setContent:[dict valueForKey:@"Content"]];
 	[self setHtmlContent:[dict valueForKey:@"HtmlContent"]];
 	[self setCreatedAt:[Qortexapi dateFromString:[dict valueForKey:@"CreatedAt"]]];
-	[self setEmbedUser:[[EmbedUser alloc] initWithDictionary:[dict valueForKey:@"EmbedUser"]]];
+	id dictEmbedUser = [dict valueForKey:@"EmbedUser"];
+	if ([dictEmbedUser isKindOfClass:[NSDictionary class]]){
+		[self setEmbedUser:[[EmbedUser alloc] initWithDictionary:dictEmbedUser]];
+	}
 	[self setShowUser:[[dict valueForKey:@"ShowUser"] boolValue]];
 	[self setHighlightedContent:[dict valueForKey:@"HighlightedContent"]];
 
@@ -2241,7 +2265,10 @@ static NSDateFormatter * _dateFormatter;
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
-	[self setOrganization:[[Organization alloc] initWithDictionary:[dict valueForKey:@"Organization"]]];
+	id dictOrganization = [dict valueForKey:@"Organization"];
+	if ([dictOrganization isKindOfClass:[NSDictionary class]]){
+		[self setOrganization:[[Organization alloc] initWithDictionary:dictOrganization]];
+	}
 	[self setUserCount:[dict valueForKey:@"UserCount"]];
 	[self setGroupCount:[dict valueForKey:@"GroupCount"]];
 	[self setSharedGroupCount:[dict valueForKey:@"SharedGroupCount"]];
@@ -2293,7 +2320,10 @@ static NSDateFormatter * _dateFormatter;
 	[self setTitle:[dict valueForKey:@"Title"]];
 	[self setHtmlTitle:[dict valueForKey:@"HtmlTitle"]];
 	[self setEType:[dict valueForKey:@"EType"]];
-	[self setAuthor:[[EmbedUser alloc] initWithDictionary:[dict valueForKey:@"Author"]]];
+	id dictAuthor = [dict valueForKey:@"Author"];
+	if ([dictAuthor isKindOfClass:[NSDictionary class]]){
+		[self setAuthor:[[EmbedUser alloc] initWithDictionary:dictAuthor]];
+	}
 
 	NSMutableArray * mToUsers = [[NSMutableArray alloc] init];
 	NSArray * lToUsers = [dict valueForKey:@"ToUsers"];
@@ -2359,14 +2389,32 @@ static NSDateFormatter * _dateFormatter;
 	[self setCurrentPrefixURL:[dict valueForKey:@"CurrentPrefixURL"]];
 	[self setInfo:[dict valueForKey:@"Info"]];
 	[self setActionButton:[dict valueForKey:@"ActionButton"]];
-	[self setFromOrg:[[EmbedOrg alloc] initWithDictionary:[dict valueForKey:@"FromOrg"]]];
-	[self setToOrg:[[EmbedOrg alloc] initWithDictionary:[dict valueForKey:@"ToOrg"]]];
-	[self setSharedGroup:[[Group alloc] initWithDictionary:[dict valueForKey:@"SharedGroup"]]];
+	id dictFromOrg = [dict valueForKey:@"FromOrg"];
+	if ([dictFromOrg isKindOfClass:[NSDictionary class]]){
+		[self setFromOrg:[[EmbedOrg alloc] initWithDictionary:dictFromOrg]];
+	}
+	id dictToOrg = [dict valueForKey:@"ToOrg"];
+	if ([dictToOrg isKindOfClass:[NSDictionary class]]){
+		[self setToOrg:[[EmbedOrg alloc] initWithDictionary:dictToOrg]];
+	}
+	id dictSharedGroup = [dict valueForKey:@"SharedGroup"];
+	if ([dictSharedGroup isKindOfClass:[NSDictionary class]]){
+		[self setSharedGroup:[[Group alloc] initWithDictionary:dictSharedGroup]];
+	}
 	[self setSharedOrgIdHex:[dict valueForKey:@"SharedOrgIdHex"]];
 	[self setFromUserIdHex:[dict valueForKey:@"FromUserIdHex"]];
-	[self setSharedInvitee:[[EmbedUser alloc] initWithDictionary:[dict valueForKey:@"SharedInvitee"]]];
-	[self setSharedInviter:[[EmbedUser alloc] initWithDictionary:[dict valueForKey:@"SharedInviter"]]];
-	[self setSharedResponsor:[[EmbedUser alloc] initWithDictionary:[dict valueForKey:@"SharedResponsor"]]];
+	id dictSharedInvitee = [dict valueForKey:@"SharedInvitee"];
+	if ([dictSharedInvitee isKindOfClass:[NSDictionary class]]){
+		[self setSharedInvitee:[[EmbedUser alloc] initWithDictionary:dictSharedInvitee]];
+	}
+	id dictSharedInviter = [dict valueForKey:@"SharedInviter"];
+	if ([dictSharedInviter isKindOfClass:[NSDictionary class]]){
+		[self setSharedInviter:[[EmbedUser alloc] initWithDictionary:dictSharedInviter]];
+	}
+	id dictSharedResponsor = [dict valueForKey:@"SharedResponsor"];
+	if ([dictSharedResponsor isKindOfClass:[NSDictionary class]]){
+		[self setSharedResponsor:[[EmbedUser alloc] initWithDictionary:dictSharedResponsor]];
+	}
 	[self setToEmail:[dict valueForKey:@"ToEmail"]];
 	[self setState:[dict valueForKey:@"State"]];
 
@@ -2521,11 +2569,26 @@ static NSDateFormatter * _dateFormatter;
 	}
 	[self setId:[dict valueForKey:@"Id"]];
 	[self setGroupId:[dict valueForKey:@"GroupId"]];
-	[self setToUser:[[EmbedUser alloc] initWithDictionary:[dict valueForKey:@"ToUser"]]];
-	[self setForEntry:[[EmbedEntry alloc] initWithDictionary:[dict valueForKey:@"ForEntry"]]];
-	[self setFromUser:[[EmbedUser alloc] initWithDictionary:[dict valueForKey:@"FromUser"]]];
-	[self setFromOrg:[[EmbedOrg alloc] initWithDictionary:[dict valueForKey:@"FromOrg"]]];
-	[self setCausedByEntry:[[EmbedEntry alloc] initWithDictionary:[dict valueForKey:@"CausedByEntry"]]];
+	id dictToUser = [dict valueForKey:@"ToUser"];
+	if ([dictToUser isKindOfClass:[NSDictionary class]]){
+		[self setToUser:[[EmbedUser alloc] initWithDictionary:dictToUser]];
+	}
+	id dictForEntry = [dict valueForKey:@"ForEntry"];
+	if ([dictForEntry isKindOfClass:[NSDictionary class]]){
+		[self setForEntry:[[EmbedEntry alloc] initWithDictionary:dictForEntry]];
+	}
+	id dictFromUser = [dict valueForKey:@"FromUser"];
+	if ([dictFromUser isKindOfClass:[NSDictionary class]]){
+		[self setFromUser:[[EmbedUser alloc] initWithDictionary:dictFromUser]];
+	}
+	id dictFromOrg = [dict valueForKey:@"FromOrg"];
+	if ([dictFromOrg isKindOfClass:[NSDictionary class]]){
+		[self setFromOrg:[[EmbedOrg alloc] initWithDictionary:dictFromOrg]];
+	}
+	id dictCausedByEntry = [dict valueForKey:@"CausedByEntry"];
+	if ([dictCausedByEntry isKindOfClass:[NSDictionary class]]){
+		[self setCausedByEntry:[[EmbedEntry alloc] initWithDictionary:dictCausedByEntry]];
+	}
 	[self setNotifiedAt:[Qortexapi dateFromString:[dict valueForKey:@"NotifiedAt"]]];
 	[self setReadAt:[Qortexapi dateFromString:[dict valueForKey:@"ReadAt"]]];
 	[self setReaded:[[dict valueForKey:@"Readed"] boolValue]];
@@ -2590,9 +2653,15 @@ static NSDateFormatter * _dateFormatter;
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
-	[self setFromOrg:[[EmbedOrg alloc] initWithDictionary:[dict valueForKey:@"FromOrg"]]];
+	id dictFromOrg = [dict valueForKey:@"FromOrg"];
+	if ([dictFromOrg isKindOfClass:[NSDictionary class]]){
+		[self setFromOrg:[[EmbedOrg alloc] initWithDictionary:dictFromOrg]];
+	}
 	[self setFromUserId:[dict valueForKey:@"FromUserId"]];
-	[self setSharedGroup:[[Group alloc] initWithDictionary:[dict valueForKey:@"SharedGroup"]]];
+	id dictSharedGroup = [dict valueForKey:@"SharedGroup"];
+	if ([dictSharedGroup isKindOfClass:[NSDictionary class]]){
+		[self setSharedGroup:[[Group alloc] initWithDictionary:dictSharedGroup]];
+	}
 	[self setIsNewAccount:[[dict valueForKey:@"IsNewAccount"] boolValue]];
 	[self setEmail:[dict valueForKey:@"Email"]];
 	[self setToken:[dict valueForKey:@"Token"]];
@@ -2727,7 +2796,10 @@ static NSDateFormatter * _dateFormatter;
 		}
 	}
 	[self setFollowingGroups:mFollowingGroups];
-	[self setPreferences:[[Preferences alloc] initWithDictionary:[dict valueForKey:@"Preferences"]]];
+	id dictPreferences = [dict valueForKey:@"Preferences"];
+	if ([dictPreferences isKindOfClass:[NSDictionary class]]){
+		[self setPreferences:[[Preferences alloc] initWithDictionary:dictPreferences]];
+	}
 
 	return self;
 }
@@ -2934,7 +3006,10 @@ static NSDateFormatter * _dateFormatter;
 	[self setIsBroadcastTypeToSomeOrgs:[[dict valueForKey:@"IsBroadcastTypeToSomeOrgs"] boolValue]];
 	[self setIsFromSuperOrg:[[dict valueForKey:@"IsFromSuperOrg"] boolValue]];
 	[self setIsFeedback:[[dict valueForKey:@"IsFeedback"] boolValue]];
-	[self setFromOrg:[[EmbedOrg alloc] initWithDictionary:[dict valueForKey:@"FromOrg"]]];
+	id dictFromOrg = [dict valueForKey:@"FromOrg"];
+	if ([dictFromOrg isKindOfClass:[NSDictionary class]]){
+		[self setFromOrg:[[EmbedOrg alloc] initWithDictionary:dictFromOrg]];
+	}
 
 	NSMutableArray * mToOrgs = [[NSMutableArray alloc] init];
 	NSArray * lToOrgs = [dict valueForKey:@"ToOrgs"];
@@ -2946,7 +3021,10 @@ static NSDateFormatter * _dateFormatter;
 	[self setToOrgs:mToOrgs];
 	[self setToOrgsHtml:[dict valueForKey:@"ToOrgsHtml"]];
 	[self setIsRequest:[[dict valueForKey:@"IsRequest"] boolValue]];
-	[self setRequest:[[Request alloc] initWithDictionary:[dict valueForKey:@"Request"]]];
+	id dictRequest = [dict valueForKey:@"Request"];
+	if ([dictRequest isKindOfClass:[NSDictionary class]]){
+		[self setRequest:[[Request alloc] initWithDictionary:dictRequest]];
+	}
 	[self setVisibleForSuperUserInSuperOrg:[[dict valueForKey:@"VisibleForSuperUserInSuperOrg"] boolValue]];
 	[self setVisibleForSuperOrg:[[dict valueForKey:@"VisibleForSuperOrg"] boolValue]];
 	[self setIsKnowledgeBase:[[dict valueForKey:@"IsKnowledgeBase"] boolValue]];
@@ -2977,11 +3055,26 @@ static NSDateFormatter * _dateFormatter;
 	[self setCommentsCount:[dict valueForKey:@"CommentsCount"]];
 	[self setAllLikesCount:[dict valueForKey:@"AllLikesCount"]];
 	[self setVersionCount:[dict valueForKey:@"VersionCount"]];
-	[self setAuthor:[[EmbedUser alloc] initWithDictionary:[dict valueForKey:@"Author"]]];
-	[self setCurrentVersionEditor:[[EmbedUser alloc] initWithDictionary:[dict valueForKey:@"CurrentVersionEditor"]]];
-	[self setGroup:[[Group alloc] initWithDictionary:[dict valueForKey:@"Group"]]];
-	[self setTask:[[Task alloc] initWithDictionary:[dict valueForKey:@"Task"]]];
-	[self setConversation:[[Conversation alloc] initWithDictionary:[dict valueForKey:@"Conversation"]]];
+	id dictAuthor = [dict valueForKey:@"Author"];
+	if ([dictAuthor isKindOfClass:[NSDictionary class]]){
+		[self setAuthor:[[EmbedUser alloc] initWithDictionary:dictAuthor]];
+	}
+	id dictCurrentVersionEditor = [dict valueForKey:@"CurrentVersionEditor"];
+	if ([dictCurrentVersionEditor isKindOfClass:[NSDictionary class]]){
+		[self setCurrentVersionEditor:[[EmbedUser alloc] initWithDictionary:dictCurrentVersionEditor]];
+	}
+	id dictGroup = [dict valueForKey:@"Group"];
+	if ([dictGroup isKindOfClass:[NSDictionary class]]){
+		[self setGroup:[[Group alloc] initWithDictionary:dictGroup]];
+	}
+	id dictTask = [dict valueForKey:@"Task"];
+	if ([dictTask isKindOfClass:[NSDictionary class]]){
+		[self setTask:[[Task alloc] initWithDictionary:dictTask]];
+	}
+	id dictConversation = [dict valueForKey:@"Conversation"];
+	if ([dictConversation isKindOfClass:[NSDictionary class]]){
+		[self setConversation:[[Conversation alloc] initWithDictionary:dictConversation]];
+	}
 
 	NSMutableArray * mLinkedEntries = [[NSMutableArray alloc] init];
 	NSArray * lLinkedEntries = [dict valueForKey:@"LinkedEntries"];
@@ -3036,7 +3129,10 @@ static NSDateFormatter * _dateFormatter;
 		}
 	}
 	[self setAttachments:mAttachments];
-	[self setFirstPicture:[[Attachment alloc] initWithDictionary:[dict valueForKey:@"FirstPicture"]]];
+	id dictFirstPicture = [dict valueForKey:@"FirstPicture"];
+	if ([dictFirstPicture isKindOfClass:[NSDictionary class]]){
+		[self setFirstPicture:[[Attachment alloc] initWithDictionary:dictFirstPicture]];
+	}
 
 	NSMutableArray * mComments = [[NSMutableArray alloc] init];
 	NSArray * lComments = [dict valueForKey:@"Comments"];
@@ -3073,9 +3169,18 @@ static NSDateFormatter * _dateFormatter;
 		}
 	}
 	[self setOtherVersionsComments:mOtherVersionsComments];
-	[self setNewComment:[[Entry alloc] initWithDictionary:[dict valueForKey:@"NewComment"]]];
-	[self setNewEntry:[[Entry alloc] initWithDictionary:[dict valueForKey:@"NewEntry"]]];
-	[self setGroupSlector:[[GroupSelector alloc] initWithDictionary:[dict valueForKey:@"GroupSlector"]]];
+	id dictNewComment = [dict valueForKey:@"NewComment"];
+	if ([dictNewComment isKindOfClass:[NSDictionary class]]){
+		[self setNewComment:[[Entry alloc] initWithDictionary:dictNewComment]];
+	}
+	id dictNewEntry = [dict valueForKey:@"NewEntry"];
+	if ([dictNewEntry isKindOfClass:[NSDictionary class]]){
+		[self setNewEntry:[[Entry alloc] initWithDictionary:dictNewEntry]];
+	}
+	id dictGroupSlector = [dict valueForKey:@"GroupSlector"];
+	if ([dictGroupSlector isKindOfClass:[NSDictionary class]]){
+		[self setGroupSlector:[[GroupSelector alloc] initWithDictionary:dictGroupSlector]];
+	}
 
 	return self;
 }
@@ -3392,7 +3497,10 @@ static NSDateFormatter * _dateFormatter;
 	[self setCommentCntStr:[dict valueForKey:@"CommentCntStr"]];
 	[self setLikeCntStr:[dict valueForKey:@"LikeCntStr"]];
 	[self setWatchTime:[Qortexapi dateFromString:[dict valueForKey:@"WatchTime"]]];
-	[self setWatchEntry:[[Entry alloc] initWithDictionary:[dict valueForKey:@"WatchEntry"]]];
+	id dictWatchEntry = [dict valueForKey:@"WatchEntry"];
+	if ([dictWatchEntry isKindOfClass:[NSDictionary class]]){
+		[self setWatchEntry:[[Entry alloc] initWithDictionary:dictWatchEntry]];
+	}
 
 	return self;
 }
@@ -3603,7 +3711,10 @@ static NSDateFormatter * _dateFormatter;
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
-	[self setTotalStat:[[TotalStats alloc] initWithDictionary:[dict valueForKey:@"TotalStat"]]];
+	id dictTotalStat = [dict valueForKey:@"TotalStat"];
+	if ([dictTotalStat isKindOfClass:[NSDictionary class]]){
+		[self setTotalStat:[[TotalStats alloc] initWithDictionary:dictTotalStat]];
+	}
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -3787,7 +3898,10 @@ static NSDateFormatter * _dateFormatter;
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
-	[self setInfo:[[AbandonInfo alloc] initWithDictionary:[dict valueForKey:@"Info"]]];
+	id dictInfo = [dict valueForKey:@"Info"];
+	if ([dictInfo isKindOfClass:[NSDictionary class]]){
+		[self setInfo:[[AbandonInfo alloc] initWithDictionary:dictInfo]];
+	}
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -3845,7 +3959,10 @@ static NSDateFormatter * _dateFormatter;
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
-	[self setInvitation:[[SharingInvitation alloc] initWithDictionary:[dict valueForKey:@"Invitation"]]];
+	id dictInvitation = [dict valueForKey:@"Invitation"];
+	if ([dictInvitation isKindOfClass:[NSDictionary class]]){
+		[self setInvitation:[[SharingInvitation alloc] initWithDictionary:dictInvitation]];
+	}
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -4024,7 +4141,10 @@ static NSDateFormatter * _dateFormatter;
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
-	[self setEntry:[[Entry alloc] initWithDictionary:[dict valueForKey:@"Entry"]]];
+	id dictEntry = [dict valueForKey:@"Entry"];
+	if ([dictEntry isKindOfClass:[NSDictionary class]]){
+		[self setEntry:[[Entry alloc] initWithDictionary:dictEntry]];
+	}
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -4134,7 +4254,10 @@ static NSDateFormatter * _dateFormatter;
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
-	[self setInput:[[BroadcastInput alloc] initWithDictionary:[dict valueForKey:@"Input"]]];
+	id dictInput = [dict valueForKey:@"Input"];
+	if ([dictInput isKindOfClass:[NSDictionary class]]){
+		[self setInput:[[BroadcastInput alloc] initWithDictionary:dictInput]];
+	}
 
 	return self;
 }
@@ -4164,7 +4287,10 @@ static NSDateFormatter * _dateFormatter;
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
-	[self setEntry:[[Entry alloc] initWithDictionary:[dict valueForKey:@"Entry"]]];
+	id dictEntry = [dict valueForKey:@"Entry"];
+	if ([dictEntry isKindOfClass:[NSDictionary class]]){
+		[self setEntry:[[Entry alloc] initWithDictionary:dictEntry]];
+	}
 	[self setValidated:[dict valueForKey:@"Validated"]];
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
@@ -4196,7 +4322,10 @@ static NSDateFormatter * _dateFormatter;
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
-	[self setInput:[[BroadcastInput alloc] initWithDictionary:[dict valueForKey:@"Input"]]];
+	id dictInput = [dict valueForKey:@"Input"];
+	if ([dictInput isKindOfClass:[NSDictionary class]]){
+		[self setInput:[[BroadcastInput alloc] initWithDictionary:dictInput]];
+	}
 
 	return self;
 }
@@ -4226,7 +4355,10 @@ static NSDateFormatter * _dateFormatter;
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
-	[self setEntry:[[Entry alloc] initWithDictionary:[dict valueForKey:@"Entry"]]];
+	id dictEntry = [dict valueForKey:@"Entry"];
+	if ([dictEntry isKindOfClass:[NSDictionary class]]){
+		[self setEntry:[[Entry alloc] initWithDictionary:dictEntry]];
+	}
 	[self setValidated:[dict valueForKey:@"Validated"]];
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
@@ -4286,7 +4418,10 @@ static NSDateFormatter * _dateFormatter;
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
-	[self setEntry:[[Entry alloc] initWithDictionary:[dict valueForKey:@"Entry"]]];
+	id dictEntry = [dict valueForKey:@"Entry"];
+	if ([dictEntry isKindOfClass:[NSDictionary class]]){
+		[self setEntry:[[Entry alloc] initWithDictionary:dictEntry]];
+	}
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -4344,7 +4479,10 @@ static NSDateFormatter * _dateFormatter;
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
-	[self setEntry:[[Entry alloc] initWithDictionary:[dict valueForKey:@"Entry"]]];
+	id dictEntry = [dict valueForKey:@"Entry"];
+	if ([dictEntry isKindOfClass:[NSDictionary class]]){
+		[self setEntry:[[Entry alloc] initWithDictionary:dictEntry]];
+	}
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -4402,7 +4540,10 @@ static NSDateFormatter * _dateFormatter;
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
-	[self setEntry:[[Entry alloc] initWithDictionary:[dict valueForKey:@"Entry"]]];
+	id dictEntry = [dict valueForKey:@"Entry"];
+	if ([dictEntry isKindOfClass:[NSDictionary class]]){
+		[self setEntry:[[Entry alloc] initWithDictionary:dictEntry]];
+	}
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -4432,7 +4573,10 @@ static NSDateFormatter * _dateFormatter;
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
-	[self setInput:[[BroadcastInput alloc] initWithDictionary:[dict valueForKey:@"Input"]]];
+	id dictInput = [dict valueForKey:@"Input"];
+	if ([dictInput isKindOfClass:[NSDictionary class]]){
+		[self setInput:[[BroadcastInput alloc] initWithDictionary:dictInput]];
+	}
 
 	return self;
 }
@@ -4462,7 +4606,10 @@ static NSDateFormatter * _dateFormatter;
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
-	[self setEntry:[[Entry alloc] initWithDictionary:[dict valueForKey:@"Entry"]]];
+	id dictEntry = [dict valueForKey:@"Entry"];
+	if ([dictEntry isKindOfClass:[NSDictionary class]]){
+		[self setEntry:[[Entry alloc] initWithDictionary:dictEntry]];
+	}
 	[self setValidated:[dict valueForKey:@"Validated"]];
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
@@ -4494,7 +4641,10 @@ static NSDateFormatter * _dateFormatter;
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
-	[self setInput:[[BroadcastInput alloc] initWithDictionary:[dict valueForKey:@"Input"]]];
+	id dictInput = [dict valueForKey:@"Input"];
+	if ([dictInput isKindOfClass:[NSDictionary class]]){
+		[self setInput:[[BroadcastInput alloc] initWithDictionary:dictInput]];
+	}
 
 	return self;
 }
@@ -4524,7 +4674,10 @@ static NSDateFormatter * _dateFormatter;
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
-	[self setEntry:[[Entry alloc] initWithDictionary:[dict valueForKey:@"Entry"]]];
+	id dictEntry = [dict valueForKey:@"Entry"];
+	if ([dictEntry isKindOfClass:[NSDictionary class]]){
+		[self setEntry:[[Entry alloc] initWithDictionary:dictEntry]];
+	}
 	[self setValidated:[dict valueForKey:@"Validated"]];
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
@@ -4556,7 +4709,10 @@ static NSDateFormatter * _dateFormatter;
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
-	[self setInput:[[EntryInput alloc] initWithDictionary:[dict valueForKey:@"Input"]]];
+	id dictInput = [dict valueForKey:@"Input"];
+	if ([dictInput isKindOfClass:[NSDictionary class]]){
+		[self setInput:[[EntryInput alloc] initWithDictionary:dictInput]];
+	}
 
 	return self;
 }
@@ -4586,7 +4742,10 @@ static NSDateFormatter * _dateFormatter;
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
-	[self setEntry:[[Entry alloc] initWithDictionary:[dict valueForKey:@"Entry"]]];
+	id dictEntry = [dict valueForKey:@"Entry"];
+	if ([dictEntry isKindOfClass:[NSDictionary class]]){
+		[self setEntry:[[Entry alloc] initWithDictionary:dictEntry]];
+	}
 	[self setValidated:[dict valueForKey:@"Validated"]];
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
@@ -4618,7 +4777,10 @@ static NSDateFormatter * _dateFormatter;
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
-	[self setInput:[[EntryInput alloc] initWithDictionary:[dict valueForKey:@"Input"]]];
+	id dictInput = [dict valueForKey:@"Input"];
+	if ([dictInput isKindOfClass:[NSDictionary class]]){
+		[self setInput:[[EntryInput alloc] initWithDictionary:dictInput]];
+	}
 
 	return self;
 }
@@ -4648,7 +4810,10 @@ static NSDateFormatter * _dateFormatter;
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
-	[self setEntry:[[Entry alloc] initWithDictionary:[dict valueForKey:@"Entry"]]];
+	id dictEntry = [dict valueForKey:@"Entry"];
+	if ([dictEntry isKindOfClass:[NSDictionary class]]){
+		[self setEntry:[[Entry alloc] initWithDictionary:dictEntry]];
+	}
 	[self setValidated:[dict valueForKey:@"Validated"]];
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
@@ -4711,7 +4876,10 @@ static NSDateFormatter * _dateFormatter;
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
-	[self setEntry:[[Task alloc] initWithDictionary:[dict valueForKey:@"Entry"]]];
+	id dictEntry = [dict valueForKey:@"Entry"];
+	if ([dictEntry isKindOfClass:[NSDictionary class]]){
+		[self setEntry:[[Task alloc] initWithDictionary:dictEntry]];
+	}
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -4741,7 +4909,10 @@ static NSDateFormatter * _dateFormatter;
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
-	[self setInput:[[EntryInput alloc] initWithDictionary:[dict valueForKey:@"Input"]]];
+	id dictInput = [dict valueForKey:@"Input"];
+	if ([dictInput isKindOfClass:[NSDictionary class]]){
+		[self setInput:[[EntryInput alloc] initWithDictionary:dictInput]];
+	}
 
 	return self;
 }
@@ -4771,7 +4942,10 @@ static NSDateFormatter * _dateFormatter;
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
-	[self setEntry:[[Entry alloc] initWithDictionary:[dict valueForKey:@"Entry"]]];
+	id dictEntry = [dict valueForKey:@"Entry"];
+	if ([dictEntry isKindOfClass:[NSDictionary class]]){
+		[self setEntry:[[Entry alloc] initWithDictionary:dictEntry]];
+	}
 	[self setValidated:[dict valueForKey:@"Validated"]];
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
@@ -4834,7 +5008,10 @@ static NSDateFormatter * _dateFormatter;
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
-	[self setEntry:[[Entry alloc] initWithDictionary:[dict valueForKey:@"Entry"]]];
+	id dictEntry = [dict valueForKey:@"Entry"];
+	if ([dictEntry isKindOfClass:[NSDictionary class]]){
+		[self setEntry:[[Entry alloc] initWithDictionary:dictEntry]];
+	}
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -4864,7 +5041,10 @@ static NSDateFormatter * _dateFormatter;
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
-	[self setInput:[[EntryInput alloc] initWithDictionary:[dict valueForKey:@"Input"]]];
+	id dictInput = [dict valueForKey:@"Input"];
+	if ([dictInput isKindOfClass:[NSDictionary class]]){
+		[self setInput:[[EntryInput alloc] initWithDictionary:dictInput]];
+	}
 
 	return self;
 }
@@ -4894,7 +5074,10 @@ static NSDateFormatter * _dateFormatter;
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
-	[self setEntry:[[Entry alloc] initWithDictionary:[dict valueForKey:@"Entry"]]];
+	id dictEntry = [dict valueForKey:@"Entry"];
+	if ([dictEntry isKindOfClass:[NSDictionary class]]){
+		[self setEntry:[[Entry alloc] initWithDictionary:dictEntry]];
+	}
 	[self setValidated:[dict valueForKey:@"Validated"]];
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
@@ -4926,7 +5109,10 @@ static NSDateFormatter * _dateFormatter;
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
-	[self setInput:[[EntryInput alloc] initWithDictionary:[dict valueForKey:@"Input"]]];
+	id dictInput = [dict valueForKey:@"Input"];
+	if ([dictInput isKindOfClass:[NSDictionary class]]){
+		[self setInput:[[EntryInput alloc] initWithDictionary:dictInput]];
+	}
 
 	return self;
 }
@@ -4956,7 +5142,10 @@ static NSDateFormatter * _dateFormatter;
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
-	[self setEntry:[[Entry alloc] initWithDictionary:[dict valueForKey:@"Entry"]]];
+	id dictEntry = [dict valueForKey:@"Entry"];
+	if ([dictEntry isKindOfClass:[NSDictionary class]]){
+		[self setEntry:[[Entry alloc] initWithDictionary:dictEntry]];
+	}
 	[self setValidated:[dict valueForKey:@"Validated"]];
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
@@ -5085,7 +5274,10 @@ static NSDateFormatter * _dateFormatter;
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
-	[self setEntry:[[Entry alloc] initWithDictionary:[dict valueForKey:@"Entry"]]];
+	id dictEntry = [dict valueForKey:@"Entry"];
+	if ([dictEntry isKindOfClass:[NSDictionary class]]){
+		[self setEntry:[[Entry alloc] initWithDictionary:dictEntry]];
+	}
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -6036,7 +6228,10 @@ static NSDateFormatter * _dateFormatter;
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
-	[self setMycount:[[MyCount alloc] initWithDictionary:[dict valueForKey:@"Mycount"]]];
+	id dictMycount = [dict valueForKey:@"Mycount"];
+	if ([dictMycount isKindOfClass:[NSDictionary class]]){
+		[self setMycount:[[MyCount alloc] initWithDictionary:dictMycount]];
+	}
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -6097,7 +6292,10 @@ static NSDateFormatter * _dateFormatter;
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
-	[self setWatchlist:[[WatchList alloc] initWithDictionary:[dict valueForKey:@"Watchlist"]]];
+	id dictWatchlist = [dict valueForKey:@"Watchlist"];
+	if ([dictWatchlist isKindOfClass:[NSDictionary class]]){
+		[self setWatchlist:[[WatchList alloc] initWithDictionary:dictWatchlist]];
+	}
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -6304,7 +6502,10 @@ static NSDateFormatter * _dateFormatter;
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
-	[self setInput:[[LikeInput alloc] initWithDictionary:[dict valueForKey:@"Input"]]];
+	id dictInput = [dict valueForKey:@"Input"];
+	if ([dictInput isKindOfClass:[NSDictionary class]]){
+		[self setInput:[[LikeInput alloc] initWithDictionary:dictInput]];
+	}
 
 	return self;
 }
@@ -6333,7 +6534,10 @@ static NSDateFormatter * _dateFormatter;
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
-	[self setEntry:[[Entry alloc] initWithDictionary:[dict valueForKey:@"Entry"]]];
+	id dictEntry = [dict valueForKey:@"Entry"];
+	if ([dictEntry isKindOfClass:[NSDictionary class]]){
+		[self setEntry:[[Entry alloc] initWithDictionary:dictEntry]];
+	}
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -6394,7 +6598,10 @@ static NSDateFormatter * _dateFormatter;
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
-	[self setDraftlist:[[DraftList alloc] initWithDictionary:[dict valueForKey:@"Draftlist"]]];
+	id dictDraftlist = [dict valueForKey:@"Draftlist"];
+	if ([dictDraftlist isKindOfClass:[NSDictionary class]]){
+		[self setDraftlist:[[DraftList alloc] initWithDictionary:dictDraftlist]];
+	}
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -6455,7 +6662,10 @@ static NSDateFormatter * _dateFormatter;
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
-	[self setEntry:[[Entry alloc] initWithDictionary:[dict valueForKey:@"Entry"]]];
+	id dictEntry = [dict valueForKey:@"Entry"];
+	if ([dictEntry isKindOfClass:[NSDictionary class]]){
+		[self setEntry:[[Entry alloc] initWithDictionary:dictEntry]];
+	}
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -6567,7 +6777,10 @@ static NSDateFormatter * _dateFormatter;
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
-	[self setGroup:[[Group alloc] initWithDictionary:[dict valueForKey:@"Group"]]];
+	id dictGroup = [dict valueForKey:@"Group"];
+	if ([dictGroup isKindOfClass:[NSDictionary class]]){
+		[self setGroup:[[Group alloc] initWithDictionary:dictGroup]];
+	}
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -6625,7 +6838,10 @@ static NSDateFormatter * _dateFormatter;
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
-	[self setGroup:[[Group alloc] initWithDictionary:[dict valueForKey:@"Group"]]];
+	id dictGroup = [dict valueForKey:@"Group"];
+	if ([dictGroup isKindOfClass:[NSDictionary class]]){
+		[self setGroup:[[Group alloc] initWithDictionary:dictGroup]];
+	}
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -6655,7 +6871,10 @@ static NSDateFormatter * _dateFormatter;
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
-	[self setInput:[[GroupInput alloc] initWithDictionary:[dict valueForKey:@"Input"]]];
+	id dictInput = [dict valueForKey:@"Input"];
+	if ([dictInput isKindOfClass:[NSDictionary class]]){
+		[self setInput:[[GroupInput alloc] initWithDictionary:dictInput]];
+	}
 
 	return self;
 }
@@ -6685,7 +6904,10 @@ static NSDateFormatter * _dateFormatter;
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
-	[self setGroup:[[Group alloc] initWithDictionary:[dict valueForKey:@"Group"]]];
+	id dictGroup = [dict valueForKey:@"Group"];
+	if ([dictGroup isKindOfClass:[NSDictionary class]]){
+		[self setGroup:[[Group alloc] initWithDictionary:dictGroup]];
+	}
 	[self setValidated:[dict valueForKey:@"Validated"]];
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
@@ -6717,7 +6939,10 @@ static NSDateFormatter * _dateFormatter;
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
-	[self setInput:[[GroupInput alloc] initWithDictionary:[dict valueForKey:@"Input"]]];
+	id dictInput = [dict valueForKey:@"Input"];
+	if ([dictInput isKindOfClass:[NSDictionary class]]){
+		[self setInput:[[GroupInput alloc] initWithDictionary:dictInput]];
+	}
 
 	return self;
 }
@@ -6914,7 +7139,10 @@ static NSDateFormatter * _dateFormatter;
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
-	[self setGroup:[[Group alloc] initWithDictionary:[dict valueForKey:@"Group"]]];
+	id dictGroup = [dict valueForKey:@"Group"];
+	if ([dictGroup isKindOfClass:[NSDictionary class]]){
+		[self setGroup:[[Group alloc] initWithDictionary:dictGroup]];
+	}
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -7228,7 +7456,10 @@ static NSDateFormatter * _dateFormatter;
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
-	[self setHeader:[[GroupHeader alloc] initWithDictionary:[dict valueForKey:@"Header"]]];
+	id dictHeader = [dict valueForKey:@"Header"];
+	if ([dictHeader isKindOfClass:[NSDictionary class]]){
+		[self setHeader:[[GroupHeader alloc] initWithDictionary:dictHeader]];
+	}
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -7285,7 +7516,10 @@ static NSDateFormatter * _dateFormatter;
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
-	[self setAnouncementGroup:[[Group alloc] initWithDictionary:[dict valueForKey:@"AnouncementGroup"]]];
+	id dictAnouncementGroup = [dict valueForKey:@"AnouncementGroup"];
+	if ([dictAnouncementGroup isKindOfClass:[NSDictionary class]]){
+		[self setAnouncementGroup:[[Group alloc] initWithDictionary:dictAnouncementGroup]];
+	}
 
 	NSMutableArray * mFollowedGroups = [[NSMutableArray alloc] init];
 	NSArray * lFollowedGroups = [dict valueForKey:@"FollowedGroups"];
@@ -7541,7 +7775,10 @@ static NSDateFormatter * _dateFormatter;
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
-	[self setUser:[[User alloc] initWithDictionary:[dict valueForKey:@"User"]]];
+	id dictUser = [dict valueForKey:@"User"];
+	if ([dictUser isKindOfClass:[NSDictionary class]]){
+		[self setUser:[[User alloc] initWithDictionary:dictUser]];
+	}
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -8042,7 +8279,10 @@ static NSDateFormatter * _dateFormatter;
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
-	[self setPanelStatus:[[PanelStatus alloc] initWithDictionary:[dict valueForKey:@"PanelStatus"]]];
+	id dictPanelStatus = [dict valueForKey:@"PanelStatus"];
+	if ([dictPanelStatus isKindOfClass:[NSDictionary class]]){
+		[self setPanelStatus:[[PanelStatus alloc] initWithDictionary:dictPanelStatus]];
+	}
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -8097,7 +8337,10 @@ static NSDateFormatter * _dateFormatter;
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
-	[self setPreferences:[[Preferences alloc] initWithDictionary:[dict valueForKey:@"Preferences"]]];
+	id dictPreferences = [dict valueForKey:@"Preferences"];
+	if ([dictPreferences isKindOfClass:[NSDictionary class]]){
+		[self setPreferences:[[Preferences alloc] initWithDictionary:dictPreferences]];
+	}
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -8127,7 +8370,10 @@ static NSDateFormatter * _dateFormatter;
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
-	[self setInput:[[PreferencesInput alloc] initWithDictionary:[dict valueForKey:@"Input"]]];
+	id dictInput = [dict valueForKey:@"Input"];
+	if ([dictInput isKindOfClass:[NSDictionary class]]){
+		[self setInput:[[PreferencesInput alloc] initWithDictionary:dictInput]];
+	}
 
 	return self;
 }
@@ -8157,7 +8403,10 @@ static NSDateFormatter * _dateFormatter;
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
-	[self setPreferences:[[Preferences alloc] initWithDictionary:[dict valueForKey:@"Preferences"]]];
+	id dictPreferences = [dict valueForKey:@"Preferences"];
+	if ([dictPreferences isKindOfClass:[NSDictionary class]]){
+		[self setPreferences:[[Preferences alloc] initWithDictionary:dictPreferences]];
+	}
 	[self setValidated:[dict valueForKey:@"Validated"]];
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
@@ -8325,7 +8574,10 @@ static NSDateFormatter * _dateFormatter;
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
-	[self setInput:[[UserProfileInput alloc] initWithDictionary:[dict valueForKey:@"Input"]]];
+	id dictInput = [dict valueForKey:@"Input"];
+	if ([dictInput isKindOfClass:[NSDictionary class]]){
+		[self setInput:[[UserProfileInput alloc] initWithDictionary:dictInput]];
+	}
 
 	return self;
 }
@@ -8408,7 +8660,10 @@ static NSDateFormatter * _dateFormatter;
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
-	[self setMyCount:[[MyCount alloc] initWithDictionary:[dict valueForKey:@"MyCount"]]];
+	id dictMyCount = [dict valueForKey:@"MyCount"];
+	if ([dictMyCount isKindOfClass:[NSDictionary class]]){
+		[self setMyCount:[[MyCount alloc] initWithDictionary:dictMyCount]];
+	}
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -8469,7 +8724,10 @@ static NSDateFormatter * _dateFormatter;
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
-	[self setMyCount:[[MyCount alloc] initWithDictionary:[dict valueForKey:@"MyCount"]]];
+	id dictMyCount = [dict valueForKey:@"MyCount"];
+	if ([dictMyCount isKindOfClass:[NSDictionary class]]){
+		[self setMyCount:[[MyCount alloc] initWithDictionary:dictMyCount]];
+	}
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -8595,7 +8853,10 @@ static NSDateFormatter * _dateFormatter;
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
-	[self setOrg:[[Organization alloc] initWithDictionary:[dict valueForKey:@"Org"]]];
+	id dictOrg = [dict valueForKey:@"Org"];
+	if ([dictOrg isKindOfClass:[NSDictionary class]]){
+		[self setOrg:[[Organization alloc] initWithDictionary:dictOrg]];
+	}
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -8767,7 +9028,10 @@ static NSDateFormatter * _dateFormatter;
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
-	[self setInput:[[OrganizationInput alloc] initWithDictionary:[dict valueForKey:@"Input"]]];
+	id dictInput = [dict valueForKey:@"Input"];
+	if ([dictInput isKindOfClass:[NSDictionary class]]){
+		[self setInput:[[OrganizationInput alloc] initWithDictionary:dictInput]];
+	}
 
 	return self;
 }
@@ -8797,7 +9061,10 @@ static NSDateFormatter * _dateFormatter;
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
-	[self setOrg:[[Organization alloc] initWithDictionary:[dict valueForKey:@"Org"]]];
+	id dictOrg = [dict valueForKey:@"Org"];
+	if ([dictOrg isKindOfClass:[NSDictionary class]]){
+		[self setOrg:[[Organization alloc] initWithDictionary:dictOrg]];
+	}
 	[self setValidated:[dict valueForKey:@"Validated"]];
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
@@ -8920,7 +9187,10 @@ static NSDateFormatter * _dateFormatter;
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
-	[self setReq:[[Request alloc] initWithDictionary:[dict valueForKey:@"Req"]]];
+	id dictReq = [dict valueForKey:@"Req"];
+	if ([dictReq isKindOfClass:[NSDictionary class]]){
+		[self setReq:[[Request alloc] initWithDictionary:dictReq]];
+	}
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -8987,7 +9257,10 @@ static NSDateFormatter * _dateFormatter;
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
-	[self setReq:[[Request alloc] initWithDictionary:[dict valueForKey:@"Req"]]];
+	id dictReq = [dict valueForKey:@"Req"];
+	if ([dictReq isKindOfClass:[NSDictionary class]]){
+		[self setReq:[[Request alloc] initWithDictionary:dictReq]];
+	}
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -9042,7 +9315,10 @@ static NSDateFormatter * _dateFormatter;
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
-	[self setOrgSetting:[[OrgSettings alloc] initWithDictionary:[dict valueForKey:@"OrgSetting"]]];
+	id dictOrgSetting = [dict valueForKey:@"OrgSetting"];
+	if ([dictOrgSetting isKindOfClass:[NSDictionary class]]){
+		[self setOrgSetting:[[OrgSettings alloc] initWithDictionary:dictOrgSetting]];
+	}
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -9072,7 +9348,10 @@ static NSDateFormatter * _dateFormatter;
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
-	[self setOrgSettingInput:[[OrgSettingsInput alloc] initWithDictionary:[dict valueForKey:@"OrgSettingInput"]]];
+	id dictOrgSettingInput = [dict valueForKey:@"OrgSettingInput"];
+	if ([dictOrgSettingInput isKindOfClass:[NSDictionary class]]){
+		[self setOrgSettingInput:[[OrgSettingsInput alloc] initWithDictionary:dictOrgSettingInput]];
+	}
 
 	return self;
 }
@@ -9400,7 +9679,10 @@ static NSDateFormatter * _dateFormatter;
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
-	[self setInput:[[MailUpdatesInput alloc] initWithDictionary:[dict valueForKey:@"Input"]]];
+	id dictInput = [dict valueForKey:@"Input"];
+	if ([dictInput isKindOfClass:[NSDictionary class]]){
+		[self setInput:[[MailUpdatesInput alloc] initWithDictionary:dictInput]];
+	}
 
 	return self;
 }
@@ -9484,7 +9766,10 @@ static NSDateFormatter * _dateFormatter;
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
-	[self setChanger:[[EmailChanger alloc] initWithDictionary:[dict valueForKey:@"Changer"]]];
+	id dictChanger = [dict valueForKey:@"Changer"];
+	if ([dictChanger isKindOfClass:[NSDictionary class]]){
+		[self setChanger:[[EmailChanger alloc] initWithDictionary:dictChanger]];
+	}
 	[self setValidated:[dict valueForKey:@"Validated"]];
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
@@ -9570,7 +9855,10 @@ static NSDateFormatter * _dateFormatter;
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
-	[self setInput:[[MemberAccountInput alloc] initWithDictionary:[dict valueForKey:@"Input"]]];
+	id dictInput = [dict valueForKey:@"Input"];
+	if ([dictInput isKindOfClass:[NSDictionary class]]){
+		[self setInput:[[MemberAccountInput alloc] initWithDictionary:dictInput]];
+	}
 
 	return self;
 }
@@ -9663,7 +9951,10 @@ static NSDateFormatter * _dateFormatter;
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
-	[self setSi:[[SharingInvitation alloc] initWithDictionary:[dict valueForKey:@"Si"]]];
+	id dictSi = [dict valueForKey:@"Si"];
+	if ([dictSi isKindOfClass:[NSDictionary class]]){
+		[self setSi:[[SharingInvitation alloc] initWithDictionary:dictSi]];
+	}
 	[self setValidated:[dict valueForKey:@"Validated"]];
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
@@ -9934,7 +10225,10 @@ static NSDateFormatter * _dateFormatter;
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
-	[self setInput:[[ShareChatInput alloc] initWithDictionary:[dict valueForKey:@"Input"]]];
+	id dictInput = [dict valueForKey:@"Input"];
+	if ([dictInput isKindOfClass:[NSDictionary class]]){
+		[self setInput:[[ShareChatInput alloc] initWithDictionary:dictInput]];
+	}
 
 	return self;
 }
@@ -9964,7 +10258,10 @@ static NSDateFormatter * _dateFormatter;
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
-	[self setChatEntry:[[Entry alloc] initWithDictionary:[dict valueForKey:@"ChatEntry"]]];
+	id dictChatEntry = [dict valueForKey:@"ChatEntry"];
+	if ([dictChatEntry isKindOfClass:[NSDictionary class]]){
+		[self setChatEntry:[[Entry alloc] initWithDictionary:dictChatEntry]];
+	}
 	[self setValidated:[dict valueForKey:@"Validated"]];
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
@@ -10085,7 +10382,10 @@ static NSDateFormatter * _dateFormatter;
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
-	[self setApiEmbedUser:[[EmbedUser alloc] initWithDictionary:[dict valueForKey:@"ApiEmbedUser"]]];
+	id dictApiEmbedUser = [dict valueForKey:@"ApiEmbedUser"];
+	if ([dictApiEmbedUser isKindOfClass:[NSDictionary class]]){
+		[self setApiEmbedUser:[[EmbedUser alloc] initWithDictionary:dictApiEmbedUser]];
+	}
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -10147,7 +10447,10 @@ static NSDateFormatter * _dateFormatter;
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
-	[self setChanger:[[EmailChanger alloc] initWithDictionary:[dict valueForKey:@"Changer"]]];
+	id dictChanger = [dict valueForKey:@"Changer"];
+	if ([dictChanger isKindOfClass:[NSDictionary class]]){
+		[self setChanger:[[EmailChanger alloc] initWithDictionary:dictChanger]];
+	}
 	[self setValidated:[dict valueForKey:@"Validated"]];
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
@@ -10441,7 +10744,10 @@ static NSDateFormatter * _dateFormatter;
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
-	[self setInvitation:[[SharingInvitation alloc] initWithDictionary:[dict valueForKey:@"Invitation"]]];
+	id dictInvitation = [dict valueForKey:@"Invitation"];
+	if ([dictInvitation isKindOfClass:[NSDictionary class]]){
+		[self setInvitation:[[SharingInvitation alloc] initWithDictionary:dictInvitation]];
+	}
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -10471,7 +10777,10 @@ static NSDateFormatter * _dateFormatter;
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
-	[self setInput:[[ContactInput alloc] initWithDictionary:[dict valueForKey:@"Input"]]];
+	id dictInput = [dict valueForKey:@"Input"];
+	if ([dictInput isKindOfClass:[NSDictionary class]]){
+		[self setInput:[[ContactInput alloc] initWithDictionary:dictInput]];
+	}
 
 	return self;
 }
@@ -10501,7 +10810,10 @@ static NSDateFormatter * _dateFormatter;
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
-	[self setContact:[[ContactInfo alloc] initWithDictionary:[dict valueForKey:@"Contact"]]];
+	id dictContact = [dict valueForKey:@"Contact"];
+	if ([dictContact isKindOfClass:[NSDictionary class]]){
+		[self setContact:[[ContactInfo alloc] initWithDictionary:dictContact]];
+	}
 	[self setValidated:[dict valueForKey:@"Validated"]];
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
@@ -10569,7 +10881,10 @@ static NSDateFormatter * _dateFormatter;
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
-	[self setBlog:[[Blog alloc] initWithDictionary:[dict valueForKey:@"Blog"]]];
+	id dictBlog = [dict valueForKey:@"Blog"];
+	if ([dictBlog isKindOfClass:[NSDictionary class]]){
+		[self setBlog:[[Blog alloc] initWithDictionary:dictBlog]];
+	}
 
 	NSMutableArray * mBlogEntries = [[NSMutableArray alloc] init];
 	NSArray * lBlogEntries = [dict valueForKey:@"BlogEntries"];
@@ -10649,8 +10964,14 @@ static NSDateFormatter * _dateFormatter;
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
-	[self setBlog:[[Blog alloc] initWithDictionary:[dict valueForKey:@"Blog"]]];
-	[self setBlogEntry:[[BlogEntry alloc] initWithDictionary:[dict valueForKey:@"BlogEntry"]]];
+	id dictBlog = [dict valueForKey:@"Blog"];
+	if ([dictBlog isKindOfClass:[NSDictionary class]]){
+		[self setBlog:[[Blog alloc] initWithDictionary:dictBlog]];
+	}
+	id dictBlogEntry = [dict valueForKey:@"BlogEntry"];
+	if ([dictBlogEntry isKindOfClass:[NSDictionary class]]){
+		[self setBlogEntry:[[BlogEntry alloc] initWithDictionary:dictBlogEntry]];
+	}
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -10684,7 +11005,10 @@ static NSDateFormatter * _dateFormatter;
 		return self;
 	}
 	[self setDoi:[dict valueForKey:@"Doi"]];
-	[self setInput:[[EntryInput alloc] initWithDictionary:[dict valueForKey:@"Input"]]];
+	id dictInput = [dict valueForKey:@"Input"];
+	if ([dictInput isKindOfClass:[NSDictionary class]]){
+		[self setInput:[[EntryInput alloc] initWithDictionary:dictInput]];
+	}
 
 	return self;
 }
@@ -10715,7 +11039,10 @@ static NSDateFormatter * _dateFormatter;
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
-	[self setBlogEntry:[[BlogEntry alloc] initWithDictionary:[dict valueForKey:@"BlogEntry"]]];
+	id dictBlogEntry = [dict valueForKey:@"BlogEntry"];
+	if ([dictBlogEntry isKindOfClass:[NSDictionary class]]){
+		[self setBlogEntry:[[BlogEntry alloc] initWithDictionary:dictBlogEntry]];
+	}
 	[self setValidated:[dict valueForKey:@"Validated"]];
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
@@ -10807,7 +11134,10 @@ static NSDateFormatter * _dateFormatter;
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
-	[self setInput:[[NewsletterInput alloc] initWithDictionary:[dict valueForKey:@"Input"]]];
+	id dictInput = [dict valueForKey:@"Input"];
+	if ([dictInput isKindOfClass:[NSDictionary class]]){
+		[self setInput:[[NewsletterInput alloc] initWithDictionary:dictInput]];
+	}
 
 	return self;
 }
@@ -10837,7 +11167,10 @@ static NSDateFormatter * _dateFormatter;
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
-	[self setNewsletter:[[Newsletter alloc] initWithDictionary:[dict valueForKey:@"Newsletter"]]];
+	id dictNewsletter = [dict valueForKey:@"Newsletter"];
+	if ([dictNewsletter isKindOfClass:[NSDictionary class]]){
+		[self setNewsletter:[[Newsletter alloc] initWithDictionary:dictNewsletter]];
+	}
 	[self setValidated:[dict valueForKey:@"Validated"]];
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
