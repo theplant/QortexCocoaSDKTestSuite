@@ -4731,7 +4731,6 @@ static NSDateFormatter * _dateFormatter;
 @implementation AuthUserServiceCreateEntryResults : NSObject
 
 @synthesize Entry;
-@synthesize Validated;
 @synthesize Err;
 
 - (id) initWithDictionary:(NSDictionary*)dict{
@@ -4746,7 +4745,6 @@ static NSDateFormatter * _dateFormatter;
 	if ([dictEntry isKindOfClass:[NSDictionary class]]){
 		[self setEntry:[[Entry alloc] initWithDictionary:dictEntry]];
 	}
-	[self setValidated:[dict valueForKey:@"Validated"]];
 	[self setErr:[Qortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -4756,7 +4754,6 @@ static NSDateFormatter * _dateFormatter;
 	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
 	[dict setValue:[self.Entry dictionary] forKey:@"Entry"];
 	
-	[dict setValue:self.Validated forKey:@"Validated"];
 	[dict setValue:self.Err forKey:@"Err"];
 
 	return dict;

@@ -85,4 +85,13 @@
     AuthUserServiceGetEntryResults *findR = [_aaronAuthUserService GetEntry:newCreatedResult.Entry.Id groupId:newCreatedResult.Entry.GroupId updateAtUnixNanoForVersion:@"" hightlightKeywords:@""];
     STAssertTrue(findR.Entry == nil, @"delete failed entry is %@", findR.Entry);
 }
+
+- (void)testCreateEntryReturnError {
+    EntryInput *input = [EntryInput alloc];
+    [input setTitle:@"Hello"];
+    AuthUserServiceCreateEntryResults *r = [_aaronAuthUserService CreateEntry:input];
+    STAssertTrue(r.Err != nil, @"error is nil");
+    STAssertEqualObjects([[r.Err.userInfo valueForKey:@"Errors"][0] valueForKey:@"Message"], @"Entry Id can't be blank", @"err is %@", r.Err);
+}
+
 @end

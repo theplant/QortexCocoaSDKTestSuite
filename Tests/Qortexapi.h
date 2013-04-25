@@ -1455,7 +1455,6 @@
 @interface AuthUserServiceCreateEntryResults : NSObject
 
 @property (nonatomic, strong) Entry * Entry;
-@property (nonatomic, strong) Validated * Validated;
 @property (nonatomic, strong) NSError * Err;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
