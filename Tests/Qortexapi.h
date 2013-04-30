@@ -3,10 +3,11 @@
 
 #import <Foundation/Foundation.h>
 
-@interface Qortexapi : NSObject
+
+@interface QXQortexapi : NSObject
 @property (nonatomic, strong) NSString * BaseURL;
 @property (nonatomic, assign) BOOL Verbose;
-+ (Qortexapi *) get;
++ (QXQortexapi *) get;
 
 @end
 
@@ -15,7 +16,7 @@
 
 
 // --- MailUpdatesInput ---
-@interface MailUpdatesInput : NSObject
+@interface QXMailUpdatesInput : NSObject
 
 @property (nonatomic, assign) BOOL IndividualIsOn;
 @property (nonatomic, strong) NSNumber * SendLag;
@@ -45,7 +46,7 @@
 @end
 
 // --- Organization ---
-@interface Organization : NSObject
+@interface QXOrganization : NSObject
 
 @property (nonatomic, strong) NSString * Id;
 @property (nonatomic, strong) NSString * Name;
@@ -64,7 +65,7 @@
 @end
 
 // --- Blog ---
-@interface Blog : NSObject
+@interface QXBlog : NSObject
 
 @property (nonatomic, strong) NSString * Title;
 @property (nonatomic, strong) NSString * Description;
@@ -76,7 +77,7 @@
 @end
 
 // --- PanelStatus ---
-@interface PanelStatus : NSObject
+@interface QXPanelStatus : NSObject
 
 @property (nonatomic, assign) BOOL AsideGroupsCollapse;
 @property (nonatomic, assign) BOOL AsideOtherGroupsCollapse;
@@ -92,7 +93,7 @@
 @end
 
 // --- GroupSelectorItem ---
-@interface GroupSelectorItem : NSObject
+@interface QXGroupSelectorItem : NSObject
 
 @property (nonatomic, strong) NSString * Id;
 @property (nonatomic, strong) NSString * Name;
@@ -104,7 +105,7 @@
 @end
 
 // --- Attachment ---
-@interface Attachment : NSObject
+@interface QXAttachment : NSObject
 
 @property (nonatomic, strong) NSString * Id;
 @property (nonatomic, strong) NSArray * OwnerId;
@@ -133,7 +134,7 @@
 @end
 
 // --- LinkedEntry ---
-@interface LinkedEntry : NSObject
+@interface QXLinkedEntry : NSObject
 
 @property (nonatomic, strong) NSString * Id;
 @property (nonatomic, strong) NSString * EType;
@@ -151,7 +152,7 @@
 @end
 
 // --- Newsletter ---
-@interface Newsletter : NSObject
+@interface QXNewsletter : NSObject
 
 @property (nonatomic, strong) NSString * Email;
 
@@ -161,7 +162,7 @@
 @end
 
 // --- OrgSettings ---
-@interface OrgSettings : NSObject
+@interface QXOrgSettings : NSObject
 
 @property (nonatomic, assign) BOOL AllowUsersCreateGroups;
 @property (nonatomic, assign) BOOL AllowUsersInvitePeople;
@@ -172,7 +173,7 @@
 @end
 
 // --- GroupCount ---
-@interface GroupCount : NSObject
+@interface QXGroupCount : NSObject
 
 @property (nonatomic, strong) NSString * GroupId;
 @property (nonatomic, strong) NSNumber * UnreadCount;
@@ -183,7 +184,7 @@
 @end
 
 // --- GroupHeader ---
-@interface GroupHeader : NSObject
+@interface QXGroupHeader : NSObject
 
 @property (nonatomic, assign) BOOL HasToFollow;
 @property (nonatomic, assign) BOOL IsFollowing;
@@ -199,7 +200,7 @@
 @end
 
 // --- InlineHelp ---
-@interface InlineHelp : NSObject
+@interface QXInlineHelp : NSObject
 
 @property (nonatomic, assign) BOOL WhatFeed;
 @property (nonatomic, assign) BOOL WhatGroup;
@@ -218,7 +219,7 @@
 @end
 
 // --- EmailChanger ---
-@interface EmailChanger : NSObject
+@interface QXEmailChanger : NSObject
 
 @property (nonatomic, strong) NSString * Token;
 @property (nonatomic, strong) NSString * Email;
@@ -229,7 +230,7 @@
 @end
 
 // --- ContactInfo ---
-@interface ContactInfo : NSObject
+@interface QXContactInfo : NSObject
 
 @property (nonatomic, strong) NSString * FirstName;
 @property (nonatomic, strong) NSString * LastName;
@@ -247,7 +248,7 @@
 @end
 
 // --- TotalStats ---
-@interface TotalStats : NSObject
+@interface QXTotalStats : NSObject
 
 @property (nonatomic, strong) NSNumber * OrgCount;
 @property (nonatomic, strong) NSNumber * MemberCount;
@@ -262,7 +263,7 @@
 @end
 
 // --- AccessReq ---
-@interface AccessReq : NSObject
+@interface QXAccessReq : NSObject
 
 @property (nonatomic, strong) NSString * Email;
 @property (nonatomic, strong) NSString * AccessCode;
@@ -277,7 +278,7 @@
 @end
 
 // --- EntryInput ---
-@interface EntryInput : NSObject
+@interface QXEntryInput : NSObject
 
 @property (nonatomic, strong) NSString * Id;
 @property (nonatomic, strong) NSString * EType;
@@ -310,7 +311,7 @@
 @end
 
 // --- BroadcastInput ---
-@interface BroadcastInput : NSObject
+@interface QXBroadcastInput : NSObject
 
 @property (nonatomic, strong) NSString * Id;
 @property (nonatomic, strong) NSString * Title;
@@ -325,7 +326,7 @@
 @end
 
 // --- GroupInput ---
-@interface GroupInput : NSObject
+@interface QXGroupInput : NSObject
 
 @property (nonatomic, strong) NSString * Id;
 @property (nonatomic, strong) NSString * Name;
@@ -346,7 +347,7 @@
 @end
 
 // --- OrgSettingsInput ---
-@interface OrgSettingsInput : NSObject
+@interface QXOrgSettingsInput : NSObject
 
 @property (nonatomic, assign) BOOL AllowUsersCreateGroups;
 @property (nonatomic, assign) BOOL AllowUsersInvitePeople;
@@ -357,7 +358,7 @@
 @end
 
 // --- OrganizationInput ---
-@interface OrganizationInput : NSObject
+@interface QXOrganizationInput : NSObject
 
 @property (nonatomic, strong) NSString * Id;
 @property (nonatomic, strong) NSString * OType;
@@ -383,7 +384,7 @@
 @end
 
 // --- LikeInput ---
-@interface LikeInput : NSObject
+@interface QXLikeInput : NSObject
 
 @property (nonatomic, strong) NSString * EntryId;
 @property (nonatomic, strong) NSString * GroupId;
@@ -395,7 +396,7 @@
 @end
 
 // --- PreferencesInput ---
-@interface PreferencesInput : NSObject
+@interface QXPreferencesInput : NSObject
 
 @property (nonatomic, strong) NSString * Timezone;
 @property (nonatomic, strong) NSString * TimezoneOffset;
@@ -414,7 +415,7 @@
 @end
 
 // --- MemberAccountInput ---
-@interface MemberAccountInput : NSObject
+@interface QXMemberAccountInput : NSObject
 
 @property (nonatomic, strong) NSString * FirstName;
 @property (nonatomic, strong) NSString * LastName;
@@ -426,7 +427,7 @@
 @end
 
 // --- NewsletterInput ---
-@interface NewsletterInput : NSObject
+@interface QXNewsletterInput : NSObject
 
 @property (nonatomic, strong) NSString * Email;
 
@@ -436,7 +437,7 @@
 @end
 
 // --- ShareChatInput ---
-@interface ShareChatInput : NSObject
+@interface QXShareChatInput : NSObject
 
 @property (nonatomic, strong) NSString * Title;
 @property (nonatomic, strong) NSString * Content;
@@ -450,7 +451,7 @@
 @end
 
 // --- ContactInput ---
-@interface ContactInput : NSObject
+@interface QXContactInput : NSObject
 
 @property (nonatomic, strong) NSString * FirstName;
 @property (nonatomic, strong) NSString * LastName;
@@ -468,7 +469,7 @@
 @end
 
 // --- UserProfileInput ---
-@interface UserProfileInput : NSObject
+@interface QXUserProfileInput : NSObject
 
 @property (nonatomic, strong) NSString * Summary;
 @property (nonatomic, strong) NSString * Title;
@@ -491,7 +492,7 @@
 @end
 
 // --- Preferences ---
-@interface Preferences : NSObject
+@interface QXPreferences : NSObject
 
 @property (nonatomic, strong) NSString * Timezone;
 @property (nonatomic, strong) NSString * TimezoneOffset;
@@ -510,7 +511,7 @@
 @end
 
 // --- EmbedOrg ---
-@interface EmbedOrg : NSObject
+@interface QXEmbedOrg : NSObject
 
 @property (nonatomic, strong) NSString * Id;
 @property (nonatomic, strong) NSString * Name;
@@ -523,7 +524,7 @@
 @end
 
 // --- EmbedUser ---
-@interface EmbedUser : NSObject
+@interface QXEmbedUser : NSObject
 
 @property (nonatomic, strong) NSString * Id;
 @property (nonatomic, strong) NSString * Email;
@@ -545,7 +546,7 @@
 @end
 
 // --- BlogEntry ---
-@interface BlogEntry : NSObject
+@interface QXBlogEntry : NSObject
 
 @property (nonatomic, strong) NSString * Id;
 @property (nonatomic, strong) NSString * Title;
@@ -555,7 +556,7 @@
 @property (nonatomic, strong) NSString * Permalink;
 @property (nonatomic, strong) NSString * CreateCommentURL;
 @property (nonatomic, strong) NSString * HtmlContent;
-@property (nonatomic, strong) EmbedUser * Author;
+@property (nonatomic, strong) QXEmbedUser * Author;
 @property (nonatomic, strong) NSArray * Comments;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
@@ -564,7 +565,7 @@
 @end
 
 // --- GroupUsers ---
-@interface GroupUsers : NSObject
+@interface QXGroupUsers : NSObject
 
 @property (nonatomic, strong) NSString * GroupId;
 @property (nonatomic, strong) NSArray * EmbedUsers;
@@ -575,12 +576,12 @@
 @end
 
 // --- Invitation ---
-@interface Invitation : NSObject
+@interface QXInvitation : NSObject
 
 @property (nonatomic, strong) NSString * Email;
 @property (nonatomic, strong) NSString * Token;
 @property (nonatomic, strong) NSString * SentAgo;
-@property (nonatomic, strong) EmbedUser * ByUser;
+@property (nonatomic, strong) QXEmbedUser * ByUser;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
 - (NSDictionary*) dictionary;
@@ -588,7 +589,7 @@
 @end
 
 // --- MyCount ---
-@interface MyCount : NSObject
+@interface QXMyCount : NSObject
 
 @property (nonatomic, strong) NSString * UserId;
 @property (nonatomic, strong) NSNumber * FollowedUnreadCount;
@@ -602,9 +603,9 @@
 @end
 
 // --- AbandonInfo ---
-@interface AbandonInfo : NSObject
+@interface QXAbandonInfo : NSObject
 
-@property (nonatomic, strong) EmbedOrg * AbandonFromOrg;
+@property (nonatomic, strong) QXEmbedOrg * AbandonFromOrg;
 @property (nonatomic, strong) NSArray * AvailableOrgs;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
@@ -613,7 +614,7 @@
 @end
 
 // --- Group ---
-@interface Group : NSObject
+@interface QXGroup : NSObject
 
 @property (nonatomic, strong) NSString * Id;
 @property (nonatomic, strong) NSString * Name;
@@ -623,7 +624,7 @@
 @property (nonatomic, strong) NSString * IconName;
 @property (nonatomic, strong) NSString * Link;
 @property (nonatomic, strong) NSString * Slug;
-@property (nonatomic, strong) EmbedUser * Author;
+@property (nonatomic, strong) QXEmbedUser * Author;
 @property (nonatomic, assign) BOOL IsAdmin;
 @property (nonatomic, assign) BOOL IsPrivate;
 @property (nonatomic, assign) BOOL Editable;
@@ -639,7 +640,7 @@
 @property (nonatomic, strong) NSNumber * FollowersCount;
 @property (nonatomic, assign) BOOL IsAnnoucement;
 @property (nonatomic, strong) NSArray * GroupOwners;
-@property (nonatomic, strong) EmbedOrg * SharedGroupFromOrg;
+@property (nonatomic, strong) QXEmbedOrg * SharedGroupFromOrg;
 @property (nonatomic, strong) NSArray * AcceptedEmbedOrgs;
 @property (nonatomic, strong) NSArray * PreSharingEmails;
 @property (nonatomic, strong) NSArray * ForwardedOrgs;
@@ -651,9 +652,9 @@
 @end
 
 // --- OrgStats ---
-@interface OrgStats : NSObject
+@interface QXOrgStats : NSObject
 
-@property (nonatomic, strong) Organization * Organization;
+@property (nonatomic, strong) QXOrganization * Organization;
 @property (nonatomic, strong) NSNumber * UserCount;
 @property (nonatomic, strong) NSNumber * GroupCount;
 @property (nonatomic, strong) NSNumber * SharedGroupCount;
@@ -669,11 +670,11 @@
 @end
 
 // --- GroupSelector ---
-@interface GroupSelector : NSObject
+@interface QXGroupSelector : NSObject
 
 @property (nonatomic, strong) NSString * Header;
 @property (nonatomic, strong) NSString * SelectedGroupId;
-@property (nonatomic, strong) GroupSelectorItem * SysMessage;
+@property (nonatomic, strong) QXGroupSelectorItem * SysMessage;
 @property (nonatomic, strong) NSArray * FollowingNormalGroups;
 @property (nonatomic, strong) NSArray * FollowingSharedGroups;
 @property (nonatomic, strong) NSArray * UnFollowingNormalGroups;
@@ -685,7 +686,7 @@
 @end
 
 // --- Member ---
-@interface Member : NSObject
+@interface QXMember : NSObject
 
 @property (nonatomic, strong) NSString * Name;
 @property (nonatomic, strong) NSString * Email;
@@ -700,7 +701,7 @@
 @end
 
 // --- Task ---
-@interface Task : NSObject
+@interface QXTask : NSObject
 
 @property (nonatomic, assign) BOOL IsTaskOwner;
 @property (nonatomic, assign) BOOL IsTaskAssignee;
@@ -723,7 +724,7 @@
 @property (nonatomic, strong) NSNumber * TotalUsersCount;
 @property (nonatomic, strong) NSNumber * CompletedUsersCount;
 @property (nonatomic, strong) NSNumber * PendingUsersCount;
-@property (nonatomic, strong) EmbedUser * Owner;
+@property (nonatomic, strong) QXEmbedUser * Owner;
 @property (nonatomic, strong) NSArray * ToUsers;
 @property (nonatomic, strong) NSArray * PendingUsers;
 @property (nonatomic, strong) NSArray * CompletedUsers;
@@ -736,14 +737,14 @@
 @end
 
 // --- EntryVersion ---
-@interface EntryVersion : NSObject
+@interface QXEntryVersion : NSObject
 
 @property (nonatomic, strong) NSString * Id;
 @property (nonatomic, strong) NSString * GroupId;
 @property (nonatomic, strong) NSDate * UpdatedAt;
 @property (nonatomic, strong) NSString * LocalUpdatedAt;
 @property (nonatomic, strong) NSString * UpdatedAtUnixNano;
-@property (nonatomic, strong) EmbedUser * CurrentVersionEditor;
+@property (nonatomic, strong) QXEmbedUser * CurrentVersionEditor;
 @property (nonatomic, assign) BOOL IsNewVersion;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
@@ -752,7 +753,7 @@
 @end
 
 // --- Message ---
-@interface Message : NSObject
+@interface QXMessage : NSObject
 
 @property (nonatomic, strong) NSString * Id;
 @property (nonatomic, strong) NSString * ConversationId;
@@ -760,7 +761,7 @@
 @property (nonatomic, strong) NSString * Content;
 @property (nonatomic, strong) NSString * HtmlContent;
 @property (nonatomic, strong) NSDate * CreatedAt;
-@property (nonatomic, strong) EmbedUser * EmbedUser;
+@property (nonatomic, strong) QXEmbedUser * EmbedUser;
 @property (nonatomic, assign) BOOL ShowUser;
 @property (nonatomic, strong) NSString * HighlightedContent;
 
@@ -770,14 +771,14 @@
 @end
 
 // --- EmbedEntry ---
-@interface EmbedEntry : NSObject
+@interface QXEmbedEntry : NSObject
 
 @property (nonatomic, strong) NSString * Id;
 @property (nonatomic, strong) NSString * GroupId;
 @property (nonatomic, strong) NSString * Title;
 @property (nonatomic, strong) NSString * HtmlTitle;
 @property (nonatomic, strong) NSString * EType;
-@property (nonatomic, strong) EmbedUser * Author;
+@property (nonatomic, strong) QXEmbedUser * Author;
 @property (nonatomic, strong) NSArray * ToUsers;
 @property (nonatomic, strong) NSString * Link;
 
@@ -787,11 +788,11 @@
 @end
 
 // --- SharingInvitation ---
-@interface SharingInvitation : NSObject
+@interface QXSharingInvitation : NSObject
 
-@property (nonatomic, strong) EmbedOrg * FromOrg;
+@property (nonatomic, strong) QXEmbedOrg * FromOrg;
 @property (nonatomic, strong) NSString * FromUserId;
-@property (nonatomic, strong) Group * SharedGroup;
+@property (nonatomic, strong) QXGroup * SharedGroup;
 @property (nonatomic, assign) BOOL IsNewAccount;
 @property (nonatomic, strong) NSString * Email;
 @property (nonatomic, strong) NSString * Token;
@@ -812,7 +813,7 @@
 @end
 
 // --- User ---
-@interface User : NSObject
+@interface QXUser : NSObject
 
 @property (nonatomic, strong) NSString * Id;
 @property (nonatomic, strong) NSString * Email;
@@ -842,7 +843,7 @@
 @property (nonatomic, strong) NSString * Department;
 @property (nonatomic, strong) NSString * Location;
 @property (nonatomic, strong) NSArray * FollowingGroups;
-@property (nonatomic, strong) Preferences * Preferences;
+@property (nonatomic, strong) QXPreferences * Preferences;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
 - (NSDictionary*) dictionary;
@@ -850,19 +851,19 @@
 @end
 
 // --- Request ---
-@interface Request : NSObject
+@interface QXRequest : NSObject
 
 @property (nonatomic, strong) NSString * CurrentPrefixURL;
 @property (nonatomic, strong) NSString * Info;
 @property (nonatomic, strong) NSString * ActionButton;
-@property (nonatomic, strong) EmbedOrg * FromOrg;
-@property (nonatomic, strong) EmbedOrg * ToOrg;
-@property (nonatomic, strong) Group * SharedGroup;
+@property (nonatomic, strong) QXEmbedOrg * FromOrg;
+@property (nonatomic, strong) QXEmbedOrg * ToOrg;
+@property (nonatomic, strong) QXGroup * SharedGroup;
 @property (nonatomic, strong) NSString * SharedOrgIdHex;
 @property (nonatomic, strong) NSString * FromUserIdHex;
-@property (nonatomic, strong) EmbedUser * SharedInvitee;
-@property (nonatomic, strong) EmbedUser * SharedInviter;
-@property (nonatomic, strong) EmbedUser * SharedResponsor;
+@property (nonatomic, strong) QXEmbedUser * SharedInvitee;
+@property (nonatomic, strong) QXEmbedUser * SharedInviter;
+@property (nonatomic, strong) QXEmbedUser * SharedResponsor;
 @property (nonatomic, strong) NSString * ToEmail;
 @property (nonatomic, strong) NSString * State;
 
@@ -872,7 +873,7 @@
 @end
 
 // --- Conversation ---
-@interface Conversation : NSObject
+@interface QXConversation : NSObject
 
 @property (nonatomic, strong) NSString * Id;
 @property (nonatomic, strong) NSString * Title;
@@ -895,15 +896,15 @@
 @end
 
 // --- NotificationItem ---
-@interface NotificationItem : NSObject
+@interface QXNotificationItem : NSObject
 
 @property (nonatomic, strong) NSString * Id;
 @property (nonatomic, strong) NSString * GroupId;
-@property (nonatomic, strong) EmbedUser * ToUser;
-@property (nonatomic, strong) EmbedEntry * ForEntry;
-@property (nonatomic, strong) EmbedUser * FromUser;
-@property (nonatomic, strong) EmbedOrg * FromOrg;
-@property (nonatomic, strong) EmbedEntry * CausedByEntry;
+@property (nonatomic, strong) QXEmbedUser * ToUser;
+@property (nonatomic, strong) QXEmbedEntry * ForEntry;
+@property (nonatomic, strong) QXEmbedUser * FromUser;
+@property (nonatomic, strong) QXEmbedOrg * FromOrg;
+@property (nonatomic, strong) QXEmbedEntry * CausedByEntry;
 @property (nonatomic, strong) NSDate * NotifiedAt;
 @property (nonatomic, strong) NSDate * ReadAt;
 @property (nonatomic, assign) BOOL Readed;
@@ -917,7 +918,7 @@
 @end
 
 // --- MyNotifications ---
-@interface MyNotifications : NSObject
+@interface QXMyNotifications : NSObject
 
 @property (nonatomic, strong) NSArray * NotificationItems;
 @property (nonatomic, assign) BOOL HasMore;
@@ -929,7 +930,7 @@
 @end
 
 // --- Entry ---
-@interface Entry : NSObject
+@interface QXEntry : NSObject
 
 @property (nonatomic, strong) NSString * Id;
 @property (nonatomic, strong) NSString * EType;
@@ -977,11 +978,11 @@
 @property (nonatomic, assign) BOOL IsBroadcastTypeToSomeOrgs;
 @property (nonatomic, assign) BOOL IsFromSuperOrg;
 @property (nonatomic, assign) BOOL IsFeedback;
-@property (nonatomic, strong) EmbedOrg * FromOrg;
+@property (nonatomic, strong) QXEmbedOrg * FromOrg;
 @property (nonatomic, strong) NSArray * ToOrgs;
 @property (nonatomic, strong) NSString * ToOrgsHtml;
 @property (nonatomic, assign) BOOL IsRequest;
-@property (nonatomic, strong) Request * Request;
+@property (nonatomic, strong) QXRequest * Request;
 @property (nonatomic, assign) BOOL VisibleForSuperUserInSuperOrg;
 @property (nonatomic, assign) BOOL VisibleForSuperOrg;
 @property (nonatomic, assign) BOOL IsKnowledgeBase;
@@ -1012,25 +1013,25 @@
 @property (nonatomic, strong) NSNumber * CommentsCount;
 @property (nonatomic, strong) NSNumber * AllLikesCount;
 @property (nonatomic, strong) NSNumber * VersionCount;
-@property (nonatomic, strong) EmbedUser * Author;
-@property (nonatomic, strong) EmbedUser * CurrentVersionEditor;
-@property (nonatomic, strong) Group * Group;
-@property (nonatomic, strong) Task * Task;
-@property (nonatomic, strong) Conversation * Conversation;
+@property (nonatomic, strong) QXEmbedUser * Author;
+@property (nonatomic, strong) QXEmbedUser * CurrentVersionEditor;
+@property (nonatomic, strong) QXGroup * Group;
+@property (nonatomic, strong) QXTask * Task;
+@property (nonatomic, strong) QXConversation * Conversation;
 @property (nonatomic, strong) NSArray * LinkedEntries;
 @property (nonatomic, strong) NSArray * Versions;
 @property (nonatomic, strong) NSArray * ToUsers;
 @property (nonatomic, strong) NSArray * MentionedUsers;
 @property (nonatomic, strong) NSArray * LikedByUsers;
 @property (nonatomic, strong) NSArray * Attachments;
-@property (nonatomic, strong) Attachment * FirstPicture;
+@property (nonatomic, strong) QXAttachment * FirstPicture;
 @property (nonatomic, strong) NSArray * Comments;
 @property (nonatomic, strong) NSArray * ExternalComments;
 @property (nonatomic, strong) NSArray * CurrentVersionComments;
 @property (nonatomic, strong) NSArray * OtherVersionsComments;
-@property (nonatomic, strong) Entry * NewComment;
-@property (nonatomic, strong) Entry * NewEntry;
-@property (nonatomic, strong) GroupSelector * GroupSlector;
+@property (nonatomic, strong) QXEntry * NewComment;
+@property (nonatomic, strong) QXEntry * NewEntry;
+@property (nonatomic, strong) QXGroupSelector * GroupSlector;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
 - (NSDictionary*) dictionary;
@@ -1038,7 +1039,7 @@
 @end
 
 // --- MyTask ---
-@interface MyTask : NSObject
+@interface QXMyTask : NSObject
 
 @property (nonatomic, strong) NSArray * TasksForMe;
 @property (nonatomic, strong) NSArray * MyCreatedTasks;
@@ -1050,7 +1051,7 @@
 @end
 
 // --- WatchItem ---
-@interface WatchItem : NSObject
+@interface QXWatchItem : NSObject
 
 @property (nonatomic, strong) NSNumber * AttachCnt;
 @property (nonatomic, strong) NSNumber * CommentCnt;
@@ -1059,7 +1060,7 @@
 @property (nonatomic, strong) NSString * CommentCntStr;
 @property (nonatomic, strong) NSString * LikeCntStr;
 @property (nonatomic, strong) NSDate * WatchTime;
-@property (nonatomic, strong) Entry * WatchEntry;
+@property (nonatomic, strong) QXEntry * WatchEntry;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
 - (NSDictionary*) dictionary;
@@ -1067,7 +1068,7 @@
 @end
 
 // --- MyChats ---
-@interface MyChats : NSObject
+@interface QXMyChats : NSObject
 
 @property (nonatomic, strong) NSArray * ChatEntries;
 @property (nonatomic, assign) BOOL HasMore;
@@ -1081,7 +1082,7 @@
 @end
 
 // --- DraftList ---
-@interface DraftList : NSObject
+@interface QXDraftList : NSObject
 
 @property (nonatomic, strong) NSArray * DraftItems;
 
@@ -1091,7 +1092,7 @@
 @end
 
 // --- WatchList ---
-@interface WatchList : NSObject
+@interface QXWatchList : NSObject
 
 @property (nonatomic, strong) NSArray * Items;
 @property (nonatomic, assign) BOOL WhatWatchList;
@@ -1105,8 +1106,8 @@
 // === Interfaces ===
 
 
-// --- GetTotalStatsParams ---
-@interface AuthAdminServiceGetTotalStatsParams : NSObject
+// --- QXGetTotalStatsParams ---
+@interface QXAuthAdminServiceGetTotalStatsParams : NSObject
 
 
 - (id) initWithDictionary:(NSDictionary*)dict;
@@ -1114,10 +1115,10 @@
 
 @end
 
-// --- GetTotalStatsResults ---
-@interface AuthAdminServiceGetTotalStatsResults : NSObject
+// --- QXGetTotalStatsResults ---
+@interface QXAuthAdminServiceGetTotalStatsResults : NSObject
 
-@property (nonatomic, strong) TotalStats * TotalStat;
+@property (nonatomic, strong) QXTotalStats * TotalStat;
 @property (nonatomic, strong) NSError * Err;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
@@ -1125,8 +1126,8 @@
 
 @end
 
-// --- GetWeeklyTotalStatsParams ---
-@interface AuthAdminServiceGetWeeklyTotalStatsParams : NSObject
+// --- QXGetWeeklyTotalStatsParams ---
+@interface QXAuthAdminServiceGetWeeklyTotalStatsParams : NSObject
 
 
 - (id) initWithDictionary:(NSDictionary*)dict;
@@ -1134,10 +1135,10 @@
 
 @end
 
-// --- GetWeeklyTotalStatsResults ---
-@interface AuthAdminServiceGetWeeklyTotalStatsResults : NSObject
+// --- QXGetWeeklyTotalStatsResults ---
+@interface QXAuthAdminServiceGetWeeklyTotalStatsResults : NSObject
 
-@property (nonatomic, strong) TotalStats * TotalStat;
+@property (nonatomic, strong) QXTotalStats * TotalStat;
 @property (nonatomic, strong) NSError * Err;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
@@ -1145,8 +1146,8 @@
 
 @end
 
-// --- GetOrgStatsParams ---
-@interface AuthAdminServiceGetOrgStatsParams : NSObject
+// --- QXGetOrgStatsParams ---
+@interface QXAuthAdminServiceGetOrgStatsParams : NSObject
 
 
 - (id) initWithDictionary:(NSDictionary*)dict;
@@ -1154,8 +1155,8 @@
 
 @end
 
-// --- GetOrgStatsResults ---
-@interface AuthAdminServiceGetOrgStatsResults : NSObject
+// --- QXGetOrgStatsResults ---
+@interface QXAuthAdminServiceGetOrgStatsResults : NSObject
 
 @property (nonatomic, strong) NSArray * OrgStats;
 @property (nonatomic, strong) NSError * Err;
@@ -1165,8 +1166,8 @@
 
 @end
 
-// --- GetAccessRequestsParams ---
-@interface AuthAdminServiceGetAccessRequestsParams : NSObject
+// --- QXGetAccessRequestsParams ---
+@interface QXAuthAdminServiceGetAccessRequestsParams : NSObject
 
 
 - (id) initWithDictionary:(NSDictionary*)dict;
@@ -1174,8 +1175,8 @@
 
 @end
 
-// --- GetAccessRequestsResults ---
-@interface AuthAdminServiceGetAccessRequestsResults : NSObject
+// --- QXGetAccessRequestsResults ---
+@interface QXAuthAdminServiceGetAccessRequestsResults : NSObject
 
 @property (nonatomic, strong) NSArray * AccessReqs;
 @property (nonatomic, strong) NSError * Err;
@@ -1185,8 +1186,8 @@
 
 @end
 
-// --- ApproveAccessParams ---
-@interface AuthAdminServiceApproveAccessParams : NSObject
+// --- QXApproveAccessParams ---
+@interface QXAuthAdminServiceApproveAccessParams : NSObject
 
 @property (nonatomic, strong) NSString * Email;
 
@@ -1195,8 +1196,8 @@
 
 @end
 
-// --- ApproveAccessResults ---
-@interface AuthAdminServiceApproveAccessResults : NSObject
+// --- QXApproveAccessResults ---
+@interface QXAuthAdminServiceApproveAccessResults : NSObject
 
 @property (nonatomic, strong) NSError * Err;
 
@@ -1205,8 +1206,8 @@
 
 @end
 
-// --- GetAllMembersParams ---
-@interface AuthAdminServiceGetAllMembersParams : NSObject
+// --- QXGetAllMembersParams ---
+@interface QXAuthAdminServiceGetAllMembersParams : NSObject
 
 
 - (id) initWithDictionary:(NSDictionary*)dict;
@@ -1214,8 +1215,8 @@
 
 @end
 
-// --- GetAllMembersResults ---
-@interface AuthAdminServiceGetAllMembersResults : NSObject
+// --- QXGetAllMembersResults ---
+@interface QXAuthAdminServiceGetAllMembersResults : NSObject
 
 @property (nonatomic, strong) NSArray * Members;
 @property (nonatomic, strong) NSError * Err;
@@ -1226,7 +1227,7 @@
 @end
 
 
-@interface AuthAdminService : NSObject
+@interface QXAuthAdminService : NSObject
 
 @property (nonatomic, strong) NSString * Session;
 
@@ -1235,22 +1236,22 @@
 
 
 
-- (AuthAdminServiceGetTotalStatsResults *) GetTotalStats;
+- (QXAuthAdminServiceGetTotalStatsResults *) GetTotalStats;
 
-- (AuthAdminServiceGetWeeklyTotalStatsResults *) GetWeeklyTotalStats;
+- (QXAuthAdminServiceGetWeeklyTotalStatsResults *) GetWeeklyTotalStats;
 
-- (AuthAdminServiceGetOrgStatsResults *) GetOrgStats;
+- (QXAuthAdminServiceGetOrgStatsResults *) GetOrgStats;
 
-- (AuthAdminServiceGetAccessRequestsResults *) GetAccessRequests;
+- (QXAuthAdminServiceGetAccessRequestsResults *) GetAccessRequests;
 
 - (NSError *) ApproveAccess:(NSString *)email;
 
-- (AuthAdminServiceGetAllMembersResults *) GetAllMembers;
+- (QXAuthAdminServiceGetAllMembersResults *) GetAllMembers;
 @end
 
 
-// --- SwitchOrganizationParams ---
-@interface AuthMemberServiceSwitchOrganizationParams : NSObject
+// --- QXSwitchOrganizationParams ---
+@interface QXAuthMemberServiceSwitchOrganizationParams : NSObject
 
 @property (nonatomic, strong) NSString * OrgId;
 
@@ -1259,8 +1260,8 @@
 
 @end
 
-// --- SwitchOrganizationResults ---
-@interface AuthMemberServiceSwitchOrganizationResults : NSObject
+// --- QXSwitchOrganizationResults ---
+@interface QXAuthMemberServiceSwitchOrganizationResults : NSObject
 
 @property (nonatomic, strong) NSError * Err;
 
@@ -1269,8 +1270,8 @@
 
 @end
 
-// --- GetAbandonInfoParams ---
-@interface AuthMemberServiceGetAbandonInfoParams : NSObject
+// --- QXGetAbandonInfoParams ---
+@interface QXAuthMemberServiceGetAbandonInfoParams : NSObject
 
 @property (nonatomic, strong) NSString * AbandonOrgId;
 @property (nonatomic, strong) NSString * MemberId;
@@ -1280,10 +1281,10 @@
 
 @end
 
-// --- GetAbandonInfoResults ---
-@interface AuthMemberServiceGetAbandonInfoResults : NSObject
+// --- QXGetAbandonInfoResults ---
+@interface QXAuthMemberServiceGetAbandonInfoResults : NSObject
 
-@property (nonatomic, strong) AbandonInfo * Info;
+@property (nonatomic, strong) QXAbandonInfo * Info;
 @property (nonatomic, strong) NSError * Err;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
@@ -1291,8 +1292,8 @@
 
 @end
 
-// --- GetSharingInviationByTokenParams ---
-@interface AuthMemberServiceGetSharingInviationByTokenParams : NSObject
+// --- QXGetSharingInviationByTokenParams ---
+@interface QXAuthMemberServiceGetSharingInviationByTokenParams : NSObject
 
 @property (nonatomic, strong) NSString * SharingInviationToken;
 
@@ -1301,10 +1302,10 @@
 
 @end
 
-// --- GetSharingInviationByTokenResults ---
-@interface AuthMemberServiceGetSharingInviationByTokenResults : NSObject
+// --- QXGetSharingInviationByTokenResults ---
+@interface QXAuthMemberServiceGetSharingInviationByTokenResults : NSObject
 
-@property (nonatomic, strong) SharingInvitation * Invitation;
+@property (nonatomic, strong) QXSharingInvitation * Invitation;
 @property (nonatomic, strong) NSError * Err;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
@@ -1312,8 +1313,8 @@
 
 @end
 
-// --- RejectSharingBeforeForwardingParams ---
-@interface AuthMemberServiceRejectSharingBeforeForwardingParams : NSObject
+// --- QXRejectSharingBeforeForwardingParams ---
+@interface QXAuthMemberServiceRejectSharingBeforeForwardingParams : NSObject
 
 @property (nonatomic, strong) NSString * GroupId;
 @property (nonatomic, strong) NSString * Email;
@@ -1323,8 +1324,8 @@
 
 @end
 
-// --- RejectSharingBeforeForwardingResults ---
-@interface AuthMemberServiceRejectSharingBeforeForwardingResults : NSObject
+// --- QXRejectSharingBeforeForwardingResults ---
+@interface QXAuthMemberServiceRejectSharingBeforeForwardingResults : NSObject
 
 @property (nonatomic, strong) NSError * Err;
 
@@ -1333,8 +1334,8 @@
 
 @end
 
-// --- RespondSharingRequestParams ---
-@interface AuthMemberServiceRespondSharingRequestParams : NSObject
+// --- QXRespondSharingRequestParams ---
+@interface QXAuthMemberServiceRespondSharingRequestParams : NSObject
 
 @property (nonatomic, strong) NSString * Token;
 @property (nonatomic, strong) NSString * ToOrgId;
@@ -1344,8 +1345,8 @@
 
 @end
 
-// --- RespondSharingRequestResults ---
-@interface AuthMemberServiceRespondSharingRequestResults : NSObject
+// --- QXRespondSharingRequestResults ---
+@interface QXAuthMemberServiceRespondSharingRequestResults : NSObject
 
 @property (nonatomic, strong) NSString * PrefixURL;
 @property (nonatomic, strong) Validated * Validated;
@@ -1357,24 +1358,24 @@
 @end
 
 
-@interface AuthMemberService : NSObject
+@interface QXAuthMemberService : NSObject
 - (NSDictionary*) dictionary;
 
 
 - (NSError *) SwitchOrganization:(NSString *)orgId;
 
-- (AuthMemberServiceGetAbandonInfoResults *) GetAbandonInfo:(NSString *)abandonOrgId memberId:(NSString *)memberId;
+- (QXAuthMemberServiceGetAbandonInfoResults *) GetAbandonInfo:(NSString *)abandonOrgId memberId:(NSString *)memberId;
 
-- (AuthMemberServiceGetSharingInviationByTokenResults *) GetSharingInviationByToken:(NSString *)sharingInviationToken;
+- (QXAuthMemberServiceGetSharingInviationByTokenResults *) GetSharingInviationByToken:(NSString *)sharingInviationToken;
 
 - (NSError *) RejectSharingBeforeForwarding:(NSString *)groupId email:(NSString *)email;
 
-- (AuthMemberServiceRespondSharingRequestResults *) RespondSharingRequest:(NSString *)token toOrgId:(NSString *)toOrgId;
+- (QXAuthMemberServiceRespondSharingRequestResults *) RespondSharingRequest:(NSString *)token toOrgId:(NSString *)toOrgId;
 @end
 
 
-// --- GetNewEntryParams ---
-@interface AuthUserServiceGetNewEntryParams : NSObject
+// --- QXGetNewEntryParams ---
+@interface QXAuthUserServiceGetNewEntryParams : NSObject
 
 @property (nonatomic, strong) NSString * GroupId;
 
@@ -1383,10 +1384,10 @@
 
 @end
 
-// --- GetNewEntryResults ---
-@interface AuthUserServiceGetNewEntryResults : NSObject
+// --- QXGetNewEntryResults ---
+@interface QXAuthUserServiceGetNewEntryResults : NSObject
 
-@property (nonatomic, strong) Entry * Entry;
+@property (nonatomic, strong) QXEntry * Entry;
 @property (nonatomic, strong) NSError * Err;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
@@ -1394,8 +1395,8 @@
 
 @end
 
-// --- GetQortexMessagesParams ---
-@interface AuthUserServiceGetQortexMessagesParams : NSObject
+// --- QXGetQortexMessagesParams ---
+@interface QXAuthUserServiceGetQortexMessagesParams : NSObject
 
 @property (nonatomic, strong) NSString * MesssageType;
 @property (nonatomic, strong) NSString * Before;
@@ -1407,8 +1408,8 @@
 
 @end
 
-// --- GetQortexMessagesResults ---
-@interface AuthUserServiceGetQortexMessagesResults : NSObject
+// --- QXGetQortexMessagesResults ---
+@interface QXAuthUserServiceGetQortexMessagesResults : NSObject
 
 @property (nonatomic, strong) NSArray * Entries;
 @property (nonatomic, strong) NSError * Err;
@@ -1418,20 +1419,20 @@
 
 @end
 
-// --- CreateBroadcastParams ---
-@interface AuthUserServiceCreateBroadcastParams : NSObject
+// --- QXCreateBroadcastParams ---
+@interface QXAuthUserServiceCreateBroadcastParams : NSObject
 
-@property (nonatomic, strong) BroadcastInput * Input;
+@property (nonatomic, strong) QXBroadcastInput * Input;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
 - (NSDictionary*) dictionary;
 
 @end
 
-// --- CreateBroadcastResults ---
-@interface AuthUserServiceCreateBroadcastResults : NSObject
+// --- QXCreateBroadcastResults ---
+@interface QXAuthUserServiceCreateBroadcastResults : NSObject
 
-@property (nonatomic, strong) Entry * Entry;
+@property (nonatomic, strong) QXEntry * Entry;
 @property (nonatomic, strong) NSError * Err;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
@@ -1439,20 +1440,20 @@
 
 @end
 
-// --- CreateBroadcastCommentParams ---
-@interface AuthUserServiceCreateBroadcastCommentParams : NSObject
+// --- QXCreateBroadcastCommentParams ---
+@interface QXAuthUserServiceCreateBroadcastCommentParams : NSObject
 
-@property (nonatomic, strong) BroadcastInput * Input;
+@property (nonatomic, strong) QXBroadcastInput * Input;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
 - (NSDictionary*) dictionary;
 
 @end
 
-// --- CreateBroadcastCommentResults ---
-@interface AuthUserServiceCreateBroadcastCommentResults : NSObject
+// --- QXCreateBroadcastCommentResults ---
+@interface QXAuthUserServiceCreateBroadcastCommentResults : NSObject
 
-@property (nonatomic, strong) Entry * Entry;
+@property (nonatomic, strong) QXEntry * Entry;
 @property (nonatomic, strong) NSError * Err;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
@@ -1460,8 +1461,8 @@
 
 @end
 
-// --- GetSharingRequestEntryParams ---
-@interface AuthUserServiceGetSharingRequestEntryParams : NSObject
+// --- QXGetSharingRequestEntryParams ---
+@interface QXAuthUserServiceGetSharingRequestEntryParams : NSObject
 
 @property (nonatomic, strong) NSString * EntryId;
 
@@ -1470,10 +1471,10 @@
 
 @end
 
-// --- GetSharingRequestEntryResults ---
-@interface AuthUserServiceGetSharingRequestEntryResults : NSObject
+// --- QXGetSharingRequestEntryResults ---
+@interface QXAuthUserServiceGetSharingRequestEntryResults : NSObject
 
-@property (nonatomic, strong) Entry * Entry;
+@property (nonatomic, strong) QXEntry * Entry;
 @property (nonatomic, strong) NSError * Err;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
@@ -1481,8 +1482,8 @@
 
 @end
 
-// --- GetBroadcastParams ---
-@interface AuthUserServiceGetBroadcastParams : NSObject
+// --- QXGetBroadcastParams ---
+@interface QXAuthUserServiceGetBroadcastParams : NSObject
 
 @property (nonatomic, strong) NSString * EntryId;
 
@@ -1491,10 +1492,10 @@
 
 @end
 
-// --- GetBroadcastResults ---
-@interface AuthUserServiceGetBroadcastResults : NSObject
+// --- QXGetBroadcastResults ---
+@interface QXAuthUserServiceGetBroadcastResults : NSObject
 
-@property (nonatomic, strong) Entry * Entry;
+@property (nonatomic, strong) QXEntry * Entry;
 @property (nonatomic, strong) NSError * Err;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
@@ -1502,8 +1503,8 @@
 
 @end
 
-// --- GetBroadcastCommentParams ---
-@interface AuthUserServiceGetBroadcastCommentParams : NSObject
+// --- QXGetBroadcastCommentParams ---
+@interface QXAuthUserServiceGetBroadcastCommentParams : NSObject
 
 @property (nonatomic, strong) NSString * EntryId;
 
@@ -1512,10 +1513,10 @@
 
 @end
 
-// --- GetBroadcastCommentResults ---
-@interface AuthUserServiceGetBroadcastCommentResults : NSObject
+// --- QXGetBroadcastCommentResults ---
+@interface QXAuthUserServiceGetBroadcastCommentResults : NSObject
 
-@property (nonatomic, strong) Entry * Entry;
+@property (nonatomic, strong) QXEntry * Entry;
 @property (nonatomic, strong) NSError * Err;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
@@ -1523,20 +1524,20 @@
 
 @end
 
-// --- UpdateBroadcastParams ---
-@interface AuthUserServiceUpdateBroadcastParams : NSObject
+// --- QXUpdateBroadcastParams ---
+@interface QXAuthUserServiceUpdateBroadcastParams : NSObject
 
-@property (nonatomic, strong) BroadcastInput * Input;
+@property (nonatomic, strong) QXBroadcastInput * Input;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
 - (NSDictionary*) dictionary;
 
 @end
 
-// --- UpdateBroadcastResults ---
-@interface AuthUserServiceUpdateBroadcastResults : NSObject
+// --- QXUpdateBroadcastResults ---
+@interface QXAuthUserServiceUpdateBroadcastResults : NSObject
 
-@property (nonatomic, strong) Entry * Entry;
+@property (nonatomic, strong) QXEntry * Entry;
 @property (nonatomic, strong) NSError * Err;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
@@ -1544,20 +1545,20 @@
 
 @end
 
-// --- UpdateBroadcastCommentParams ---
-@interface AuthUserServiceUpdateBroadcastCommentParams : NSObject
+// --- QXUpdateBroadcastCommentParams ---
+@interface QXAuthUserServiceUpdateBroadcastCommentParams : NSObject
 
-@property (nonatomic, strong) BroadcastInput * Input;
+@property (nonatomic, strong) QXBroadcastInput * Input;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
 - (NSDictionary*) dictionary;
 
 @end
 
-// --- UpdateBroadcastCommentResults ---
-@interface AuthUserServiceUpdateBroadcastCommentResults : NSObject
+// --- QXUpdateBroadcastCommentResults ---
+@interface QXAuthUserServiceUpdateBroadcastCommentResults : NSObject
 
-@property (nonatomic, strong) Entry * Entry;
+@property (nonatomic, strong) QXEntry * Entry;
 @property (nonatomic, strong) NSError * Err;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
@@ -1565,20 +1566,20 @@
 
 @end
 
-// --- CreateEntryParams ---
-@interface AuthUserServiceCreateEntryParams : NSObject
+// --- QXCreateEntryParams ---
+@interface QXAuthUserServiceCreateEntryParams : NSObject
 
-@property (nonatomic, strong) EntryInput * Input;
+@property (nonatomic, strong) QXEntryInput * Input;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
 - (NSDictionary*) dictionary;
 
 @end
 
-// --- CreateEntryResults ---
-@interface AuthUserServiceCreateEntryResults : NSObject
+// --- QXCreateEntryResults ---
+@interface QXAuthUserServiceCreateEntryResults : NSObject
 
-@property (nonatomic, strong) Entry * Entry;
+@property (nonatomic, strong) QXEntry * Entry;
 @property (nonatomic, strong) NSError * Err;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
@@ -1586,20 +1587,20 @@
 
 @end
 
-// --- CreateTaskParams ---
-@interface AuthUserServiceCreateTaskParams : NSObject
+// --- QXCreateTaskParams ---
+@interface QXAuthUserServiceCreateTaskParams : NSObject
 
-@property (nonatomic, strong) EntryInput * Input;
+@property (nonatomic, strong) QXEntryInput * Input;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
 - (NSDictionary*) dictionary;
 
 @end
 
-// --- CreateTaskResults ---
-@interface AuthUserServiceCreateTaskResults : NSObject
+// --- QXCreateTaskResults ---
+@interface QXAuthUserServiceCreateTaskResults : NSObject
 
-@property (nonatomic, strong) Entry * Entry;
+@property (nonatomic, strong) QXEntry * Entry;
 @property (nonatomic, strong) NSError * Err;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
@@ -1607,52 +1608,8 @@
 
 @end
 
-// --- CloseTaskParams ---
-@interface AuthUserServiceCloseTaskParams : NSObject
-
-@property (nonatomic, strong) NSString * EntryId;
-@property (nonatomic, strong) NSString * GroupId;
-
-- (id) initWithDictionary:(NSDictionary*)dict;
-- (NSDictionary*) dictionary;
-
-@end
-
-// --- CloseTaskResults ---
-@interface AuthUserServiceCloseTaskResults : NSObject
-
-@property (nonatomic, strong) Task * Entry;
-@property (nonatomic, strong) NSError * Err;
-
-- (id) initWithDictionary:(NSDictionary*)dict;
-- (NSDictionary*) dictionary;
-
-@end
-
-// --- CreateCommentParams ---
-@interface AuthUserServiceCreateCommentParams : NSObject
-
-@property (nonatomic, strong) EntryInput * Input;
-
-- (id) initWithDictionary:(NSDictionary*)dict;
-- (NSDictionary*) dictionary;
-
-@end
-
-// --- CreateCommentResults ---
-@interface AuthUserServiceCreateCommentResults : NSObject
-
-@property (nonatomic, strong) Entry * Entry;
-@property (nonatomic, strong) Validated * Validated;
-@property (nonatomic, strong) NSError * Err;
-
-- (id) initWithDictionary:(NSDictionary*)dict;
-- (NSDictionary*) dictionary;
-
-@end
-
-// --- GetCommentParams ---
-@interface AuthUserServiceGetCommentParams : NSObject
+// --- QXCloseTaskParams ---
+@interface QXAuthUserServiceCloseTaskParams : NSObject
 
 @property (nonatomic, strong) NSString * EntryId;
 @property (nonatomic, strong) NSString * GroupId;
@@ -1662,10 +1619,10 @@
 
 @end
 
-// --- GetCommentResults ---
-@interface AuthUserServiceGetCommentResults : NSObject
+// --- QXCloseTaskResults ---
+@interface QXAuthUserServiceCloseTaskResults : NSObject
 
-@property (nonatomic, strong) Entry * Entry;
+@property (nonatomic, strong) QXTask * Entry;
 @property (nonatomic, strong) NSError * Err;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
@@ -1673,20 +1630,20 @@
 
 @end
 
-// --- UpdateCommentParams ---
-@interface AuthUserServiceUpdateCommentParams : NSObject
+// --- QXCreateCommentParams ---
+@interface QXAuthUserServiceCreateCommentParams : NSObject
 
-@property (nonatomic, strong) EntryInput * Input;
+@property (nonatomic, strong) QXEntryInput * Input;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
 - (NSDictionary*) dictionary;
 
 @end
 
-// --- UpdateCommentResults ---
-@interface AuthUserServiceUpdateCommentResults : NSObject
+// --- QXCreateCommentResults ---
+@interface QXAuthUserServiceCreateCommentResults : NSObject
 
-@property (nonatomic, strong) Entry * Entry;
+@property (nonatomic, strong) QXEntry * Entry;
 @property (nonatomic, strong) Validated * Validated;
 @property (nonatomic, strong) NSError * Err;
 
@@ -1695,20 +1652,42 @@
 
 @end
 
-// --- UpdateEntryParams ---
-@interface AuthUserServiceUpdateEntryParams : NSObject
+// --- QXGetCommentParams ---
+@interface QXAuthUserServiceGetCommentParams : NSObject
 
-@property (nonatomic, strong) EntryInput * Input;
+@property (nonatomic, strong) NSString * EntryId;
+@property (nonatomic, strong) NSString * GroupId;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
 - (NSDictionary*) dictionary;
 
 @end
 
-// --- UpdateEntryResults ---
-@interface AuthUserServiceUpdateEntryResults : NSObject
+// --- QXGetCommentResults ---
+@interface QXAuthUserServiceGetCommentResults : NSObject
 
-@property (nonatomic, strong) Entry * Entry;
+@property (nonatomic, strong) QXEntry * Entry;
+@property (nonatomic, strong) NSError * Err;
+
+- (id) initWithDictionary:(NSDictionary*)dict;
+- (NSDictionary*) dictionary;
+
+@end
+
+// --- QXUpdateCommentParams ---
+@interface QXAuthUserServiceUpdateCommentParams : NSObject
+
+@property (nonatomic, strong) QXEntryInput * Input;
+
+- (id) initWithDictionary:(NSDictionary*)dict;
+- (NSDictionary*) dictionary;
+
+@end
+
+// --- QXUpdateCommentResults ---
+@interface QXAuthUserServiceUpdateCommentResults : NSObject
+
+@property (nonatomic, strong) QXEntry * Entry;
 @property (nonatomic, strong) Validated * Validated;
 @property (nonatomic, strong) NSError * Err;
 
@@ -1717,8 +1696,30 @@
 
 @end
 
-// --- GetLatestUpdatedEntryIdByTitleParams ---
-@interface AuthUserServiceGetLatestUpdatedEntryIdByTitleParams : NSObject
+// --- QXUpdateEntryParams ---
+@interface QXAuthUserServiceUpdateEntryParams : NSObject
+
+@property (nonatomic, strong) QXEntryInput * Input;
+
+- (id) initWithDictionary:(NSDictionary*)dict;
+- (NSDictionary*) dictionary;
+
+@end
+
+// --- QXUpdateEntryResults ---
+@interface QXAuthUserServiceUpdateEntryResults : NSObject
+
+@property (nonatomic, strong) QXEntry * Entry;
+@property (nonatomic, strong) Validated * Validated;
+@property (nonatomic, strong) NSError * Err;
+
+- (id) initWithDictionary:(NSDictionary*)dict;
+- (NSDictionary*) dictionary;
+
+@end
+
+// --- QXGetLatestUpdatedEntryIdByTitleParams ---
+@interface QXAuthUserServiceGetLatestUpdatedEntryIdByTitleParams : NSObject
 
 @property (nonatomic, strong) NSString * Title;
 @property (nonatomic, strong) NSString * GroupId;
@@ -1728,8 +1729,8 @@
 
 @end
 
-// --- GetLatestUpdatedEntryIdByTitleResults ---
-@interface AuthUserServiceGetLatestUpdatedEntryIdByTitleResults : NSObject
+// --- QXGetLatestUpdatedEntryIdByTitleResults ---
+@interface QXAuthUserServiceGetLatestUpdatedEntryIdByTitleResults : NSObject
 
 @property (nonatomic, strong) NSString * EntryId;
 @property (nonatomic, strong) NSError * Err;
@@ -1739,8 +1740,8 @@
 
 @end
 
-// --- GetEntryParams ---
-@interface AuthUserServiceGetEntryParams : NSObject
+// --- QXGetEntryParams ---
+@interface QXAuthUserServiceGetEntryParams : NSObject
 
 @property (nonatomic, strong) NSString * EntryId;
 @property (nonatomic, strong) NSString * GroupId;
@@ -1752,10 +1753,10 @@
 
 @end
 
-// --- GetEntryResults ---
-@interface AuthUserServiceGetEntryResults : NSObject
+// --- QXGetEntryResults ---
+@interface QXAuthUserServiceGetEntryResults : NSObject
 
-@property (nonatomic, strong) Entry * Entry;
+@property (nonatomic, strong) QXEntry * Entry;
 @property (nonatomic, strong) NSError * Err;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
@@ -1763,8 +1764,8 @@
 
 @end
 
-// --- DeleteEntryParams ---
-@interface AuthUserServiceDeleteEntryParams : NSObject
+// --- QXDeleteEntryParams ---
+@interface QXAuthUserServiceDeleteEntryParams : NSObject
 
 @property (nonatomic, strong) NSString * EntryId;
 @property (nonatomic, strong) NSString * GroupId;
@@ -1775,8 +1776,8 @@
 
 @end
 
-// --- DeleteEntryResults ---
-@interface AuthUserServiceDeleteEntryResults : NSObject
+// --- QXDeleteEntryResults ---
+@interface QXAuthUserServiceDeleteEntryResults : NSObject
 
 @property (nonatomic, strong) NSString * DelType;
 @property (nonatomic, strong) NSError * Err;
@@ -1786,8 +1787,8 @@
 
 @end
 
-// --- MuteEntryParams ---
-@interface AuthUserServiceMuteEntryParams : NSObject
+// --- QXMuteEntryParams ---
+@interface QXAuthUserServiceMuteEntryParams : NSObject
 
 @property (nonatomic, strong) NSString * EntryId;
 @property (nonatomic, strong) NSString * GroupId;
@@ -1797,8 +1798,8 @@
 
 @end
 
-// --- MuteEntryResults ---
-@interface AuthUserServiceMuteEntryResults : NSObject
+// --- QXMuteEntryResults ---
+@interface QXAuthUserServiceMuteEntryResults : NSObject
 
 @property (nonatomic, strong) NSError * Err;
 
@@ -1807,8 +1808,8 @@
 
 @end
 
-// --- UndoMuteEntryParams ---
-@interface AuthUserServiceUndoMuteEntryParams : NSObject
+// --- QXUndoMuteEntryParams ---
+@interface QXAuthUserServiceUndoMuteEntryParams : NSObject
 
 @property (nonatomic, strong) NSString * EntryId;
 @property (nonatomic, strong) NSString * GroupId;
@@ -1818,8 +1819,8 @@
 
 @end
 
-// --- UndoMuteEntryResults ---
-@interface AuthUserServiceUndoMuteEntryResults : NSObject
+// --- QXUndoMuteEntryResults ---
+@interface QXAuthUserServiceUndoMuteEntryResults : NSObject
 
 @property (nonatomic, strong) NSError * Err;
 
@@ -1828,8 +1829,8 @@
 
 @end
 
-// --- GetEntryAttachmentsParams ---
-@interface AuthUserServiceGetEntryAttachmentsParams : NSObject
+// --- QXGetEntryAttachmentsParams ---
+@interface QXAuthUserServiceGetEntryAttachmentsParams : NSObject
 
 @property (nonatomic, strong) NSString * EntryId;
 @property (nonatomic, strong) NSString * GroupId;
@@ -1839,8 +1840,8 @@
 
 @end
 
-// --- GetEntryAttachmentsResults ---
-@interface AuthUserServiceGetEntryAttachmentsResults : NSObject
+// --- QXGetEntryAttachmentsResults ---
+@interface QXAuthUserServiceGetEntryAttachmentsResults : NSObject
 
 @property (nonatomic, strong) NSArray * Attachments;
 @property (nonatomic, strong) NSError * Err;
@@ -1850,8 +1851,8 @@
 
 @end
 
-// --- GetOtherVersionsCommentsParams ---
-@interface AuthUserServiceGetOtherVersionsCommentsParams : NSObject
+// --- QXGetOtherVersionsCommentsParams ---
+@interface QXAuthUserServiceGetOtherVersionsCommentsParams : NSObject
 
 @property (nonatomic, strong) NSString * EntryId;
 @property (nonatomic, strong) NSString * GroupId;
@@ -1863,8 +1864,8 @@
 
 @end
 
-// --- GetOtherVersionsCommentsResults ---
-@interface AuthUserServiceGetOtherVersionsCommentsResults : NSObject
+// --- QXGetOtherVersionsCommentsResults ---
+@interface QXAuthUserServiceGetOtherVersionsCommentsResults : NSObject
 
 @property (nonatomic, strong) NSArray * Comments;
 @property (nonatomic, strong) NSError * Err;
@@ -1874,8 +1875,8 @@
 
 @end
 
-// --- GetGroupEntriesParams ---
-@interface AuthUserServiceGetGroupEntriesParams : NSObject
+// --- QXGetGroupEntriesParams ---
+@interface QXAuthUserServiceGetGroupEntriesParams : NSObject
 
 @property (nonatomic, strong) NSString * GroupId;
 @property (nonatomic, strong) NSString * EntryType;
@@ -1888,8 +1889,8 @@
 
 @end
 
-// --- GetGroupEntriesResults ---
-@interface AuthUserServiceGetGroupEntriesResults : NSObject
+// --- QXGetGroupEntriesResults ---
+@interface QXAuthUserServiceGetGroupEntriesResults : NSObject
 
 @property (nonatomic, strong) NSArray * Entries;
 @property (nonatomic, strong) NSError * Err;
@@ -1899,8 +1900,8 @@
 
 @end
 
-// --- GetMyFeedEntriesParams ---
-@interface AuthUserServiceGetMyFeedEntriesParams : NSObject
+// --- QXGetMyFeedEntriesParams ---
+@interface QXAuthUserServiceGetMyFeedEntriesParams : NSObject
 
 @property (nonatomic, strong) NSString * EntryType;
 @property (nonatomic, strong) NSString * Before;
@@ -1912,8 +1913,8 @@
 
 @end
 
-// --- GetMyFeedEntriesResults ---
-@interface AuthUserServiceGetMyFeedEntriesResults : NSObject
+// --- QXGetMyFeedEntriesResults ---
+@interface QXAuthUserServiceGetMyFeedEntriesResults : NSObject
 
 @property (nonatomic, strong) NSArray * Entries;
 @property (nonatomic, strong) NSError * Err;
@@ -1923,8 +1924,8 @@
 
 @end
 
-// --- GetNewFeedEntriesParams ---
-@interface AuthUserServiceGetNewFeedEntriesParams : NSObject
+// --- QXGetNewFeedEntriesParams ---
+@interface QXAuthUserServiceGetNewFeedEntriesParams : NSObject
 
 @property (nonatomic, strong) NSString * EntryType;
 @property (nonatomic, strong) NSString * FromTimeUnixNano;
@@ -1935,8 +1936,8 @@
 
 @end
 
-// --- GetNewFeedEntriesResults ---
-@interface AuthUserServiceGetNewFeedEntriesResults : NSObject
+// --- QXGetNewFeedEntriesResults ---
+@interface QXAuthUserServiceGetNewFeedEntriesResults : NSObject
 
 @property (nonatomic, strong) NSArray * Entries;
 @property (nonatomic, strong) NSError * Err;
@@ -1946,8 +1947,8 @@
 
 @end
 
-// --- GetMyTaskEntriesParams ---
-@interface AuthUserServiceGetMyTaskEntriesParams : NSObject
+// --- QXGetMyTaskEntriesParams ---
+@interface QXAuthUserServiceGetMyTaskEntriesParams : NSObject
 
 @property (nonatomic, assign) BOOL Active;
 @property (nonatomic, strong) NSString * Before;
@@ -1958,8 +1959,8 @@
 
 @end
 
-// --- GetMyTaskEntriesResults ---
-@interface AuthUserServiceGetMyTaskEntriesResults : NSObject
+// --- QXGetMyTaskEntriesResults ---
+@interface QXAuthUserServiceGetMyTaskEntriesResults : NSObject
 
 @property (nonatomic, strong) NSArray * TasksForMe;
 @property (nonatomic, strong) NSArray * MyCreatedTasks;
@@ -1970,8 +1971,8 @@
 
 @end
 
-// --- GetUserEntriesParams ---
-@interface AuthUserServiceGetUserEntriesParams : NSObject
+// --- QXGetUserEntriesParams ---
+@interface QXAuthUserServiceGetUserEntriesParams : NSObject
 
 @property (nonatomic, strong) NSString * UserId;
 @property (nonatomic, strong) NSString * EntryType;
@@ -1983,8 +1984,8 @@
 
 @end
 
-// --- GetUserEntriesResults ---
-@interface AuthUserServiceGetUserEntriesResults : NSObject
+// --- QXGetUserEntriesResults ---
+@interface QXAuthUserServiceGetUserEntriesResults : NSObject
 
 @property (nonatomic, strong) NSArray * Entries;
 @property (nonatomic, strong) NSError * Err;
@@ -1994,8 +1995,8 @@
 
 @end
 
-// --- GetMyChatEntriesParams ---
-@interface AuthUserServiceGetMyChatEntriesParams : NSObject
+// --- QXGetMyChatEntriesParams ---
+@interface QXAuthUserServiceGetMyChatEntriesParams : NSObject
 
 @property (nonatomic, strong) NSString * Before;
 @property (nonatomic, strong) NSNumber * Limit;
@@ -2005,8 +2006,8 @@
 
 @end
 
-// --- GetMyChatEntriesResults ---
-@interface AuthUserServiceGetMyChatEntriesResults : NSObject
+// --- QXGetMyChatEntriesResults ---
+@interface QXAuthUserServiceGetMyChatEntriesResults : NSObject
 
 @property (nonatomic, strong) NSArray * Entries;
 @property (nonatomic, strong) NSError * Err;
@@ -2016,8 +2017,8 @@
 
 @end
 
-// --- GetMyNotificationItemsParams ---
-@interface AuthUserServiceGetMyNotificationItemsParams : NSObject
+// --- QXGetMyNotificationItemsParams ---
+@interface QXAuthUserServiceGetMyNotificationItemsParams : NSObject
 
 @property (nonatomic, strong) NSString * Before;
 @property (nonatomic, strong) NSNumber * Limit;
@@ -2027,8 +2028,8 @@
 
 @end
 
-// --- GetMyNotificationItemsResults ---
-@interface AuthUserServiceGetMyNotificationItemsResults : NSObject
+// --- QXGetMyNotificationItemsResults ---
+@interface QXAuthUserServiceGetMyNotificationItemsResults : NSObject
 
 @property (nonatomic, strong) NSArray * NotificationItems;
 @property (nonatomic, strong) NSError * Err;
@@ -2038,8 +2039,8 @@
 
 @end
 
-// --- MarkAllAsReadParams ---
-@interface AuthUserServiceMarkAllAsReadParams : NSObject
+// --- QXMarkAllAsReadParams ---
+@interface QXAuthUserServiceMarkAllAsReadParams : NSObject
 
 @property (nonatomic, strong) NSString * GroupId;
 
@@ -2048,10 +2049,10 @@
 
 @end
 
-// --- MarkAllAsReadResults ---
-@interface AuthUserServiceMarkAllAsReadResults : NSObject
+// --- QXMarkAllAsReadResults ---
+@interface QXAuthUserServiceMarkAllAsReadResults : NSObject
 
-@property (nonatomic, strong) MyCount * Mycount;
+@property (nonatomic, strong) QXMyCount * Mycount;
 @property (nonatomic, strong) NSError * Err;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
@@ -2059,8 +2060,8 @@
 
 @end
 
-// --- GetWatchListParams ---
-@interface AuthUserServiceGetWatchListParams : NSObject
+// --- QXGetWatchListParams ---
+@interface QXAuthUserServiceGetWatchListParams : NSObject
 
 @property (nonatomic, strong) NSDate * Before;
 @property (nonatomic, strong) NSNumber * Limit;
@@ -2070,10 +2071,10 @@
 
 @end
 
-// --- GetWatchListResults ---
-@interface AuthUserServiceGetWatchListResults : NSObject
+// --- QXGetWatchListResults ---
+@interface QXAuthUserServiceGetWatchListResults : NSObject
 
-@property (nonatomic, strong) WatchList * Watchlist;
+@property (nonatomic, strong) QXWatchList * Watchlist;
 @property (nonatomic, strong) NSError * Err;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
@@ -2081,8 +2082,8 @@
 
 @end
 
-// --- AddToWatchListParams ---
-@interface AuthUserServiceAddToWatchListParams : NSObject
+// --- QXAddToWatchListParams ---
+@interface QXAuthUserServiceAddToWatchListParams : NSObject
 
 @property (nonatomic, strong) NSString * EntryId;
 @property (nonatomic, strong) NSString * GroupId;
@@ -2092,8 +2093,8 @@
 
 @end
 
-// --- AddToWatchListResults ---
-@interface AuthUserServiceAddToWatchListResults : NSObject
+// --- QXAddToWatchListResults ---
+@interface QXAuthUserServiceAddToWatchListResults : NSObject
 
 @property (nonatomic, assign) BOOL Added;
 @property (nonatomic, strong) NSError * Err;
@@ -2103,8 +2104,8 @@
 
 @end
 
-// --- StopWatchingParams ---
-@interface AuthUserServiceStopWatchingParams : NSObject
+// --- QXStopWatchingParams ---
+@interface QXAuthUserServiceStopWatchingParams : NSObject
 
 @property (nonatomic, strong) NSString * EntryId;
 @property (nonatomic, strong) NSString * GroupId;
@@ -2114,8 +2115,8 @@
 
 @end
 
-// --- StopWatchingResults ---
-@interface AuthUserServiceStopWatchingResults : NSObject
+// --- QXStopWatchingResults ---
+@interface QXAuthUserServiceStopWatchingResults : NSObject
 
 @property (nonatomic, assign) BOOL Stopped;
 @property (nonatomic, strong) NSError * Err;
@@ -2125,8 +2126,8 @@
 
 @end
 
-// --- ReadWatchingParams ---
-@interface AuthUserServiceReadWatchingParams : NSObject
+// --- QXReadWatchingParams ---
+@interface QXAuthUserServiceReadWatchingParams : NSObject
 
 @property (nonatomic, strong) NSString * EntryId;
 @property (nonatomic, strong) NSString * GroupId;
@@ -2136,8 +2137,8 @@
 
 @end
 
-// --- ReadWatchingResults ---
-@interface AuthUserServiceReadWatchingResults : NSObject
+// --- QXReadWatchingResults ---
+@interface QXAuthUserServiceReadWatchingResults : NSObject
 
 @property (nonatomic, strong) NSError * Err;
 
@@ -2146,20 +2147,20 @@
 
 @end
 
-// --- UpdateLikeParams ---
-@interface AuthUserServiceUpdateLikeParams : NSObject
+// --- QXUpdateLikeParams ---
+@interface QXAuthUserServiceUpdateLikeParams : NSObject
 
-@property (nonatomic, strong) LikeInput * Input;
+@property (nonatomic, strong) QXLikeInput * Input;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
 - (NSDictionary*) dictionary;
 
 @end
 
-// --- UpdateLikeResults ---
-@interface AuthUserServiceUpdateLikeResults : NSObject
+// --- QXUpdateLikeResults ---
+@interface QXAuthUserServiceUpdateLikeResults : NSObject
 
-@property (nonatomic, strong) Entry * Entry;
+@property (nonatomic, strong) QXEntry * Entry;
 @property (nonatomic, strong) NSError * Err;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
@@ -2167,8 +2168,8 @@
 
 @end
 
-// --- GetDraftListParams ---
-@interface AuthUserServiceGetDraftListParams : NSObject
+// --- QXGetDraftListParams ---
+@interface QXAuthUserServiceGetDraftListParams : NSObject
 
 @property (nonatomic, strong) NSDate * Before;
 @property (nonatomic, strong) NSNumber * Limit;
@@ -2178,10 +2179,10 @@
 
 @end
 
-// --- GetDraftListResults ---
-@interface AuthUserServiceGetDraftListResults : NSObject
+// --- QXGetDraftListResults ---
+@interface QXAuthUserServiceGetDraftListResults : NSObject
 
-@property (nonatomic, strong) DraftList * Draftlist;
+@property (nonatomic, strong) QXDraftList * Draftlist;
 @property (nonatomic, strong) NSError * Err;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
@@ -2189,8 +2190,8 @@
 
 @end
 
-// --- GetDraftParams ---
-@interface AuthUserServiceGetDraftParams : NSObject
+// --- QXGetDraftParams ---
+@interface QXAuthUserServiceGetDraftParams : NSObject
 
 @property (nonatomic, strong) NSString * EntryId;
 @property (nonatomic, strong) NSString * GroupId;
@@ -2200,10 +2201,10 @@
 
 @end
 
-// --- GetDraftResults ---
-@interface AuthUserServiceGetDraftResults : NSObject
+// --- QXGetDraftResults ---
+@interface QXAuthUserServiceGetDraftResults : NSObject
 
-@property (nonatomic, strong) Entry * Entry;
+@property (nonatomic, strong) QXEntry * Entry;
 @property (nonatomic, strong) NSError * Err;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
@@ -2211,8 +2212,8 @@
 
 @end
 
-// --- DeleteDraftParams ---
-@interface AuthUserServiceDeleteDraftParams : NSObject
+// --- QXDeleteDraftParams ---
+@interface QXAuthUserServiceDeleteDraftParams : NSObject
 
 @property (nonatomic, strong) NSString * EntryId;
 @property (nonatomic, strong) NSString * GroupId;
@@ -2222,8 +2223,8 @@
 
 @end
 
-// --- DeleteDraftResults ---
-@interface AuthUserServiceDeleteDraftResults : NSObject
+// --- QXDeleteDraftResults ---
+@interface QXAuthUserServiceDeleteDraftResults : NSObject
 
 @property (nonatomic, strong) NSError * Err;
 
@@ -2232,8 +2233,8 @@
 
 @end
 
-// --- GetNewGroupParams ---
-@interface AuthUserServiceGetNewGroupParams : NSObject
+// --- QXGetNewGroupParams ---
+@interface QXAuthUserServiceGetNewGroupParams : NSObject
 
 
 - (id) initWithDictionary:(NSDictionary*)dict;
@@ -2241,10 +2242,10 @@
 
 @end
 
-// --- GetNewGroupResults ---
-@interface AuthUserServiceGetNewGroupResults : NSObject
+// --- QXGetNewGroupResults ---
+@interface QXAuthUserServiceGetNewGroupResults : NSObject
 
-@property (nonatomic, strong) Group * Group;
+@property (nonatomic, strong) QXGroup * Group;
 @property (nonatomic, strong) NSError * Err;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
@@ -2252,8 +2253,8 @@
 
 @end
 
-// --- GetGroupParams ---
-@interface AuthUserServiceGetGroupParams : NSObject
+// --- QXGetGroupParams ---
+@interface QXAuthUserServiceGetGroupParams : NSObject
 
 @property (nonatomic, strong) NSString * GroupId;
 
@@ -2262,10 +2263,10 @@
 
 @end
 
-// --- GetGroupResults ---
-@interface AuthUserServiceGetGroupResults : NSObject
+// --- QXGetGroupResults ---
+@interface QXAuthUserServiceGetGroupResults : NSObject
 
-@property (nonatomic, strong) Group * Group;
+@property (nonatomic, strong) QXGroup * Group;
 @property (nonatomic, strong) NSError * Err;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
@@ -2273,20 +2274,20 @@
 
 @end
 
-// --- CreateGroupParams ---
-@interface AuthUserServiceCreateGroupParams : NSObject
+// --- QXCreateGroupParams ---
+@interface QXAuthUserServiceCreateGroupParams : NSObject
 
-@property (nonatomic, strong) GroupInput * Input;
+@property (nonatomic, strong) QXGroupInput * Input;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
 - (NSDictionary*) dictionary;
 
 @end
 
-// --- CreateGroupResults ---
-@interface AuthUserServiceCreateGroupResults : NSObject
+// --- QXCreateGroupResults ---
+@interface QXAuthUserServiceCreateGroupResults : NSObject
 
-@property (nonatomic, strong) Group * Group;
+@property (nonatomic, strong) QXGroup * Group;
 @property (nonatomic, strong) Validated * Validated;
 @property (nonatomic, strong) NSError * Err;
 
@@ -2295,18 +2296,18 @@
 
 @end
 
-// --- UpdateGroupParams ---
-@interface AuthUserServiceUpdateGroupParams : NSObject
+// --- QXUpdateGroupParams ---
+@interface QXAuthUserServiceUpdateGroupParams : NSObject
 
-@property (nonatomic, strong) GroupInput * Input;
+@property (nonatomic, strong) QXGroupInput * Input;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
 - (NSDictionary*) dictionary;
 
 @end
 
-// --- UpdateGroupResults ---
-@interface AuthUserServiceUpdateGroupResults : NSObject
+// --- QXUpdateGroupResults ---
+@interface QXAuthUserServiceUpdateGroupResults : NSObject
 
 @property (nonatomic, strong) Validated * Validated;
 @property (nonatomic, strong) NSError * Err;
@@ -2316,8 +2317,8 @@
 
 @end
 
-// --- UpdateGroupLogoParams ---
-@interface AuthUserServiceUpdateGroupLogoParams : NSObject
+// --- QXUpdateGroupLogoParams ---
+@interface QXAuthUserServiceUpdateGroupLogoParams : NSObject
 
 @property (nonatomic, strong) NSString * GroupId;
 @property (nonatomic, strong) NSString * LogoURL;
@@ -2327,8 +2328,8 @@
 
 @end
 
-// --- UpdateGroupLogoResults ---
-@interface AuthUserServiceUpdateGroupLogoResults : NSObject
+// --- QXUpdateGroupLogoResults ---
+@interface QXAuthUserServiceUpdateGroupLogoResults : NSObject
 
 @property (nonatomic, strong) NSError * Err;
 
@@ -2337,8 +2338,8 @@
 
 @end
 
-// --- DeleteGroupParams ---
-@interface AuthUserServiceDeleteGroupParams : NSObject
+// --- QXDeleteGroupParams ---
+@interface QXAuthUserServiceDeleteGroupParams : NSObject
 
 @property (nonatomic, strong) NSString * GroupId;
 
@@ -2347,8 +2348,8 @@
 
 @end
 
-// --- DeleteGroupResults ---
-@interface AuthUserServiceDeleteGroupResults : NSObject
+// --- QXDeleteGroupResults ---
+@interface QXAuthUserServiceDeleteGroupResults : NSObject
 
 @property (nonatomic, strong) NSError * Err;
 
@@ -2357,8 +2358,8 @@
 
 @end
 
-// --- GetGroupBySlugParams ---
-@interface AuthUserServiceGetGroupBySlugParams : NSObject
+// --- QXGetGroupBySlugParams ---
+@interface QXAuthUserServiceGetGroupBySlugParams : NSObject
 
 @property (nonatomic, strong) NSString * Slug;
 
@@ -2367,10 +2368,10 @@
 
 @end
 
-// --- GetGroupBySlugResults ---
-@interface AuthUserServiceGetGroupBySlugResults : NSObject
+// --- QXGetGroupBySlugResults ---
+@interface QXAuthUserServiceGetGroupBySlugResults : NSObject
 
-@property (nonatomic, strong) Group * Group;
+@property (nonatomic, strong) QXGroup * Group;
 @property (nonatomic, strong) NSError * Err;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
@@ -2378,8 +2379,8 @@
 
 @end
 
-// --- GetGroupsParams ---
-@interface AuthUserServiceGetGroupsParams : NSObject
+// --- QXGetGroupsParams ---
+@interface QXAuthUserServiceGetGroupsParams : NSObject
 
 @property (nonatomic, strong) NSString * Keyword;
 
@@ -2388,8 +2389,8 @@
 
 @end
 
-// --- GetGroupsResults ---
-@interface AuthUserServiceGetGroupsResults : NSObject
+// --- QXGetGroupsResults ---
+@interface QXAuthUserServiceGetGroupsResults : NSObject
 
 @property (nonatomic, strong) NSArray * Groups;
 @property (nonatomic, strong) NSError * Err;
@@ -2399,8 +2400,8 @@
 
 @end
 
-// --- GetPublicGroupsParams ---
-@interface AuthUserServiceGetPublicGroupsParams : NSObject
+// --- QXGetPublicGroupsParams ---
+@interface QXAuthUserServiceGetPublicGroupsParams : NSObject
 
 @property (nonatomic, strong) NSString * Keyword;
 
@@ -2409,8 +2410,8 @@
 
 @end
 
-// --- GetPublicGroupsResults ---
-@interface AuthUserServiceGetPublicGroupsResults : NSObject
+// --- QXGetPublicGroupsResults ---
+@interface QXAuthUserServiceGetPublicGroupsResults : NSObject
 
 @property (nonatomic, strong) NSArray * Groups;
 @property (nonatomic, strong) NSError * Err;
@@ -2420,8 +2421,8 @@
 
 @end
 
-// --- AddUserToGroupParams ---
-@interface AuthUserServiceAddUserToGroupParams : NSObject
+// --- QXAddUserToGroupParams ---
+@interface QXAuthUserServiceAddUserToGroupParams : NSObject
 
 @property (nonatomic, strong) NSString * GroupId;
 @property (nonatomic, strong) NSString * UserId;
@@ -2431,8 +2432,8 @@
 
 @end
 
-// --- AddUserToGroupResults ---
-@interface AuthUserServiceAddUserToGroupResults : NSObject
+// --- QXAddUserToGroupResults ---
+@interface QXAuthUserServiceAddUserToGroupResults : NSObject
 
 @property (nonatomic, strong) NSError * Err;
 
@@ -2441,8 +2442,8 @@
 
 @end
 
-// --- RemoveUserFromGroupParams ---
-@interface AuthUserServiceRemoveUserFromGroupParams : NSObject
+// --- QXRemoveUserFromGroupParams ---
+@interface QXAuthUserServiceRemoveUserFromGroupParams : NSObject
 
 @property (nonatomic, strong) NSString * GroupId;
 @property (nonatomic, strong) NSString * UserId;
@@ -2452,8 +2453,8 @@
 
 @end
 
-// --- RemoveUserFromGroupResults ---
-@interface AuthUserServiceRemoveUserFromGroupResults : NSObject
+// --- QXRemoveUserFromGroupResults ---
+@interface QXAuthUserServiceRemoveUserFromGroupResults : NSObject
 
 @property (nonatomic, strong) NSError * Err;
 
@@ -2462,8 +2463,8 @@
 
 @end
 
-// --- GetGroupHeaderParams ---
-@interface AuthUserServiceGetGroupHeaderParams : NSObject
+// --- QXGetGroupHeaderParams ---
+@interface QXAuthUserServiceGetGroupHeaderParams : NSObject
 
 @property (nonatomic, strong) NSString * GroupId;
 
@@ -2472,10 +2473,10 @@
 
 @end
 
-// --- GetGroupHeaderResults ---
-@interface AuthUserServiceGetGroupHeaderResults : NSObject
+// --- QXGetGroupHeaderResults ---
+@interface QXAuthUserServiceGetGroupHeaderResults : NSObject
 
-@property (nonatomic, strong) GroupHeader * Header;
+@property (nonatomic, strong) QXGroupHeader * Header;
 @property (nonatomic, strong) NSError * Err;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
@@ -2483,8 +2484,8 @@
 
 @end
 
-// --- GetClassifiedGroupsParams ---
-@interface AuthUserServiceGetClassifiedGroupsParams : NSObject
+// --- QXGetClassifiedGroupsParams ---
+@interface QXAuthUserServiceGetClassifiedGroupsParams : NSObject
 
 
 - (id) initWithDictionary:(NSDictionary*)dict;
@@ -2492,10 +2493,10 @@
 
 @end
 
-// --- GetClassifiedGroupsResults ---
-@interface AuthUserServiceGetClassifiedGroupsResults : NSObject
+// --- QXGetClassifiedGroupsResults ---
+@interface QXAuthUserServiceGetClassifiedGroupsResults : NSObject
 
-@property (nonatomic, strong) Group * AnouncementGroup;
+@property (nonatomic, strong) QXGroup * AnouncementGroup;
 @property (nonatomic, strong) NSArray * FollowedNormalGroups;
 @property (nonatomic, strong) NSArray * FollowedSharedGroups;
 @property (nonatomic, strong) NSArray * UnFollowedNormalGroups;
@@ -2507,8 +2508,8 @@
 
 @end
 
-// --- GetOrgUsersParams ---
-@interface AuthUserServiceGetOrgUsersParams : NSObject
+// --- QXGetOrgUsersParams ---
+@interface QXAuthUserServiceGetOrgUsersParams : NSObject
 
 @property (nonatomic, strong) NSString * Keyword;
 @property (nonatomic, strong) NSString * StartFullName;
@@ -2519,8 +2520,8 @@
 
 @end
 
-// --- GetOrgUsersResults ---
-@interface AuthUserServiceGetOrgUsersResults : NSObject
+// --- QXGetOrgUsersResults ---
+@interface QXAuthUserServiceGetOrgUsersResults : NSObject
 
 @property (nonatomic, strong) NSArray * Users;
 @property (nonatomic, strong) NSString * NextFullName;
@@ -2531,8 +2532,8 @@
 
 @end
 
-// --- GetGroupUsersParams ---
-@interface AuthUserServiceGetGroupUsersParams : NSObject
+// --- QXGetGroupUsersParams ---
+@interface QXAuthUserServiceGetGroupUsersParams : NSObject
 
 @property (nonatomic, strong) NSString * GroupId;
 @property (nonatomic, strong) NSString * Keyword;
@@ -2545,8 +2546,8 @@
 
 @end
 
-// --- GetGroupUsersResults ---
-@interface AuthUserServiceGetGroupUsersResults : NSObject
+// --- QXGetGroupUsersResults ---
+@interface QXAuthUserServiceGetGroupUsersResults : NSObject
 
 @property (nonatomic, strong) NSArray * Users;
 @property (nonatomic, strong) NSString * NextFullName;
@@ -2557,8 +2558,8 @@
 
 @end
 
-// --- GetUserParams ---
-@interface AuthUserServiceGetUserParams : NSObject
+// --- QXGetUserParams ---
+@interface QXAuthUserServiceGetUserParams : NSObject
 
 @property (nonatomic, strong) NSString * UserId;
 
@@ -2567,10 +2568,10 @@
 
 @end
 
-// --- GetUserResults ---
-@interface AuthUserServiceGetUserResults : NSObject
+// --- QXGetUserResults ---
+@interface QXAuthUserServiceGetUserResults : NSObject
 
-@property (nonatomic, strong) User * User;
+@property (nonatomic, strong) QXUser * User;
 @property (nonatomic, strong) NSError * Err;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
@@ -2578,8 +2579,8 @@
 
 @end
 
-// --- EnableUserParams ---
-@interface AuthUserServiceEnableUserParams : NSObject
+// --- QXEnableUserParams ---
+@interface QXAuthUserServiceEnableUserParams : NSObject
 
 @property (nonatomic, strong) NSString * UserId;
 
@@ -2588,8 +2589,8 @@
 
 @end
 
-// --- EnableUserResults ---
-@interface AuthUserServiceEnableUserResults : NSObject
+// --- QXEnableUserResults ---
+@interface QXAuthUserServiceEnableUserResults : NSObject
 
 @property (nonatomic, strong) NSError * Err;
 
@@ -2598,8 +2599,8 @@
 
 @end
 
-// --- DisableUserParams ---
-@interface AuthUserServiceDisableUserParams : NSObject
+// --- QXDisableUserParams ---
+@interface QXAuthUserServiceDisableUserParams : NSObject
 
 @property (nonatomic, strong) NSString * UserId;
 
@@ -2608,8 +2609,8 @@
 
 @end
 
-// --- DisableUserResults ---
-@interface AuthUserServiceDisableUserResults : NSObject
+// --- QXDisableUserResults ---
+@interface QXAuthUserServiceDisableUserResults : NSObject
 
 @property (nonatomic, strong) NSError * Err;
 
@@ -2618,8 +2619,8 @@
 
 @end
 
-// --- DeleteUserParams ---
-@interface AuthUserServiceDeleteUserParams : NSObject
+// --- QXDeleteUserParams ---
+@interface QXAuthUserServiceDeleteUserParams : NSObject
 
 @property (nonatomic, strong) NSString * UserId;
 
@@ -2628,8 +2629,8 @@
 
 @end
 
-// --- DeleteUserResults ---
-@interface AuthUserServiceDeleteUserResults : NSObject
+// --- QXDeleteUserResults ---
+@interface QXAuthUserServiceDeleteUserResults : NSObject
 
 @property (nonatomic, strong) NSError * Err;
 
@@ -2638,8 +2639,8 @@
 
 @end
 
-// --- PromoteToSuperUserParams ---
-@interface AuthUserServicePromoteToSuperUserParams : NSObject
+// --- QXPromoteToSuperUserParams ---
+@interface QXAuthUserServicePromoteToSuperUserParams : NSObject
 
 @property (nonatomic, strong) NSString * UserId;
 
@@ -2648,8 +2649,8 @@
 
 @end
 
-// --- PromoteToSuperUserResults ---
-@interface AuthUserServicePromoteToSuperUserResults : NSObject
+// --- QXPromoteToSuperUserResults ---
+@interface QXAuthUserServicePromoteToSuperUserResults : NSObject
 
 @property (nonatomic, strong) NSError * Err;
 
@@ -2658,8 +2659,8 @@
 
 @end
 
-// --- DemoteFromSuperUserParams ---
-@interface AuthUserServiceDemoteFromSuperUserParams : NSObject
+// --- QXDemoteFromSuperUserParams ---
+@interface QXAuthUserServiceDemoteFromSuperUserParams : NSObject
 
 @property (nonatomic, strong) NSString * UserId;
 
@@ -2668,8 +2669,8 @@
 
 @end
 
-// --- DemoteFromSuperUserResults ---
-@interface AuthUserServiceDemoteFromSuperUserResults : NSObject
+// --- QXDemoteFromSuperUserResults ---
+@interface QXAuthUserServiceDemoteFromSuperUserResults : NSObject
 
 @property (nonatomic, strong) NSError * Err;
 
@@ -2678,8 +2679,8 @@
 
 @end
 
-// --- FollowUserParams ---
-@interface AuthUserServiceFollowUserParams : NSObject
+// --- QXFollowUserParams ---
+@interface QXAuthUserServiceFollowUserParams : NSObject
 
 @property (nonatomic, strong) NSString * UserId;
 
@@ -2688,8 +2689,8 @@
 
 @end
 
-// --- FollowUserResults ---
-@interface AuthUserServiceFollowUserResults : NSObject
+// --- QXFollowUserResults ---
+@interface QXAuthUserServiceFollowUserResults : NSObject
 
 @property (nonatomic, strong) NSError * Err;
 
@@ -2698,8 +2699,8 @@
 
 @end
 
-// --- UnfollowUserParams ---
-@interface AuthUserServiceUnfollowUserParams : NSObject
+// --- QXUnfollowUserParams ---
+@interface QXAuthUserServiceUnfollowUserParams : NSObject
 
 @property (nonatomic, strong) NSString * UserId;
 
@@ -2708,8 +2709,8 @@
 
 @end
 
-// --- UnfollowUserResults ---
-@interface AuthUserServiceUnfollowUserResults : NSObject
+// --- QXUnfollowUserResults ---
+@interface QXAuthUserServiceUnfollowUserResults : NSObject
 
 @property (nonatomic, strong) NSError * Err;
 
@@ -2718,8 +2719,8 @@
 
 @end
 
-// --- GetMyFollowingUsersParams ---
-@interface AuthUserServiceGetMyFollowingUsersParams : NSObject
+// --- QXGetMyFollowingUsersParams ---
+@interface QXAuthUserServiceGetMyFollowingUsersParams : NSObject
 
 
 - (id) initWithDictionary:(NSDictionary*)dict;
@@ -2727,8 +2728,8 @@
 
 @end
 
-// --- GetMyFollowingUsersResults ---
-@interface AuthUserServiceGetMyFollowingUsersResults : NSObject
+// --- QXGetMyFollowingUsersResults ---
+@interface QXAuthUserServiceGetMyFollowingUsersResults : NSObject
 
 @property (nonatomic, strong) NSArray * FollowingUsers;
 @property (nonatomic, strong) NSError * Err;
@@ -2738,8 +2739,8 @@
 
 @end
 
-// --- GetPanelStatusParams ---
-@interface AuthUserServiceGetPanelStatusParams : NSObject
+// --- QXGetPanelStatusParams ---
+@interface QXAuthUserServiceGetPanelStatusParams : NSObject
 
 
 - (id) initWithDictionary:(NSDictionary*)dict;
@@ -2747,10 +2748,10 @@
 
 @end
 
-// --- GetPanelStatusResults ---
-@interface AuthUserServiceGetPanelStatusResults : NSObject
+// --- QXGetPanelStatusResults ---
+@interface QXAuthUserServiceGetPanelStatusResults : NSObject
 
-@property (nonatomic, strong) PanelStatus * PanelStatus;
+@property (nonatomic, strong) QXPanelStatus * PanelStatus;
 @property (nonatomic, strong) NSError * Err;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
@@ -2758,8 +2759,8 @@
 
 @end
 
-// --- GetUserPreferencesParams ---
-@interface AuthUserServiceGetUserPreferencesParams : NSObject
+// --- QXGetUserPreferencesParams ---
+@interface QXAuthUserServiceGetUserPreferencesParams : NSObject
 
 
 - (id) initWithDictionary:(NSDictionary*)dict;
@@ -2767,10 +2768,10 @@
 
 @end
 
-// --- GetUserPreferencesResults ---
-@interface AuthUserServiceGetUserPreferencesResults : NSObject
+// --- QXGetUserPreferencesResults ---
+@interface QXAuthUserServiceGetUserPreferencesResults : NSObject
 
-@property (nonatomic, strong) Preferences * Preferences;
+@property (nonatomic, strong) QXPreferences * Preferences;
 @property (nonatomic, strong) NSError * Err;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
@@ -2778,20 +2779,20 @@
 
 @end
 
-// --- UpdateUserPreferencesParams ---
-@interface AuthUserServiceUpdateUserPreferencesParams : NSObject
+// --- QXUpdateUserPreferencesParams ---
+@interface QXAuthUserServiceUpdateUserPreferencesParams : NSObject
 
-@property (nonatomic, strong) PreferencesInput * Input;
+@property (nonatomic, strong) QXPreferencesInput * Input;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
 - (NSDictionary*) dictionary;
 
 @end
 
-// --- UpdateUserPreferencesResults ---
-@interface AuthUserServiceUpdateUserPreferencesResults : NSObject
+// --- QXUpdateUserPreferencesResults ---
+@interface QXAuthUserServiceUpdateUserPreferencesResults : NSObject
 
-@property (nonatomic, strong) Preferences * Preferences;
+@property (nonatomic, strong) QXPreferences * Preferences;
 @property (nonatomic, strong) Validated * Validated;
 @property (nonatomic, strong) NSError * Err;
 
@@ -2800,8 +2801,8 @@
 
 @end
 
-// --- GetOrgEmbedUsersParams ---
-@interface AuthUserServiceGetOrgEmbedUsersParams : NSObject
+// --- QXGetOrgEmbedUsersParams ---
+@interface QXAuthUserServiceGetOrgEmbedUsersParams : NSObject
 
 
 - (id) initWithDictionary:(NSDictionary*)dict;
@@ -2809,8 +2810,8 @@
 
 @end
 
-// --- GetOrgEmbedUsersResults ---
-@interface AuthUserServiceGetOrgEmbedUsersResults : NSObject
+// --- QXGetOrgEmbedUsersResults ---
+@interface QXAuthUserServiceGetOrgEmbedUsersResults : NSObject
 
 @property (nonatomic, strong) NSArray * Users;
 @property (nonatomic, strong) NSError * Err;
@@ -2820,8 +2821,8 @@
 
 @end
 
-// --- GetNonStandardGroupEmbedUsersParams ---
-@interface AuthUserServiceGetNonStandardGroupEmbedUsersParams : NSObject
+// --- QXGetNonStandardGroupEmbedUsersParams ---
+@interface QXAuthUserServiceGetNonStandardGroupEmbedUsersParams : NSObject
 
 
 - (id) initWithDictionary:(NSDictionary*)dict;
@@ -2829,8 +2830,8 @@
 
 @end
 
-// --- GetNonStandardGroupEmbedUsersResults ---
-@interface AuthUserServiceGetNonStandardGroupEmbedUsersResults : NSObject
+// --- QXGetNonStandardGroupEmbedUsersResults ---
+@interface QXAuthUserServiceGetNonStandardGroupEmbedUsersResults : NSObject
 
 @property (nonatomic, strong) NSArray * GroupUsers;
 @property (nonatomic, strong) NSError * Err;
@@ -2840,18 +2841,18 @@
 
 @end
 
-// --- UpdateUserProfileParams ---
-@interface AuthUserServiceUpdateUserProfileParams : NSObject
+// --- QXUpdateUserProfileParams ---
+@interface QXAuthUserServiceUpdateUserProfileParams : NSObject
 
-@property (nonatomic, strong) UserProfileInput * Input;
+@property (nonatomic, strong) QXUserProfileInput * Input;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
 - (NSDictionary*) dictionary;
 
 @end
 
-// --- UpdateUserProfileResults ---
-@interface AuthUserServiceUpdateUserProfileResults : NSObject
+// --- QXUpdateUserProfileResults ---
+@interface QXAuthUserServiceUpdateUserProfileResults : NSObject
 
 @property (nonatomic, strong) Validated * Validated;
 @property (nonatomic, strong) NSError * Err;
@@ -2861,8 +2862,8 @@
 
 @end
 
-// --- GetMyCountParams ---
-@interface AuthUserServiceGetMyCountParams : NSObject
+// --- QXGetMyCountParams ---
+@interface QXAuthUserServiceGetMyCountParams : NSObject
 
 
 - (id) initWithDictionary:(NSDictionary*)dict;
@@ -2870,10 +2871,10 @@
 
 @end
 
-// --- GetMyCountResults ---
-@interface AuthUserServiceGetMyCountResults : NSObject
+// --- QXGetMyCountResults ---
+@interface QXAuthUserServiceGetMyCountResults : NSObject
 
-@property (nonatomic, strong) MyCount * MyCount;
+@property (nonatomic, strong) QXMyCount * MyCount;
 @property (nonatomic, strong) NSError * Err;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
@@ -2881,8 +2882,8 @@
 
 @end
 
-// --- ReadEntryParams ---
-@interface AuthUserServiceReadEntryParams : NSObject
+// --- QXReadEntryParams ---
+@interface QXAuthUserServiceReadEntryParams : NSObject
 
 @property (nonatomic, strong) NSString * EntryId;
 @property (nonatomic, strong) NSString * GroupId;
@@ -2892,10 +2893,10 @@
 
 @end
 
-// --- ReadEntryResults ---
-@interface AuthUserServiceReadEntryResults : NSObject
+// --- QXReadEntryResults ---
+@interface QXAuthUserServiceReadEntryResults : NSObject
 
-@property (nonatomic, strong) MyCount * MyCount;
+@property (nonatomic, strong) QXMyCount * MyCount;
 @property (nonatomic, strong) NSError * Err;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
@@ -2903,8 +2904,8 @@
 
 @end
 
-// --- GetJoinOrgInvitationsParams ---
-@interface AuthUserServiceGetJoinOrgInvitationsParams : NSObject
+// --- QXGetJoinOrgInvitationsParams ---
+@interface QXAuthUserServiceGetJoinOrgInvitationsParams : NSObject
 
 
 - (id) initWithDictionary:(NSDictionary*)dict;
@@ -2912,8 +2913,8 @@
 
 @end
 
-// --- GetJoinOrgInvitationsResults ---
-@interface AuthUserServiceGetJoinOrgInvitationsResults : NSObject
+// --- QXGetJoinOrgInvitationsResults ---
+@interface QXAuthUserServiceGetJoinOrgInvitationsResults : NSObject
 
 @property (nonatomic, strong) NSArray * Invitations;
 @property (nonatomic, strong) NSError * Err;
@@ -2923,8 +2924,8 @@
 
 @end
 
-// --- GetOrganizationParams ---
-@interface AuthUserServiceGetOrganizationParams : NSObject
+// --- QXGetOrganizationParams ---
+@interface QXAuthUserServiceGetOrganizationParams : NSObject
 
 @property (nonatomic, strong) NSString * OrgId;
 
@@ -2933,10 +2934,10 @@
 
 @end
 
-// --- GetOrganizationResults ---
-@interface AuthUserServiceGetOrganizationResults : NSObject
+// --- QXGetOrganizationResults ---
+@interface QXAuthUserServiceGetOrganizationResults : NSObject
 
-@property (nonatomic, strong) Organization * Org;
+@property (nonatomic, strong) QXOrganization * Org;
 @property (nonatomic, strong) NSError * Err;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
@@ -2944,8 +2945,8 @@
 
 @end
 
-// --- GetOrganizationsParams ---
-@interface AuthUserServiceGetOrganizationsParams : NSObject
+// --- QXGetOrganizationsParams ---
+@interface QXAuthUserServiceGetOrganizationsParams : NSObject
 
 @property (nonatomic, strong) NSArray * OrgIds;
 
@@ -2954,8 +2955,8 @@
 
 @end
 
-// --- GetOrganizationsResults ---
-@interface AuthUserServiceGetOrganizationsResults : NSObject
+// --- QXGetOrganizationsResults ---
+@interface QXAuthUserServiceGetOrganizationsResults : NSObject
 
 @property (nonatomic, strong) NSArray * Orgs;
 @property (nonatomic, strong) NSError * Err;
@@ -2965,8 +2966,8 @@
 
 @end
 
-// --- SearchOrganizationsParams ---
-@interface AuthUserServiceSearchOrganizationsParams : NSObject
+// --- QXSearchOrganizationsParams ---
+@interface QXAuthUserServiceSearchOrganizationsParams : NSObject
 
 @property (nonatomic, strong) NSString * Keyword;
 
@@ -2975,8 +2976,8 @@
 
 @end
 
-// --- SearchOrganizationsResults ---
-@interface AuthUserServiceSearchOrganizationsResults : NSObject
+// --- QXSearchOrganizationsResults ---
+@interface QXAuthUserServiceSearchOrganizationsResults : NSObject
 
 @property (nonatomic, strong) NSArray * Orgs;
 @property (nonatomic, strong) NSError * Err;
@@ -2986,20 +2987,20 @@
 
 @end
 
-// --- UpdateOrganizationParams ---
-@interface AuthUserServiceUpdateOrganizationParams : NSObject
+// --- QXUpdateOrganizationParams ---
+@interface QXAuthUserServiceUpdateOrganizationParams : NSObject
 
-@property (nonatomic, strong) OrganizationInput * Input;
+@property (nonatomic, strong) QXOrganizationInput * Input;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
 - (NSDictionary*) dictionary;
 
 @end
 
-// --- UpdateOrganizationResults ---
-@interface AuthUserServiceUpdateOrganizationResults : NSObject
+// --- QXUpdateOrganizationResults ---
+@interface QXAuthUserServiceUpdateOrganizationResults : NSObject
 
-@property (nonatomic, strong) Organization * Org;
+@property (nonatomic, strong) QXOrganization * Org;
 @property (nonatomic, strong) Validated * Validated;
 @property (nonatomic, strong) NSError * Err;
 
@@ -3008,8 +3009,8 @@
 
 @end
 
-// --- SwitchOrganizationParams ---
-@interface AuthUserServiceSwitchOrganizationParams : NSObject
+// --- QXSwitchOrganizationParams ---
+@interface QXAuthUserServiceSwitchOrganizationParams : NSObject
 
 @property (nonatomic, strong) NSString * OrgId;
 
@@ -3018,8 +3019,8 @@
 
 @end
 
-// --- SwitchOrganizationResults ---
-@interface AuthUserServiceSwitchOrganizationResults : NSObject
+// --- QXSwitchOrganizationResults ---
+@interface QXAuthUserServiceSwitchOrganizationResults : NSObject
 
 @property (nonatomic, strong) NSError * Err;
 
@@ -3028,8 +3029,8 @@
 
 @end
 
-// --- AcceptSharedGroupRequestParams ---
-@interface AuthUserServiceAcceptSharedGroupRequestParams : NSObject
+// --- QXAcceptSharedGroupRequestParams ---
+@interface QXAuthUserServiceAcceptSharedGroupRequestParams : NSObject
 
 @property (nonatomic, strong) NSString * FromOrgId;
 @property (nonatomic, strong) NSString * SharedOrgId;
@@ -3041,10 +3042,10 @@
 
 @end
 
-// --- AcceptSharedGroupRequestResults ---
-@interface AuthUserServiceAcceptSharedGroupRequestResults : NSObject
+// --- QXAcceptSharedGroupRequestResults ---
+@interface QXAuthUserServiceAcceptSharedGroupRequestResults : NSObject
 
-@property (nonatomic, strong) Request * Req;
+@property (nonatomic, strong) QXRequest * Req;
 @property (nonatomic, strong) NSError * Err;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
@@ -3052,8 +3053,8 @@
 
 @end
 
-// --- RejectSharedGroupRequestParams ---
-@interface AuthUserServiceRejectSharedGroupRequestParams : NSObject
+// --- QXRejectSharedGroupRequestParams ---
+@interface QXAuthUserServiceRejectSharedGroupRequestParams : NSObject
 
 @property (nonatomic, strong) NSString * FromOrgId;
 @property (nonatomic, strong) NSString * SharedOrgId;
@@ -3065,10 +3066,10 @@
 
 @end
 
-// --- RejectSharedGroupRequestResults ---
-@interface AuthUserServiceRejectSharedGroupRequestResults : NSObject
+// --- QXRejectSharedGroupRequestResults ---
+@interface QXAuthUserServiceRejectSharedGroupRequestResults : NSObject
 
-@property (nonatomic, strong) Request * Req;
+@property (nonatomic, strong) QXRequest * Req;
 @property (nonatomic, strong) NSError * Err;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
@@ -3076,8 +3077,8 @@
 
 @end
 
-// --- GetOrgSettingsParams ---
-@interface AuthUserServiceGetOrgSettingsParams : NSObject
+// --- QXGetOrgSettingsParams ---
+@interface QXAuthUserServiceGetOrgSettingsParams : NSObject
 
 
 - (id) initWithDictionary:(NSDictionary*)dict;
@@ -3085,10 +3086,10 @@
 
 @end
 
-// --- GetOrgSettingsResults ---
-@interface AuthUserServiceGetOrgSettingsResults : NSObject
+// --- QXGetOrgSettingsResults ---
+@interface QXAuthUserServiceGetOrgSettingsResults : NSObject
 
-@property (nonatomic, strong) OrgSettings * OrgSetting;
+@property (nonatomic, strong) QXOrgSettings * OrgSetting;
 @property (nonatomic, strong) NSError * Err;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
@@ -3096,18 +3097,18 @@
 
 @end
 
-// --- UpdateOrgSettingsParams ---
-@interface AuthUserServiceUpdateOrgSettingsParams : NSObject
+// --- QXUpdateOrgSettingsParams ---
+@interface QXAuthUserServiceUpdateOrgSettingsParams : NSObject
 
-@property (nonatomic, strong) OrgSettingsInput * OrgSettingInput;
+@property (nonatomic, strong) QXOrgSettingsInput * OrgSettingInput;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
 - (NSDictionary*) dictionary;
 
 @end
 
-// --- UpdateOrgSettingsResults ---
-@interface AuthUserServiceUpdateOrgSettingsResults : NSObject
+// --- QXUpdateOrgSettingsResults ---
+@interface QXAuthUserServiceUpdateOrgSettingsResults : NSObject
 
 @property (nonatomic, strong) NSError * Err;
 
@@ -3116,8 +3117,8 @@
 
 @end
 
-// --- CanCreateGroupParams ---
-@interface AuthUserServiceCanCreateGroupParams : NSObject
+// --- QXCanCreateGroupParams ---
+@interface QXAuthUserServiceCanCreateGroupParams : NSObject
 
 
 - (id) initWithDictionary:(NSDictionary*)dict;
@@ -3125,8 +3126,8 @@
 
 @end
 
-// --- CanCreateGroupResults ---
-@interface AuthUserServiceCanCreateGroupResults : NSObject
+// --- QXCanCreateGroupResults ---
+@interface QXAuthUserServiceCanCreateGroupResults : NSObject
 
 @property (nonatomic, assign) BOOL Ok;
 @property (nonatomic, strong) NSError * Err;
@@ -3136,8 +3137,8 @@
 
 @end
 
-// --- CanInvitePeopleParams ---
-@interface AuthUserServiceCanInvitePeopleParams : NSObject
+// --- QXCanInvitePeopleParams ---
+@interface QXAuthUserServiceCanInvitePeopleParams : NSObject
 
 
 - (id) initWithDictionary:(NSDictionary*)dict;
@@ -3145,8 +3146,8 @@
 
 @end
 
-// --- CanInvitePeopleResults ---
-@interface AuthUserServiceCanInvitePeopleResults : NSObject
+// --- QXCanInvitePeopleResults ---
+@interface QXAuthUserServiceCanInvitePeopleResults : NSObject
 
 @property (nonatomic, assign) BOOL Ok;
 @property (nonatomic, strong) NSError * Err;
@@ -3156,8 +3157,8 @@
 
 @end
 
-// --- InvitePeopleParams ---
-@interface AuthUserServiceInvitePeopleParams : NSObject
+// --- QXInvitePeopleParams ---
+@interface QXAuthUserServiceInvitePeopleParams : NSObject
 
 @property (nonatomic, strong) NSArray * Emails;
 
@@ -3166,8 +3167,8 @@
 
 @end
 
-// --- InvitePeopleResults ---
-@interface AuthUserServiceInvitePeopleResults : NSObject
+// --- QXInvitePeopleResults ---
+@interface QXAuthUserServiceInvitePeopleResults : NSObject
 
 @property (nonatomic, strong) Validated * Validated;
 @property (nonatomic, strong) NSError * Err;
@@ -3177,8 +3178,8 @@
 
 @end
 
-// --- CancelInvitationParams ---
-@interface AuthUserServiceCancelInvitationParams : NSObject
+// --- QXCancelInvitationParams ---
+@interface QXAuthUserServiceCancelInvitationParams : NSObject
 
 @property (nonatomic, strong) NSString * Email;
 
@@ -3187,8 +3188,8 @@
 
 @end
 
-// --- CancelInvitationResults ---
-@interface AuthUserServiceCancelInvitationResults : NSObject
+// --- QXCancelInvitationResults ---
+@interface QXAuthUserServiceCancelInvitationResults : NSObject
 
 @property (nonatomic, strong) NSError * Err;
 
@@ -3197,8 +3198,8 @@
 
 @end
 
-// --- ResendInvitationParams ---
-@interface AuthUserServiceResendInvitationParams : NSObject
+// --- QXResendInvitationParams ---
+@interface QXAuthUserServiceResendInvitationParams : NSObject
 
 @property (nonatomic, strong) NSString * Email;
 
@@ -3207,8 +3208,8 @@
 
 @end
 
-// --- ResendInvitationResults ---
-@interface AuthUserServiceResendInvitationResults : NSObject
+// --- QXResendInvitationResults ---
+@interface QXAuthUserServiceResendInvitationResults : NSObject
 
 @property (nonatomic, strong) NSError * Err;
 
@@ -3217,18 +3218,18 @@
 
 @end
 
-// --- UpdateMailUpdatesParams ---
-@interface AuthUserServiceUpdateMailUpdatesParams : NSObject
+// --- QXUpdateMailUpdatesParams ---
+@interface QXAuthUserServiceUpdateMailUpdatesParams : NSObject
 
-@property (nonatomic, strong) MailUpdatesInput * Input;
+@property (nonatomic, strong) QXMailUpdatesInput * Input;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
 - (NSDictionary*) dictionary;
 
 @end
 
-// --- UpdateMailUpdatesResults ---
-@interface AuthUserServiceUpdateMailUpdatesResults : NSObject
+// --- QXUpdateMailUpdatesResults ---
+@interface QXAuthUserServiceUpdateMailUpdatesResults : NSObject
 
 @property (nonatomic, strong) NSError * Err;
 
@@ -3237,8 +3238,8 @@
 
 @end
 
-// --- PrepareChangingEmailParams ---
-@interface AuthUserServicePrepareChangingEmailParams : NSObject
+// --- QXPrepareChangingEmailParams ---
+@interface QXAuthUserServicePrepareChangingEmailParams : NSObject
 
 @property (nonatomic, strong) NSString * NewEmail;
 
@@ -3247,10 +3248,10 @@
 
 @end
 
-// --- PrepareChangingEmailResults ---
-@interface AuthUserServicePrepareChangingEmailResults : NSObject
+// --- QXPrepareChangingEmailResults ---
+@interface QXAuthUserServicePrepareChangingEmailResults : NSObject
 
-@property (nonatomic, strong) EmailChanger * Changer;
+@property (nonatomic, strong) QXEmailChanger * Changer;
 @property (nonatomic, strong) Validated * Validated;
 @property (nonatomic, strong) NSError * Err;
 
@@ -3259,8 +3260,8 @@
 
 @end
 
-// --- ConfirmChangingEmailParams ---
-@interface AuthUserServiceConfirmChangingEmailParams : NSObject
+// --- QXConfirmChangingEmailParams ---
+@interface QXAuthUserServiceConfirmChangingEmailParams : NSObject
 
 @property (nonatomic, strong) NSString * Token;
 
@@ -3269,8 +3270,8 @@
 
 @end
 
-// --- ConfirmChangingEmailResults ---
-@interface AuthUserServiceConfirmChangingEmailResults : NSObject
+// --- QXConfirmChangingEmailResults ---
+@interface QXAuthUserServiceConfirmChangingEmailResults : NSObject
 
 @property (nonatomic, strong) NSError * Err;
 
@@ -3279,18 +3280,18 @@
 
 @end
 
-// --- UpdateAccountParams ---
-@interface AuthUserServiceUpdateAccountParams : NSObject
+// --- QXUpdateAccountParams ---
+@interface QXAuthUserServiceUpdateAccountParams : NSObject
 
-@property (nonatomic, strong) MemberAccountInput * Input;
+@property (nonatomic, strong) QXMemberAccountInput * Input;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
 - (NSDictionary*) dictionary;
 
 @end
 
-// --- UpdateAccountResults ---
-@interface AuthUserServiceUpdateAccountResults : NSObject
+// --- QXUpdateAccountResults ---
+@interface QXAuthUserServiceUpdateAccountResults : NSObject
 
 @property (nonatomic, strong) Validated * Validated;
 @property (nonatomic, strong) NSError * Err;
@@ -3300,8 +3301,8 @@
 
 @end
 
-// --- SendSharingInvitationParams ---
-@interface AuthUserServiceSendSharingInvitationParams : NSObject
+// --- QXSendSharingInvitationParams ---
+@interface QXAuthUserServiceSendSharingInvitationParams : NSObject
 
 @property (nonatomic, strong) NSString * GroupId;
 @property (nonatomic, strong) NSString * Email;
@@ -3312,10 +3313,10 @@
 
 @end
 
-// --- SendSharingInvitationResults ---
-@interface AuthUserServiceSendSharingInvitationResults : NSObject
+// --- QXSendSharingInvitationResults ---
+@interface QXAuthUserServiceSendSharingInvitationResults : NSObject
 
-@property (nonatomic, strong) SharingInvitation * Si;
+@property (nonatomic, strong) QXSharingInvitation * Si;
 @property (nonatomic, strong) Validated * Validated;
 @property (nonatomic, strong) NSError * Err;
 
@@ -3324,8 +3325,8 @@
 
 @end
 
-// --- GetSharingInvitationsParams ---
-@interface AuthUserServiceGetSharingInvitationsParams : NSObject
+// --- QXGetSharingInvitationsParams ---
+@interface QXAuthUserServiceGetSharingInvitationsParams : NSObject
 
 @property (nonatomic, strong) NSString * GroupId;
 
@@ -3334,8 +3335,8 @@
 
 @end
 
-// --- GetSharingInvitationsResults ---
-@interface AuthUserServiceGetSharingInvitationsResults : NSObject
+// --- QXGetSharingInvitationsResults ---
+@interface QXAuthUserServiceGetSharingInvitationsResults : NSObject
 
 @property (nonatomic, strong) NSArray * Sis;
 @property (nonatomic, strong) NSError * Err;
@@ -3345,8 +3346,8 @@
 
 @end
 
-// --- CancelSharingInvitationParams ---
-@interface AuthUserServiceCancelSharingInvitationParams : NSObject
+// --- QXCancelSharingInvitationParams ---
+@interface QXAuthUserServiceCancelSharingInvitationParams : NSObject
 
 @property (nonatomic, strong) NSString * GroupId;
 @property (nonatomic, strong) NSString * Email;
@@ -3356,8 +3357,8 @@
 
 @end
 
-// --- CancelSharingInvitationResults ---
-@interface AuthUserServiceCancelSharingInvitationResults : NSObject
+// --- QXCancelSharingInvitationResults ---
+@interface QXAuthUserServiceCancelSharingInvitationResults : NSObject
 
 @property (nonatomic, strong) NSError * Err;
 
@@ -3366,8 +3367,8 @@
 
 @end
 
-// --- StopSharedGroupParams ---
-@interface AuthUserServiceStopSharedGroupParams : NSObject
+// --- QXStopSharedGroupParams ---
+@interface QXAuthUserServiceStopSharedGroupParams : NSObject
 
 @property (nonatomic, strong) NSString * GroupId;
 @property (nonatomic, strong) NSString * ToStopOrgId;
@@ -3377,8 +3378,8 @@
 
 @end
 
-// --- StopSharedGroupResults ---
-@interface AuthUserServiceStopSharedGroupResults : NSObject
+// --- QXStopSharedGroupResults ---
+@interface QXAuthUserServiceStopSharedGroupResults : NSObject
 
 @property (nonatomic, strong) NSError * Err;
 
@@ -3387,8 +3388,8 @@
 
 @end
 
-// --- LeaveSharedGroupParams ---
-@interface AuthUserServiceLeaveSharedGroupParams : NSObject
+// --- QXLeaveSharedGroupParams ---
+@interface QXAuthUserServiceLeaveSharedGroupParams : NSObject
 
 @property (nonatomic, strong) NSString * GroupId;
 
@@ -3397,8 +3398,8 @@
 
 @end
 
-// --- LeaveSharedGroupResults ---
-@interface AuthUserServiceLeaveSharedGroupResults : NSObject
+// --- QXLeaveSharedGroupResults ---
+@interface QXAuthUserServiceLeaveSharedGroupResults : NSObject
 
 @property (nonatomic, strong) NSError * Err;
 
@@ -3407,20 +3408,20 @@
 
 @end
 
-// --- ShareChatParams ---
-@interface AuthUserServiceShareChatParams : NSObject
+// --- QXShareChatParams ---
+@interface QXAuthUserServiceShareChatParams : NSObject
 
-@property (nonatomic, strong) ShareChatInput * Input;
+@property (nonatomic, strong) QXShareChatInput * Input;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
 - (NSDictionary*) dictionary;
 
 @end
 
-// --- ShareChatResults ---
-@interface AuthUserServiceShareChatResults : NSObject
+// --- QXShareChatResults ---
+@interface QXAuthUserServiceShareChatResults : NSObject
 
-@property (nonatomic, strong) Entry * ChatEntry;
+@property (nonatomic, strong) QXEntry * ChatEntry;
 @property (nonatomic, strong) Validated * Validated;
 @property (nonatomic, strong) NSError * Err;
 
@@ -3430,7 +3431,7 @@
 @end
 
 
-@interface AuthUserService : NSObject
+@interface QXAuthUserService : NSObject
 
 @property (nonatomic, strong) NSString * Session;
 
@@ -3439,115 +3440,115 @@
 
 
 
-- (AuthUserServiceGetNewEntryResults *) GetNewEntry:(NSString *)groupId;
+- (QXAuthUserServiceGetNewEntryResults *) GetNewEntry:(NSString *)groupId;
 
-- (AuthUserServiceGetQortexMessagesResults *) GetQortexMessages:(NSString *)messsageType before:(NSString *)before limit:(NSNumber *)limit withComments:(BOOL)withComments;
+- (QXAuthUserServiceGetQortexMessagesResults *) GetQortexMessages:(NSString *)messsageType before:(NSString *)before limit:(NSNumber *)limit withComments:(BOOL)withComments;
 
-- (AuthUserServiceCreateBroadcastResults *) CreateBroadcast:(BroadcastInput *)input;
+- (QXAuthUserServiceCreateBroadcastResults *) CreateBroadcast:(QXBroadcastInput *)input;
 
-- (AuthUserServiceCreateBroadcastCommentResults *) CreateBroadcastComment:(BroadcastInput *)input;
+- (QXAuthUserServiceCreateBroadcastCommentResults *) CreateBroadcastComment:(QXBroadcastInput *)input;
 
-- (AuthUserServiceGetSharingRequestEntryResults *) GetSharingRequestEntry:(NSString *)entryId;
+- (QXAuthUserServiceGetSharingRequestEntryResults *) GetSharingRequestEntry:(NSString *)entryId;
 
-- (AuthUserServiceGetBroadcastResults *) GetBroadcast:(NSString *)entryId;
+- (QXAuthUserServiceGetBroadcastResults *) GetBroadcast:(NSString *)entryId;
 
-- (AuthUserServiceGetBroadcastCommentResults *) GetBroadcastComment:(NSString *)entryId;
+- (QXAuthUserServiceGetBroadcastCommentResults *) GetBroadcastComment:(NSString *)entryId;
 
-- (AuthUserServiceUpdateBroadcastResults *) UpdateBroadcast:(BroadcastInput *)input;
+- (QXAuthUserServiceUpdateBroadcastResults *) UpdateBroadcast:(QXBroadcastInput *)input;
 
-- (AuthUserServiceUpdateBroadcastCommentResults *) UpdateBroadcastComment:(BroadcastInput *)input;
+- (QXAuthUserServiceUpdateBroadcastCommentResults *) UpdateBroadcastComment:(QXBroadcastInput *)input;
 
-- (AuthUserServiceCreateEntryResults *) CreateEntry:(EntryInput *)input;
+- (QXAuthUserServiceCreateEntryResults *) CreateEntry:(QXEntryInput *)input;
 
-- (AuthUserServiceCreateTaskResults *) CreateTask:(EntryInput *)input;
+- (QXAuthUserServiceCreateTaskResults *) CreateTask:(QXEntryInput *)input;
 
-- (AuthUserServiceCloseTaskResults *) CloseTask:(NSString *)entryId groupId:(NSString *)groupId;
+- (QXAuthUserServiceCloseTaskResults *) CloseTask:(NSString *)entryId groupId:(NSString *)groupId;
 
-- (AuthUserServiceCreateCommentResults *) CreateComment:(EntryInput *)input;
+- (QXAuthUserServiceCreateCommentResults *) CreateComment:(QXEntryInput *)input;
 
-- (AuthUserServiceGetCommentResults *) GetComment:(NSString *)entryId groupId:(NSString *)groupId;
+- (QXAuthUserServiceGetCommentResults *) GetComment:(NSString *)entryId groupId:(NSString *)groupId;
 
-- (AuthUserServiceUpdateCommentResults *) UpdateComment:(EntryInput *)input;
+- (QXAuthUserServiceUpdateCommentResults *) UpdateComment:(QXEntryInput *)input;
 
-- (AuthUserServiceUpdateEntryResults *) UpdateEntry:(EntryInput *)input;
+- (QXAuthUserServiceUpdateEntryResults *) UpdateEntry:(QXEntryInput *)input;
 
-- (AuthUserServiceGetLatestUpdatedEntryIdByTitleResults *) GetLatestUpdatedEntryIdByTitle:(NSString *)title groupId:(NSString *)groupId;
+- (QXAuthUserServiceGetLatestUpdatedEntryIdByTitleResults *) GetLatestUpdatedEntryIdByTitle:(NSString *)title groupId:(NSString *)groupId;
 
-- (AuthUserServiceGetEntryResults *) GetEntry:(NSString *)entryId groupId:(NSString *)groupId updateAtUnixNanoForVersion:(NSString *)updateAtUnixNanoForVersion hightlightKeywords:(NSString *)hightlightKeywords;
+- (QXAuthUserServiceGetEntryResults *) GetEntry:(NSString *)entryId groupId:(NSString *)groupId updateAtUnixNanoForVersion:(NSString *)updateAtUnixNanoForVersion hightlightKeywords:(NSString *)hightlightKeywords;
 
-- (AuthUserServiceDeleteEntryResults *) DeleteEntry:(NSString *)entryId groupId:(NSString *)groupId dType:(NSString *)dType;
+- (QXAuthUserServiceDeleteEntryResults *) DeleteEntry:(NSString *)entryId groupId:(NSString *)groupId dType:(NSString *)dType;
 
 - (NSError *) MuteEntry:(NSString *)entryId groupId:(NSString *)groupId;
 
 - (NSError *) UndoMuteEntry:(NSString *)entryId groupId:(NSString *)groupId;
 
-- (AuthUserServiceGetEntryAttachmentsResults *) GetEntryAttachments:(NSString *)entryId groupId:(NSString *)groupId;
+- (QXAuthUserServiceGetEntryAttachmentsResults *) GetEntryAttachments:(NSString *)entryId groupId:(NSString *)groupId;
 
-- (AuthUserServiceGetOtherVersionsCommentsResults *) GetOtherVersionsComments:(NSString *)entryId groupId:(NSString *)groupId updateAtUnixNanoForVersion:(NSString *)updateAtUnixNanoForVersion hightlightKeywords:(NSString *)hightlightKeywords;
+- (QXAuthUserServiceGetOtherVersionsCommentsResults *) GetOtherVersionsComments:(NSString *)entryId groupId:(NSString *)groupId updateAtUnixNanoForVersion:(NSString *)updateAtUnixNanoForVersion hightlightKeywords:(NSString *)hightlightKeywords;
 
-- (AuthUserServiceGetGroupEntriesResults *) GetGroupEntries:(NSString *)groupId entryType:(NSString *)entryType before:(NSString *)before limit:(NSNumber *)limit withComments:(BOOL)withComments;
+- (QXAuthUserServiceGetGroupEntriesResults *) GetGroupEntries:(NSString *)groupId entryType:(NSString *)entryType before:(NSString *)before limit:(NSNumber *)limit withComments:(BOOL)withComments;
 
-- (AuthUserServiceGetMyFeedEntriesResults *) GetMyFeedEntries:(NSString *)entryType before:(NSString *)before limit:(NSNumber *)limit withComments:(BOOL)withComments;
+- (QXAuthUserServiceGetMyFeedEntriesResults *) GetMyFeedEntries:(NSString *)entryType before:(NSString *)before limit:(NSNumber *)limit withComments:(BOOL)withComments;
 
-- (AuthUserServiceGetNewFeedEntriesResults *) GetNewFeedEntries:(NSString *)entryType fromTimeUnixNano:(NSString *)fromTimeUnixNano limit:(NSNumber *)limit;
+- (QXAuthUserServiceGetNewFeedEntriesResults *) GetNewFeedEntries:(NSString *)entryType fromTimeUnixNano:(NSString *)fromTimeUnixNano limit:(NSNumber *)limit;
 
-- (AuthUserServiceGetMyTaskEntriesResults *) GetMyTaskEntries:(BOOL)active before:(NSString *)before limit:(NSNumber *)limit;
+- (QXAuthUserServiceGetMyTaskEntriesResults *) GetMyTaskEntries:(BOOL)active before:(NSString *)before limit:(NSNumber *)limit;
 
-- (AuthUserServiceGetUserEntriesResults *) GetUserEntries:(NSString *)userId entryType:(NSString *)entryType before:(NSString *)before limit:(NSNumber *)limit;
+- (QXAuthUserServiceGetUserEntriesResults *) GetUserEntries:(NSString *)userId entryType:(NSString *)entryType before:(NSString *)before limit:(NSNumber *)limit;
 
-- (AuthUserServiceGetMyChatEntriesResults *) GetMyChatEntries:(NSString *)before limit:(NSNumber *)limit;
+- (QXAuthUserServiceGetMyChatEntriesResults *) GetMyChatEntries:(NSString *)before limit:(NSNumber *)limit;
 
-- (AuthUserServiceGetMyNotificationItemsResults *) GetMyNotificationItems:(NSString *)before limit:(NSNumber *)limit;
+- (QXAuthUserServiceGetMyNotificationItemsResults *) GetMyNotificationItems:(NSString *)before limit:(NSNumber *)limit;
 
-- (AuthUserServiceMarkAllAsReadResults *) MarkAllAsRead:(NSString *)groupId;
+- (QXAuthUserServiceMarkAllAsReadResults *) MarkAllAsRead:(NSString *)groupId;
 
-- (AuthUserServiceGetWatchListResults *) GetWatchList:(NSDate *)before limit:(NSNumber *)limit;
+- (QXAuthUserServiceGetWatchListResults *) GetWatchList:(NSDate *)before limit:(NSNumber *)limit;
 
-- (AuthUserServiceAddToWatchListResults *) AddToWatchList:(NSString *)entryId groupId:(NSString *)groupId;
+- (QXAuthUserServiceAddToWatchListResults *) AddToWatchList:(NSString *)entryId groupId:(NSString *)groupId;
 
-- (AuthUserServiceStopWatchingResults *) StopWatching:(NSString *)entryId groupId:(NSString *)groupId;
+- (QXAuthUserServiceStopWatchingResults *) StopWatching:(NSString *)entryId groupId:(NSString *)groupId;
 
 - (NSError *) ReadWatching:(NSString *)entryId groupId:(NSString *)groupId;
 
-- (AuthUserServiceUpdateLikeResults *) UpdateLike:(LikeInput *)input;
+- (QXAuthUserServiceUpdateLikeResults *) UpdateLike:(QXLikeInput *)input;
 
-- (AuthUserServiceGetDraftListResults *) GetDraftList:(NSDate *)before limit:(NSNumber *)limit;
+- (QXAuthUserServiceGetDraftListResults *) GetDraftList:(NSDate *)before limit:(NSNumber *)limit;
 
-- (AuthUserServiceGetDraftResults *) GetDraft:(NSString *)entryId groupId:(NSString *)groupId;
+- (QXAuthUserServiceGetDraftResults *) GetDraft:(NSString *)entryId groupId:(NSString *)groupId;
 
 - (NSError *) DeleteDraft:(NSString *)entryId groupId:(NSString *)groupId;
 
-- (AuthUserServiceGetNewGroupResults *) GetNewGroup;
+- (QXAuthUserServiceGetNewGroupResults *) GetNewGroup;
 
-- (AuthUserServiceGetGroupResults *) GetGroup:(NSString *)groupId;
+- (QXAuthUserServiceGetGroupResults *) GetGroup:(NSString *)groupId;
 
-- (AuthUserServiceCreateGroupResults *) CreateGroup:(GroupInput *)input;
+- (QXAuthUserServiceCreateGroupResults *) CreateGroup:(QXGroupInput *)input;
 
-- (AuthUserServiceUpdateGroupResults *) UpdateGroup:(GroupInput *)input;
+- (QXAuthUserServiceUpdateGroupResults *) UpdateGroup:(QXGroupInput *)input;
 
 - (NSError *) UpdateGroupLogo:(NSString *)groupId logoURL:(NSString *)logoURL;
 
 - (NSError *) DeleteGroup:(NSString *)groupId;
 
-- (AuthUserServiceGetGroupBySlugResults *) GetGroupBySlug:(NSString *)slug;
+- (QXAuthUserServiceGetGroupBySlugResults *) GetGroupBySlug:(NSString *)slug;
 
-- (AuthUserServiceGetGroupsResults *) GetGroups:(NSString *)keyword;
+- (QXAuthUserServiceGetGroupsResults *) GetGroups:(NSString *)keyword;
 
-- (AuthUserServiceGetPublicGroupsResults *) GetPublicGroups:(NSString *)keyword;
+- (QXAuthUserServiceGetPublicGroupsResults *) GetPublicGroups:(NSString *)keyword;
 
 - (NSError *) AddUserToGroup:(NSString *)groupId userId:(NSString *)userId;
 
 - (NSError *) RemoveUserFromGroup:(NSString *)groupId userId:(NSString *)userId;
 
-- (AuthUserServiceGetGroupHeaderResults *) GetGroupHeader:(NSString *)groupId;
+- (QXAuthUserServiceGetGroupHeaderResults *) GetGroupHeader:(NSString *)groupId;
 
-- (AuthUserServiceGetClassifiedGroupsResults *) GetClassifiedGroups;
+- (QXAuthUserServiceGetClassifiedGroupsResults *) GetClassifiedGroups;
 
-- (AuthUserServiceGetOrgUsersResults *) GetOrgUsers:(NSString *)keyword startFullName:(NSString *)startFullName limit:(NSNumber *)limit;
+- (QXAuthUserServiceGetOrgUsersResults *) GetOrgUsers:(NSString *)keyword startFullName:(NSString *)startFullName limit:(NSNumber *)limit;
 
-- (AuthUserServiceGetGroupUsersResults *) GetGroupUsers:(NSString *)groupId keyword:(NSString *)keyword onlyFollowers:(BOOL)onlyFollowers startFullName:(NSString *)startFullName limit:(NSNumber *)limit;
+- (QXAuthUserServiceGetGroupUsersResults *) GetGroupUsers:(NSString *)groupId keyword:(NSString *)keyword onlyFollowers:(BOOL)onlyFollowers startFullName:(NSString *)startFullName limit:(NSNumber *)limit;
 
-- (AuthUserServiceGetUserResults *) GetUser:(NSString *)userId;
+- (QXAuthUserServiceGetUserResults *) GetUser:(NSString *)userId;
 
 - (NSError *) EnableUser:(NSString *)userId;
 
@@ -3563,65 +3564,65 @@
 
 - (NSError *) UnfollowUser:(NSString *)userId;
 
-- (AuthUserServiceGetMyFollowingUsersResults *) GetMyFollowingUsers;
+- (QXAuthUserServiceGetMyFollowingUsersResults *) GetMyFollowingUsers;
 
-- (AuthUserServiceGetPanelStatusResults *) GetPanelStatus;
+- (QXAuthUserServiceGetPanelStatusResults *) GetPanelStatus;
 
-- (AuthUserServiceGetUserPreferencesResults *) GetUserPreferences;
+- (QXAuthUserServiceGetUserPreferencesResults *) GetUserPreferences;
 
-- (AuthUserServiceUpdateUserPreferencesResults *) UpdateUserPreferences:(PreferencesInput *)input;
+- (QXAuthUserServiceUpdateUserPreferencesResults *) UpdateUserPreferences:(QXPreferencesInput *)input;
 
-- (AuthUserServiceGetOrgEmbedUsersResults *) GetOrgEmbedUsers;
+- (QXAuthUserServiceGetOrgEmbedUsersResults *) GetOrgEmbedUsers;
 
-- (AuthUserServiceGetNonStandardGroupEmbedUsersResults *) GetNonStandardGroupEmbedUsers;
+- (QXAuthUserServiceGetNonStandardGroupEmbedUsersResults *) GetNonStandardGroupEmbedUsers;
 
-- (AuthUserServiceUpdateUserProfileResults *) UpdateUserProfile:(UserProfileInput *)input;
+- (QXAuthUserServiceUpdateUserProfileResults *) UpdateUserProfile:(QXUserProfileInput *)input;
 
-- (AuthUserServiceGetMyCountResults *) GetMyCount;
+- (QXAuthUserServiceGetMyCountResults *) GetMyCount;
 
-- (AuthUserServiceReadEntryResults *) ReadEntry:(NSString *)entryId groupId:(NSString *)groupId;
+- (QXAuthUserServiceReadEntryResults *) ReadEntry:(NSString *)entryId groupId:(NSString *)groupId;
 
-- (AuthUserServiceGetJoinOrgInvitationsResults *) GetJoinOrgInvitations;
+- (QXAuthUserServiceGetJoinOrgInvitationsResults *) GetJoinOrgInvitations;
 
-- (AuthUserServiceGetOrganizationResults *) GetOrganization:(NSString *)orgId;
+- (QXAuthUserServiceGetOrganizationResults *) GetOrganization:(NSString *)orgId;
 
-- (AuthUserServiceGetOrganizationsResults *) GetOrganizations:(NSArray *)orgIds;
+- (QXAuthUserServiceGetOrganizationsResults *) GetOrganizations:(NSArray *)orgIds;
 
-- (AuthUserServiceSearchOrganizationsResults *) SearchOrganizations:(NSString *)keyword;
+- (QXAuthUserServiceSearchOrganizationsResults *) SearchOrganizations:(NSString *)keyword;
 
-- (AuthUserServiceUpdateOrganizationResults *) UpdateOrganization:(OrganizationInput *)input;
+- (QXAuthUserServiceUpdateOrganizationResults *) UpdateOrganization:(QXOrganizationInput *)input;
 
 - (NSError *) SwitchOrganization:(NSString *)orgId;
 
-- (AuthUserServiceAcceptSharedGroupRequestResults *) AcceptSharedGroupRequest:(NSString *)fromOrgId sharedOrgId:(NSString *)sharedOrgId sharedGroupId:(NSString *)sharedGroupId fromUserId:(NSString *)fromUserId;
+- (QXAuthUserServiceAcceptSharedGroupRequestResults *) AcceptSharedGroupRequest:(NSString *)fromOrgId sharedOrgId:(NSString *)sharedOrgId sharedGroupId:(NSString *)sharedGroupId fromUserId:(NSString *)fromUserId;
 
-- (AuthUserServiceRejectSharedGroupRequestResults *) RejectSharedGroupRequest:(NSString *)fromOrgId sharedOrgId:(NSString *)sharedOrgId sharedGroupId:(NSString *)sharedGroupId fromUserId:(NSString *)fromUserId;
+- (QXAuthUserServiceRejectSharedGroupRequestResults *) RejectSharedGroupRequest:(NSString *)fromOrgId sharedOrgId:(NSString *)sharedOrgId sharedGroupId:(NSString *)sharedGroupId fromUserId:(NSString *)fromUserId;
 
-- (AuthUserServiceGetOrgSettingsResults *) GetOrgSettings;
+- (QXAuthUserServiceGetOrgSettingsResults *) GetOrgSettings;
 
-- (NSError *) UpdateOrgSettings:(OrgSettingsInput *)orgSettingInput;
+- (NSError *) UpdateOrgSettings:(QXOrgSettingsInput *)orgSettingInput;
 
-- (AuthUserServiceCanCreateGroupResults *) CanCreateGroup;
+- (QXAuthUserServiceCanCreateGroupResults *) CanCreateGroup;
 
-- (AuthUserServiceCanInvitePeopleResults *) CanInvitePeople;
+- (QXAuthUserServiceCanInvitePeopleResults *) CanInvitePeople;
 
-- (AuthUserServiceInvitePeopleResults *) InvitePeople:(NSArray *)emails;
+- (QXAuthUserServiceInvitePeopleResults *) InvitePeople:(NSArray *)emails;
 
 - (NSError *) CancelInvitation:(NSString *)email;
 
 - (NSError *) ResendInvitation:(NSString *)email;
 
-- (NSError *) UpdateMailUpdates:(MailUpdatesInput *)input;
+- (NSError *) UpdateMailUpdates:(QXMailUpdatesInput *)input;
 
-- (AuthUserServicePrepareChangingEmailResults *) PrepareChangingEmail:(NSString *)newEmail;
+- (QXAuthUserServicePrepareChangingEmailResults *) PrepareChangingEmail:(NSString *)newEmail;
 
 - (NSError *) ConfirmChangingEmail:(NSString *)token;
 
-- (AuthUserServiceUpdateAccountResults *) UpdateAccount:(MemberAccountInput *)input;
+- (QXAuthUserServiceUpdateAccountResults *) UpdateAccount:(QXMemberAccountInput *)input;
 
-- (AuthUserServiceSendSharingInvitationResults *) SendSharingInvitation:(NSString *)groupId email:(NSString *)email isResend:(BOOL)isResend;
+- (QXAuthUserServiceSendSharingInvitationResults *) SendSharingInvitation:(NSString *)groupId email:(NSString *)email isResend:(BOOL)isResend;
 
-- (AuthUserServiceGetSharingInvitationsResults *) GetSharingInvitations:(NSString *)groupId;
+- (QXAuthUserServiceGetSharingInvitationsResults *) GetSharingInvitations:(NSString *)groupId;
 
 - (NSError *) CancelSharingInvitation:(NSString *)groupId email:(NSString *)email;
 
@@ -3629,12 +3630,12 @@
 
 - (NSError *) LeaveSharedGroup:(NSString *)groupId;
 
-- (AuthUserServiceShareChatResults *) ShareChat:(ShareChatInput *)input;
+- (QXAuthUserServiceShareChatResults *) ShareChat:(QXShareChatInput *)input;
 @end
 
 
-// --- GetSessionParams ---
-@interface PublicServiceGetSessionParams : NSObject
+// --- QXGetSessionParams ---
+@interface QXPublicServiceGetSessionParams : NSObject
 
 @property (nonatomic, strong) NSString * Email;
 @property (nonatomic, strong) NSString * Password;
@@ -3644,8 +3645,8 @@
 
 @end
 
-// --- GetSessionResults ---
-@interface PublicServiceGetSessionResults : NSObject
+// --- QXGetSessionResults ---
+@interface QXPublicServiceGetSessionResults : NSObject
 
 @property (nonatomic, strong) NSString * Session;
 @property (nonatomic, strong) NSError * Err;
@@ -3655,8 +3656,8 @@
 
 @end
 
-// --- GetAuthorizedAdminParams ---
-@interface PublicServiceGetAuthorizedAdminParams : NSObject
+// --- QXGetAuthorizedAdminParams ---
+@interface QXPublicServiceGetAuthorizedAdminParams : NSObject
 
 @property (nonatomic, strong) NSString * Session;
 
@@ -3665,10 +3666,10 @@
 
 @end
 
-// --- GetAuthorizedAdminResults ---
-@interface PublicServiceGetAuthorizedAdminResults : NSObject
+// --- QXGetAuthorizedAdminResults ---
+@interface QXPublicServiceGetAuthorizedAdminResults : NSObject
 
-@property (nonatomic, strong) EmbedUser * ApiEmbedUser;
+@property (nonatomic, strong) QXEmbedUser * ApiEmbedUser;
 @property (nonatomic, strong) NSError * Err;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
@@ -3676,8 +3677,8 @@
 
 @end
 
-// --- PrepareChangingEmailParams ---
-@interface PublicServicePrepareChangingEmailParams : NSObject
+// --- QXPrepareChangingEmailParams ---
+@interface QXPublicServicePrepareChangingEmailParams : NSObject
 
 @property (nonatomic, strong) NSString * MemberId;
 @property (nonatomic, strong) NSString * NewEmail;
@@ -3687,10 +3688,10 @@
 
 @end
 
-// --- PrepareChangingEmailResults ---
-@interface PublicServicePrepareChangingEmailResults : NSObject
+// --- QXPrepareChangingEmailResults ---
+@interface QXPublicServicePrepareChangingEmailResults : NSObject
 
-@property (nonatomic, strong) EmailChanger * Changer;
+@property (nonatomic, strong) QXEmailChanger * Changer;
 @property (nonatomic, strong) Validated * Validated;
 @property (nonatomic, strong) NSError * Err;
 
@@ -3699,8 +3700,8 @@
 
 @end
 
-// --- ConfirmChangingEmailParams ---
-@interface PublicServiceConfirmChangingEmailParams : NSObject
+// --- QXConfirmChangingEmailParams ---
+@interface QXPublicServiceConfirmChangingEmailParams : NSObject
 
 @property (nonatomic, strong) NSString * Token;
 
@@ -3709,8 +3710,8 @@
 
 @end
 
-// --- ConfirmChangingEmailResults ---
-@interface PublicServiceConfirmChangingEmailResults : NSObject
+// --- QXConfirmChangingEmailResults ---
+@interface QXPublicServiceConfirmChangingEmailResults : NSObject
 
 @property (nonatomic, strong) NSString * ActivationToken;
 @property (nonatomic, strong) NSError * Err;
@@ -3720,8 +3721,8 @@
 
 @end
 
-// --- CancelChangingEmailParams ---
-@interface PublicServiceCancelChangingEmailParams : NSObject
+// --- QXCancelChangingEmailParams ---
+@interface QXPublicServiceCancelChangingEmailParams : NSObject
 
 @property (nonatomic, strong) NSString * Token;
 
@@ -3730,8 +3731,8 @@
 
 @end
 
-// --- CancelChangingEmailResults ---
-@interface PublicServiceCancelChangingEmailResults : NSObject
+// --- QXCancelChangingEmailResults ---
+@interface QXPublicServiceCancelChangingEmailResults : NSObject
 
 @property (nonatomic, strong) NSError * Err;
 
@@ -3740,8 +3741,8 @@
 
 @end
 
-// --- UpdatePendingInvitationEmailParams ---
-@interface PublicServiceUpdatePendingInvitationEmailParams : NSObject
+// --- QXUpdatePendingInvitationEmailParams ---
+@interface QXPublicServiceUpdatePendingInvitationEmailParams : NSObject
 
 @property (nonatomic, strong) NSString * OrgId;
 @property (nonatomic, strong) NSString * InvitationToken;
@@ -3752,8 +3753,8 @@
 
 @end
 
-// --- UpdatePendingInvitationEmailResults ---
-@interface PublicServiceUpdatePendingInvitationEmailResults : NSObject
+// --- QXUpdatePendingInvitationEmailResults ---
+@interface QXPublicServiceUpdatePendingInvitationEmailResults : NSObject
 
 @property (nonatomic, strong) NSError * Err;
 
@@ -3762,8 +3763,8 @@
 
 @end
 
-// --- ChangeEmailToAcceptSharingParams ---
-@interface PublicServiceChangeEmailToAcceptSharingParams : NSObject
+// --- QXChangeEmailToAcceptSharingParams ---
+@interface QXPublicServiceChangeEmailToAcceptSharingParams : NSObject
 
 @property (nonatomic, strong) NSString * Token;
 @property (nonatomic, strong) NSString * NewEmail;
@@ -3773,8 +3774,8 @@
 
 @end
 
-// --- ChangeEmailToAcceptSharingResults ---
-@interface PublicServiceChangeEmailToAcceptSharingResults : NSObject
+// --- QXChangeEmailToAcceptSharingResults ---
+@interface QXPublicServiceChangeEmailToAcceptSharingResults : NSObject
 
 @property (nonatomic, strong) Validated * Validated;
 @property (nonatomic, strong) NSError * Err;
@@ -3784,8 +3785,8 @@
 
 @end
 
-// --- GetSharingInviationParams ---
-@interface PublicServiceGetSharingInviationParams : NSObject
+// --- QXGetSharingInviationParams ---
+@interface QXPublicServiceGetSharingInviationParams : NSObject
 
 @property (nonatomic, strong) NSString * SharingInviationToken;
 @property (nonatomic, strong) NSString * MemberId;
@@ -3795,10 +3796,10 @@
 
 @end
 
-// --- GetSharingInviationResults ---
-@interface PublicServiceGetSharingInviationResults : NSObject
+// --- QXGetSharingInviationResults ---
+@interface QXPublicServiceGetSharingInviationResults : NSObject
 
-@property (nonatomic, strong) SharingInvitation * Invitation;
+@property (nonatomic, strong) QXSharingInvitation * Invitation;
 @property (nonatomic, strong) NSError * Err;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
@@ -3806,20 +3807,20 @@
 
 @end
 
-// --- ContactUsParams ---
-@interface PublicServiceContactUsParams : NSObject
+// --- QXContactUsParams ---
+@interface QXPublicServiceContactUsParams : NSObject
 
-@property (nonatomic, strong) ContactInput * Input;
+@property (nonatomic, strong) QXContactInput * Input;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
 - (NSDictionary*) dictionary;
 
 @end
 
-// --- ContactUsResults ---
-@interface PublicServiceContactUsResults : NSObject
+// --- QXContactUsResults ---
+@interface QXPublicServiceContactUsResults : NSObject
 
-@property (nonatomic, strong) ContactInfo * Contact;
+@property (nonatomic, strong) QXContactInfo * Contact;
 @property (nonatomic, strong) Validated * Validated;
 @property (nonatomic, strong) NSError * Err;
 
@@ -3828,8 +3829,8 @@
 
 @end
 
-// --- GetBlogEntriesParams ---
-@interface PublicServiceGetBlogEntriesParams : NSObject
+// --- QXGetBlogEntriesParams ---
+@interface QXPublicServiceGetBlogEntriesParams : NSObject
 
 @property (nonatomic, strong) NSString * Doi;
 @property (nonatomic, strong) NSNumber * PageNum;
@@ -3840,10 +3841,10 @@
 
 @end
 
-// --- GetBlogEntriesResults ---
-@interface PublicServiceGetBlogEntriesResults : NSObject
+// --- QXGetBlogEntriesResults ---
+@interface QXPublicServiceGetBlogEntriesResults : NSObject
 
-@property (nonatomic, strong) Blog * Blog;
+@property (nonatomic, strong) QXBlog * Blog;
 @property (nonatomic, strong) NSArray * BlogEntries;
 @property (nonatomic, strong) NSNumber * TotalPageNum;
 @property (nonatomic, strong) NSError * Err;
@@ -3853,8 +3854,8 @@
 
 @end
 
-// --- GetBlogEntryBySlugParams ---
-@interface PublicServiceGetBlogEntryBySlugParams : NSObject
+// --- QXGetBlogEntryBySlugParams ---
+@interface QXPublicServiceGetBlogEntryBySlugParams : NSObject
 
 @property (nonatomic, strong) NSString * Doi;
 @property (nonatomic, strong) NSString * Slug;
@@ -3864,11 +3865,11 @@
 
 @end
 
-// --- GetBlogEntryBySlugResults ---
-@interface PublicServiceGetBlogEntryBySlugResults : NSObject
+// --- QXGetBlogEntryBySlugResults ---
+@interface QXPublicServiceGetBlogEntryBySlugResults : NSObject
 
-@property (nonatomic, strong) Blog * Blog;
-@property (nonatomic, strong) BlogEntry * BlogEntry;
+@property (nonatomic, strong) QXBlog * Blog;
+@property (nonatomic, strong) QXBlogEntry * BlogEntry;
 @property (nonatomic, strong) NSError * Err;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
@@ -3876,21 +3877,21 @@
 
 @end
 
-// --- CreateExternalCommentParams ---
-@interface PublicServiceCreateExternalCommentParams : NSObject
+// --- QXCreateExternalCommentParams ---
+@interface QXPublicServiceCreateExternalCommentParams : NSObject
 
 @property (nonatomic, strong) NSString * Doi;
-@property (nonatomic, strong) EntryInput * Input;
+@property (nonatomic, strong) QXEntryInput * Input;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
 - (NSDictionary*) dictionary;
 
 @end
 
-// --- CreateExternalCommentResults ---
-@interface PublicServiceCreateExternalCommentResults : NSObject
+// --- QXCreateExternalCommentResults ---
+@interface QXPublicServiceCreateExternalCommentResults : NSObject
 
-@property (nonatomic, strong) BlogEntry * BlogEntry;
+@property (nonatomic, strong) QXBlogEntry * BlogEntry;
 @property (nonatomic, strong) Validated * Validated;
 @property (nonatomic, strong) NSError * Err;
 
@@ -3899,8 +3900,8 @@
 
 @end
 
-// --- GenerateBlogEntrySlugParams ---
-@interface PublicServiceGenerateBlogEntrySlugParams : NSObject
+// --- QXGenerateBlogEntrySlugParams ---
+@interface QXPublicServiceGenerateBlogEntrySlugParams : NSObject
 
 @property (nonatomic, strong) NSString * Doi;
 @property (nonatomic, strong) NSString * Slug;
@@ -3910,8 +3911,8 @@
 
 @end
 
-// --- GenerateBlogEntrySlugResults ---
-@interface PublicServiceGenerateBlogEntrySlugResults : NSObject
+// --- QXGenerateBlogEntrySlugResults ---
+@interface QXPublicServiceGenerateBlogEntrySlugResults : NSObject
 
 @property (nonatomic, strong) NSString * ValidSlug;
 @property (nonatomic, strong) NSError * Err;
@@ -3921,20 +3922,20 @@
 
 @end
 
-// --- CreateNewsletterParams ---
-@interface PublicServiceCreateNewsletterParams : NSObject
+// --- QXCreateNewsletterParams ---
+@interface QXPublicServiceCreateNewsletterParams : NSObject
 
-@property (nonatomic, strong) NewsletterInput * Input;
+@property (nonatomic, strong) QXNewsletterInput * Input;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
 - (NSDictionary*) dictionary;
 
 @end
 
-// --- CreateNewsletterResults ---
-@interface PublicServiceCreateNewsletterResults : NSObject
+// --- QXCreateNewsletterResults ---
+@interface QXPublicServiceCreateNewsletterResults : NSObject
 
-@property (nonatomic, strong) Newsletter * Newsletter;
+@property (nonatomic, strong) QXNewsletter * Newsletter;
 @property (nonatomic, strong) Validated * Validated;
 @property (nonatomic, strong) NSError * Err;
 
@@ -3943,8 +3944,8 @@
 
 @end
 
-// --- RequestNewSignupTokenParams ---
-@interface PublicServiceRequestNewSignupTokenParams : NSObject
+// --- QXRequestNewSignupTokenParams ---
+@interface QXPublicServiceRequestNewSignupTokenParams : NSObject
 
 @property (nonatomic, strong) NSString * Email;
 
@@ -3953,8 +3954,8 @@
 
 @end
 
-// --- RequestNewSignupTokenResults ---
-@interface PublicServiceRequestNewSignupTokenResults : NSObject
+// --- QXRequestNewSignupTokenResults ---
+@interface QXPublicServiceRequestNewSignupTokenResults : NSObject
 
 @property (nonatomic, strong) Validated * Validated;
 @property (nonatomic, strong) NSError * Err;
@@ -3964,8 +3965,8 @@
 
 @end
 
-// --- RequestNewInvitationTokenParams ---
-@interface PublicServiceRequestNewInvitationTokenParams : NSObject
+// --- QXRequestNewInvitationTokenParams ---
+@interface QXPublicServiceRequestNewInvitationTokenParams : NSObject
 
 @property (nonatomic, strong) NSString * OrgId;
 @property (nonatomic, strong) NSString * Email;
@@ -3975,8 +3976,8 @@
 
 @end
 
-// --- RequestNewInvitationTokenResults ---
-@interface PublicServiceRequestNewInvitationTokenResults : NSObject
+// --- QXRequestNewInvitationTokenResults ---
+@interface QXPublicServiceRequestNewInvitationTokenResults : NSObject
 
 @property (nonatomic, strong) Validated * Validated;
 @property (nonatomic, strong) NSError * Err;
@@ -3986,8 +3987,8 @@
 
 @end
 
-// --- RequestNewSharingTokenParams ---
-@interface PublicServiceRequestNewSharingTokenParams : NSObject
+// --- QXRequestNewSharingTokenParams ---
+@interface QXPublicServiceRequestNewSharingTokenParams : NSObject
 
 @property (nonatomic, strong) NSString * Email;
 
@@ -3996,8 +3997,8 @@
 
 @end
 
-// --- RequestNewSharingTokenResults ---
-@interface PublicServiceRequestNewSharingTokenResults : NSObject
+// --- QXRequestNewSharingTokenResults ---
+@interface QXPublicServiceRequestNewSharingTokenResults : NSObject
 
 @property (nonatomic, strong) Validated * Validated;
 @property (nonatomic, strong) NSError * Err;
@@ -4007,8 +4008,8 @@
 
 @end
 
-// --- InviteMeParams ---
-@interface PublicServiceInviteMeParams : NSObject
+// --- QXInviteMeParams ---
+@interface QXPublicServiceInviteMeParams : NSObject
 
 @property (nonatomic, strong) NSString * OrganizationId;
 @property (nonatomic, strong) NSString * Email;
@@ -4018,8 +4019,8 @@
 
 @end
 
-// --- InviteMeResults ---
-@interface PublicServiceInviteMeResults : NSObject
+// --- QXInviteMeResults ---
+@interface QXPublicServiceInviteMeResults : NSObject
 
 @property (nonatomic, strong) Validated * Validated;
 @property (nonatomic, strong) NSError * Err;
@@ -4029,8 +4030,8 @@
 
 @end
 
-// --- RequestSignupParams ---
-@interface PublicServiceRequestSignupParams : NSObject
+// --- QXRequestSignupParams ---
+@interface QXPublicServiceRequestSignupParams : NSObject
 
 @property (nonatomic, strong) NSString * Email;
 
@@ -4039,8 +4040,8 @@
 
 @end
 
-// --- RequestSignupResults ---
-@interface PublicServiceRequestSignupResults : NSObject
+// --- QXRequestSignupResults ---
+@interface QXPublicServiceRequestSignupResults : NSObject
 
 @property (nonatomic, strong) NSError * Err;
 
@@ -4050,49 +4051,49 @@
 @end
 
 
-@interface PublicService : NSObject
+@interface QXPublicService : NSObject
 - (NSDictionary*) dictionary;
 
 
-- (PublicServiceGetSessionResults *) GetSession:(NSString *)email password:(NSString *)password;
+- (QXPublicServiceGetSessionResults *) GetSession:(NSString *)email password:(NSString *)password;
 
-- (AuthUserService *) GetAuthUserService:(NSString *)session;
+- (QXAuthUserService *) GetAuthUserService:(NSString *)session;
 
-- (PublicServiceGetAuthorizedAdminResults *) GetAuthorizedAdmin:(NSString *)session;
+- (QXPublicServiceGetAuthorizedAdminResults *) GetAuthorizedAdmin:(NSString *)session;
 
-- (AuthAdminService *) GetAuthAdminService:(NSString *)session;
+- (QXAuthAdminService *) GetAuthAdminService:(NSString *)session;
 
-- (PublicServicePrepareChangingEmailResults *) PrepareChangingEmail:(NSString *)memberId newEmail:(NSString *)newEmail;
+- (QXPublicServicePrepareChangingEmailResults *) PrepareChangingEmail:(NSString *)memberId newEmail:(NSString *)newEmail;
 
-- (PublicServiceConfirmChangingEmailResults *) ConfirmChangingEmail:(NSString *)token;
+- (QXPublicServiceConfirmChangingEmailResults *) ConfirmChangingEmail:(NSString *)token;
 
 - (NSError *) CancelChangingEmail:(NSString *)token;
 
 - (NSError *) UpdatePendingInvitationEmail:(NSString *)orgId invitationToken:(NSString *)invitationToken newEmail:(NSString *)newEmail;
 
-- (PublicServiceChangeEmailToAcceptSharingResults *) ChangeEmailToAcceptSharing:(NSString *)token newEmail:(NSString *)newEmail;
+- (QXPublicServiceChangeEmailToAcceptSharingResults *) ChangeEmailToAcceptSharing:(NSString *)token newEmail:(NSString *)newEmail;
 
-- (PublicServiceGetSharingInviationResults *) GetSharingInviation:(NSString *)sharingInviationToken memberId:(NSString *)memberId;
+- (QXPublicServiceGetSharingInviationResults *) GetSharingInviation:(NSString *)sharingInviationToken memberId:(NSString *)memberId;
 
-- (PublicServiceContactUsResults *) ContactUs:(ContactInput *)input;
+- (QXPublicServiceContactUsResults *) ContactUs:(QXContactInput *)input;
 
-- (PublicServiceGetBlogEntriesResults *) GetBlogEntries:(NSString *)doi pageNum:(NSNumber *)pageNum limit:(NSNumber *)limit;
+- (QXPublicServiceGetBlogEntriesResults *) GetBlogEntries:(NSString *)doi pageNum:(NSNumber *)pageNum limit:(NSNumber *)limit;
 
-- (PublicServiceGetBlogEntryBySlugResults *) GetBlogEntryBySlug:(NSString *)doi slug:(NSString *)slug;
+- (QXPublicServiceGetBlogEntryBySlugResults *) GetBlogEntryBySlug:(NSString *)doi slug:(NSString *)slug;
 
-- (PublicServiceCreateExternalCommentResults *) CreateExternalComment:(NSString *)doi input:(EntryInput *)input;
+- (QXPublicServiceCreateExternalCommentResults *) CreateExternalComment:(NSString *)doi input:(QXEntryInput *)input;
 
-- (PublicServiceGenerateBlogEntrySlugResults *) GenerateBlogEntrySlug:(NSString *)doi slug:(NSString *)slug;
+- (QXPublicServiceGenerateBlogEntrySlugResults *) GenerateBlogEntrySlug:(NSString *)doi slug:(NSString *)slug;
 
-- (PublicServiceCreateNewsletterResults *) CreateNewsletter:(NewsletterInput *)input;
+- (QXPublicServiceCreateNewsletterResults *) CreateNewsletter:(QXNewsletterInput *)input;
 
-- (PublicServiceRequestNewSignupTokenResults *) RequestNewSignupToken:(NSString *)email;
+- (QXPublicServiceRequestNewSignupTokenResults *) RequestNewSignupToken:(NSString *)email;
 
-- (PublicServiceRequestNewInvitationTokenResults *) RequestNewInvitationToken:(NSString *)orgId email:(NSString *)email;
+- (QXPublicServiceRequestNewInvitationTokenResults *) RequestNewInvitationToken:(NSString *)orgId email:(NSString *)email;
 
-- (PublicServiceRequestNewSharingTokenResults *) RequestNewSharingToken:(NSString *)email;
+- (QXPublicServiceRequestNewSharingTokenResults *) RequestNewSharingToken:(NSString *)email;
 
-- (PublicServiceInviteMeResults *) InviteMe:(NSString *)organizationId email:(NSString *)email;
+- (QXPublicServiceInviteMeResults *) InviteMe:(NSString *)organizationId email:(NSString *)email;
 
 - (NSError *) RequestSignup:(NSString *)email;
 @end

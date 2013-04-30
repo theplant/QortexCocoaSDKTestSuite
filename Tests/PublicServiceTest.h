@@ -10,6 +10,6 @@
 #import "Qortexapi.h"
 
 @interface PublicServiceTest : SenTestCase
-@property PublicService * publicService;
+@property QXPublicService * publicService;
 
 @end
