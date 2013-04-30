@@ -27,7 +27,7 @@
     Group *anoucement = r.AnouncementGroup;
     STAssertNotNil(anoucement, @"anouncementGroup is nil");
     STAssertTrue([anoucement.Name isEqualToString:@"Announcements"], @"anoucement group name is %@", anoucement.Name);
-    STAssertTrue([r.FollowedGroups count] > 2, @"followed groups count is %@", [r.FollowedGroups count]);
+    STAssertTrue([r.FollowedNormalGroups count] > 2, @"followed groups count is %@", [r.FollowedNormalGroups count]);
 }
 
 // Too slow to execute, wait for Entry JSON to FIT
@@ -92,6 +92,17 @@
     AuthUserServiceCreateEntryResults *r = [_aaronAuthUserService CreateEntry:input];
     STAssertTrue(r.Err != nil, @"error is nil");
     STAssertEqualObjects([[r.Err.userInfo valueForKey:@"Errors"][0] valueForKey:@"Message"], @"Entry Id can't be blank", @"err is %@", r.Err);
+}
+
+- (void)testCreateBroadcast {
+    
+    AuthUserServiceGetNewEntryResults *newEntry = [_aaronAuthUserService GetNewEntry:@"4fd78138558fbe76ff000028"];
+    BroadcastInput *input = [BroadcastInput alloc];
+    [input setTitle: @"Hello"];
+    [input setId: newEntry.Entry.Id];
+    [input setContent: @"Hello everyone"];
+    
+    
 }
 
 @end
