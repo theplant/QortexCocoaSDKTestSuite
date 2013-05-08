@@ -842,25 +842,23 @@ static NSDateFormatter * _dateFormatter;
 @synthesize Id;
 @synthesize EType;
 @synthesize Title;
-@synthesize Slug;
 @synthesize Content;
 @synthesize GroupId;
 @synthesize IsToGroup;
 @synthesize ToUserIds;
 @synthesize MentionedUserIds;
-@synthesize IsPublished;
 @synthesize IsAcknowledgement;
-@synthesize TaskRequireType;
 @synthesize TaskDue;
 @synthesize RootId;
 @synthesize IsCommentAcknowledgement;
-@synthesize BaseOnEntryId;
 @synthesize NewVersion;
 @synthesize OldGroupId;
 @synthesize KnowledgeBase;
 @synthesize AnyoneCanEdit;
 @synthesize Presentation;
 @synthesize IsFromEmail;
+@synthesize IsPublished;
+@synthesize Slug;
 @synthesize Email;
 @synthesize Name;
 
@@ -875,25 +873,23 @@ static NSDateFormatter * _dateFormatter;
 	[self setId:[dict valueForKey:@"Id"]];
 	[self setEType:[dict valueForKey:@"EType"]];
 	[self setTitle:[dict valueForKey:@"Title"]];
-	[self setSlug:[dict valueForKey:@"Slug"]];
 	[self setContent:[dict valueForKey:@"Content"]];
 	[self setGroupId:[dict valueForKey:@"GroupId"]];
 	[self setIsToGroup:[dict valueForKey:@"IsToGroup"]];
 	[self setToUserIds:[dict valueForKey:@"ToUserIds"]];
 	[self setMentionedUserIds:[dict valueForKey:@"MentionedUserIds"]];
-	[self setIsPublished:[dict valueForKey:@"IsPublished"]];
-	[self setIsAcknowledgement:[dict valueForKey:@"IsAcknowledgement"]];
-	[self setTaskRequireType:[dict valueForKey:@"TaskRequireType"]];
+	[self setIsAcknowledgement:[[dict valueForKey:@"IsAcknowledgement"] boolValue]];
 	[self setTaskDue:[dict valueForKey:@"TaskDue"]];
 	[self setRootId:[dict valueForKey:@"RootId"]];
 	[self setIsCommentAcknowledgement:[dict valueForKey:@"IsCommentAcknowledgement"]];
-	[self setBaseOnEntryId:[dict valueForKey:@"BaseOnEntryId"]];
 	[self setNewVersion:[dict valueForKey:@"NewVersion"]];
 	[self setOldGroupId:[dict valueForKey:@"OldGroupId"]];
 	[self setKnowledgeBase:[[dict valueForKey:@"KnowledgeBase"] boolValue]];
 	[self setAnyoneCanEdit:[[dict valueForKey:@"AnyoneCanEdit"] boolValue]];
 	[self setPresentation:[[dict valueForKey:@"Presentation"] boolValue]];
 	[self setIsFromEmail:[[dict valueForKey:@"IsFromEmail"] boolValue]];
+	[self setIsPublished:[[dict valueForKey:@"IsPublished"] boolValue]];
+	[self setSlug:[dict valueForKey:@"Slug"]];
 	[self setEmail:[dict valueForKey:@"Email"]];
 	[self setName:[dict valueForKey:@"Name"]];
 
@@ -905,25 +901,23 @@ static NSDateFormatter * _dateFormatter;
 	[dict setValue:self.Id forKey:@"Id"];
 	[dict setValue:self.EType forKey:@"EType"];
 	[dict setValue:self.Title forKey:@"Title"];
-	[dict setValue:self.Slug forKey:@"Slug"];
 	[dict setValue:self.Content forKey:@"Content"];
 	[dict setValue:self.GroupId forKey:@"GroupId"];
 	[dict setValue:self.IsToGroup forKey:@"IsToGroup"];
 	[dict setValue:self.ToUserIds forKey:@"ToUserIds"];
 	[dict setValue:self.MentionedUserIds forKey:@"MentionedUserIds"];
-	[dict setValue:self.IsPublished forKey:@"IsPublished"];
-	[dict setValue:self.IsAcknowledgement forKey:@"IsAcknowledgement"];
-	[dict setValue:self.TaskRequireType forKey:@"TaskRequireType"];
+	[dict setValue:[NSNumber numberWithBool:self.IsAcknowledgement] forKey:@"IsAcknowledgement"];
 	[dict setValue:self.TaskDue forKey:@"TaskDue"];
 	[dict setValue:self.RootId forKey:@"RootId"];
 	[dict setValue:self.IsCommentAcknowledgement forKey:@"IsCommentAcknowledgement"];
-	[dict setValue:self.BaseOnEntryId forKey:@"BaseOnEntryId"];
 	[dict setValue:self.NewVersion forKey:@"NewVersion"];
 	[dict setValue:self.OldGroupId forKey:@"OldGroupId"];
 	[dict setValue:[NSNumber numberWithBool:self.KnowledgeBase] forKey:@"KnowledgeBase"];
 	[dict setValue:[NSNumber numberWithBool:self.AnyoneCanEdit] forKey:@"AnyoneCanEdit"];
 	[dict setValue:[NSNumber numberWithBool:self.Presentation] forKey:@"Presentation"];
 	[dict setValue:[NSNumber numberWithBool:self.IsFromEmail] forKey:@"IsFromEmail"];
+	[dict setValue:[NSNumber numberWithBool:self.IsPublished] forKey:@"IsPublished"];
+	[dict setValue:self.Slug forKey:@"Slug"];
 	[dict setValue:self.Email forKey:@"Email"];
 	[dict setValue:self.Name forKey:@"Name"];
 
@@ -988,7 +982,6 @@ static NSDateFormatter * _dateFormatter;
 @synthesize IsShared;
 @synthesize GroupOwners;
 @synthesize InvitedOrgIds;
-@synthesize ActionOrgId;
 
 - (id) initWithDictionary:(NSDictionary*)dict{
 	self = [super init];
@@ -1009,7 +1002,6 @@ static NSDateFormatter * _dateFormatter;
 	[self setIsShared:[[dict valueForKey:@"IsShared"] boolValue]];
 	[self setGroupOwners:[dict valueForKey:@"GroupOwners"]];
 	[self setInvitedOrgIds:[dict valueForKey:@"InvitedOrgIds"]];
-	[self setActionOrgId:[dict valueForKey:@"ActionOrgId"]];
 
 	return self;
 }
@@ -1027,7 +1019,6 @@ static NSDateFormatter * _dateFormatter;
 	[dict setValue:[NSNumber numberWithBool:self.IsShared] forKey:@"IsShared"];
 	[dict setValue:self.GroupOwners forKey:@"GroupOwners"];
 	[dict setValue:self.InvitedOrgIds forKey:@"InvitedOrgIds"];
-	[dict setValue:self.ActionOrgId forKey:@"ActionOrgId"];
 
 	return dict;
 }
@@ -1600,12 +1591,14 @@ static NSDateFormatter * _dateFormatter;
 
 @synthesize Id;
 @synthesize Title;
+@synthesize HtmlTitle;
 @synthesize Slug;
 @synthesize CreatedAt;
 @synthesize UpdatedAt;
 @synthesize Permalink;
 @synthesize CreateCommentURL;
 @synthesize HtmlContent;
+@synthesize HtmlContentPart;
 @synthesize Author;
 @synthesize Comments;
 
@@ -1619,12 +1612,14 @@ static NSDateFormatter * _dateFormatter;
 	}
 	[self setId:[dict valueForKey:@"Id"]];
 	[self setTitle:[dict valueForKey:@"Title"]];
+	[self setHtmlTitle:[dict valueForKey:@"HtmlTitle"]];
 	[self setSlug:[dict valueForKey:@"Slug"]];
 	[self setCreatedAt:[QXQortexapi dateFromString:[dict valueForKey:@"CreatedAt"]]];
 	[self setUpdatedAt:[QXQortexapi dateFromString:[dict valueForKey:@"UpdatedAt"]]];
 	[self setPermalink:[dict valueForKey:@"Permalink"]];
 	[self setCreateCommentURL:[dict valueForKey:@"CreateCommentURL"]];
 	[self setHtmlContent:[dict valueForKey:@"HtmlContent"]];
+	[self setHtmlContentPart:[dict valueForKey:@"HtmlContentPart"]];
 	id dictAuthor = [dict valueForKey:@"Author"];
 	if ([dictAuthor isKindOfClass:[NSDictionary class]]){
 		[self setAuthor:[[QXEmbedUser alloc] initWithDictionary:dictAuthor]];
@@ -1646,12 +1641,14 @@ static NSDateFormatter * _dateFormatter;
 	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
 	[dict setValue:self.Id forKey:@"Id"];
 	[dict setValue:self.Title forKey:@"Title"];
+	[dict setValue:self.HtmlTitle forKey:@"HtmlTitle"];
 	[dict setValue:self.Slug forKey:@"Slug"];
 	[dict setValue:[QXQortexapi stringFromDate:self.CreatedAt] forKey:@"CreatedAt"];
 	[dict setValue:[QXQortexapi stringFromDate:self.UpdatedAt] forKey:@"UpdatedAt"];
 	[dict setValue:self.Permalink forKey:@"Permalink"];
 	[dict setValue:self.CreateCommentURL forKey:@"CreateCommentURL"];
 	[dict setValue:self.HtmlContent forKey:@"HtmlContent"];
+	[dict setValue:self.HtmlContentPart forKey:@"HtmlContentPart"];
 	[dict setValue:[self.Author dictionary] forKey:@"Author"];
 	
 
@@ -2025,6 +2022,7 @@ static NSDateFormatter * _dateFormatter;
 @synthesize ChatCount;
 @synthesize CreatedAt;
 @synthesize LastUpdate;
+@synthesize Author;
 
 - (id) initWithDictionary:(NSDictionary*)dict{
 	self = [super init];
@@ -2046,6 +2044,10 @@ static NSDateFormatter * _dateFormatter;
 	[self setChatCount:[dict valueForKey:@"ChatCount"]];
 	[self setCreatedAt:[dict valueForKey:@"CreatedAt"]];
 	[self setLastUpdate:[dict valueForKey:@"LastUpdate"]];
+	id dictAuthor = [dict valueForKey:@"Author"];
+	if ([dictAuthor isKindOfClass:[NSDictionary class]]){
+		[self setAuthor:[[QXEmbedUser alloc] initWithDictionary:dictAuthor]];
+	}
 
 	return self;
 }
@@ -2062,6 +2064,8 @@ static NSDateFormatter * _dateFormatter;
 	[dict setValue:self.ChatCount forKey:@"ChatCount"];
 	[dict setValue:self.CreatedAt forKey:@"CreatedAt"];
 	[dict setValue:self.LastUpdate forKey:@"LastUpdate"];
+	[dict setValue:[self.Author dictionary] forKey:@"Author"];
+	
 
 	return dict;
 }

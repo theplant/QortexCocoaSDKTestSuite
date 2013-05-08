@@ -283,25 +283,23 @@
 @property (nonatomic, strong) NSString * Id;
 @property (nonatomic, strong) NSString * EType;
 @property (nonatomic, strong) NSString * Title;
-@property (nonatomic, strong) NSString * Slug;
 @property (nonatomic, strong) NSString * Content;
 @property (nonatomic, strong) NSString * GroupId;
 @property (nonatomic, strong) NSString * IsToGroup;
 @property (nonatomic, strong) NSString * ToUserIds;
 @property (nonatomic, strong) NSString * MentionedUserIds;
-@property (nonatomic, strong) NSString * IsPublished;
-@property (nonatomic, strong) NSString * IsAcknowledgement;
-@property (nonatomic, strong) NSString * TaskRequireType;
+@property (nonatomic, assign) BOOL IsAcknowledgement;
 @property (nonatomic, strong) NSString * TaskDue;
 @property (nonatomic, strong) NSString * RootId;
 @property (nonatomic, strong) NSString * IsCommentAcknowledgement;
-@property (nonatomic, strong) NSString * BaseOnEntryId;
 @property (nonatomic, strong) NSString * NewVersion;
 @property (nonatomic, strong) NSString * OldGroupId;
 @property (nonatomic, assign) BOOL KnowledgeBase;
 @property (nonatomic, assign) BOOL AnyoneCanEdit;
 @property (nonatomic, assign) BOOL Presentation;
 @property (nonatomic, assign) BOOL IsFromEmail;
+@property (nonatomic, assign) BOOL IsPublished;
+@property (nonatomic, strong) NSString * Slug;
 @property (nonatomic, strong) NSString * Email;
 @property (nonatomic, strong) NSString * Name;
 
@@ -339,7 +337,6 @@
 @property (nonatomic, assign) BOOL IsShared;
 @property (nonatomic, strong) NSArray * GroupOwners;
 @property (nonatomic, strong) NSArray * InvitedOrgIds;
-@property (nonatomic, strong) NSString * ActionOrgId;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
 - (NSDictionary*) dictionary;
@@ -550,12 +547,14 @@
 
 @property (nonatomic, strong) NSString * Id;
 @property (nonatomic, strong) NSString * Title;
+@property (nonatomic, strong) NSString * HtmlTitle;
 @property (nonatomic, strong) NSString * Slug;
 @property (nonatomic, strong) NSDate * CreatedAt;
 @property (nonatomic, strong) NSDate * UpdatedAt;
 @property (nonatomic, strong) NSString * Permalink;
 @property (nonatomic, strong) NSString * CreateCommentURL;
 @property (nonatomic, strong) NSString * HtmlContent;
+@property (nonatomic, strong) NSString * HtmlContentPart;
 @property (nonatomic, strong) QXEmbedUser * Author;
 @property (nonatomic, strong) NSArray * Comments;
 
@@ -663,6 +662,7 @@
 @property (nonatomic, strong) NSNumber * ChatCount;
 @property (nonatomic, strong) NSString * CreatedAt;
 @property (nonatomic, strong) NSString * LastUpdate;
+@property (nonatomic, strong) QXEmbedUser * Author;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
 - (NSDictionary*) dictionary;
