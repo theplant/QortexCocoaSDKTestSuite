@@ -98,621 +98,15 @@ static NSDateFormatter * _dateFormatter;
 @end
 
 
-// --- MailUpdatesInput ---
-@implementation QXMailUpdatesInput
-
-@synthesize IndividualIsOn;
-@synthesize SendLag;
-@synthesize AckRequest;
-@synthesize AckConfirmation;
-@synthesize Todo;
-@synthesize TodoConfirmation;
-@synthesize SystemMessage;
-@synthesize EntryNotification;
-@synthesize Like;
-@synthesize SendTimeIsOn;
-@synthesize Mon;
-@synthesize Tue;
-@synthesize Wed;
-@synthesize Thu;
-@synthesize Fri;
-@synthesize Sat;
-@synthesize Sun;
-@synthesize SendHoursIsOn;
-@synthesize StartAt;
-@synthesize EndAt;
-@synthesize DailyIsOn;
-
-- (id) initWithDictionary:(NSDictionary*)dict{
-	self = [super init];
-	if (!self) {
-		return self;
-	}
-	if (![dict isKindOfClass:[NSDictionary class]]) {
-		return self;
-	}
-	[self setIndividualIsOn:[[dict valueForKey:@"IndividualIsOn"] boolValue]];
-	[self setSendLag:[dict valueForKey:@"SendLag"]];
-	[self setAckRequest:[[dict valueForKey:@"AckRequest"] boolValue]];
-	[self setAckConfirmation:[[dict valueForKey:@"AckConfirmation"] boolValue]];
-	[self setTodo:[[dict valueForKey:@"Todo"] boolValue]];
-	[self setTodoConfirmation:[[dict valueForKey:@"TodoConfirmation"] boolValue]];
-	[self setSystemMessage:[[dict valueForKey:@"SystemMessage"] boolValue]];
-	[self setEntryNotification:[[dict valueForKey:@"EntryNotification"] boolValue]];
-	[self setLike:[[dict valueForKey:@"Like"] boolValue]];
-	[self setSendTimeIsOn:[[dict valueForKey:@"SendTimeIsOn"] boolValue]];
-	[self setMon:[[dict valueForKey:@"Mon"] boolValue]];
-	[self setTue:[[dict valueForKey:@"Tue"] boolValue]];
-	[self setWed:[[dict valueForKey:@"Wed"] boolValue]];
-	[self setThu:[[dict valueForKey:@"Thu"] boolValue]];
-	[self setFri:[[dict valueForKey:@"Fri"] boolValue]];
-	[self setSat:[[dict valueForKey:@"Sat"] boolValue]];
-	[self setSun:[[dict valueForKey:@"Sun"] boolValue]];
-	[self setSendHoursIsOn:[[dict valueForKey:@"SendHoursIsOn"] boolValue]];
-	[self setStartAt:[dict valueForKey:@"StartAt"]];
-	[self setEndAt:[dict valueForKey:@"EndAt"]];
-	[self setDailyIsOn:[[dict valueForKey:@"DailyIsOn"] boolValue]];
-
-	return self;
-}
-
-- (NSDictionary*) dictionary {
-	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
-	[dict setValue:[NSNumber numberWithBool:self.IndividualIsOn] forKey:@"IndividualIsOn"];
-	[dict setValue:self.SendLag forKey:@"SendLag"];
-	[dict setValue:[NSNumber numberWithBool:self.AckRequest] forKey:@"AckRequest"];
-	[dict setValue:[NSNumber numberWithBool:self.AckConfirmation] forKey:@"AckConfirmation"];
-	[dict setValue:[NSNumber numberWithBool:self.Todo] forKey:@"Todo"];
-	[dict setValue:[NSNumber numberWithBool:self.TodoConfirmation] forKey:@"TodoConfirmation"];
-	[dict setValue:[NSNumber numberWithBool:self.SystemMessage] forKey:@"SystemMessage"];
-	[dict setValue:[NSNumber numberWithBool:self.EntryNotification] forKey:@"EntryNotification"];
-	[dict setValue:[NSNumber numberWithBool:self.Like] forKey:@"Like"];
-	[dict setValue:[NSNumber numberWithBool:self.SendTimeIsOn] forKey:@"SendTimeIsOn"];
-	[dict setValue:[NSNumber numberWithBool:self.Mon] forKey:@"Mon"];
-	[dict setValue:[NSNumber numberWithBool:self.Tue] forKey:@"Tue"];
-	[dict setValue:[NSNumber numberWithBool:self.Wed] forKey:@"Wed"];
-	[dict setValue:[NSNumber numberWithBool:self.Thu] forKey:@"Thu"];
-	[dict setValue:[NSNumber numberWithBool:self.Fri] forKey:@"Fri"];
-	[dict setValue:[NSNumber numberWithBool:self.Sat] forKey:@"Sat"];
-	[dict setValue:[NSNumber numberWithBool:self.Sun] forKey:@"Sun"];
-	[dict setValue:[NSNumber numberWithBool:self.SendHoursIsOn] forKey:@"SendHoursIsOn"];
-	[dict setValue:self.StartAt forKey:@"StartAt"];
-	[dict setValue:self.EndAt forKey:@"EndAt"];
-	[dict setValue:[NSNumber numberWithBool:self.DailyIsOn] forKey:@"DailyIsOn"];
-
-	return dict;
-}
-
-@end
-
-// --- Organization ---
-@implementation QXOrganization
-
-@synthesize Id;
-@synthesize Name;
-@synthesize QortexURL;
-@synthesize Summary;
-@synthesize LogoURL;
-@synthesize Address;
-@synthesize Phone;
-@synthesize Website;
-@synthesize Domains;
-@synthesize RestrictSubscriptionMail;
-@synthesize IsActive;
-
-- (id) initWithDictionary:(NSDictionary*)dict{
-	self = [super init];
-	if (!self) {
-		return self;
-	}
-	if (![dict isKindOfClass:[NSDictionary class]]) {
-		return self;
-	}
-	[self setId:[dict valueForKey:@"Id"]];
-	[self setName:[dict valueForKey:@"Name"]];
-	[self setQortexURL:[dict valueForKey:@"QortexURL"]];
-	[self setSummary:[dict valueForKey:@"Summary"]];
-	[self setLogoURL:[dict valueForKey:@"LogoURL"]];
-	[self setAddress:[dict valueForKey:@"Address"]];
-	[self setPhone:[dict valueForKey:@"Phone"]];
-	[self setWebsite:[dict valueForKey:@"Website"]];
-	[self setDomains:[dict valueForKey:@"Domains"]];
-	[self setRestrictSubscriptionMail:[[dict valueForKey:@"RestrictSubscriptionMail"] boolValue]];
-	[self setIsActive:[[dict valueForKey:@"IsActive"] boolValue]];
-
-	return self;
-}
-
-- (NSDictionary*) dictionary {
-	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
-	[dict setValue:self.Id forKey:@"Id"];
-	[dict setValue:self.Name forKey:@"Name"];
-	[dict setValue:self.QortexURL forKey:@"QortexURL"];
-	[dict setValue:self.Summary forKey:@"Summary"];
-	[dict setValue:self.LogoURL forKey:@"LogoURL"];
-	[dict setValue:self.Address forKey:@"Address"];
-	[dict setValue:self.Phone forKey:@"Phone"];
-	[dict setValue:self.Website forKey:@"Website"];
-	[dict setValue:self.Domains forKey:@"Domains"];
-	[dict setValue:[NSNumber numberWithBool:self.RestrictSubscriptionMail] forKey:@"RestrictSubscriptionMail"];
-	[dict setValue:[NSNumber numberWithBool:self.IsActive] forKey:@"IsActive"];
-
-	return dict;
-}
-
-@end
-
-// --- Blog ---
-@implementation QXBlog
-
-@synthesize Title;
-@synthesize Description;
-@synthesize SideContent;
-
-- (id) initWithDictionary:(NSDictionary*)dict{
-	self = [super init];
-	if (!self) {
-		return self;
-	}
-	if (![dict isKindOfClass:[NSDictionary class]]) {
-		return self;
-	}
-	[self setTitle:[dict valueForKey:@"Title"]];
-	[self setDescription:[dict valueForKey:@"Description"]];
-	[self setSideContent:[dict valueForKey:@"SideContent"]];
-
-	return self;
-}
-
-- (NSDictionary*) dictionary {
-	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
-	[dict setValue:self.Title forKey:@"Title"];
-	[dict setValue:self.Description forKey:@"Description"];
-	[dict setValue:self.SideContent forKey:@"SideContent"];
-
-	return dict;
-}
-
-@end
-
-// --- PanelStatus ---
-@implementation QXPanelStatus
-
-@synthesize AsideGroupsCollapse;
-@synthesize AsideOtherGroupsCollapse;
-@synthesize HasToDo;
-@synthesize HasDraft;
-@synthesize HasWatchList;
-@synthesize HasChat;
-@synthesize ShowMarkUnreadThreshold;
-
-- (id) initWithDictionary:(NSDictionary*)dict{
-	self = [super init];
-	if (!self) {
-		return self;
-	}
-	if (![dict isKindOfClass:[NSDictionary class]]) {
-		return self;
-	}
-	[self setAsideGroupsCollapse:[[dict valueForKey:@"AsideGroupsCollapse"] boolValue]];
-	[self setAsideOtherGroupsCollapse:[[dict valueForKey:@"AsideOtherGroupsCollapse"] boolValue]];
-	[self setHasToDo:[[dict valueForKey:@"HasToDo"] boolValue]];
-	[self setHasDraft:[[dict valueForKey:@"HasDraft"] boolValue]];
-	[self setHasWatchList:[[dict valueForKey:@"HasWatchList"] boolValue]];
-	[self setHasChat:[[dict valueForKey:@"HasChat"] boolValue]];
-	[self setShowMarkUnreadThreshold:[dict valueForKey:@"ShowMarkUnreadThreshold"]];
-
-	return self;
-}
-
-- (NSDictionary*) dictionary {
-	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
-	[dict setValue:[NSNumber numberWithBool:self.AsideGroupsCollapse] forKey:@"AsideGroupsCollapse"];
-	[dict setValue:[NSNumber numberWithBool:self.AsideOtherGroupsCollapse] forKey:@"AsideOtherGroupsCollapse"];
-	[dict setValue:[NSNumber numberWithBool:self.HasToDo] forKey:@"HasToDo"];
-	[dict setValue:[NSNumber numberWithBool:self.HasDraft] forKey:@"HasDraft"];
-	[dict setValue:[NSNumber numberWithBool:self.HasWatchList] forKey:@"HasWatchList"];
-	[dict setValue:[NSNumber numberWithBool:self.HasChat] forKey:@"HasChat"];
-	[dict setValue:self.ShowMarkUnreadThreshold forKey:@"ShowMarkUnreadThreshold"];
-
-	return dict;
-}
-
-@end
-
-// --- GroupSelectorItem ---
-@implementation QXGroupSelectorItem
-
-@synthesize Id;
-@synthesize Name;
-@synthesize IsSelected;
-
-- (id) initWithDictionary:(NSDictionary*)dict{
-	self = [super init];
-	if (!self) {
-		return self;
-	}
-	if (![dict isKindOfClass:[NSDictionary class]]) {
-		return self;
-	}
-	[self setId:[dict valueForKey:@"Id"]];
-	[self setName:[dict valueForKey:@"Name"]];
-	[self setIsSelected:[[dict valueForKey:@"IsSelected"] boolValue]];
-
-	return self;
-}
-
-- (NSDictionary*) dictionary {
-	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
-	[dict setValue:self.Id forKey:@"Id"];
-	[dict setValue:self.Name forKey:@"Name"];
-	[dict setValue:[NSNumber numberWithBool:self.IsSelected] forKey:@"IsSelected"];
-
-	return dict;
-}
-
-@end
-
-// --- Attachment ---
-@implementation QXAttachment
-
-@synthesize Id;
-@synthesize OwnerId;
-@synthesize Category;
-@synthesize Filename;
-@synthesize ShortFilename;
-@synthesize ContentType;
-@synthesize ContentId;
-@synthesize MD5;
-@synthesize ContentLength;
-@synthesize Error;
-@synthesize GroupId;
-@synthesize UploadTime;
-@synthesize Width;
-@synthesize Height;
-@synthesize URL;
-@synthesize S1ThumbURL;
-@synthesize MThumbURL;
-@synthesize LThumbURL;
-@synthesize ImageIconURL;
-@synthesize FileIconURL;
-@synthesize HumanSize;
-@synthesize IsImage;
-@synthesize FileKind;
-
-- (id) initWithDictionary:(NSDictionary*)dict{
-	self = [super init];
-	if (!self) {
-		return self;
-	}
-	if (![dict isKindOfClass:[NSDictionary class]]) {
-		return self;
-	}
-	[self setId:[dict valueForKey:@"Id"]];
-	[self setOwnerId:[dict valueForKey:@"OwnerId"]];
-	[self setCategory:[dict valueForKey:@"Category"]];
-	[self setFilename:[dict valueForKey:@"Filename"]];
-	[self setShortFilename:[dict valueForKey:@"ShortFilename"]];
-	[self setContentType:[dict valueForKey:@"ContentType"]];
-	[self setContentId:[dict valueForKey:@"ContentId"]];
-	[self setMD5:[dict valueForKey:@"MD5"]];
-	[self setContentLength:[dict valueForKey:@"ContentLength"]];
-	[self setError:[dict valueForKey:@"Error"]];
-	[self setGroupId:[dict valueForKey:@"GroupId"]];
-	[self setUploadTime:[QXQortexapi dateFromString:[dict valueForKey:@"UploadTime"]]];
-	[self setWidth:[dict valueForKey:@"Width"]];
-	[self setHeight:[dict valueForKey:@"Height"]];
-	[self setURL:[dict valueForKey:@"URL"]];
-	[self setS1ThumbURL:[dict valueForKey:@"S1ThumbURL"]];
-	[self setMThumbURL:[dict valueForKey:@"MThumbURL"]];
-	[self setLThumbURL:[dict valueForKey:@"LThumbURL"]];
-	[self setImageIconURL:[dict valueForKey:@"ImageIconURL"]];
-	[self setFileIconURL:[dict valueForKey:@"FileIconURL"]];
-	[self setHumanSize:[dict valueForKey:@"HumanSize"]];
-	[self setIsImage:[[dict valueForKey:@"IsImage"] boolValue]];
-	[self setFileKind:[dict valueForKey:@"FileKind"]];
-
-	return self;
-}
-
-- (NSDictionary*) dictionary {
-	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
-	[dict setValue:self.Id forKey:@"Id"];
-	[dict setValue:self.OwnerId forKey:@"OwnerId"];
-	[dict setValue:self.Category forKey:@"Category"];
-	[dict setValue:self.Filename forKey:@"Filename"];
-	[dict setValue:self.ShortFilename forKey:@"ShortFilename"];
-	[dict setValue:self.ContentType forKey:@"ContentType"];
-	[dict setValue:self.ContentId forKey:@"ContentId"];
-	[dict setValue:self.MD5 forKey:@"MD5"];
-	[dict setValue:self.ContentLength forKey:@"ContentLength"];
-	[dict setValue:self.Error forKey:@"Error"];
-	[dict setValue:self.GroupId forKey:@"GroupId"];
-	[dict setValue:[QXQortexapi stringFromDate:self.UploadTime] forKey:@"UploadTime"];
-	[dict setValue:self.Width forKey:@"Width"];
-	[dict setValue:self.Height forKey:@"Height"];
-	[dict setValue:self.URL forKey:@"URL"];
-	[dict setValue:self.S1ThumbURL forKey:@"S1ThumbURL"];
-	[dict setValue:self.MThumbURL forKey:@"MThumbURL"];
-	[dict setValue:self.LThumbURL forKey:@"LThumbURL"];
-	[dict setValue:self.ImageIconURL forKey:@"ImageIconURL"];
-	[dict setValue:self.FileIconURL forKey:@"FileIconURL"];
-	[dict setValue:self.HumanSize forKey:@"HumanSize"];
-	[dict setValue:[NSNumber numberWithBool:self.IsImage] forKey:@"IsImage"];
-	[dict setValue:self.FileKind forKey:@"FileKind"];
-
-	return dict;
-}
-
-@end
-
-// --- LinkedEntry ---
-@implementation QXLinkedEntry
-
-@synthesize Id;
-@synthesize EType;
-@synthesize Title;
-@synthesize GroupId;
-@synthesize AuthorId;
-@synthesize IsRoot;
-@synthesize RootId;
-@synthesize RootEntryTitle;
-@synthesize Link;
-
-- (id) initWithDictionary:(NSDictionary*)dict{
-	self = [super init];
-	if (!self) {
-		return self;
-	}
-	if (![dict isKindOfClass:[NSDictionary class]]) {
-		return self;
-	}
-	[self setId:[dict valueForKey:@"Id"]];
-	[self setEType:[dict valueForKey:@"EType"]];
-	[self setTitle:[dict valueForKey:@"Title"]];
-	[self setGroupId:[dict valueForKey:@"GroupId"]];
-	[self setAuthorId:[dict valueForKey:@"AuthorId"]];
-	[self setIsRoot:[[dict valueForKey:@"IsRoot"] boolValue]];
-	[self setRootId:[dict valueForKey:@"RootId"]];
-	[self setRootEntryTitle:[dict valueForKey:@"RootEntryTitle"]];
-	[self setLink:[dict valueForKey:@"Link"]];
-
-	return self;
-}
-
-- (NSDictionary*) dictionary {
-	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
-	[dict setValue:self.Id forKey:@"Id"];
-	[dict setValue:self.EType forKey:@"EType"];
-	[dict setValue:self.Title forKey:@"Title"];
-	[dict setValue:self.GroupId forKey:@"GroupId"];
-	[dict setValue:self.AuthorId forKey:@"AuthorId"];
-	[dict setValue:[NSNumber numberWithBool:self.IsRoot] forKey:@"IsRoot"];
-	[dict setValue:self.RootId forKey:@"RootId"];
-	[dict setValue:self.RootEntryTitle forKey:@"RootEntryTitle"];
-	[dict setValue:self.Link forKey:@"Link"];
-
-	return dict;
-}
-
-@end
-
-// --- Newsletter ---
-@implementation QXNewsletter
+// --- MarketableMemberInfo ---
+@implementation QXMarketableMemberInfo
 
 @synthesize Email;
-
-- (id) initWithDictionary:(NSDictionary*)dict{
-	self = [super init];
-	if (!self) {
-		return self;
-	}
-	if (![dict isKindOfClass:[NSDictionary class]]) {
-		return self;
-	}
-	[self setEmail:[dict valueForKey:@"Email"]];
-
-	return self;
-}
-
-- (NSDictionary*) dictionary {
-	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
-	[dict setValue:self.Email forKey:@"Email"];
-
-	return dict;
-}
-
-@end
-
-// --- OrgSettings ---
-@implementation QXOrgSettings
-
-@synthesize AllowUsersCreateGroups;
-@synthesize AllowUsersInvitePeople;
-
-- (id) initWithDictionary:(NSDictionary*)dict{
-	self = [super init];
-	if (!self) {
-		return self;
-	}
-	if (![dict isKindOfClass:[NSDictionary class]]) {
-		return self;
-	}
-	[self setAllowUsersCreateGroups:[[dict valueForKey:@"AllowUsersCreateGroups"] boolValue]];
-	[self setAllowUsersInvitePeople:[[dict valueForKey:@"AllowUsersInvitePeople"] boolValue]];
-
-	return self;
-}
-
-- (NSDictionary*) dictionary {
-	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
-	[dict setValue:[NSNumber numberWithBool:self.AllowUsersCreateGroups] forKey:@"AllowUsersCreateGroups"];
-	[dict setValue:[NSNumber numberWithBool:self.AllowUsersInvitePeople] forKey:@"AllowUsersInvitePeople"];
-
-	return dict;
-}
-
-@end
-
-// --- GroupCount ---
-@implementation QXGroupCount
-
-@synthesize GroupId;
-@synthesize UnreadCount;
-
-- (id) initWithDictionary:(NSDictionary*)dict{
-	self = [super init];
-	if (!self) {
-		return self;
-	}
-	if (![dict isKindOfClass:[NSDictionary class]]) {
-		return self;
-	}
-	[self setGroupId:[dict valueForKey:@"GroupId"]];
-	[self setUnreadCount:[dict valueForKey:@"UnreadCount"]];
-
-	return self;
-}
-
-- (NSDictionary*) dictionary {
-	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
-	[dict setValue:self.GroupId forKey:@"GroupId"];
-	[dict setValue:self.UnreadCount forKey:@"UnreadCount"];
-
-	return dict;
-}
-
-@end
-
-// --- GroupHeader ---
-@implementation QXGroupHeader
-
-@synthesize HasToFollow;
-@synthesize IsFollowing;
-@synthesize IsManaging;
-@synthesize HasFileTab;
-@synthesize HasToDoTab;
-@synthesize IsSystemMessage;
-@synthesize SelectedGroup;
-
-- (id) initWithDictionary:(NSDictionary*)dict{
-	self = [super init];
-	if (!self) {
-		return self;
-	}
-	if (![dict isKindOfClass:[NSDictionary class]]) {
-		return self;
-	}
-	[self setHasToFollow:[[dict valueForKey:@"HasToFollow"] boolValue]];
-	[self setIsFollowing:[[dict valueForKey:@"IsFollowing"] boolValue]];
-	[self setIsManaging:[[dict valueForKey:@"IsManaging"] boolValue]];
-	[self setHasFileTab:[[dict valueForKey:@"HasFileTab"] boolValue]];
-	[self setHasToDoTab:[[dict valueForKey:@"HasToDoTab"] boolValue]];
-	[self setIsSystemMessage:[[dict valueForKey:@"IsSystemMessage"] boolValue]];
-	[self setSelectedGroup:[[dict valueForKey:@"SelectedGroup"] boolValue]];
-
-	return self;
-}
-
-- (NSDictionary*) dictionary {
-	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
-	[dict setValue:[NSNumber numberWithBool:self.HasToFollow] forKey:@"HasToFollow"];
-	[dict setValue:[NSNumber numberWithBool:self.IsFollowing] forKey:@"IsFollowing"];
-	[dict setValue:[NSNumber numberWithBool:self.IsManaging] forKey:@"IsManaging"];
-	[dict setValue:[NSNumber numberWithBool:self.HasFileTab] forKey:@"HasFileTab"];
-	[dict setValue:[NSNumber numberWithBool:self.HasToDoTab] forKey:@"HasToDoTab"];
-	[dict setValue:[NSNumber numberWithBool:self.IsSystemMessage] forKey:@"IsSystemMessage"];
-	[dict setValue:[NSNumber numberWithBool:self.SelectedGroup] forKey:@"SelectedGroup"];
-
-	return dict;
-}
-
-@end
-
-// --- InlineHelp ---
-@implementation QXInlineHelp
-
-@synthesize QortexOverview;
-@synthesize WhatNext;
-@synthesize WhatChats;
-@synthesize InviteOthersURL;
-@synthesize WhatChatsURL;
-
-- (id) initWithDictionary:(NSDictionary*)dict{
-	self = [super init];
-	if (!self) {
-		return self;
-	}
-	if (![dict isKindOfClass:[NSDictionary class]]) {
-		return self;
-	}
-	[self setQortexOverview:[[dict valueForKey:@"QortexOverview"] boolValue]];
-	[self setWhatNext:[[dict valueForKey:@"WhatNext"] boolValue]];
-	[self setWhatChats:[[dict valueForKey:@"WhatChats"] boolValue]];
-	[self setInviteOthersURL:[dict valueForKey:@"InviteOthersURL"]];
-	[self setWhatChatsURL:[dict valueForKey:@"WhatChatsURL"]];
-
-	return self;
-}
-
-- (NSDictionary*) dictionary {
-	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
-	[dict setValue:[NSNumber numberWithBool:self.QortexOverview] forKey:@"QortexOverview"];
-	[dict setValue:[NSNumber numberWithBool:self.WhatNext] forKey:@"WhatNext"];
-	[dict setValue:[NSNumber numberWithBool:self.WhatChats] forKey:@"WhatChats"];
-	[dict setValue:self.InviteOthersURL forKey:@"InviteOthersURL"];
-	[dict setValue:self.WhatChatsURL forKey:@"WhatChatsURL"];
-
-	return dict;
-}
-
-@end
-
-// --- EmailChanger ---
-@implementation QXEmailChanger
-
-@synthesize Token;
-@synthesize Email;
-@synthesize SharingToken;
-
-- (id) initWithDictionary:(NSDictionary*)dict{
-	self = [super init];
-	if (!self) {
-		return self;
-	}
-	if (![dict isKindOfClass:[NSDictionary class]]) {
-		return self;
-	}
-	[self setToken:[dict valueForKey:@"Token"]];
-	[self setEmail:[dict valueForKey:@"Email"]];
-	[self setSharingToken:[dict valueForKey:@"SharingToken"]];
-
-	return self;
-}
-
-- (NSDictionary*) dictionary {
-	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
-	[dict setValue:self.Token forKey:@"Token"];
-	[dict setValue:self.Email forKey:@"Email"];
-	[dict setValue:self.SharingToken forKey:@"SharingToken"];
-
-	return dict;
-}
-
-@end
-
-// --- ContactInfo ---
-@implementation QXContactInfo
-
 @synthesize FirstName;
 @synthesize LastName;
-@synthesize CompanyName;
-@synthesize CompanySize;
-@synthesize Email;
-@synthesize Phone;
-@synthesize Country;
-@synthesize City;
-@synthesize HelpContent;
+@synthesize Status;
+@synthesize InvitOrg;
+@synthesize GotoURL;
 
 - (id) initWithDictionary:(NSDictionary*)dict{
 	self = [super init];
@@ -722,207 +116,24 @@ static NSDateFormatter * _dateFormatter;
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
+	[self setEmail:[dict valueForKey:@"Email"]];
 	[self setFirstName:[dict valueForKey:@"FirstName"]];
 	[self setLastName:[dict valueForKey:@"LastName"]];
-	[self setCompanyName:[dict valueForKey:@"CompanyName"]];
-	[self setCompanySize:[dict valueForKey:@"CompanySize"]];
-	[self setEmail:[dict valueForKey:@"Email"]];
-	[self setPhone:[dict valueForKey:@"Phone"]];
-	[self setCountry:[dict valueForKey:@"Country"]];
-	[self setCity:[dict valueForKey:@"City"]];
-	[self setHelpContent:[dict valueForKey:@"HelpContent"]];
+	[self setStatus:[dict valueForKey:@"Status"]];
+	[self setInvitOrg:[dict valueForKey:@"InvitOrg"]];
+	[self setGotoURL:[dict valueForKey:@"GotoURL"]];
 
 	return self;
 }
 
 - (NSDictionary*) dictionary {
 	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
+	[dict setValue:self.Email forKey:@"Email"];
 	[dict setValue:self.FirstName forKey:@"FirstName"];
 	[dict setValue:self.LastName forKey:@"LastName"];
-	[dict setValue:self.CompanyName forKey:@"CompanyName"];
-	[dict setValue:self.CompanySize forKey:@"CompanySize"];
-	[dict setValue:self.Email forKey:@"Email"];
-	[dict setValue:self.Phone forKey:@"Phone"];
-	[dict setValue:self.Country forKey:@"Country"];
-	[dict setValue:self.City forKey:@"City"];
-	[dict setValue:self.HelpContent forKey:@"HelpContent"];
-
-	return dict;
-}
-
-@end
-
-// --- TotalStats ---
-@implementation QXTotalStats
-
-@synthesize OrgCount;
-@synthesize MemberCount;
-@synthesize GroupCount;
-@synthesize EntryCount;
-@synthesize CommentCount;
-@synthesize ChatCount;
-
-- (id) initWithDictionary:(NSDictionary*)dict{
-	self = [super init];
-	if (!self) {
-		return self;
-	}
-	if (![dict isKindOfClass:[NSDictionary class]]) {
-		return self;
-	}
-	[self setOrgCount:[dict valueForKey:@"OrgCount"]];
-	[self setMemberCount:[dict valueForKey:@"MemberCount"]];
-	[self setGroupCount:[dict valueForKey:@"GroupCount"]];
-	[self setEntryCount:[dict valueForKey:@"EntryCount"]];
-	[self setCommentCount:[dict valueForKey:@"CommentCount"]];
-	[self setChatCount:[dict valueForKey:@"ChatCount"]];
-
-	return self;
-}
-
-- (NSDictionary*) dictionary {
-	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
-	[dict setValue:self.OrgCount forKey:@"OrgCount"];
-	[dict setValue:self.MemberCount forKey:@"MemberCount"];
-	[dict setValue:self.GroupCount forKey:@"GroupCount"];
-	[dict setValue:self.EntryCount forKey:@"EntryCount"];
-	[dict setValue:self.CommentCount forKey:@"CommentCount"];
-	[dict setValue:self.ChatCount forKey:@"ChatCount"];
-
-	return dict;
-}
-
-@end
-
-// --- AccessReq ---
-@implementation QXAccessReq
-
-@synthesize Email;
-@synthesize AccessCode;
-@synthesize Status;
-@synthesize ApprovedBy;
-@synthesize CreatedAt;
-@synthesize UpdatedAt;
-
-- (id) initWithDictionary:(NSDictionary*)dict{
-	self = [super init];
-	if (!self) {
-		return self;
-	}
-	if (![dict isKindOfClass:[NSDictionary class]]) {
-		return self;
-	}
-	[self setEmail:[dict valueForKey:@"Email"]];
-	[self setAccessCode:[dict valueForKey:@"AccessCode"]];
-	[self setStatus:[dict valueForKey:@"Status"]];
-	[self setApprovedBy:[dict valueForKey:@"ApprovedBy"]];
-	[self setCreatedAt:[dict valueForKey:@"CreatedAt"]];
-	[self setUpdatedAt:[dict valueForKey:@"UpdatedAt"]];
-
-	return self;
-}
-
-- (NSDictionary*) dictionary {
-	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
-	[dict setValue:self.Email forKey:@"Email"];
-	[dict setValue:self.AccessCode forKey:@"AccessCode"];
 	[dict setValue:self.Status forKey:@"Status"];
-	[dict setValue:self.ApprovedBy forKey:@"ApprovedBy"];
-	[dict setValue:self.CreatedAt forKey:@"CreatedAt"];
-	[dict setValue:self.UpdatedAt forKey:@"UpdatedAt"];
-
-	return dict;
-}
-
-@end
-
-// --- EntryInput ---
-@implementation QXEntryInput
-
-@synthesize Id;
-@synthesize EType;
-@synthesize Title;
-@synthesize Content;
-@synthesize GroupId;
-@synthesize IsToGroup;
-@synthesize ToUserIds;
-@synthesize MentionedUserIds;
-@synthesize IsAcknowledgement;
-@synthesize TaskDue;
-@synthesize RootId;
-@synthesize IsCommentAcknowledgement;
-@synthesize NewVersion;
-@synthesize OldGroupId;
-@synthesize LastUpdateAt;
-@synthesize KnowledgeBase;
-@synthesize AnyoneCanEdit;
-@synthesize Presentation;
-@synthesize IsFromEmail;
-@synthesize IsPublished;
-@synthesize Slug;
-@synthesize Email;
-@synthesize Name;
-
-- (id) initWithDictionary:(NSDictionary*)dict{
-	self = [super init];
-	if (!self) {
-		return self;
-	}
-	if (![dict isKindOfClass:[NSDictionary class]]) {
-		return self;
-	}
-	[self setId:[dict valueForKey:@"Id"]];
-	[self setEType:[dict valueForKey:@"EType"]];
-	[self setTitle:[dict valueForKey:@"Title"]];
-	[self setContent:[dict valueForKey:@"Content"]];
-	[self setGroupId:[dict valueForKey:@"GroupId"]];
-	[self setIsToGroup:[dict valueForKey:@"IsToGroup"]];
-	[self setToUserIds:[dict valueForKey:@"ToUserIds"]];
-	[self setMentionedUserIds:[dict valueForKey:@"MentionedUserIds"]];
-	[self setIsAcknowledgement:[[dict valueForKey:@"IsAcknowledgement"] boolValue]];
-	[self setTaskDue:[dict valueForKey:@"TaskDue"]];
-	[self setRootId:[dict valueForKey:@"RootId"]];
-	[self setIsCommentAcknowledgement:[dict valueForKey:@"IsCommentAcknowledgement"]];
-	[self setNewVersion:[dict valueForKey:@"NewVersion"]];
-	[self setOldGroupId:[dict valueForKey:@"OldGroupId"]];
-	[self setLastUpdateAt:[dict valueForKey:@"LastUpdateAt"]];
-	[self setKnowledgeBase:[[dict valueForKey:@"KnowledgeBase"] boolValue]];
-	[self setAnyoneCanEdit:[[dict valueForKey:@"AnyoneCanEdit"] boolValue]];
-	[self setPresentation:[[dict valueForKey:@"Presentation"] boolValue]];
-	[self setIsFromEmail:[[dict valueForKey:@"IsFromEmail"] boolValue]];
-	[self setIsPublished:[[dict valueForKey:@"IsPublished"] boolValue]];
-	[self setSlug:[dict valueForKey:@"Slug"]];
-	[self setEmail:[dict valueForKey:@"Email"]];
-	[self setName:[dict valueForKey:@"Name"]];
-
-	return self;
-}
-
-- (NSDictionary*) dictionary {
-	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
-	[dict setValue:self.Id forKey:@"Id"];
-	[dict setValue:self.EType forKey:@"EType"];
-	[dict setValue:self.Title forKey:@"Title"];
-	[dict setValue:self.Content forKey:@"Content"];
-	[dict setValue:self.GroupId forKey:@"GroupId"];
-	[dict setValue:self.IsToGroup forKey:@"IsToGroup"];
-	[dict setValue:self.ToUserIds forKey:@"ToUserIds"];
-	[dict setValue:self.MentionedUserIds forKey:@"MentionedUserIds"];
-	[dict setValue:[NSNumber numberWithBool:self.IsAcknowledgement] forKey:@"IsAcknowledgement"];
-	[dict setValue:self.TaskDue forKey:@"TaskDue"];
-	[dict setValue:self.RootId forKey:@"RootId"];
-	[dict setValue:self.IsCommentAcknowledgement forKey:@"IsCommentAcknowledgement"];
-	[dict setValue:self.NewVersion forKey:@"NewVersion"];
-	[dict setValue:self.OldGroupId forKey:@"OldGroupId"];
-	[dict setValue:self.LastUpdateAt forKey:@"LastUpdateAt"];
-	[dict setValue:[NSNumber numberWithBool:self.KnowledgeBase] forKey:@"KnowledgeBase"];
-	[dict setValue:[NSNumber numberWithBool:self.AnyoneCanEdit] forKey:@"AnyoneCanEdit"];
-	[dict setValue:[NSNumber numberWithBool:self.Presentation] forKey:@"Presentation"];
-	[dict setValue:[NSNumber numberWithBool:self.IsFromEmail] forKey:@"IsFromEmail"];
-	[dict setValue:[NSNumber numberWithBool:self.IsPublished] forKey:@"IsPublished"];
-	[dict setValue:self.Slug forKey:@"Slug"];
-	[dict setValue:self.Email forKey:@"Email"];
-	[dict setValue:self.Name forKey:@"Name"];
+	[dict setValue:self.InvitOrg forKey:@"InvitOrg"];
+	[dict setValue:self.GotoURL forKey:@"GotoURL"];
 
 	return dict;
 }
@@ -965,6 +176,57 @@ static NSDateFormatter * _dateFormatter;
 	[dict setValue:self.ToOrgIds forKey:@"ToOrgIds"];
 	[dict setValue:self.BroadcastType forKey:@"BroadcastType"];
 	[dict setValue:self.RootId forKey:@"RootId"];
+
+	return dict;
+}
+
+@end
+
+// --- QortexSupportInput ---
+@implementation QXQortexSupportInput
+
+@synthesize Id;
+@synthesize Title;
+@synthesize Content;
+@synthesize ToOrgIds;
+@synthesize RootId;
+@synthesize Audiance;
+@synthesize KnowledgeBase;
+@synthesize InlineHelp;
+@synthesize PublishedToUsers;
+
+- (id) initWithDictionary:(NSDictionary*)dict{
+	self = [super init];
+	if (!self) {
+		return self;
+	}
+	if (![dict isKindOfClass:[NSDictionary class]]) {
+		return self;
+	}
+	[self setId:[dict valueForKey:@"Id"]];
+	[self setTitle:[dict valueForKey:@"Title"]];
+	[self setContent:[dict valueForKey:@"Content"]];
+	[self setToOrgIds:[dict valueForKey:@"ToOrgIds"]];
+	[self setRootId:[dict valueForKey:@"RootId"]];
+	[self setAudiance:[dict valueForKey:@"Audiance"]];
+	[self setKnowledgeBase:[[dict valueForKey:@"KnowledgeBase"] boolValue]];
+	[self setInlineHelp:[[dict valueForKey:@"InlineHelp"] boolValue]];
+	[self setPublishedToUsers:[[dict valueForKey:@"PublishedToUsers"] boolValue]];
+
+	return self;
+}
+
+- (NSDictionary*) dictionary {
+	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
+	[dict setValue:self.Id forKey:@"Id"];
+	[dict setValue:self.Title forKey:@"Title"];
+	[dict setValue:self.Content forKey:@"Content"];
+	[dict setValue:self.ToOrgIds forKey:@"ToOrgIds"];
+	[dict setValue:self.RootId forKey:@"RootId"];
+	[dict setValue:self.Audiance forKey:@"Audiance"];
+	[dict setValue:[NSNumber numberWithBool:self.KnowledgeBase] forKey:@"KnowledgeBase"];
+	[dict setValue:[NSNumber numberWithBool:self.InlineHelp] forKey:@"InlineHelp"];
+	[dict setValue:[NSNumber numberWithBool:self.PublishedToUsers] forKey:@"PublishedToUsers"];
 
 	return dict;
 }
@@ -1334,6 +596,7 @@ static NSDateFormatter * _dateFormatter;
 @synthesize Country;
 @synthesize City;
 @synthesize HelpContent;
+@synthesize Fake;
 
 - (id) initWithDictionary:(NSDictionary*)dict{
 	self = [super init];
@@ -1352,6 +615,7 @@ static NSDateFormatter * _dateFormatter;
 	[self setCountry:[dict valueForKey:@"Country"]];
 	[self setCity:[dict valueForKey:@"City"]];
 	[self setHelpContent:[dict valueForKey:@"HelpContent"]];
+	[self setFake:[[dict valueForKey:@"Fake"] boolValue]];
 
 	return self;
 }
@@ -1367,6 +631,7 @@ static NSDateFormatter * _dateFormatter;
 	[dict setValue:self.Country forKey:@"Country"];
 	[dict setValue:self.City forKey:@"City"];
 	[dict setValue:self.HelpContent forKey:@"HelpContent"];
+	[dict setValue:[NSNumber numberWithBool:self.Fake] forKey:@"Fake"];
 
 	return dict;
 }
@@ -1433,6 +698,246 @@ static NSDateFormatter * _dateFormatter;
 	[dict setValue:self.Skype forKey:@"Skype"];
 	[dict setValue:self.Facebook forKey:@"Facebook"];
 	[dict setValue:self.OtherWebsites forKey:@"OtherWebsites"];
+
+	return dict;
+}
+
+@end
+
+// --- MailUpdatesInput ---
+@implementation QXMailUpdatesInput
+
+@synthesize IndividualIsOn;
+@synthesize SendLag;
+@synthesize AckRequest;
+@synthesize AckConfirmation;
+@synthesize Todo;
+@synthesize TodoConfirmation;
+@synthesize SystemMessage;
+@synthesize EntryNotification;
+@synthesize Like;
+@synthesize SendTimeIsOn;
+@synthesize Mon;
+@synthesize Tue;
+@synthesize Wed;
+@synthesize Thu;
+@synthesize Fri;
+@synthesize Sat;
+@synthesize Sun;
+@synthesize SendHoursIsOn;
+@synthesize StartAt;
+@synthesize EndAt;
+@synthesize DailyIsOn;
+
+- (id) initWithDictionary:(NSDictionary*)dict{
+	self = [super init];
+	if (!self) {
+		return self;
+	}
+	if (![dict isKindOfClass:[NSDictionary class]]) {
+		return self;
+	}
+	[self setIndividualIsOn:[[dict valueForKey:@"IndividualIsOn"] boolValue]];
+	[self setSendLag:[dict valueForKey:@"SendLag"]];
+	[self setAckRequest:[[dict valueForKey:@"AckRequest"] boolValue]];
+	[self setAckConfirmation:[[dict valueForKey:@"AckConfirmation"] boolValue]];
+	[self setTodo:[[dict valueForKey:@"Todo"] boolValue]];
+	[self setTodoConfirmation:[[dict valueForKey:@"TodoConfirmation"] boolValue]];
+	[self setSystemMessage:[[dict valueForKey:@"SystemMessage"] boolValue]];
+	[self setEntryNotification:[[dict valueForKey:@"EntryNotification"] boolValue]];
+	[self setLike:[[dict valueForKey:@"Like"] boolValue]];
+	[self setSendTimeIsOn:[[dict valueForKey:@"SendTimeIsOn"] boolValue]];
+	[self setMon:[[dict valueForKey:@"Mon"] boolValue]];
+	[self setTue:[[dict valueForKey:@"Tue"] boolValue]];
+	[self setWed:[[dict valueForKey:@"Wed"] boolValue]];
+	[self setThu:[[dict valueForKey:@"Thu"] boolValue]];
+	[self setFri:[[dict valueForKey:@"Fri"] boolValue]];
+	[self setSat:[[dict valueForKey:@"Sat"] boolValue]];
+	[self setSun:[[dict valueForKey:@"Sun"] boolValue]];
+	[self setSendHoursIsOn:[[dict valueForKey:@"SendHoursIsOn"] boolValue]];
+	[self setStartAt:[dict valueForKey:@"StartAt"]];
+	[self setEndAt:[dict valueForKey:@"EndAt"]];
+	[self setDailyIsOn:[[dict valueForKey:@"DailyIsOn"] boolValue]];
+
+	return self;
+}
+
+- (NSDictionary*) dictionary {
+	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
+	[dict setValue:[NSNumber numberWithBool:self.IndividualIsOn] forKey:@"IndividualIsOn"];
+	[dict setValue:self.SendLag forKey:@"SendLag"];
+	[dict setValue:[NSNumber numberWithBool:self.AckRequest] forKey:@"AckRequest"];
+	[dict setValue:[NSNumber numberWithBool:self.AckConfirmation] forKey:@"AckConfirmation"];
+	[dict setValue:[NSNumber numberWithBool:self.Todo] forKey:@"Todo"];
+	[dict setValue:[NSNumber numberWithBool:self.TodoConfirmation] forKey:@"TodoConfirmation"];
+	[dict setValue:[NSNumber numberWithBool:self.SystemMessage] forKey:@"SystemMessage"];
+	[dict setValue:[NSNumber numberWithBool:self.EntryNotification] forKey:@"EntryNotification"];
+	[dict setValue:[NSNumber numberWithBool:self.Like] forKey:@"Like"];
+	[dict setValue:[NSNumber numberWithBool:self.SendTimeIsOn] forKey:@"SendTimeIsOn"];
+	[dict setValue:[NSNumber numberWithBool:self.Mon] forKey:@"Mon"];
+	[dict setValue:[NSNumber numberWithBool:self.Tue] forKey:@"Tue"];
+	[dict setValue:[NSNumber numberWithBool:self.Wed] forKey:@"Wed"];
+	[dict setValue:[NSNumber numberWithBool:self.Thu] forKey:@"Thu"];
+	[dict setValue:[NSNumber numberWithBool:self.Fri] forKey:@"Fri"];
+	[dict setValue:[NSNumber numberWithBool:self.Sat] forKey:@"Sat"];
+	[dict setValue:[NSNumber numberWithBool:self.Sun] forKey:@"Sun"];
+	[dict setValue:[NSNumber numberWithBool:self.SendHoursIsOn] forKey:@"SendHoursIsOn"];
+	[dict setValue:self.StartAt forKey:@"StartAt"];
+	[dict setValue:self.EndAt forKey:@"EndAt"];
+	[dict setValue:[NSNumber numberWithBool:self.DailyIsOn] forKey:@"DailyIsOn"];
+
+	return dict;
+}
+
+@end
+
+// --- MailPreferenceInput ---
+@implementation QXMailPreferenceInput
+
+@synthesize Expecting;
+@synthesize SendInterval;
+@synthesize SendLag;
+
+- (id) initWithDictionary:(NSDictionary*)dict{
+	self = [super init];
+	if (!self) {
+		return self;
+	}
+	if (![dict isKindOfClass:[NSDictionary class]]) {
+		return self;
+	}
+	[self setExpecting:[[dict valueForKey:@"Expecting"] boolValue]];
+	[self setSendInterval:[dict valueForKey:@"SendInterval"]];
+	[self setSendLag:[dict valueForKey:@"SendLag"]];
+
+	return self;
+}
+
+- (NSDictionary*) dictionary {
+	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
+	[dict setValue:[NSNumber numberWithBool:self.Expecting] forKey:@"Expecting"];
+	[dict setValue:self.SendInterval forKey:@"SendInterval"];
+	[dict setValue:self.SendLag forKey:@"SendLag"];
+
+	return dict;
+}
+
+@end
+
+// --- OrgSettings ---
+@implementation QXOrgSettings
+
+@synthesize AllowUsersCreateGroups;
+@synthesize AllowUsersInvitePeople;
+
+- (id) initWithDictionary:(NSDictionary*)dict{
+	self = [super init];
+	if (!self) {
+		return self;
+	}
+	if (![dict isKindOfClass:[NSDictionary class]]) {
+		return self;
+	}
+	[self setAllowUsersCreateGroups:[[dict valueForKey:@"AllowUsersCreateGroups"] boolValue]];
+	[self setAllowUsersInvitePeople:[[dict valueForKey:@"AllowUsersInvitePeople"] boolValue]];
+
+	return self;
+}
+
+- (NSDictionary*) dictionary {
+	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
+	[dict setValue:[NSNumber numberWithBool:self.AllowUsersCreateGroups] forKey:@"AllowUsersCreateGroups"];
+	[dict setValue:[NSNumber numberWithBool:self.AllowUsersInvitePeople] forKey:@"AllowUsersInvitePeople"];
+
+	return dict;
+}
+
+@end
+
+// --- Organization ---
+@implementation QXOrganization
+
+@synthesize Id;
+@synthesize Name;
+@synthesize QortexURL;
+@synthesize Summary;
+@synthesize LogoURL;
+@synthesize Address;
+@synthesize Phone;
+@synthesize Website;
+@synthesize Domains;
+@synthesize RestrictSubscriptionMail;
+@synthesize IsActive;
+
+- (id) initWithDictionary:(NSDictionary*)dict{
+	self = [super init];
+	if (!self) {
+		return self;
+	}
+	if (![dict isKindOfClass:[NSDictionary class]]) {
+		return self;
+	}
+	[self setId:[dict valueForKey:@"Id"]];
+	[self setName:[dict valueForKey:@"Name"]];
+	[self setQortexURL:[dict valueForKey:@"QortexURL"]];
+	[self setSummary:[dict valueForKey:@"Summary"]];
+	[self setLogoURL:[dict valueForKey:@"LogoURL"]];
+	[self setAddress:[dict valueForKey:@"Address"]];
+	[self setPhone:[dict valueForKey:@"Phone"]];
+	[self setWebsite:[dict valueForKey:@"Website"]];
+	[self setDomains:[dict valueForKey:@"Domains"]];
+	[self setRestrictSubscriptionMail:[[dict valueForKey:@"RestrictSubscriptionMail"] boolValue]];
+	[self setIsActive:[[dict valueForKey:@"IsActive"] boolValue]];
+
+	return self;
+}
+
+- (NSDictionary*) dictionary {
+	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
+	[dict setValue:self.Id forKey:@"Id"];
+	[dict setValue:self.Name forKey:@"Name"];
+	[dict setValue:self.QortexURL forKey:@"QortexURL"];
+	[dict setValue:self.Summary forKey:@"Summary"];
+	[dict setValue:self.LogoURL forKey:@"LogoURL"];
+	[dict setValue:self.Address forKey:@"Address"];
+	[dict setValue:self.Phone forKey:@"Phone"];
+	[dict setValue:self.Website forKey:@"Website"];
+	[dict setValue:self.Domains forKey:@"Domains"];
+	[dict setValue:[NSNumber numberWithBool:self.RestrictSubscriptionMail] forKey:@"RestrictSubscriptionMail"];
+	[dict setValue:[NSNumber numberWithBool:self.IsActive] forKey:@"IsActive"];
+
+	return dict;
+}
+
+@end
+
+// --- Blog ---
+@implementation QXBlog
+
+@synthesize Title;
+@synthesize Description;
+@synthesize SideContent;
+
+- (id) initWithDictionary:(NSDictionary*)dict{
+	self = [super init];
+	if (!self) {
+		return self;
+	}
+	if (![dict isKindOfClass:[NSDictionary class]]) {
+		return self;
+	}
+	[self setTitle:[dict valueForKey:@"Title"]];
+	[self setDescription:[dict valueForKey:@"Description"]];
+	[self setSideContent:[dict valueForKey:@"SideContent"]];
+
+	return self;
+}
+
+- (NSDictionary*) dictionary {
+	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
+	[dict setValue:self.Title forKey:@"Title"];
+	[dict setValue:self.Description forKey:@"Description"];
+	[dict setValue:self.SideContent forKey:@"SideContent"];
 
 	return dict;
 }
@@ -1548,6 +1053,7 @@ static NSDateFormatter * _dateFormatter;
 @synthesize OriginalOrgId;
 @synthesize ProfileURL;
 @synthesize NoDetail;
+@synthesize UnfollowSharedGroup;
 
 - (id) initWithDictionary:(NSDictionary*)dict{
 	self = [super init];
@@ -1570,6 +1076,7 @@ static NSDateFormatter * _dateFormatter;
 	[self setOriginalOrgId:[dict valueForKey:@"OriginalOrgId"]];
 	[self setProfileURL:[dict valueForKey:@"ProfileURL"]];
 	[self setNoDetail:[[dict valueForKey:@"NoDetail"] boolValue]];
+	[self setUnfollowSharedGroup:[[dict valueForKey:@"UnfollowSharedGroup"] boolValue]];
 
 	return self;
 }
@@ -1589,26 +1096,63 @@ static NSDateFormatter * _dateFormatter;
 	[dict setValue:self.OriginalOrgId forKey:@"OriginalOrgId"];
 	[dict setValue:self.ProfileURL forKey:@"ProfileURL"];
 	[dict setValue:[NSNumber numberWithBool:self.NoDetail] forKey:@"NoDetail"];
+	[dict setValue:[NSNumber numberWithBool:self.UnfollowSharedGroup] forKey:@"UnfollowSharedGroup"];
 
 	return dict;
 }
 
 @end
 
-// --- BlogEntry ---
-@implementation QXBlogEntry
+// --- PanelStatus ---
+@implementation QXPanelStatus
+
+@synthesize AsideGroupsCollapse;
+@synthesize AsideOtherGroupsCollapse;
+@synthesize HasToDo;
+@synthesize HasDraft;
+@synthesize HasWatchList;
+@synthesize HasChat;
+@synthesize ShowMarkUnreadThreshold;
+
+- (id) initWithDictionary:(NSDictionary*)dict{
+	self = [super init];
+	if (!self) {
+		return self;
+	}
+	if (![dict isKindOfClass:[NSDictionary class]]) {
+		return self;
+	}
+	[self setAsideGroupsCollapse:[[dict valueForKey:@"AsideGroupsCollapse"] boolValue]];
+	[self setAsideOtherGroupsCollapse:[[dict valueForKey:@"AsideOtherGroupsCollapse"] boolValue]];
+	[self setHasToDo:[[dict valueForKey:@"HasToDo"] boolValue]];
+	[self setHasDraft:[[dict valueForKey:@"HasDraft"] boolValue]];
+	[self setHasWatchList:[[dict valueForKey:@"HasWatchList"] boolValue]];
+	[self setHasChat:[[dict valueForKey:@"HasChat"] boolValue]];
+	[self setShowMarkUnreadThreshold:[dict valueForKey:@"ShowMarkUnreadThreshold"]];
+
+	return self;
+}
+
+- (NSDictionary*) dictionary {
+	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
+	[dict setValue:[NSNumber numberWithBool:self.AsideGroupsCollapse] forKey:@"AsideGroupsCollapse"];
+	[dict setValue:[NSNumber numberWithBool:self.AsideOtherGroupsCollapse] forKey:@"AsideOtherGroupsCollapse"];
+	[dict setValue:[NSNumber numberWithBool:self.HasToDo] forKey:@"HasToDo"];
+	[dict setValue:[NSNumber numberWithBool:self.HasDraft] forKey:@"HasDraft"];
+	[dict setValue:[NSNumber numberWithBool:self.HasWatchList] forKey:@"HasWatchList"];
+	[dict setValue:[NSNumber numberWithBool:self.HasChat] forKey:@"HasChat"];
+	[dict setValue:self.ShowMarkUnreadThreshold forKey:@"ShowMarkUnreadThreshold"];
+
+	return dict;
+}
+
+@end
+
+// --- EmbedGroup ---
+@implementation QXEmbedGroup
 
 @synthesize Id;
-@synthesize Title;
-@synthesize HtmlTitle;
-@synthesize Slug;
-@synthesize CreatedAt;
-@synthesize LocalCreatedAt;
-@synthesize Permalink;
-@synthesize CreateCommentURL;
-@synthesize HtmlContent;
-@synthesize HtmlContentPart;
-@synthesize Author;
+@synthesize Name;
 
 - (id) initWithDictionary:(NSDictionary*)dict{
 	self = [super init];
@@ -1619,20 +1163,7 @@ static NSDateFormatter * _dateFormatter;
 		return self;
 	}
 	[self setId:[dict valueForKey:@"Id"]];
-	[self setTitle:[dict valueForKey:@"Title"]];
-	[self setHtmlTitle:[dict valueForKey:@"HtmlTitle"]];
-	[self setSlug:[dict valueForKey:@"Slug"]];
-	[self setCreatedAt:[QXQortexapi dateFromString:[dict valueForKey:@"CreatedAt"]]];
-	[self setLocalCreatedAt:[dict valueForKey:@"LocalCreatedAt"]];
-	[self setPermalink:[dict valueForKey:@"Permalink"]];
-	[self setCreateCommentURL:[dict valueForKey:@"CreateCommentURL"]];
-	[self setHtmlContent:[dict valueForKey:@"HtmlContent"]];
-	[self setHtmlContentPart:[dict valueForKey:@"HtmlContentPart"]];
-
-	id dictAuthor = [dict valueForKey:@"Author"];
-	if ([dictAuthor isKindOfClass:[NSDictionary class]]){
-		[self setAuthor:[[QXEmbedUser alloc] initWithDictionary:dictAuthor]];
-	}
+	[self setName:[dict valueForKey:@"Name"]];
 
 	return self;
 }
@@ -1640,28 +1171,297 @@ static NSDateFormatter * _dateFormatter;
 - (NSDictionary*) dictionary {
 	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
 	[dict setValue:self.Id forKey:@"Id"];
-	[dict setValue:self.Title forKey:@"Title"];
-	[dict setValue:self.HtmlTitle forKey:@"HtmlTitle"];
-	[dict setValue:self.Slug forKey:@"Slug"];
-	[dict setValue:[QXQortexapi stringFromDate:self.CreatedAt] forKey:@"CreatedAt"];
-	[dict setValue:self.LocalCreatedAt forKey:@"LocalCreatedAt"];
-	[dict setValue:self.Permalink forKey:@"Permalink"];
-	[dict setValue:self.CreateCommentURL forKey:@"CreateCommentURL"];
-	[dict setValue:self.HtmlContent forKey:@"HtmlContent"];
-	[dict setValue:self.HtmlContentPart forKey:@"HtmlContentPart"];
-	[dict setValue:[self.Author dictionary] forKey:@"Author"];
-	
+	[dict setValue:self.Name forKey:@"Name"];
 
 	return dict;
 }
 
 @end
 
-// --- GroupUsers ---
-@implementation QXGroupUsers
+// --- GroupSelectorItem ---
+@implementation QXGroupSelectorItem
+
+@synthesize Id;
+@synthesize Name;
+@synthesize IsSelected;
+
+- (id) initWithDictionary:(NSDictionary*)dict{
+	self = [super init];
+	if (!self) {
+		return self;
+	}
+	if (![dict isKindOfClass:[NSDictionary class]]) {
+		return self;
+	}
+	[self setId:[dict valueForKey:@"Id"]];
+	[self setName:[dict valueForKey:@"Name"]];
+	[self setIsSelected:[[dict valueForKey:@"IsSelected"] boolValue]];
+
+	return self;
+}
+
+- (NSDictionary*) dictionary {
+	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
+	[dict setValue:self.Id forKey:@"Id"];
+	[dict setValue:self.Name forKey:@"Name"];
+	[dict setValue:[NSNumber numberWithBool:self.IsSelected] forKey:@"IsSelected"];
+
+	return dict;
+}
+
+@end
+
+// --- Attachment ---
+@implementation QXAttachment
+
+@synthesize Id;
+@synthesize OwnerId;
+@synthesize Category;
+@synthesize Filename;
+@synthesize ShortFilename;
+@synthesize ContentType;
+@synthesize ContentId;
+@synthesize MD5;
+@synthesize ContentLength;
+@synthesize Error;
+@synthesize GroupId;
+@synthesize UploadTime;
+@synthesize Width;
+@synthesize Height;
+@synthesize URL;
+@synthesize S1ThumbURL;
+@synthesize MThumbURL;
+@synthesize LThumbURL;
+@synthesize ImageIconURL;
+@synthesize FileIconURL;
+@synthesize HumanSize;
+@synthesize IsImage;
+@synthesize FileKind;
+
+- (id) initWithDictionary:(NSDictionary*)dict{
+	self = [super init];
+	if (!self) {
+		return self;
+	}
+	if (![dict isKindOfClass:[NSDictionary class]]) {
+		return self;
+	}
+	[self setId:[dict valueForKey:@"Id"]];
+	[self setOwnerId:[dict valueForKey:@"OwnerId"]];
+	[self setCategory:[dict valueForKey:@"Category"]];
+	[self setFilename:[dict valueForKey:@"Filename"]];
+	[self setShortFilename:[dict valueForKey:@"ShortFilename"]];
+	[self setContentType:[dict valueForKey:@"ContentType"]];
+	[self setContentId:[dict valueForKey:@"ContentId"]];
+	[self setMD5:[dict valueForKey:@"MD5"]];
+	[self setContentLength:[dict valueForKey:@"ContentLength"]];
+	[self setError:[dict valueForKey:@"Error"]];
+	[self setGroupId:[dict valueForKey:@"GroupId"]];
+	[self setUploadTime:[QXQortexapi dateFromString:[dict valueForKey:@"UploadTime"]]];
+	[self setWidth:[dict valueForKey:@"Width"]];
+	[self setHeight:[dict valueForKey:@"Height"]];
+	[self setURL:[dict valueForKey:@"URL"]];
+	[self setS1ThumbURL:[dict valueForKey:@"S1ThumbURL"]];
+	[self setMThumbURL:[dict valueForKey:@"MThumbURL"]];
+	[self setLThumbURL:[dict valueForKey:@"LThumbURL"]];
+	[self setImageIconURL:[dict valueForKey:@"ImageIconURL"]];
+	[self setFileIconURL:[dict valueForKey:@"FileIconURL"]];
+	[self setHumanSize:[dict valueForKey:@"HumanSize"]];
+	[self setIsImage:[[dict valueForKey:@"IsImage"] boolValue]];
+	[self setFileKind:[dict valueForKey:@"FileKind"]];
+
+	return self;
+}
+
+- (NSDictionary*) dictionary {
+	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
+	[dict setValue:self.Id forKey:@"Id"];
+	[dict setValue:self.OwnerId forKey:@"OwnerId"];
+	[dict setValue:self.Category forKey:@"Category"];
+	[dict setValue:self.Filename forKey:@"Filename"];
+	[dict setValue:self.ShortFilename forKey:@"ShortFilename"];
+	[dict setValue:self.ContentType forKey:@"ContentType"];
+	[dict setValue:self.ContentId forKey:@"ContentId"];
+	[dict setValue:self.MD5 forKey:@"MD5"];
+	[dict setValue:self.ContentLength forKey:@"ContentLength"];
+	[dict setValue:self.Error forKey:@"Error"];
+	[dict setValue:self.GroupId forKey:@"GroupId"];
+	[dict setValue:[QXQortexapi stringFromDate:self.UploadTime] forKey:@"UploadTime"];
+	[dict setValue:self.Width forKey:@"Width"];
+	[dict setValue:self.Height forKey:@"Height"];
+	[dict setValue:self.URL forKey:@"URL"];
+	[dict setValue:self.S1ThumbURL forKey:@"S1ThumbURL"];
+	[dict setValue:self.MThumbURL forKey:@"MThumbURL"];
+	[dict setValue:self.LThumbURL forKey:@"LThumbURL"];
+	[dict setValue:self.ImageIconURL forKey:@"ImageIconURL"];
+	[dict setValue:self.FileIconURL forKey:@"FileIconURL"];
+	[dict setValue:self.HumanSize forKey:@"HumanSize"];
+	[dict setValue:[NSNumber numberWithBool:self.IsImage] forKey:@"IsImage"];
+	[dict setValue:self.FileKind forKey:@"FileKind"];
+
+	return dict;
+}
+
+@end
+
+// --- LinkedEntry ---
+@implementation QXLinkedEntry
+
+@synthesize Id;
+@synthesize EType;
+@synthesize Title;
+@synthesize GroupId;
+@synthesize AuthorId;
+@synthesize IsRoot;
+@synthesize RootId;
+@synthesize RootEntryTitle;
+@synthesize Link;
+
+- (id) initWithDictionary:(NSDictionary*)dict{
+	self = [super init];
+	if (!self) {
+		return self;
+	}
+	if (![dict isKindOfClass:[NSDictionary class]]) {
+		return self;
+	}
+	[self setId:[dict valueForKey:@"Id"]];
+	[self setEType:[dict valueForKey:@"EType"]];
+	[self setTitle:[dict valueForKey:@"Title"]];
+	[self setGroupId:[dict valueForKey:@"GroupId"]];
+	[self setAuthorId:[dict valueForKey:@"AuthorId"]];
+	[self setIsRoot:[[dict valueForKey:@"IsRoot"] boolValue]];
+	[self setRootId:[dict valueForKey:@"RootId"]];
+	[self setRootEntryTitle:[dict valueForKey:@"RootEntryTitle"]];
+	[self setLink:[dict valueForKey:@"Link"]];
+
+	return self;
+}
+
+- (NSDictionary*) dictionary {
+	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
+	[dict setValue:self.Id forKey:@"Id"];
+	[dict setValue:self.EType forKey:@"EType"];
+	[dict setValue:self.Title forKey:@"Title"];
+	[dict setValue:self.GroupId forKey:@"GroupId"];
+	[dict setValue:self.AuthorId forKey:@"AuthorId"];
+	[dict setValue:[NSNumber numberWithBool:self.IsRoot] forKey:@"IsRoot"];
+	[dict setValue:self.RootId forKey:@"RootId"];
+	[dict setValue:self.RootEntryTitle forKey:@"RootEntryTitle"];
+	[dict setValue:self.Link forKey:@"Link"];
+
+	return dict;
+}
+
+@end
+
+// --- EntryInput ---
+@implementation QXEntryInput
+
+@synthesize Id;
+@synthesize EType;
+@synthesize Title;
+@synthesize Content;
+@synthesize GroupId;
+@synthesize IsToGroup;
+@synthesize ToUserIds;
+@synthesize MentionedUserIds;
+@synthesize IsAcknowledgement;
+@synthesize TaskDue;
+@synthesize RootId;
+@synthesize IsCommentAcknowledgement;
+@synthesize NewVersion;
+@synthesize OldGroupId;
+@synthesize LastUpdateAt;
+@synthesize KnowledgeBase;
+@synthesize AnyoneCanEdit;
+@synthesize Presentation;
+@synthesize IsFromEmail;
+@synthesize IsPublished;
+@synthesize Slug;
+@synthesize Email;
+@synthesize Name;
+@synthesize InlineHelp;
+@synthesize BaseOnEntryId;
+@synthesize PublishedToUsers;
+
+- (id) initWithDictionary:(NSDictionary*)dict{
+	self = [super init];
+	if (!self) {
+		return self;
+	}
+	if (![dict isKindOfClass:[NSDictionary class]]) {
+		return self;
+	}
+	[self setId:[dict valueForKey:@"Id"]];
+	[self setEType:[dict valueForKey:@"EType"]];
+	[self setTitle:[dict valueForKey:@"Title"]];
+	[self setContent:[dict valueForKey:@"Content"]];
+	[self setGroupId:[dict valueForKey:@"GroupId"]];
+	[self setIsToGroup:[dict valueForKey:@"IsToGroup"]];
+	[self setToUserIds:[dict valueForKey:@"ToUserIds"]];
+	[self setMentionedUserIds:[dict valueForKey:@"MentionedUserIds"]];
+	[self setIsAcknowledgement:[[dict valueForKey:@"IsAcknowledgement"] boolValue]];
+	[self setTaskDue:[dict valueForKey:@"TaskDue"]];
+	[self setRootId:[dict valueForKey:@"RootId"]];
+	[self setIsCommentAcknowledgement:[dict valueForKey:@"IsCommentAcknowledgement"]];
+	[self setNewVersion:[dict valueForKey:@"NewVersion"]];
+	[self setOldGroupId:[dict valueForKey:@"OldGroupId"]];
+	[self setLastUpdateAt:[dict valueForKey:@"LastUpdateAt"]];
+	[self setKnowledgeBase:[[dict valueForKey:@"KnowledgeBase"] boolValue]];
+	[self setAnyoneCanEdit:[[dict valueForKey:@"AnyoneCanEdit"] boolValue]];
+	[self setPresentation:[[dict valueForKey:@"Presentation"] boolValue]];
+	[self setIsFromEmail:[[dict valueForKey:@"IsFromEmail"] boolValue]];
+	[self setIsPublished:[[dict valueForKey:@"IsPublished"] boolValue]];
+	[self setSlug:[dict valueForKey:@"Slug"]];
+	[self setEmail:[dict valueForKey:@"Email"]];
+	[self setName:[dict valueForKey:@"Name"]];
+	[self setInlineHelp:[[dict valueForKey:@"InlineHelp"] boolValue]];
+	[self setBaseOnEntryId:[dict valueForKey:@"BaseOnEntryId"]];
+	[self setPublishedToUsers:[[dict valueForKey:@"PublishedToUsers"] boolValue]];
+
+	return self;
+}
+
+- (NSDictionary*) dictionary {
+	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
+	[dict setValue:self.Id forKey:@"Id"];
+	[dict setValue:self.EType forKey:@"EType"];
+	[dict setValue:self.Title forKey:@"Title"];
+	[dict setValue:self.Content forKey:@"Content"];
+	[dict setValue:self.GroupId forKey:@"GroupId"];
+	[dict setValue:self.IsToGroup forKey:@"IsToGroup"];
+	[dict setValue:self.ToUserIds forKey:@"ToUserIds"];
+	[dict setValue:self.MentionedUserIds forKey:@"MentionedUserIds"];
+	[dict setValue:[NSNumber numberWithBool:self.IsAcknowledgement] forKey:@"IsAcknowledgement"];
+	[dict setValue:self.TaskDue forKey:@"TaskDue"];
+	[dict setValue:self.RootId forKey:@"RootId"];
+	[dict setValue:self.IsCommentAcknowledgement forKey:@"IsCommentAcknowledgement"];
+	[dict setValue:self.NewVersion forKey:@"NewVersion"];
+	[dict setValue:self.OldGroupId forKey:@"OldGroupId"];
+	[dict setValue:self.LastUpdateAt forKey:@"LastUpdateAt"];
+	[dict setValue:[NSNumber numberWithBool:self.KnowledgeBase] forKey:@"KnowledgeBase"];
+	[dict setValue:[NSNumber numberWithBool:self.AnyoneCanEdit] forKey:@"AnyoneCanEdit"];
+	[dict setValue:[NSNumber numberWithBool:self.Presentation] forKey:@"Presentation"];
+	[dict setValue:[NSNumber numberWithBool:self.IsFromEmail] forKey:@"IsFromEmail"];
+	[dict setValue:[NSNumber numberWithBool:self.IsPublished] forKey:@"IsPublished"];
+	[dict setValue:self.Slug forKey:@"Slug"];
+	[dict setValue:self.Email forKey:@"Email"];
+	[dict setValue:self.Name forKey:@"Name"];
+	[dict setValue:[NSNumber numberWithBool:self.InlineHelp] forKey:@"InlineHelp"];
+	[dict setValue:self.BaseOnEntryId forKey:@"BaseOnEntryId"];
+	[dict setValue:[NSNumber numberWithBool:self.PublishedToUsers] forKey:@"PublishedToUsers"];
+
+	return dict;
+}
+
+@end
+
+// --- GroupCount ---
+@implementation QXGroupCount
 
 @synthesize GroupId;
-@synthesize EmbedUsers;
+@synthesize UnreadCount;
 
 - (id) initWithDictionary:(NSDictionary*)dict{
 	self = [super init];
@@ -1672,15 +1472,7 @@ static NSDateFormatter * _dateFormatter;
 		return self;
 	}
 	[self setGroupId:[dict valueForKey:@"GroupId"]];
-
-	NSMutableArray * mEmbedUsers = [[NSMutableArray alloc] init];
-	NSArray * lEmbedUsers = [dict valueForKey:@"EmbedUsers"];
-	if ([lEmbedUsers isKindOfClass:[NSArray class]]) {
-		for (NSDictionary * d in lEmbedUsers) {
-			[mEmbedUsers addObject: [[QXEmbedUser alloc] initWithDictionary:d]];
-		}
-		[self setEmbedUsers:mEmbedUsers];
-	}
+	[self setUnreadCount:[dict valueForKey:@"UnreadCount"]];
 
 	return self;
 }
@@ -1688,27 +1480,134 @@ static NSDateFormatter * _dateFormatter;
 - (NSDictionary*) dictionary {
 	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
 	[dict setValue:self.GroupId forKey:@"GroupId"];
-
-	NSMutableArray * mEmbedUsers = [[NSMutableArray alloc] init];
-	for (QXEmbedUser * p in EmbedUsers) {
-		[mEmbedUsers addObject:[p dictionary]];
-	}
-	[dict setValue:mEmbedUsers forKey:@"EmbedUsers"];
-	
+	[dict setValue:self.UnreadCount forKey:@"UnreadCount"];
 
 	return dict;
 }
 
 @end
 
-// --- Invitation ---
-@implementation QXInvitation
+// --- GroupHeader ---
+@implementation QXGroupHeader
+
+@synthesize HasToFollow;
+@synthesize IsFollowing;
+@synthesize IsManaging;
+@synthesize HasFileTab;
+@synthesize HasToDoTab;
+@synthesize IsSystemMessage;
+@synthesize SelectedGroup;
+
+- (id) initWithDictionary:(NSDictionary*)dict{
+	self = [super init];
+	if (!self) {
+		return self;
+	}
+	if (![dict isKindOfClass:[NSDictionary class]]) {
+		return self;
+	}
+	[self setHasToFollow:[[dict valueForKey:@"HasToFollow"] boolValue]];
+	[self setIsFollowing:[[dict valueForKey:@"IsFollowing"] boolValue]];
+	[self setIsManaging:[[dict valueForKey:@"IsManaging"] boolValue]];
+	[self setHasFileTab:[[dict valueForKey:@"HasFileTab"] boolValue]];
+	[self setHasToDoTab:[[dict valueForKey:@"HasToDoTab"] boolValue]];
+	[self setIsSystemMessage:[[dict valueForKey:@"IsSystemMessage"] boolValue]];
+	[self setSelectedGroup:[[dict valueForKey:@"SelectedGroup"] boolValue]];
+
+	return self;
+}
+
+- (NSDictionary*) dictionary {
+	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
+	[dict setValue:[NSNumber numberWithBool:self.HasToFollow] forKey:@"HasToFollow"];
+	[dict setValue:[NSNumber numberWithBool:self.IsFollowing] forKey:@"IsFollowing"];
+	[dict setValue:[NSNumber numberWithBool:self.IsManaging] forKey:@"IsManaging"];
+	[dict setValue:[NSNumber numberWithBool:self.HasFileTab] forKey:@"HasFileTab"];
+	[dict setValue:[NSNumber numberWithBool:self.HasToDoTab] forKey:@"HasToDoTab"];
+	[dict setValue:[NSNumber numberWithBool:self.IsSystemMessage] forKey:@"IsSystemMessage"];
+	[dict setValue:[NSNumber numberWithBool:self.SelectedGroup] forKey:@"SelectedGroup"];
+
+	return dict;
+}
+
+@end
+
+// --- InlineHelp ---
+@implementation QXInlineHelp
+
+@synthesize QortexOverview;
+@synthesize WhatNext;
+@synthesize WhatChats;
+@synthesize InviteOthersURL;
+@synthesize WhatChatsURL;
+
+- (id) initWithDictionary:(NSDictionary*)dict{
+	self = [super init];
+	if (!self) {
+		return self;
+	}
+	if (![dict isKindOfClass:[NSDictionary class]]) {
+		return self;
+	}
+	[self setQortexOverview:[[dict valueForKey:@"QortexOverview"] boolValue]];
+	[self setWhatNext:[[dict valueForKey:@"WhatNext"] boolValue]];
+	[self setWhatChats:[[dict valueForKey:@"WhatChats"] boolValue]];
+	[self setInviteOthersURL:[dict valueForKey:@"InviteOthersURL"]];
+	[self setWhatChatsURL:[dict valueForKey:@"WhatChatsURL"]];
+
+	return self;
+}
+
+- (NSDictionary*) dictionary {
+	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
+	[dict setValue:[NSNumber numberWithBool:self.QortexOverview] forKey:@"QortexOverview"];
+	[dict setValue:[NSNumber numberWithBool:self.WhatNext] forKey:@"WhatNext"];
+	[dict setValue:[NSNumber numberWithBool:self.WhatChats] forKey:@"WhatChats"];
+	[dict setValue:self.InviteOthersURL forKey:@"InviteOthersURL"];
+	[dict setValue:self.WhatChatsURL forKey:@"WhatChatsURL"];
+
+	return dict;
+}
+
+@end
+
+// --- EmailChanger ---
+@implementation QXEmailChanger
+
+@synthesize Token;
+@synthesize Email;
+@synthesize SharingToken;
+
+- (id) initWithDictionary:(NSDictionary*)dict{
+	self = [super init];
+	if (!self) {
+		return self;
+	}
+	if (![dict isKindOfClass:[NSDictionary class]]) {
+		return self;
+	}
+	[self setToken:[dict valueForKey:@"Token"]];
+	[self setEmail:[dict valueForKey:@"Email"]];
+	[self setSharingToken:[dict valueForKey:@"SharingToken"]];
+
+	return self;
+}
+
+- (NSDictionary*) dictionary {
+	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
+	[dict setValue:self.Token forKey:@"Token"];
+	[dict setValue:self.Email forKey:@"Email"];
+	[dict setValue:self.SharingToken forKey:@"SharingToken"];
+
+	return dict;
+}
+
+@end
+
+// --- Newsletter ---
+@implementation QXNewsletter
 
 @synthesize Email;
-@synthesize Token;
-@synthesize SentAgo;
-@synthesize ByUser;
-@synthesize HideInPendingList;
 
 - (id) initWithDictionary:(NSDictionary*)dict{
 	self = [super init];
@@ -1719,14 +1618,6 @@ static NSDateFormatter * _dateFormatter;
 		return self;
 	}
 	[self setEmail:[dict valueForKey:@"Email"]];
-	[self setToken:[dict valueForKey:@"Token"]];
-	[self setSentAgo:[dict valueForKey:@"SentAgo"]];
-
-	id dictByUser = [dict valueForKey:@"ByUser"];
-	if ([dictByUser isKindOfClass:[NSDictionary class]]){
-		[self setByUser:[[QXEmbedUser alloc] initWithDictionary:dictByUser]];
-	}
-	[self setHideInPendingList:[[dict valueForKey:@"HideInPendingList"] boolValue]];
 
 	return self;
 }
@@ -1734,25 +1625,24 @@ static NSDateFormatter * _dateFormatter;
 - (NSDictionary*) dictionary {
 	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
 	[dict setValue:self.Email forKey:@"Email"];
-	[dict setValue:self.Token forKey:@"Token"];
-	[dict setValue:self.SentAgo forKey:@"SentAgo"];
-	[dict setValue:[self.ByUser dictionary] forKey:@"ByUser"];
-	
-	[dict setValue:[NSNumber numberWithBool:self.HideInPendingList] forKey:@"HideInPendingList"];
 
 	return dict;
 }
 
 @end
 
-// --- MyCount ---
-@implementation QXMyCount
+// --- ContactInfo ---
+@implementation QXContactInfo
 
-@synthesize UserId;
-@synthesize FollowedUnreadCount;
-@synthesize NotificationUnreadCount;
-@synthesize ActiveTasksCount;
-@synthesize GroupCounts;
+@synthesize FirstName;
+@synthesize LastName;
+@synthesize CompanyName;
+@synthesize CompanySize;
+@synthesize Email;
+@synthesize Phone;
+@synthesize Country;
+@synthesize City;
+@synthesize HelpContent;
 
 - (id) initWithDictionary:(NSDictionary*)dict{
 	self = [super init];
@@ -1762,36 +1652,192 @@ static NSDateFormatter * _dateFormatter;
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
-	[self setUserId:[dict valueForKey:@"UserId"]];
-	[self setFollowedUnreadCount:[dict valueForKey:@"FollowedUnreadCount"]];
-	[self setNotificationUnreadCount:[dict valueForKey:@"NotificationUnreadCount"]];
-	[self setActiveTasksCount:[dict valueForKey:@"ActiveTasksCount"]];
-
-	NSMutableArray * mGroupCounts = [[NSMutableArray alloc] init];
-	NSArray * lGroupCounts = [dict valueForKey:@"GroupCounts"];
-	if ([lGroupCounts isKindOfClass:[NSArray class]]) {
-		for (NSDictionary * d in lGroupCounts) {
-			[mGroupCounts addObject: [[QXGroupCount alloc] initWithDictionary:d]];
-		}
-		[self setGroupCounts:mGroupCounts];
-	}
+	[self setFirstName:[dict valueForKey:@"FirstName"]];
+	[self setLastName:[dict valueForKey:@"LastName"]];
+	[self setCompanyName:[dict valueForKey:@"CompanyName"]];
+	[self setCompanySize:[dict valueForKey:@"CompanySize"]];
+	[self setEmail:[dict valueForKey:@"Email"]];
+	[self setPhone:[dict valueForKey:@"Phone"]];
+	[self setCountry:[dict valueForKey:@"Country"]];
+	[self setCity:[dict valueForKey:@"City"]];
+	[self setHelpContent:[dict valueForKey:@"HelpContent"]];
 
 	return self;
 }
 
 - (NSDictionary*) dictionary {
 	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
-	[dict setValue:self.UserId forKey:@"UserId"];
-	[dict setValue:self.FollowedUnreadCount forKey:@"FollowedUnreadCount"];
-	[dict setValue:self.NotificationUnreadCount forKey:@"NotificationUnreadCount"];
-	[dict setValue:self.ActiveTasksCount forKey:@"ActiveTasksCount"];
+	[dict setValue:self.FirstName forKey:@"FirstName"];
+	[dict setValue:self.LastName forKey:@"LastName"];
+	[dict setValue:self.CompanyName forKey:@"CompanyName"];
+	[dict setValue:self.CompanySize forKey:@"CompanySize"];
+	[dict setValue:self.Email forKey:@"Email"];
+	[dict setValue:self.Phone forKey:@"Phone"];
+	[dict setValue:self.Country forKey:@"Country"];
+	[dict setValue:self.City forKey:@"City"];
+	[dict setValue:self.HelpContent forKey:@"HelpContent"];
 
-	NSMutableArray * mGroupCounts = [[NSMutableArray alloc] init];
-	for (QXGroupCount * p in GroupCounts) {
-		[mGroupCounts addObject:[p dictionary]];
+	return dict;
+}
+
+@end
+
+// --- TotalStats ---
+@implementation QXTotalStats
+
+@synthesize OrgCount;
+@synthesize MemberCount;
+@synthesize GroupCount;
+@synthesize EntryCount;
+@synthesize CommentCount;
+@synthesize ChatCount;
+
+- (id) initWithDictionary:(NSDictionary*)dict{
+	self = [super init];
+	if (!self) {
+		return self;
 	}
-	[dict setValue:mGroupCounts forKey:@"GroupCounts"];
-	
+	if (![dict isKindOfClass:[NSDictionary class]]) {
+		return self;
+	}
+	[self setOrgCount:[dict valueForKey:@"OrgCount"]];
+	[self setMemberCount:[dict valueForKey:@"MemberCount"]];
+	[self setGroupCount:[dict valueForKey:@"GroupCount"]];
+	[self setEntryCount:[dict valueForKey:@"EntryCount"]];
+	[self setCommentCount:[dict valueForKey:@"CommentCount"]];
+	[self setChatCount:[dict valueForKey:@"ChatCount"]];
+
+	return self;
+}
+
+- (NSDictionary*) dictionary {
+	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
+	[dict setValue:self.OrgCount forKey:@"OrgCount"];
+	[dict setValue:self.MemberCount forKey:@"MemberCount"];
+	[dict setValue:self.GroupCount forKey:@"GroupCount"];
+	[dict setValue:self.EntryCount forKey:@"EntryCount"];
+	[dict setValue:self.CommentCount forKey:@"CommentCount"];
+	[dict setValue:self.ChatCount forKey:@"ChatCount"];
+
+	return dict;
+}
+
+@end
+
+// --- AccessReq ---
+@implementation QXAccessReq
+
+@synthesize Email;
+@synthesize PriorityCode;
+@synthesize AccessCode;
+@synthesize Status;
+@synthesize ApprovedBy;
+@synthesize CreatedAt;
+@synthesize UpdatedAt;
+
+- (id) initWithDictionary:(NSDictionary*)dict{
+	self = [super init];
+	if (!self) {
+		return self;
+	}
+	if (![dict isKindOfClass:[NSDictionary class]]) {
+		return self;
+	}
+	[self setEmail:[dict valueForKey:@"Email"]];
+	[self setPriorityCode:[dict valueForKey:@"PriorityCode"]];
+	[self setAccessCode:[dict valueForKey:@"AccessCode"]];
+	[self setStatus:[dict valueForKey:@"Status"]];
+	[self setApprovedBy:[dict valueForKey:@"ApprovedBy"]];
+	[self setCreatedAt:[dict valueForKey:@"CreatedAt"]];
+	[self setUpdatedAt:[dict valueForKey:@"UpdatedAt"]];
+
+	return self;
+}
+
+- (NSDictionary*) dictionary {
+	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
+	[dict setValue:self.Email forKey:@"Email"];
+	[dict setValue:self.PriorityCode forKey:@"PriorityCode"];
+	[dict setValue:self.AccessCode forKey:@"AccessCode"];
+	[dict setValue:self.Status forKey:@"Status"];
+	[dict setValue:self.ApprovedBy forKey:@"ApprovedBy"];
+	[dict setValue:self.CreatedAt forKey:@"CreatedAt"];
+	[dict setValue:self.UpdatedAt forKey:@"UpdatedAt"];
+
+	return dict;
+}
+
+@end
+
+// --- InnerMessage ---
+@implementation QXInnerMessage
+
+@synthesize ByUser;
+@synthesize GroupName;
+@synthesize GroupLink;
+@synthesize OrgName;
+@synthesize IsDeletedGroupMessage;
+@synthesize IsCreatedGroupMessage;
+@synthesize IsSetupOrgMessage;
+
+- (id) initWithDictionary:(NSDictionary*)dict{
+	self = [super init];
+	if (!self) {
+		return self;
+	}
+	if (![dict isKindOfClass:[NSDictionary class]]) {
+		return self;
+	}
+	[self setByUser:[dict valueForKey:@"ByUser"]];
+	[self setGroupName:[dict valueForKey:@"GroupName"]];
+	[self setGroupLink:[dict valueForKey:@"GroupLink"]];
+	[self setOrgName:[dict valueForKey:@"OrgName"]];
+	[self setIsDeletedGroupMessage:[[dict valueForKey:@"IsDeletedGroupMessage"] boolValue]];
+	[self setIsCreatedGroupMessage:[[dict valueForKey:@"IsCreatedGroupMessage"] boolValue]];
+	[self setIsSetupOrgMessage:[[dict valueForKey:@"IsSetupOrgMessage"] boolValue]];
+
+	return self;
+}
+
+- (NSDictionary*) dictionary {
+	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
+	[dict setValue:self.ByUser forKey:@"ByUser"];
+	[dict setValue:self.GroupName forKey:@"GroupName"];
+	[dict setValue:self.GroupLink forKey:@"GroupLink"];
+	[dict setValue:self.OrgName forKey:@"OrgName"];
+	[dict setValue:[NSNumber numberWithBool:self.IsDeletedGroupMessage] forKey:@"IsDeletedGroupMessage"];
+	[dict setValue:[NSNumber numberWithBool:self.IsCreatedGroupMessage] forKey:@"IsCreatedGroupMessage"];
+	[dict setValue:[NSNumber numberWithBool:self.IsSetupOrgMessage] forKey:@"IsSetupOrgMessage"];
+
+	return dict;
+}
+
+@end
+
+// --- OrgUnreadInfo ---
+@implementation QXOrgUnreadInfo
+
+@synthesize OrgId;
+@synthesize FeedUnreadCount;
+
+- (id) initWithDictionary:(NSDictionary*)dict{
+	self = [super init];
+	if (!self) {
+		return self;
+	}
+	if (![dict isKindOfClass:[NSDictionary class]]) {
+		return self;
+	}
+	[self setOrgId:[dict valueForKey:@"OrgId"]];
+	[self setFeedUnreadCount:[dict valueForKey:@"FeedUnreadCount"]];
+
+	return self;
+}
+
+- (NSDictionary*) dictionary {
+	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
+	[dict setValue:self.OrgId forKey:@"OrgId"];
+	[dict setValue:self.FeedUnreadCount forKey:@"FeedUnreadCount"];
 
 	return dict;
 }
@@ -1847,39 +1893,23 @@ static NSDateFormatter * _dateFormatter;
 
 @end
 
-// --- Group ---
-@implementation QXGroup
+// --- Request ---
+@implementation QXRequest
 
 @synthesize Id;
-@synthesize Name;
-@synthesize Description;
-@synthesize GType;
-@synthesize LogoURL;
-@synthesize IconName;
-@synthesize Link;
-@synthesize Slug;
-@synthesize Author;
-@synthesize IsAdmin;
-@synthesize IsPrivate;
-@synthesize Editable;
-@synthesize Managable;
-@synthesize FollowedByMe;
-@synthesize AdministratedByMe;
-@synthesize IsPreShared;
-@synthesize IsShared;
-@synthesize IsDefaultLogoURL;
-@synthesize HostOrgName;
-@synthesize IsDispayHostOrgName;
-@synthesize EntriesCount;
-@synthesize FollowersCount;
-@synthesize IsAnnoucement;
-@synthesize GroupOwners;
-@synthesize SharedGroupFromOrg;
-@synthesize AcceptedEmbedOrgs;
-@synthesize PreSharingEmails;
-@synthesize ForwardedOrgs;
-@synthesize HasPendingItems;
-@synthesize GroupEmailAddress;
+@synthesize CurrentPrefixURL;
+@synthesize Info;
+@synthesize ActionButton;
+@synthesize FromOrg;
+@synthesize ToOrg;
+@synthesize SharedGroup;
+@synthesize SharedOrgIdHex;
+@synthesize FromUserIdHex;
+@synthesize SharedInvitee;
+@synthesize SharedInviter;
+@synthesize SharedResponsor;
+@synthesize ToEmail;
+@synthesize State;
 
 - (id) initWithDictionary:(NSDictionary*)dict{
 	self = [super init];
@@ -1890,67 +1920,43 @@ static NSDateFormatter * _dateFormatter;
 		return self;
 	}
 	[self setId:[dict valueForKey:@"Id"]];
-	[self setName:[dict valueForKey:@"Name"]];
-	[self setDescription:[dict valueForKey:@"Description"]];
-	[self setGType:[dict valueForKey:@"GType"]];
-	[self setLogoURL:[dict valueForKey:@"LogoURL"]];
-	[self setIconName:[dict valueForKey:@"IconName"]];
-	[self setLink:[dict valueForKey:@"Link"]];
-	[self setSlug:[dict valueForKey:@"Slug"]];
+	[self setCurrentPrefixURL:[dict valueForKey:@"CurrentPrefixURL"]];
+	[self setInfo:[dict valueForKey:@"Info"]];
+	[self setActionButton:[dict valueForKey:@"ActionButton"]];
 
-	id dictAuthor = [dict valueForKey:@"Author"];
-	if ([dictAuthor isKindOfClass:[NSDictionary class]]){
-		[self setAuthor:[[QXEmbedUser alloc] initWithDictionary:dictAuthor]];
-	}
-	[self setIsAdmin:[[dict valueForKey:@"IsAdmin"] boolValue]];
-	[self setIsPrivate:[[dict valueForKey:@"IsPrivate"] boolValue]];
-	[self setEditable:[[dict valueForKey:@"Editable"] boolValue]];
-	[self setManagable:[[dict valueForKey:@"Managable"] boolValue]];
-	[self setFollowedByMe:[[dict valueForKey:@"FollowedByMe"] boolValue]];
-	[self setAdministratedByMe:[[dict valueForKey:@"AdministratedByMe"] boolValue]];
-	[self setIsPreShared:[[dict valueForKey:@"IsPreShared"] boolValue]];
-	[self setIsShared:[[dict valueForKey:@"IsShared"] boolValue]];
-	[self setIsDefaultLogoURL:[[dict valueForKey:@"IsDefaultLogoURL"] boolValue]];
-	[self setHostOrgName:[dict valueForKey:@"HostOrgName"]];
-	[self setIsDispayHostOrgName:[[dict valueForKey:@"IsDispayHostOrgName"] boolValue]];
-	[self setEntriesCount:[dict valueForKey:@"EntriesCount"]];
-	[self setFollowersCount:[dict valueForKey:@"FollowersCount"]];
-	[self setIsAnnoucement:[[dict valueForKey:@"IsAnnoucement"] boolValue]];
-
-	NSMutableArray * mGroupOwners = [[NSMutableArray alloc] init];
-	NSArray * lGroupOwners = [dict valueForKey:@"GroupOwners"];
-	if ([lGroupOwners isKindOfClass:[NSArray class]]) {
-		for (NSDictionary * d in lGroupOwners) {
-			[mGroupOwners addObject: [[QXEmbedUser alloc] initWithDictionary:d]];
-		}
-		[self setGroupOwners:mGroupOwners];
+	id dictFromOrg = [dict valueForKey:@"FromOrg"];
+	if ([dictFromOrg isKindOfClass:[NSDictionary class]]){
+		[self setFromOrg:[[QXEmbedOrg alloc] initWithDictionary:dictFromOrg]];
 	}
 
-	id dictSharedGroupFromOrg = [dict valueForKey:@"SharedGroupFromOrg"];
-	if ([dictSharedGroupFromOrg isKindOfClass:[NSDictionary class]]){
-		[self setSharedGroupFromOrg:[[QXEmbedOrg alloc] initWithDictionary:dictSharedGroupFromOrg]];
+	id dictToOrg = [dict valueForKey:@"ToOrg"];
+	if ([dictToOrg isKindOfClass:[NSDictionary class]]){
+		[self setToOrg:[[QXEmbedOrg alloc] initWithDictionary:dictToOrg]];
 	}
 
-	NSMutableArray * mAcceptedEmbedOrgs = [[NSMutableArray alloc] init];
-	NSArray * lAcceptedEmbedOrgs = [dict valueForKey:@"AcceptedEmbedOrgs"];
-	if ([lAcceptedEmbedOrgs isKindOfClass:[NSArray class]]) {
-		for (NSDictionary * d in lAcceptedEmbedOrgs) {
-			[mAcceptedEmbedOrgs addObject: [[QXEmbedOrg alloc] initWithDictionary:d]];
-		}
-		[self setAcceptedEmbedOrgs:mAcceptedEmbedOrgs];
+	id dictSharedGroup = [dict valueForKey:@"SharedGroup"];
+	if ([dictSharedGroup isKindOfClass:[NSDictionary class]]){
+		[self setSharedGroup:[[QXEmbedGroup alloc] initWithDictionary:dictSharedGroup]];
 	}
-	[self setPreSharingEmails:[dict valueForKey:@"PreSharingEmails"]];
+	[self setSharedOrgIdHex:[dict valueForKey:@"SharedOrgIdHex"]];
+	[self setFromUserIdHex:[dict valueForKey:@"FromUserIdHex"]];
 
-	NSMutableArray * mForwardedOrgs = [[NSMutableArray alloc] init];
-	NSArray * lForwardedOrgs = [dict valueForKey:@"ForwardedOrgs"];
-	if ([lForwardedOrgs isKindOfClass:[NSArray class]]) {
-		for (NSDictionary * d in lForwardedOrgs) {
-			[mForwardedOrgs addObject: [[QXEmbedOrg alloc] initWithDictionary:d]];
-		}
-		[self setForwardedOrgs:mForwardedOrgs];
+	id dictSharedInvitee = [dict valueForKey:@"SharedInvitee"];
+	if ([dictSharedInvitee isKindOfClass:[NSDictionary class]]){
+		[self setSharedInvitee:[[QXEmbedUser alloc] initWithDictionary:dictSharedInvitee]];
 	}
-	[self setHasPendingItems:[[dict valueForKey:@"HasPendingItems"] boolValue]];
-	[self setGroupEmailAddress:[dict valueForKey:@"GroupEmailAddress"]];
+
+	id dictSharedInviter = [dict valueForKey:@"SharedInviter"];
+	if ([dictSharedInviter isKindOfClass:[NSDictionary class]]){
+		[self setSharedInviter:[[QXEmbedUser alloc] initWithDictionary:dictSharedInviter]];
+	}
+
+	id dictSharedResponsor = [dict valueForKey:@"SharedResponsor"];
+	if ([dictSharedResponsor isKindOfClass:[NSDictionary class]]){
+		[self setSharedResponsor:[[QXEmbedUser alloc] initWithDictionary:dictSharedResponsor]];
+	}
+	[self setToEmail:[dict valueForKey:@"ToEmail"]];
+	[self setState:[dict valueForKey:@"State"]];
 
 	return self;
 }
@@ -1958,55 +1964,251 @@ static NSDateFormatter * _dateFormatter;
 - (NSDictionary*) dictionary {
 	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
 	[dict setValue:self.Id forKey:@"Id"];
+	[dict setValue:self.CurrentPrefixURL forKey:@"CurrentPrefixURL"];
+	[dict setValue:self.Info forKey:@"Info"];
+	[dict setValue:self.ActionButton forKey:@"ActionButton"];
+	[dict setValue:[self.FromOrg dictionary] forKey:@"FromOrg"];
+	
+	[dict setValue:[self.ToOrg dictionary] forKey:@"ToOrg"];
+	
+	[dict setValue:[self.SharedGroup dictionary] forKey:@"SharedGroup"];
+	
+	[dict setValue:self.SharedOrgIdHex forKey:@"SharedOrgIdHex"];
+	[dict setValue:self.FromUserIdHex forKey:@"FromUserIdHex"];
+	[dict setValue:[self.SharedInvitee dictionary] forKey:@"SharedInvitee"];
+	
+	[dict setValue:[self.SharedInviter dictionary] forKey:@"SharedInviter"];
+	
+	[dict setValue:[self.SharedResponsor dictionary] forKey:@"SharedResponsor"];
+	
+	[dict setValue:self.ToEmail forKey:@"ToEmail"];
+	[dict setValue:self.State forKey:@"State"];
+
+	return dict;
+}
+
+@end
+
+// --- Member ---
+@implementation QXMember
+
+@synthesize Name;
+@synthesize Email;
+@synthesize ComfirmationSentAt;
+@synthesize SignupConfirmedAt;
+@synthesize SignupStatus;
+@synthesize JoinedOrgs;
+
+- (id) initWithDictionary:(NSDictionary*)dict{
+	self = [super init];
+	if (!self) {
+		return self;
+	}
+	if (![dict isKindOfClass:[NSDictionary class]]) {
+		return self;
+	}
+	[self setName:[dict valueForKey:@"Name"]];
+	[self setEmail:[dict valueForKey:@"Email"]];
+	[self setComfirmationSentAt:[dict valueForKey:@"ComfirmationSentAt"]];
+	[self setSignupConfirmedAt:[dict valueForKey:@"SignupConfirmedAt"]];
+	[self setSignupStatus:[dict valueForKey:@"SignupStatus"]];
+
+	NSMutableArray * mJoinedOrgs = [[NSMutableArray alloc] init];
+	NSArray * lJoinedOrgs = [dict valueForKey:@"JoinedOrgs"];
+	if ([lJoinedOrgs isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lJoinedOrgs) {
+			[mJoinedOrgs addObject: [[QXOrganization alloc] initWithDictionary:d]];
+		}
+		[self setJoinedOrgs:mJoinedOrgs];
+	}
+
+	return self;
+}
+
+- (NSDictionary*) dictionary {
+	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
 	[dict setValue:self.Name forKey:@"Name"];
-	[dict setValue:self.Description forKey:@"Description"];
-	[dict setValue:self.GType forKey:@"GType"];
-	[dict setValue:self.LogoURL forKey:@"LogoURL"];
-	[dict setValue:self.IconName forKey:@"IconName"];
-	[dict setValue:self.Link forKey:@"Link"];
-	[dict setValue:self.Slug forKey:@"Slug"];
-	[dict setValue:[self.Author dictionary] forKey:@"Author"];
-	
-	[dict setValue:[NSNumber numberWithBool:self.IsAdmin] forKey:@"IsAdmin"];
-	[dict setValue:[NSNumber numberWithBool:self.IsPrivate] forKey:@"IsPrivate"];
-	[dict setValue:[NSNumber numberWithBool:self.Editable] forKey:@"Editable"];
-	[dict setValue:[NSNumber numberWithBool:self.Managable] forKey:@"Managable"];
-	[dict setValue:[NSNumber numberWithBool:self.FollowedByMe] forKey:@"FollowedByMe"];
-	[dict setValue:[NSNumber numberWithBool:self.AdministratedByMe] forKey:@"AdministratedByMe"];
-	[dict setValue:[NSNumber numberWithBool:self.IsPreShared] forKey:@"IsPreShared"];
-	[dict setValue:[NSNumber numberWithBool:self.IsShared] forKey:@"IsShared"];
-	[dict setValue:[NSNumber numberWithBool:self.IsDefaultLogoURL] forKey:@"IsDefaultLogoURL"];
-	[dict setValue:self.HostOrgName forKey:@"HostOrgName"];
-	[dict setValue:[NSNumber numberWithBool:self.IsDispayHostOrgName] forKey:@"IsDispayHostOrgName"];
-	[dict setValue:self.EntriesCount forKey:@"EntriesCount"];
-	[dict setValue:self.FollowersCount forKey:@"FollowersCount"];
-	[dict setValue:[NSNumber numberWithBool:self.IsAnnoucement] forKey:@"IsAnnoucement"];
+	[dict setValue:self.Email forKey:@"Email"];
+	[dict setValue:self.ComfirmationSentAt forKey:@"ComfirmationSentAt"];
+	[dict setValue:self.SignupConfirmedAt forKey:@"SignupConfirmedAt"];
+	[dict setValue:self.SignupStatus forKey:@"SignupStatus"];
 
-	NSMutableArray * mGroupOwners = [[NSMutableArray alloc] init];
-	for (QXEmbedUser * p in GroupOwners) {
-		[mGroupOwners addObject:[p dictionary]];
+	NSMutableArray * mJoinedOrgs = [[NSMutableArray alloc] init];
+	for (QXOrganization * p in JoinedOrgs) {
+		[mJoinedOrgs addObject:[p dictionary]];
 	}
-	[dict setValue:mGroupOwners forKey:@"GroupOwners"];
-	
-	[dict setValue:[self.SharedGroupFromOrg dictionary] forKey:@"SharedGroupFromOrg"];
+	[dict setValue:mJoinedOrgs forKey:@"JoinedOrgs"];
 	
 
-	NSMutableArray * mAcceptedEmbedOrgs = [[NSMutableArray alloc] init];
-	for (QXEmbedOrg * p in AcceptedEmbedOrgs) {
-		[mAcceptedEmbedOrgs addObject:[p dictionary]];
-	}
-	[dict setValue:mAcceptedEmbedOrgs forKey:@"AcceptedEmbedOrgs"];
-	
-	[dict setValue:self.PreSharingEmails forKey:@"PreSharingEmails"];
+	return dict;
+}
 
-	NSMutableArray * mForwardedOrgs = [[NSMutableArray alloc] init];
-	for (QXEmbedOrg * p in ForwardedOrgs) {
-		[mForwardedOrgs addObject:[p dictionary]];
+@end
+
+// --- QortexSupport ---
+@implementation QXQortexSupport
+
+@synthesize Audience;
+@synthesize IsToOffical;
+@synthesize IsToAllUsers;
+@synthesize IsToAllAdmins;
+@synthesize IsToOrganizations;
+@synthesize FromOrg;
+@synthesize ToOrgs;
+@synthesize ToOrgsHtml;
+
+- (id) initWithDictionary:(NSDictionary*)dict{
+	self = [super init];
+	if (!self) {
+		return self;
 	}
-	[dict setValue:mForwardedOrgs forKey:@"ForwardedOrgs"];
+	if (![dict isKindOfClass:[NSDictionary class]]) {
+		return self;
+	}
+	[self setAudience:[dict valueForKey:@"Audience"]];
+	[self setIsToOffical:[[dict valueForKey:@"IsToOffical"] boolValue]];
+	[self setIsToAllUsers:[[dict valueForKey:@"IsToAllUsers"] boolValue]];
+	[self setIsToAllAdmins:[[dict valueForKey:@"IsToAllAdmins"] boolValue]];
+	[self setIsToOrganizations:[[dict valueForKey:@"IsToOrganizations"] boolValue]];
+
+	id dictFromOrg = [dict valueForKey:@"FromOrg"];
+	if ([dictFromOrg isKindOfClass:[NSDictionary class]]){
+		[self setFromOrg:[[QXEmbedOrg alloc] initWithDictionary:dictFromOrg]];
+	}
+
+	NSMutableArray * mToOrgs = [[NSMutableArray alloc] init];
+	NSArray * lToOrgs = [dict valueForKey:@"ToOrgs"];
+	if ([lToOrgs isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lToOrgs) {
+			[mToOrgs addObject: [[QXEmbedOrg alloc] initWithDictionary:d]];
+		}
+		[self setToOrgs:mToOrgs];
+	}
+	[self setToOrgsHtml:[dict valueForKey:@"ToOrgsHtml"]];
+
+	return self;
+}
+
+- (NSDictionary*) dictionary {
+	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
+	[dict setValue:self.Audience forKey:@"Audience"];
+	[dict setValue:[NSNumber numberWithBool:self.IsToOffical] forKey:@"IsToOffical"];
+	[dict setValue:[NSNumber numberWithBool:self.IsToAllUsers] forKey:@"IsToAllUsers"];
+	[dict setValue:[NSNumber numberWithBool:self.IsToAllAdmins] forKey:@"IsToAllAdmins"];
+	[dict setValue:[NSNumber numberWithBool:self.IsToOrganizations] forKey:@"IsToOrganizations"];
+	[dict setValue:[self.FromOrg dictionary] forKey:@"FromOrg"];
 	
-	[dict setValue:[NSNumber numberWithBool:self.HasPendingItems] forKey:@"HasPendingItems"];
-	[dict setValue:self.GroupEmailAddress forKey:@"GroupEmailAddress"];
+
+	NSMutableArray * mToOrgs = [[NSMutableArray alloc] init];
+	for (QXEmbedOrg * p in ToOrgs) {
+		[mToOrgs addObject:[p dictionary]];
+	}
+	[dict setValue:mToOrgs forKey:@"ToOrgs"];
+	
+	[dict setValue:self.ToOrgsHtml forKey:@"ToOrgsHtml"];
+
+	return dict;
+}
+
+@end
+
+// --- Message ---
+@implementation QXMessage
+
+@synthesize Id;
+@synthesize ConversationId;
+@synthesize UserId;
+@synthesize Content;
+@synthesize HtmlContent;
+@synthesize CreatedAt;
+@synthesize EmbedUser;
+@synthesize ShowUser;
+@synthesize IsOffline;
+@synthesize HighlightedContent;
+
+- (id) initWithDictionary:(NSDictionary*)dict{
+	self = [super init];
+	if (!self) {
+		return self;
+	}
+	if (![dict isKindOfClass:[NSDictionary class]]) {
+		return self;
+	}
+	[self setId:[dict valueForKey:@"Id"]];
+	[self setConversationId:[dict valueForKey:@"ConversationId"]];
+	[self setUserId:[dict valueForKey:@"UserId"]];
+	[self setContent:[dict valueForKey:@"Content"]];
+	[self setHtmlContent:[dict valueForKey:@"HtmlContent"]];
+	[self setCreatedAt:[QXQortexapi dateFromString:[dict valueForKey:@"CreatedAt"]]];
+
+	id dictEmbedUser = [dict valueForKey:@"EmbedUser"];
+	if ([dictEmbedUser isKindOfClass:[NSDictionary class]]){
+		[self setEmbedUser:[[QXEmbedUser alloc] initWithDictionary:dictEmbedUser]];
+	}
+	[self setShowUser:[[dict valueForKey:@"ShowUser"] boolValue]];
+	[self setIsOffline:[[dict valueForKey:@"IsOffline"] boolValue]];
+	[self setHighlightedContent:[dict valueForKey:@"HighlightedContent"]];
+
+	return self;
+}
+
+- (NSDictionary*) dictionary {
+	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
+	[dict setValue:self.Id forKey:@"Id"];
+	[dict setValue:self.ConversationId forKey:@"ConversationId"];
+	[dict setValue:self.UserId forKey:@"UserId"];
+	[dict setValue:self.Content forKey:@"Content"];
+	[dict setValue:self.HtmlContent forKey:@"HtmlContent"];
+	[dict setValue:[QXQortexapi stringFromDate:self.CreatedAt] forKey:@"CreatedAt"];
+	[dict setValue:[self.EmbedUser dictionary] forKey:@"EmbedUser"];
+	
+	[dict setValue:[NSNumber numberWithBool:self.ShowUser] forKey:@"ShowUser"];
+	[dict setValue:[NSNumber numberWithBool:self.IsOffline] forKey:@"IsOffline"];
+	[dict setValue:self.HighlightedContent forKey:@"HighlightedContent"];
+
+	return dict;
+}
+
+@end
+
+// --- Invitation ---
+@implementation QXInvitation
+
+@synthesize Email;
+@synthesize Token;
+@synthesize SentAgo;
+@synthesize ByUser;
+@synthesize HideInPendingList;
+
+- (id) initWithDictionary:(NSDictionary*)dict{
+	self = [super init];
+	if (!self) {
+		return self;
+	}
+	if (![dict isKindOfClass:[NSDictionary class]]) {
+		return self;
+	}
+	[self setEmail:[dict valueForKey:@"Email"]];
+	[self setToken:[dict valueForKey:@"Token"]];
+	[self setSentAgo:[dict valueForKey:@"SentAgo"]];
+
+	id dictByUser = [dict valueForKey:@"ByUser"];
+	if ([dictByUser isKindOfClass:[NSDictionary class]]){
+		[self setByUser:[[QXEmbedUser alloc] initWithDictionary:dictByUser]];
+	}
+	[self setHideInPendingList:[[dict valueForKey:@"HideInPendingList"] boolValue]];
+
+	return self;
+}
+
+- (NSDictionary*) dictionary {
+	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
+	[dict setValue:self.Email forKey:@"Email"];
+	[dict setValue:self.Token forKey:@"Token"];
+	[dict setValue:self.SentAgo forKey:@"SentAgo"];
+	[dict setValue:[self.ByUser dictionary] forKey:@"ByUser"];
+	
+	[dict setValue:[NSNumber numberWithBool:self.HideInPendingList] forKey:@"HideInPendingList"];
 
 	return dict;
 }
@@ -2077,121 +2279,16 @@ static NSDateFormatter * _dateFormatter;
 
 @end
 
-// --- GroupSelector ---
-@implementation QXGroupSelector
+// --- EntryVersion ---
+@implementation QXEntryVersion
 
-@synthesize Header;
-@synthesize SelectedGroupId;
-@synthesize SysMessage;
-@synthesize FollowingNormalGroups;
-@synthesize FollowingSharedGroups;
-@synthesize UnFollowingNormalGroups;
-@synthesize UnFollowingSharedGroups;
-
-- (id) initWithDictionary:(NSDictionary*)dict{
-	self = [super init];
-	if (!self) {
-		return self;
-	}
-	if (![dict isKindOfClass:[NSDictionary class]]) {
-		return self;
-	}
-	[self setHeader:[dict valueForKey:@"Header"]];
-	[self setSelectedGroupId:[dict valueForKey:@"SelectedGroupId"]];
-
-	id dictSysMessage = [dict valueForKey:@"SysMessage"];
-	if ([dictSysMessage isKindOfClass:[NSDictionary class]]){
-		[self setSysMessage:[[QXGroupSelectorItem alloc] initWithDictionary:dictSysMessage]];
-	}
-
-	NSMutableArray * mFollowingNormalGroups = [[NSMutableArray alloc] init];
-	NSArray * lFollowingNormalGroups = [dict valueForKey:@"FollowingNormalGroups"];
-	if ([lFollowingNormalGroups isKindOfClass:[NSArray class]]) {
-		for (NSDictionary * d in lFollowingNormalGroups) {
-			[mFollowingNormalGroups addObject: [[QXGroupSelectorItem alloc] initWithDictionary:d]];
-		}
-		[self setFollowingNormalGroups:mFollowingNormalGroups];
-	}
-
-	NSMutableArray * mFollowingSharedGroups = [[NSMutableArray alloc] init];
-	NSArray * lFollowingSharedGroups = [dict valueForKey:@"FollowingSharedGroups"];
-	if ([lFollowingSharedGroups isKindOfClass:[NSArray class]]) {
-		for (NSDictionary * d in lFollowingSharedGroups) {
-			[mFollowingSharedGroups addObject: [[QXGroupSelectorItem alloc] initWithDictionary:d]];
-		}
-		[self setFollowingSharedGroups:mFollowingSharedGroups];
-	}
-
-	NSMutableArray * mUnFollowingNormalGroups = [[NSMutableArray alloc] init];
-	NSArray * lUnFollowingNormalGroups = [dict valueForKey:@"UnFollowingNormalGroups"];
-	if ([lUnFollowingNormalGroups isKindOfClass:[NSArray class]]) {
-		for (NSDictionary * d in lUnFollowingNormalGroups) {
-			[mUnFollowingNormalGroups addObject: [[QXGroupSelectorItem alloc] initWithDictionary:d]];
-		}
-		[self setUnFollowingNormalGroups:mUnFollowingNormalGroups];
-	}
-
-	NSMutableArray * mUnFollowingSharedGroups = [[NSMutableArray alloc] init];
-	NSArray * lUnFollowingSharedGroups = [dict valueForKey:@"UnFollowingSharedGroups"];
-	if ([lUnFollowingSharedGroups isKindOfClass:[NSArray class]]) {
-		for (NSDictionary * d in lUnFollowingSharedGroups) {
-			[mUnFollowingSharedGroups addObject: [[QXGroupSelectorItem alloc] initWithDictionary:d]];
-		}
-		[self setUnFollowingSharedGroups:mUnFollowingSharedGroups];
-	}
-
-	return self;
-}
-
-- (NSDictionary*) dictionary {
-	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
-	[dict setValue:self.Header forKey:@"Header"];
-	[dict setValue:self.SelectedGroupId forKey:@"SelectedGroupId"];
-	[dict setValue:[self.SysMessage dictionary] forKey:@"SysMessage"];
-	
-
-	NSMutableArray * mFollowingNormalGroups = [[NSMutableArray alloc] init];
-	for (QXGroupSelectorItem * p in FollowingNormalGroups) {
-		[mFollowingNormalGroups addObject:[p dictionary]];
-	}
-	[dict setValue:mFollowingNormalGroups forKey:@"FollowingNormalGroups"];
-	
-
-	NSMutableArray * mFollowingSharedGroups = [[NSMutableArray alloc] init];
-	for (QXGroupSelectorItem * p in FollowingSharedGroups) {
-		[mFollowingSharedGroups addObject:[p dictionary]];
-	}
-	[dict setValue:mFollowingSharedGroups forKey:@"FollowingSharedGroups"];
-	
-
-	NSMutableArray * mUnFollowingNormalGroups = [[NSMutableArray alloc] init];
-	for (QXGroupSelectorItem * p in UnFollowingNormalGroups) {
-		[mUnFollowingNormalGroups addObject:[p dictionary]];
-	}
-	[dict setValue:mUnFollowingNormalGroups forKey:@"UnFollowingNormalGroups"];
-	
-
-	NSMutableArray * mUnFollowingSharedGroups = [[NSMutableArray alloc] init];
-	for (QXGroupSelectorItem * p in UnFollowingSharedGroups) {
-		[mUnFollowingSharedGroups addObject:[p dictionary]];
-	}
-	[dict setValue:mUnFollowingSharedGroups forKey:@"UnFollowingSharedGroups"];
-	
-
-	return dict;
-}
-
-@end
-
-// --- Member ---
-@implementation QXMember
-
-@synthesize Name;
-@synthesize Email;
-@synthesize ComfirmationSentAt;
-@synthesize SignupConfirmedAt;
-@synthesize SignupStatus;
-@synthesize JoinedOrgs;
+@synthesize Id;
+@synthesize GroupId;
+@synthesize UpdatedAt;
+@synthesize LocalUpdatedAt;
+@synthesize UpdatedAtUnixNano;
+@synthesize CurrentVersionEditor;
+@synthesize IsNewVersion;
 
 - (id) initWithDictionary:(NSDictionary*)dict{
 	self = [super init];
@@ -2201,38 +2298,31 @@ static NSDateFormatter * _dateFormatter;
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
-	[self setName:[dict valueForKey:@"Name"]];
-	[self setEmail:[dict valueForKey:@"Email"]];
-	[self setComfirmationSentAt:[dict valueForKey:@"ComfirmationSentAt"]];
-	[self setSignupConfirmedAt:[dict valueForKey:@"SignupConfirmedAt"]];
-	[self setSignupStatus:[dict valueForKey:@"SignupStatus"]];
+	[self setId:[dict valueForKey:@"Id"]];
+	[self setGroupId:[dict valueForKey:@"GroupId"]];
+	[self setUpdatedAt:[QXQortexapi dateFromString:[dict valueForKey:@"UpdatedAt"]]];
+	[self setLocalUpdatedAt:[dict valueForKey:@"LocalUpdatedAt"]];
+	[self setUpdatedAtUnixNano:[dict valueForKey:@"UpdatedAtUnixNano"]];
 
-	NSMutableArray * mJoinedOrgs = [[NSMutableArray alloc] init];
-	NSArray * lJoinedOrgs = [dict valueForKey:@"JoinedOrgs"];
-	if ([lJoinedOrgs isKindOfClass:[NSArray class]]) {
-		for (NSDictionary * d in lJoinedOrgs) {
-			[mJoinedOrgs addObject: [[QXOrganization alloc] initWithDictionary:d]];
-		}
-		[self setJoinedOrgs:mJoinedOrgs];
+	id dictCurrentVersionEditor = [dict valueForKey:@"CurrentVersionEditor"];
+	if ([dictCurrentVersionEditor isKindOfClass:[NSDictionary class]]){
+		[self setCurrentVersionEditor:[[QXEmbedUser alloc] initWithDictionary:dictCurrentVersionEditor]];
 	}
+	[self setIsNewVersion:[[dict valueForKey:@"IsNewVersion"] boolValue]];
 
 	return self;
 }
 
 - (NSDictionary*) dictionary {
 	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
-	[dict setValue:self.Name forKey:@"Name"];
-	[dict setValue:self.Email forKey:@"Email"];
-	[dict setValue:self.ComfirmationSentAt forKey:@"ComfirmationSentAt"];
-	[dict setValue:self.SignupConfirmedAt forKey:@"SignupConfirmedAt"];
-	[dict setValue:self.SignupStatus forKey:@"SignupStatus"];
-
-	NSMutableArray * mJoinedOrgs = [[NSMutableArray alloc] init];
-	for (QXOrganization * p in JoinedOrgs) {
-		[mJoinedOrgs addObject:[p dictionary]];
-	}
-	[dict setValue:mJoinedOrgs forKey:@"JoinedOrgs"];
+	[dict setValue:self.Id forKey:@"Id"];
+	[dict setValue:self.GroupId forKey:@"GroupId"];
+	[dict setValue:[QXQortexapi stringFromDate:self.UpdatedAt] forKey:@"UpdatedAt"];
+	[dict setValue:self.LocalUpdatedAt forKey:@"LocalUpdatedAt"];
+	[dict setValue:self.UpdatedAtUnixNano forKey:@"UpdatedAtUnixNano"];
+	[dict setValue:[self.CurrentVersionEditor dictionary] forKey:@"CurrentVersionEditor"];
 	
+	[dict setValue:[NSNumber numberWithBool:self.IsNewVersion] forKey:@"IsNewVersion"];
 
 	return dict;
 }
@@ -2391,16 +2481,30 @@ static NSDateFormatter * _dateFormatter;
 
 @end
 
-// --- EntryVersion ---
-@implementation QXEntryVersion
+// --- ShareRequest ---
+@implementation QXShareRequest
 
 @synthesize Id;
-@synthesize GroupId;
-@synthesize UpdatedAt;
-@synthesize LocalUpdatedAt;
-@synthesize UpdatedAtUnixNano;
-@synthesize CurrentVersionEditor;
-@synthesize IsNewVersion;
+@synthesize FromUser;
+@synthesize ToUser;
+@synthesize Responser;
+@synthesize FromOrg;
+@synthesize ToOrg;
+@synthesize JoinedOrgs;
+@synthesize SharedGroup;
+@synthesize Token;
+@synthesize ToEmail;
+@synthesize PendingDuration;
+@synthesize IsNewAccount;
+@synthesize IsPending;
+@synthesize IsAccepted;
+@synthesize IsRejected;
+@synthesize IsForwarded;
+@synthesize IsCanceled;
+@synthesize IsStopped;
+@synthesize Info;
+@synthesize ActionButton;
+@synthesize RequestBarHtml;
 
 - (id) initWithDictionary:(NSDictionary*)dict{
 	self = [super init];
@@ -2411,16 +2515,58 @@ static NSDateFormatter * _dateFormatter;
 		return self;
 	}
 	[self setId:[dict valueForKey:@"Id"]];
-	[self setGroupId:[dict valueForKey:@"GroupId"]];
-	[self setUpdatedAt:[QXQortexapi dateFromString:[dict valueForKey:@"UpdatedAt"]]];
-	[self setLocalUpdatedAt:[dict valueForKey:@"LocalUpdatedAt"]];
-	[self setUpdatedAtUnixNano:[dict valueForKey:@"UpdatedAtUnixNano"]];
 
-	id dictCurrentVersionEditor = [dict valueForKey:@"CurrentVersionEditor"];
-	if ([dictCurrentVersionEditor isKindOfClass:[NSDictionary class]]){
-		[self setCurrentVersionEditor:[[QXEmbedUser alloc] initWithDictionary:dictCurrentVersionEditor]];
+	id dictFromUser = [dict valueForKey:@"FromUser"];
+	if ([dictFromUser isKindOfClass:[NSDictionary class]]){
+		[self setFromUser:[[QXEmbedUser alloc] initWithDictionary:dictFromUser]];
 	}
-	[self setIsNewVersion:[[dict valueForKey:@"IsNewVersion"] boolValue]];
+
+	id dictToUser = [dict valueForKey:@"ToUser"];
+	if ([dictToUser isKindOfClass:[NSDictionary class]]){
+		[self setToUser:[[QXEmbedUser alloc] initWithDictionary:dictToUser]];
+	}
+
+	id dictResponser = [dict valueForKey:@"Responser"];
+	if ([dictResponser isKindOfClass:[NSDictionary class]]){
+		[self setResponser:[[QXEmbedUser alloc] initWithDictionary:dictResponser]];
+	}
+
+	id dictFromOrg = [dict valueForKey:@"FromOrg"];
+	if ([dictFromOrg isKindOfClass:[NSDictionary class]]){
+		[self setFromOrg:[[QXEmbedOrg alloc] initWithDictionary:dictFromOrg]];
+	}
+
+	id dictToOrg = [dict valueForKey:@"ToOrg"];
+	if ([dictToOrg isKindOfClass:[NSDictionary class]]){
+		[self setToOrg:[[QXEmbedOrg alloc] initWithDictionary:dictToOrg]];
+	}
+
+	NSMutableArray * mJoinedOrgs = [[NSMutableArray alloc] init];
+	NSArray * lJoinedOrgs = [dict valueForKey:@"JoinedOrgs"];
+	if ([lJoinedOrgs isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lJoinedOrgs) {
+			[mJoinedOrgs addObject: [[QXEmbedOrg alloc] initWithDictionary:d]];
+		}
+		[self setJoinedOrgs:mJoinedOrgs];
+	}
+
+	id dictSharedGroup = [dict valueForKey:@"SharedGroup"];
+	if ([dictSharedGroup isKindOfClass:[NSDictionary class]]){
+		[self setSharedGroup:[[QXEmbedGroup alloc] initWithDictionary:dictSharedGroup]];
+	}
+	[self setToken:[dict valueForKey:@"Token"]];
+	[self setToEmail:[dict valueForKey:@"ToEmail"]];
+	[self setPendingDuration:[dict valueForKey:@"PendingDuration"]];
+	[self setIsNewAccount:[[dict valueForKey:@"IsNewAccount"] boolValue]];
+	[self setIsPending:[[dict valueForKey:@"IsPending"] boolValue]];
+	[self setIsAccepted:[[dict valueForKey:@"IsAccepted"] boolValue]];
+	[self setIsRejected:[[dict valueForKey:@"IsRejected"] boolValue]];
+	[self setIsForwarded:[[dict valueForKey:@"IsForwarded"] boolValue]];
+	[self setIsCanceled:[[dict valueForKey:@"IsCanceled"] boolValue]];
+	[self setIsStopped:[[dict valueForKey:@"IsStopped"] boolValue]];
+	[self setInfo:[dict valueForKey:@"Info"]];
+	[self setActionButton:[dict valueForKey:@"ActionButton"]];
+	[self setRequestBarHtml:[dict valueForKey:@"RequestBarHtml"]];
 
 	return self;
 }
@@ -2428,31 +2574,58 @@ static NSDateFormatter * _dateFormatter;
 - (NSDictionary*) dictionary {
 	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
 	[dict setValue:self.Id forKey:@"Id"];
-	[dict setValue:self.GroupId forKey:@"GroupId"];
-	[dict setValue:[QXQortexapi stringFromDate:self.UpdatedAt] forKey:@"UpdatedAt"];
-	[dict setValue:self.LocalUpdatedAt forKey:@"LocalUpdatedAt"];
-	[dict setValue:self.UpdatedAtUnixNano forKey:@"UpdatedAtUnixNano"];
-	[dict setValue:[self.CurrentVersionEditor dictionary] forKey:@"CurrentVersionEditor"];
+	[dict setValue:[self.FromUser dictionary] forKey:@"FromUser"];
 	
-	[dict setValue:[NSNumber numberWithBool:self.IsNewVersion] forKey:@"IsNewVersion"];
+	[dict setValue:[self.ToUser dictionary] forKey:@"ToUser"];
+	
+	[dict setValue:[self.Responser dictionary] forKey:@"Responser"];
+	
+	[dict setValue:[self.FromOrg dictionary] forKey:@"FromOrg"];
+	
+	[dict setValue:[self.ToOrg dictionary] forKey:@"ToOrg"];
+	
+
+	NSMutableArray * mJoinedOrgs = [[NSMutableArray alloc] init];
+	for (QXEmbedOrg * p in JoinedOrgs) {
+		[mJoinedOrgs addObject:[p dictionary]];
+	}
+	[dict setValue:mJoinedOrgs forKey:@"JoinedOrgs"];
+	
+	[dict setValue:[self.SharedGroup dictionary] forKey:@"SharedGroup"];
+	
+	[dict setValue:self.Token forKey:@"Token"];
+	[dict setValue:self.ToEmail forKey:@"ToEmail"];
+	[dict setValue:self.PendingDuration forKey:@"PendingDuration"];
+	[dict setValue:[NSNumber numberWithBool:self.IsNewAccount] forKey:@"IsNewAccount"];
+	[dict setValue:[NSNumber numberWithBool:self.IsPending] forKey:@"IsPending"];
+	[dict setValue:[NSNumber numberWithBool:self.IsAccepted] forKey:@"IsAccepted"];
+	[dict setValue:[NSNumber numberWithBool:self.IsRejected] forKey:@"IsRejected"];
+	[dict setValue:[NSNumber numberWithBool:self.IsForwarded] forKey:@"IsForwarded"];
+	[dict setValue:[NSNumber numberWithBool:self.IsCanceled] forKey:@"IsCanceled"];
+	[dict setValue:[NSNumber numberWithBool:self.IsStopped] forKey:@"IsStopped"];
+	[dict setValue:self.Info forKey:@"Info"];
+	[dict setValue:self.ActionButton forKey:@"ActionButton"];
+	[dict setValue:self.RequestBarHtml forKey:@"RequestBarHtml"];
 
 	return dict;
 }
 
 @end
 
-// --- Message ---
-@implementation QXMessage
+// --- BlogEntry ---
+@implementation QXBlogEntry
 
 @synthesize Id;
-@synthesize ConversationId;
-@synthesize UserId;
-@synthesize Content;
-@synthesize HtmlContent;
+@synthesize Title;
+@synthesize HtmlTitle;
+@synthesize Slug;
 @synthesize CreatedAt;
-@synthesize EmbedUser;
-@synthesize ShowUser;
-@synthesize HighlightedContent;
+@synthesize LocalCreatedAt;
+@synthesize Permalink;
+@synthesize CreateCommentURL;
+@synthesize HtmlContent;
+@synthesize HtmlContentPart;
+@synthesize Author;
 
 - (id) initWithDictionary:(NSDictionary*)dict{
 	self = [super init];
@@ -2463,18 +2636,20 @@ static NSDateFormatter * _dateFormatter;
 		return self;
 	}
 	[self setId:[dict valueForKey:@"Id"]];
-	[self setConversationId:[dict valueForKey:@"ConversationId"]];
-	[self setUserId:[dict valueForKey:@"UserId"]];
-	[self setContent:[dict valueForKey:@"Content"]];
-	[self setHtmlContent:[dict valueForKey:@"HtmlContent"]];
+	[self setTitle:[dict valueForKey:@"Title"]];
+	[self setHtmlTitle:[dict valueForKey:@"HtmlTitle"]];
+	[self setSlug:[dict valueForKey:@"Slug"]];
 	[self setCreatedAt:[QXQortexapi dateFromString:[dict valueForKey:@"CreatedAt"]]];
+	[self setLocalCreatedAt:[dict valueForKey:@"LocalCreatedAt"]];
+	[self setPermalink:[dict valueForKey:@"Permalink"]];
+	[self setCreateCommentURL:[dict valueForKey:@"CreateCommentURL"]];
+	[self setHtmlContent:[dict valueForKey:@"HtmlContent"]];
+	[self setHtmlContentPart:[dict valueForKey:@"HtmlContentPart"]];
 
-	id dictEmbedUser = [dict valueForKey:@"EmbedUser"];
-	if ([dictEmbedUser isKindOfClass:[NSDictionary class]]){
-		[self setEmbedUser:[[QXEmbedUser alloc] initWithDictionary:dictEmbedUser]];
+	id dictAuthor = [dict valueForKey:@"Author"];
+	if ([dictAuthor isKindOfClass:[NSDictionary class]]){
+		[self setAuthor:[[QXEmbedUser alloc] initWithDictionary:dictAuthor]];
 	}
-	[self setShowUser:[[dict valueForKey:@"ShowUser"] boolValue]];
-	[self setHighlightedContent:[dict valueForKey:@"HighlightedContent"]];
 
 	return self;
 }
@@ -2482,15 +2657,17 @@ static NSDateFormatter * _dateFormatter;
 - (NSDictionary*) dictionary {
 	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
 	[dict setValue:self.Id forKey:@"Id"];
-	[dict setValue:self.ConversationId forKey:@"ConversationId"];
-	[dict setValue:self.UserId forKey:@"UserId"];
-	[dict setValue:self.Content forKey:@"Content"];
-	[dict setValue:self.HtmlContent forKey:@"HtmlContent"];
+	[dict setValue:self.Title forKey:@"Title"];
+	[dict setValue:self.HtmlTitle forKey:@"HtmlTitle"];
+	[dict setValue:self.Slug forKey:@"Slug"];
 	[dict setValue:[QXQortexapi stringFromDate:self.CreatedAt] forKey:@"CreatedAt"];
-	[dict setValue:[self.EmbedUser dictionary] forKey:@"EmbedUser"];
+	[dict setValue:self.LocalCreatedAt forKey:@"LocalCreatedAt"];
+	[dict setValue:self.Permalink forKey:@"Permalink"];
+	[dict setValue:self.CreateCommentURL forKey:@"CreateCommentURL"];
+	[dict setValue:self.HtmlContent forKey:@"HtmlContent"];
+	[dict setValue:self.HtmlContentPart forKey:@"HtmlContentPart"];
+	[dict setValue:[self.Author dictionary] forKey:@"Author"];
 	
-	[dict setValue:[NSNumber numberWithBool:self.ShowUser] forKey:@"ShowUser"];
-	[dict setValue:self.HighlightedContent forKey:@"HighlightedContent"];
 
 	return dict;
 }
@@ -2558,6 +2735,1347 @@ static NSDateFormatter * _dateFormatter;
 	[dict setValue:mToUsers forKey:@"ToUsers"];
 	
 	[dict setValue:self.Link forKey:@"Link"];
+
+	return dict;
+}
+
+@end
+
+// --- GroupUsers ---
+@implementation QXGroupUsers
+
+@synthesize GroupId;
+@synthesize EmbedUsers;
+
+- (id) initWithDictionary:(NSDictionary*)dict{
+	self = [super init];
+	if (!self) {
+		return self;
+	}
+	if (![dict isKindOfClass:[NSDictionary class]]) {
+		return self;
+	}
+	[self setGroupId:[dict valueForKey:@"GroupId"]];
+
+	NSMutableArray * mEmbedUsers = [[NSMutableArray alloc] init];
+	NSArray * lEmbedUsers = [dict valueForKey:@"EmbedUsers"];
+	if ([lEmbedUsers isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lEmbedUsers) {
+			[mEmbedUsers addObject: [[QXEmbedUser alloc] initWithDictionary:d]];
+		}
+		[self setEmbedUsers:mEmbedUsers];
+	}
+
+	return self;
+}
+
+- (NSDictionary*) dictionary {
+	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
+	[dict setValue:self.GroupId forKey:@"GroupId"];
+
+	NSMutableArray * mEmbedUsers = [[NSMutableArray alloc] init];
+	for (QXEmbedUser * p in EmbedUsers) {
+		[mEmbedUsers addObject:[p dictionary]];
+	}
+	[dict setValue:mEmbedUsers forKey:@"EmbedUsers"];
+	
+
+	return dict;
+}
+
+@end
+
+// --- GroupSelector ---
+@implementation QXGroupSelector
+
+@synthesize Header;
+@synthesize SelectedGroupId;
+@synthesize SysMessage;
+@synthesize FollowingNormalGroups;
+@synthesize FollowingSharedGroups;
+@synthesize UnFollowingNormalGroups;
+@synthesize UnFollowingSharedGroups;
+
+- (id) initWithDictionary:(NSDictionary*)dict{
+	self = [super init];
+	if (!self) {
+		return self;
+	}
+	if (![dict isKindOfClass:[NSDictionary class]]) {
+		return self;
+	}
+	[self setHeader:[dict valueForKey:@"Header"]];
+	[self setSelectedGroupId:[dict valueForKey:@"SelectedGroupId"]];
+
+	id dictSysMessage = [dict valueForKey:@"SysMessage"];
+	if ([dictSysMessage isKindOfClass:[NSDictionary class]]){
+		[self setSysMessage:[[QXGroupSelectorItem alloc] initWithDictionary:dictSysMessage]];
+	}
+
+	NSMutableArray * mFollowingNormalGroups = [[NSMutableArray alloc] init];
+	NSArray * lFollowingNormalGroups = [dict valueForKey:@"FollowingNormalGroups"];
+	if ([lFollowingNormalGroups isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lFollowingNormalGroups) {
+			[mFollowingNormalGroups addObject: [[QXGroupSelectorItem alloc] initWithDictionary:d]];
+		}
+		[self setFollowingNormalGroups:mFollowingNormalGroups];
+	}
+
+	NSMutableArray * mFollowingSharedGroups = [[NSMutableArray alloc] init];
+	NSArray * lFollowingSharedGroups = [dict valueForKey:@"FollowingSharedGroups"];
+	if ([lFollowingSharedGroups isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lFollowingSharedGroups) {
+			[mFollowingSharedGroups addObject: [[QXGroupSelectorItem alloc] initWithDictionary:d]];
+		}
+		[self setFollowingSharedGroups:mFollowingSharedGroups];
+	}
+
+	NSMutableArray * mUnFollowingNormalGroups = [[NSMutableArray alloc] init];
+	NSArray * lUnFollowingNormalGroups = [dict valueForKey:@"UnFollowingNormalGroups"];
+	if ([lUnFollowingNormalGroups isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lUnFollowingNormalGroups) {
+			[mUnFollowingNormalGroups addObject: [[QXGroupSelectorItem alloc] initWithDictionary:d]];
+		}
+		[self setUnFollowingNormalGroups:mUnFollowingNormalGroups];
+	}
+
+	NSMutableArray * mUnFollowingSharedGroups = [[NSMutableArray alloc] init];
+	NSArray * lUnFollowingSharedGroups = [dict valueForKey:@"UnFollowingSharedGroups"];
+	if ([lUnFollowingSharedGroups isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lUnFollowingSharedGroups) {
+			[mUnFollowingSharedGroups addObject: [[QXGroupSelectorItem alloc] initWithDictionary:d]];
+		}
+		[self setUnFollowingSharedGroups:mUnFollowingSharedGroups];
+	}
+
+	return self;
+}
+
+- (NSDictionary*) dictionary {
+	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
+	[dict setValue:self.Header forKey:@"Header"];
+	[dict setValue:self.SelectedGroupId forKey:@"SelectedGroupId"];
+	[dict setValue:[self.SysMessage dictionary] forKey:@"SysMessage"];
+	
+
+	NSMutableArray * mFollowingNormalGroups = [[NSMutableArray alloc] init];
+	for (QXGroupSelectorItem * p in FollowingNormalGroups) {
+		[mFollowingNormalGroups addObject:[p dictionary]];
+	}
+	[dict setValue:mFollowingNormalGroups forKey:@"FollowingNormalGroups"];
+	
+
+	NSMutableArray * mFollowingSharedGroups = [[NSMutableArray alloc] init];
+	for (QXGroupSelectorItem * p in FollowingSharedGroups) {
+		[mFollowingSharedGroups addObject:[p dictionary]];
+	}
+	[dict setValue:mFollowingSharedGroups forKey:@"FollowingSharedGroups"];
+	
+
+	NSMutableArray * mUnFollowingNormalGroups = [[NSMutableArray alloc] init];
+	for (QXGroupSelectorItem * p in UnFollowingNormalGroups) {
+		[mUnFollowingNormalGroups addObject:[p dictionary]];
+	}
+	[dict setValue:mUnFollowingNormalGroups forKey:@"UnFollowingNormalGroups"];
+	
+
+	NSMutableArray * mUnFollowingSharedGroups = [[NSMutableArray alloc] init];
+	for (QXGroupSelectorItem * p in UnFollowingSharedGroups) {
+		[mUnFollowingSharedGroups addObject:[p dictionary]];
+	}
+	[dict setValue:mUnFollowingSharedGroups forKey:@"UnFollowingSharedGroups"];
+	
+
+	return dict;
+}
+
+@end
+
+// --- GroupSharingInfo ---
+@implementation QXGroupSharingInfo
+
+@synthesize IsSharing;
+@synthesize FromOrg;
+@synthesize AccpetedOrg;
+@synthesize ForwardedOrgs;
+@synthesize PendingToEmails;
+
+- (id) initWithDictionary:(NSDictionary*)dict{
+	self = [super init];
+	if (!self) {
+		return self;
+	}
+	if (![dict isKindOfClass:[NSDictionary class]]) {
+		return self;
+	}
+	[self setIsSharing:[[dict valueForKey:@"IsSharing"] boolValue]];
+
+	id dictFromOrg = [dict valueForKey:@"FromOrg"];
+	if ([dictFromOrg isKindOfClass:[NSDictionary class]]){
+		[self setFromOrg:[[QXEmbedOrg alloc] initWithDictionary:dictFromOrg]];
+	}
+
+	NSMutableArray * mAccpetedOrg = [[NSMutableArray alloc] init];
+	NSArray * lAccpetedOrg = [dict valueForKey:@"AccpetedOrg"];
+	if ([lAccpetedOrg isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lAccpetedOrg) {
+			[mAccpetedOrg addObject: [[QXEmbedOrg alloc] initWithDictionary:d]];
+		}
+		[self setAccpetedOrg:mAccpetedOrg];
+	}
+
+	NSMutableArray * mForwardedOrgs = [[NSMutableArray alloc] init];
+	NSArray * lForwardedOrgs = [dict valueForKey:@"ForwardedOrgs"];
+	if ([lForwardedOrgs isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lForwardedOrgs) {
+			[mForwardedOrgs addObject: [[QXEmbedOrg alloc] initWithDictionary:d]];
+		}
+		[self setForwardedOrgs:mForwardedOrgs];
+	}
+	[self setPendingToEmails:[dict valueForKey:@"PendingToEmails"]];
+
+	return self;
+}
+
+- (NSDictionary*) dictionary {
+	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
+	[dict setValue:[NSNumber numberWithBool:self.IsSharing] forKey:@"IsSharing"];
+	[dict setValue:[self.FromOrg dictionary] forKey:@"FromOrg"];
+	
+
+	NSMutableArray * mAccpetedOrg = [[NSMutableArray alloc] init];
+	for (QXEmbedOrg * p in AccpetedOrg) {
+		[mAccpetedOrg addObject:[p dictionary]];
+	}
+	[dict setValue:mAccpetedOrg forKey:@"AccpetedOrg"];
+	
+
+	NSMutableArray * mForwardedOrgs = [[NSMutableArray alloc] init];
+	for (QXEmbedOrg * p in ForwardedOrgs) {
+		[mForwardedOrgs addObject:[p dictionary]];
+	}
+	[dict setValue:mForwardedOrgs forKey:@"ForwardedOrgs"];
+	
+	[dict setValue:self.PendingToEmails forKey:@"PendingToEmails"];
+
+	return dict;
+}
+
+@end
+
+// --- MyCount ---
+@implementation QXMyCount
+
+@synthesize UserId;
+@synthesize FollowedUnreadCount;
+@synthesize NotificationUnreadCount;
+@synthesize ActiveTasksCount;
+@synthesize OfflineMessageCount;
+@synthesize GroupCounts;
+
+- (id) initWithDictionary:(NSDictionary*)dict{
+	self = [super init];
+	if (!self) {
+		return self;
+	}
+	if (![dict isKindOfClass:[NSDictionary class]]) {
+		return self;
+	}
+	[self setUserId:[dict valueForKey:@"UserId"]];
+	[self setFollowedUnreadCount:[dict valueForKey:@"FollowedUnreadCount"]];
+	[self setNotificationUnreadCount:[dict valueForKey:@"NotificationUnreadCount"]];
+	[self setActiveTasksCount:[dict valueForKey:@"ActiveTasksCount"]];
+	[self setOfflineMessageCount:[dict valueForKey:@"OfflineMessageCount"]];
+
+	NSMutableArray * mGroupCounts = [[NSMutableArray alloc] init];
+	NSArray * lGroupCounts = [dict valueForKey:@"GroupCounts"];
+	if ([lGroupCounts isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lGroupCounts) {
+			[mGroupCounts addObject: [[QXGroupCount alloc] initWithDictionary:d]];
+		}
+		[self setGroupCounts:mGroupCounts];
+	}
+
+	return self;
+}
+
+- (NSDictionary*) dictionary {
+	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
+	[dict setValue:self.UserId forKey:@"UserId"];
+	[dict setValue:self.FollowedUnreadCount forKey:@"FollowedUnreadCount"];
+	[dict setValue:self.NotificationUnreadCount forKey:@"NotificationUnreadCount"];
+	[dict setValue:self.ActiveTasksCount forKey:@"ActiveTasksCount"];
+	[dict setValue:self.OfflineMessageCount forKey:@"OfflineMessageCount"];
+
+	NSMutableArray * mGroupCounts = [[NSMutableArray alloc] init];
+	for (QXGroupCount * p in GroupCounts) {
+		[mGroupCounts addObject:[p dictionary]];
+	}
+	[dict setValue:mGroupCounts forKey:@"GroupCounts"];
+	
+
+	return dict;
+}
+
+@end
+
+// --- Conversation ---
+@implementation QXConversation
+
+@synthesize Id;
+@synthesize Title;
+@synthesize UserIds;
+@synthesize Participants;
+@synthesize CreatedAt;
+@synthesize EndedAt;
+@synthesize LocalHumanCreatedAt;
+@synthesize Topic;
+@synthesize Private;
+@synthesize IsClose;
+@synthesize IsShared;
+@synthesize HasOfflineMessage;
+@synthesize OfflineLocalTime;
+@synthesize SharedMessageIds;
+@synthesize MessagesCount;
+@synthesize Messages;
+
+- (id) initWithDictionary:(NSDictionary*)dict{
+	self = [super init];
+	if (!self) {
+		return self;
+	}
+	if (![dict isKindOfClass:[NSDictionary class]]) {
+		return self;
+	}
+	[self setId:[dict valueForKey:@"Id"]];
+	[self setTitle:[dict valueForKey:@"Title"]];
+	[self setUserIds:[dict valueForKey:@"UserIds"]];
+
+	NSMutableArray * mParticipants = [[NSMutableArray alloc] init];
+	NSArray * lParticipants = [dict valueForKey:@"Participants"];
+	if ([lParticipants isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lParticipants) {
+			[mParticipants addObject: [[QXEmbedUser alloc] initWithDictionary:d]];
+		}
+		[self setParticipants:mParticipants];
+	}
+	[self setCreatedAt:[QXQortexapi dateFromString:[dict valueForKey:@"CreatedAt"]]];
+	[self setEndedAt:[QXQortexapi dateFromString:[dict valueForKey:@"EndedAt"]]];
+	[self setLocalHumanCreatedAt:[dict valueForKey:@"LocalHumanCreatedAt"]];
+	[self setTopic:[dict valueForKey:@"Topic"]];
+	[self setPrivate:[[dict valueForKey:@"Private"] boolValue]];
+	[self setIsClose:[[dict valueForKey:@"IsClose"] boolValue]];
+	[self setIsShared:[[dict valueForKey:@"IsShared"] boolValue]];
+	[self setHasOfflineMessage:[[dict valueForKey:@"HasOfflineMessage"] boolValue]];
+	[self setOfflineLocalTime:[dict valueForKey:@"OfflineLocalTime"]];
+	[self setSharedMessageIds:[dict valueForKey:@"SharedMessageIds"]];
+	[self setMessagesCount:[dict valueForKey:@"MessagesCount"]];
+
+	NSMutableArray * mMessages = [[NSMutableArray alloc] init];
+	NSArray * lMessages = [dict valueForKey:@"Messages"];
+	if ([lMessages isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lMessages) {
+			[mMessages addObject: [[QXMessage alloc] initWithDictionary:d]];
+		}
+		[self setMessages:mMessages];
+	}
+
+	return self;
+}
+
+- (NSDictionary*) dictionary {
+	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
+	[dict setValue:self.Id forKey:@"Id"];
+	[dict setValue:self.Title forKey:@"Title"];
+	[dict setValue:self.UserIds forKey:@"UserIds"];
+
+	NSMutableArray * mParticipants = [[NSMutableArray alloc] init];
+	for (QXEmbedUser * p in Participants) {
+		[mParticipants addObject:[p dictionary]];
+	}
+	[dict setValue:mParticipants forKey:@"Participants"];
+	
+	[dict setValue:[QXQortexapi stringFromDate:self.CreatedAt] forKey:@"CreatedAt"];
+	[dict setValue:[QXQortexapi stringFromDate:self.EndedAt] forKey:@"EndedAt"];
+	[dict setValue:self.LocalHumanCreatedAt forKey:@"LocalHumanCreatedAt"];
+	[dict setValue:self.Topic forKey:@"Topic"];
+	[dict setValue:[NSNumber numberWithBool:self.Private] forKey:@"Private"];
+	[dict setValue:[NSNumber numberWithBool:self.IsClose] forKey:@"IsClose"];
+	[dict setValue:[NSNumber numberWithBool:self.IsShared] forKey:@"IsShared"];
+	[dict setValue:[NSNumber numberWithBool:self.HasOfflineMessage] forKey:@"HasOfflineMessage"];
+	[dict setValue:self.OfflineLocalTime forKey:@"OfflineLocalTime"];
+	[dict setValue:self.SharedMessageIds forKey:@"SharedMessageIds"];
+	[dict setValue:self.MessagesCount forKey:@"MessagesCount"];
+
+	NSMutableArray * mMessages = [[NSMutableArray alloc] init];
+	for (QXMessage * p in Messages) {
+		[mMessages addObject:[p dictionary]];
+	}
+	[dict setValue:mMessages forKey:@"Messages"];
+	
+
+	return dict;
+}
+
+@end
+
+// --- Group ---
+@implementation QXGroup
+
+@synthesize Id;
+@synthesize Name;
+@synthesize Description;
+@synthesize GType;
+@synthesize LogoURL;
+@synthesize IconName;
+@synthesize Link;
+@synthesize Slug;
+@synthesize Author;
+@synthesize IsAdmin;
+@synthesize IsPrivate;
+@synthesize Editable;
+@synthesize Managable;
+@synthesize FollowedByMe;
+@synthesize AdministratedByMe;
+@synthesize IsPreShared;
+@synthesize IsShared;
+@synthesize IsDefaultLogoURL;
+@synthesize HostOrgName;
+@synthesize IsDispayHostOrgName;
+@synthesize EntriesCount;
+@synthesize FollowersCount;
+@synthesize IsAnnoucement;
+@synthesize GroupOwners;
+@synthesize SharingInfo;
+@synthesize GroupEmailAddress;
+
+- (id) initWithDictionary:(NSDictionary*)dict{
+	self = [super init];
+	if (!self) {
+		return self;
+	}
+	if (![dict isKindOfClass:[NSDictionary class]]) {
+		return self;
+	}
+	[self setId:[dict valueForKey:@"Id"]];
+	[self setName:[dict valueForKey:@"Name"]];
+	[self setDescription:[dict valueForKey:@"Description"]];
+	[self setGType:[dict valueForKey:@"GType"]];
+	[self setLogoURL:[dict valueForKey:@"LogoURL"]];
+	[self setIconName:[dict valueForKey:@"IconName"]];
+	[self setLink:[dict valueForKey:@"Link"]];
+	[self setSlug:[dict valueForKey:@"Slug"]];
+
+	id dictAuthor = [dict valueForKey:@"Author"];
+	if ([dictAuthor isKindOfClass:[NSDictionary class]]){
+		[self setAuthor:[[QXEmbedUser alloc] initWithDictionary:dictAuthor]];
+	}
+	[self setIsAdmin:[[dict valueForKey:@"IsAdmin"] boolValue]];
+	[self setIsPrivate:[[dict valueForKey:@"IsPrivate"] boolValue]];
+	[self setEditable:[[dict valueForKey:@"Editable"] boolValue]];
+	[self setManagable:[[dict valueForKey:@"Managable"] boolValue]];
+	[self setFollowedByMe:[[dict valueForKey:@"FollowedByMe"] boolValue]];
+	[self setAdministratedByMe:[[dict valueForKey:@"AdministratedByMe"] boolValue]];
+	[self setIsPreShared:[[dict valueForKey:@"IsPreShared"] boolValue]];
+	[self setIsShared:[[dict valueForKey:@"IsShared"] boolValue]];
+	[self setIsDefaultLogoURL:[[dict valueForKey:@"IsDefaultLogoURL"] boolValue]];
+	[self setHostOrgName:[dict valueForKey:@"HostOrgName"]];
+	[self setIsDispayHostOrgName:[[dict valueForKey:@"IsDispayHostOrgName"] boolValue]];
+	[self setEntriesCount:[dict valueForKey:@"EntriesCount"]];
+	[self setFollowersCount:[dict valueForKey:@"FollowersCount"]];
+	[self setIsAnnoucement:[[dict valueForKey:@"IsAnnoucement"] boolValue]];
+
+	NSMutableArray * mGroupOwners = [[NSMutableArray alloc] init];
+	NSArray * lGroupOwners = [dict valueForKey:@"GroupOwners"];
+	if ([lGroupOwners isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lGroupOwners) {
+			[mGroupOwners addObject: [[QXEmbedUser alloc] initWithDictionary:d]];
+		}
+		[self setGroupOwners:mGroupOwners];
+	}
+
+	id dictSharingInfo = [dict valueForKey:@"SharingInfo"];
+	if ([dictSharingInfo isKindOfClass:[NSDictionary class]]){
+		[self setSharingInfo:[[QXGroupSharingInfo alloc] initWithDictionary:dictSharingInfo]];
+	}
+	[self setGroupEmailAddress:[dict valueForKey:@"GroupEmailAddress"]];
+
+	return self;
+}
+
+- (NSDictionary*) dictionary {
+	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
+	[dict setValue:self.Id forKey:@"Id"];
+	[dict setValue:self.Name forKey:@"Name"];
+	[dict setValue:self.Description forKey:@"Description"];
+	[dict setValue:self.GType forKey:@"GType"];
+	[dict setValue:self.LogoURL forKey:@"LogoURL"];
+	[dict setValue:self.IconName forKey:@"IconName"];
+	[dict setValue:self.Link forKey:@"Link"];
+	[dict setValue:self.Slug forKey:@"Slug"];
+	[dict setValue:[self.Author dictionary] forKey:@"Author"];
+	
+	[dict setValue:[NSNumber numberWithBool:self.IsAdmin] forKey:@"IsAdmin"];
+	[dict setValue:[NSNumber numberWithBool:self.IsPrivate] forKey:@"IsPrivate"];
+	[dict setValue:[NSNumber numberWithBool:self.Editable] forKey:@"Editable"];
+	[dict setValue:[NSNumber numberWithBool:self.Managable] forKey:@"Managable"];
+	[dict setValue:[NSNumber numberWithBool:self.FollowedByMe] forKey:@"FollowedByMe"];
+	[dict setValue:[NSNumber numberWithBool:self.AdministratedByMe] forKey:@"AdministratedByMe"];
+	[dict setValue:[NSNumber numberWithBool:self.IsPreShared] forKey:@"IsPreShared"];
+	[dict setValue:[NSNumber numberWithBool:self.IsShared] forKey:@"IsShared"];
+	[dict setValue:[NSNumber numberWithBool:self.IsDefaultLogoURL] forKey:@"IsDefaultLogoURL"];
+	[dict setValue:self.HostOrgName forKey:@"HostOrgName"];
+	[dict setValue:[NSNumber numberWithBool:self.IsDispayHostOrgName] forKey:@"IsDispayHostOrgName"];
+	[dict setValue:self.EntriesCount forKey:@"EntriesCount"];
+	[dict setValue:self.FollowersCount forKey:@"FollowersCount"];
+	[dict setValue:[NSNumber numberWithBool:self.IsAnnoucement] forKey:@"IsAnnoucement"];
+
+	NSMutableArray * mGroupOwners = [[NSMutableArray alloc] init];
+	for (QXEmbedUser * p in GroupOwners) {
+		[mGroupOwners addObject:[p dictionary]];
+	}
+	[dict setValue:mGroupOwners forKey:@"GroupOwners"];
+	
+	[dict setValue:[self.SharingInfo dictionary] forKey:@"SharingInfo"];
+	
+	[dict setValue:self.GroupEmailAddress forKey:@"GroupEmailAddress"];
+
+	return dict;
+}
+
+@end
+
+// --- NotificationItem ---
+@implementation QXNotificationItem
+
+@synthesize Id;
+@synthesize GroupId;
+@synthesize ToUser;
+@synthesize ForEntry;
+@synthesize FromUser;
+@synthesize FromOrg;
+@synthesize CausedByEntry;
+@synthesize NotifiedAt;
+@synthesize ReadAt;
+@synthesize Readed;
+@synthesize Type;
+@synthesize Link;
+@synthesize SharingRequestToEmail;
+
+- (id) initWithDictionary:(NSDictionary*)dict{
+	self = [super init];
+	if (!self) {
+		return self;
+	}
+	if (![dict isKindOfClass:[NSDictionary class]]) {
+		return self;
+	}
+	[self setId:[dict valueForKey:@"Id"]];
+	[self setGroupId:[dict valueForKey:@"GroupId"]];
+
+	id dictToUser = [dict valueForKey:@"ToUser"];
+	if ([dictToUser isKindOfClass:[NSDictionary class]]){
+		[self setToUser:[[QXEmbedUser alloc] initWithDictionary:dictToUser]];
+	}
+
+	id dictForEntry = [dict valueForKey:@"ForEntry"];
+	if ([dictForEntry isKindOfClass:[NSDictionary class]]){
+		[self setForEntry:[[QXEmbedEntry alloc] initWithDictionary:dictForEntry]];
+	}
+
+	id dictFromUser = [dict valueForKey:@"FromUser"];
+	if ([dictFromUser isKindOfClass:[NSDictionary class]]){
+		[self setFromUser:[[QXEmbedUser alloc] initWithDictionary:dictFromUser]];
+	}
+
+	id dictFromOrg = [dict valueForKey:@"FromOrg"];
+	if ([dictFromOrg isKindOfClass:[NSDictionary class]]){
+		[self setFromOrg:[[QXEmbedOrg alloc] initWithDictionary:dictFromOrg]];
+	}
+
+	id dictCausedByEntry = [dict valueForKey:@"CausedByEntry"];
+	if ([dictCausedByEntry isKindOfClass:[NSDictionary class]]){
+		[self setCausedByEntry:[[QXEmbedEntry alloc] initWithDictionary:dictCausedByEntry]];
+	}
+	[self setNotifiedAt:[QXQortexapi dateFromString:[dict valueForKey:@"NotifiedAt"]]];
+	[self setReadAt:[QXQortexapi dateFromString:[dict valueForKey:@"ReadAt"]]];
+	[self setReaded:[[dict valueForKey:@"Readed"] boolValue]];
+	[self setType:[dict valueForKey:@"Type"]];
+	[self setLink:[dict valueForKey:@"Link"]];
+	[self setSharingRequestToEmail:[dict valueForKey:@"SharingRequestToEmail"]];
+
+	return self;
+}
+
+- (NSDictionary*) dictionary {
+	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
+	[dict setValue:self.Id forKey:@"Id"];
+	[dict setValue:self.GroupId forKey:@"GroupId"];
+	[dict setValue:[self.ToUser dictionary] forKey:@"ToUser"];
+	
+	[dict setValue:[self.ForEntry dictionary] forKey:@"ForEntry"];
+	
+	[dict setValue:[self.FromUser dictionary] forKey:@"FromUser"];
+	
+	[dict setValue:[self.FromOrg dictionary] forKey:@"FromOrg"];
+	
+	[dict setValue:[self.CausedByEntry dictionary] forKey:@"CausedByEntry"];
+	
+	[dict setValue:[QXQortexapi stringFromDate:self.NotifiedAt] forKey:@"NotifiedAt"];
+	[dict setValue:[QXQortexapi stringFromDate:self.ReadAt] forKey:@"ReadAt"];
+	[dict setValue:[NSNumber numberWithBool:self.Readed] forKey:@"Readed"];
+	[dict setValue:self.Type forKey:@"Type"];
+	[dict setValue:self.Link forKey:@"Link"];
+	[dict setValue:self.SharingRequestToEmail forKey:@"SharingRequestToEmail"];
+
+	return dict;
+}
+
+@end
+
+// --- GroupAside ---
+@implementation QXGroupAside
+
+@synthesize IsMyGroupsCollapse;
+@synthesize IsOtherGroupsCollapse;
+@synthesize ShowNewGroupButton;
+@synthesize HaveOtherGroup;
+@synthesize ShowSharedExternallyBar;
+@synthesize AnnounGroup;
+@synthesize SMGroup;
+@synthesize FollowingNormalGroups;
+@synthesize FollowingSharedGroups;
+@synthesize UnfollowedNormalGroups;
+@synthesize UnfollowedSharedGroups;
+
+- (id) initWithDictionary:(NSDictionary*)dict{
+	self = [super init];
+	if (!self) {
+		return self;
+	}
+	if (![dict isKindOfClass:[NSDictionary class]]) {
+		return self;
+	}
+	[self setIsMyGroupsCollapse:[[dict valueForKey:@"IsMyGroupsCollapse"] boolValue]];
+	[self setIsOtherGroupsCollapse:[[dict valueForKey:@"IsOtherGroupsCollapse"] boolValue]];
+	[self setShowNewGroupButton:[[dict valueForKey:@"ShowNewGroupButton"] boolValue]];
+	[self setHaveOtherGroup:[[dict valueForKey:@"HaveOtherGroup"] boolValue]];
+	[self setShowSharedExternallyBar:[[dict valueForKey:@"ShowSharedExternallyBar"] boolValue]];
+
+	id dictAnnounGroup = [dict valueForKey:@"AnnounGroup"];
+	if ([dictAnnounGroup isKindOfClass:[NSDictionary class]]){
+		[self setAnnounGroup:[[QXGroup alloc] initWithDictionary:dictAnnounGroup]];
+	}
+
+	id dictSMGroup = [dict valueForKey:@"SMGroup"];
+	if ([dictSMGroup isKindOfClass:[NSDictionary class]]){
+		[self setSMGroup:[[QXGroup alloc] initWithDictionary:dictSMGroup]];
+	}
+
+	NSMutableArray * mFollowingNormalGroups = [[NSMutableArray alloc] init];
+	NSArray * lFollowingNormalGroups = [dict valueForKey:@"FollowingNormalGroups"];
+	if ([lFollowingNormalGroups isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lFollowingNormalGroups) {
+			[mFollowingNormalGroups addObject: [[QXGroup alloc] initWithDictionary:d]];
+		}
+		[self setFollowingNormalGroups:mFollowingNormalGroups];
+	}
+
+	NSMutableArray * mFollowingSharedGroups = [[NSMutableArray alloc] init];
+	NSArray * lFollowingSharedGroups = [dict valueForKey:@"FollowingSharedGroups"];
+	if ([lFollowingSharedGroups isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lFollowingSharedGroups) {
+			[mFollowingSharedGroups addObject: [[QXGroup alloc] initWithDictionary:d]];
+		}
+		[self setFollowingSharedGroups:mFollowingSharedGroups];
+	}
+
+	NSMutableArray * mUnfollowedNormalGroups = [[NSMutableArray alloc] init];
+	NSArray * lUnfollowedNormalGroups = [dict valueForKey:@"UnfollowedNormalGroups"];
+	if ([lUnfollowedNormalGroups isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lUnfollowedNormalGroups) {
+			[mUnfollowedNormalGroups addObject: [[QXGroup alloc] initWithDictionary:d]];
+		}
+		[self setUnfollowedNormalGroups:mUnfollowedNormalGroups];
+	}
+
+	NSMutableArray * mUnfollowedSharedGroups = [[NSMutableArray alloc] init];
+	NSArray * lUnfollowedSharedGroups = [dict valueForKey:@"UnfollowedSharedGroups"];
+	if ([lUnfollowedSharedGroups isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lUnfollowedSharedGroups) {
+			[mUnfollowedSharedGroups addObject: [[QXGroup alloc] initWithDictionary:d]];
+		}
+		[self setUnfollowedSharedGroups:mUnfollowedSharedGroups];
+	}
+
+	return self;
+}
+
+- (NSDictionary*) dictionary {
+	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
+	[dict setValue:[NSNumber numberWithBool:self.IsMyGroupsCollapse] forKey:@"IsMyGroupsCollapse"];
+	[dict setValue:[NSNumber numberWithBool:self.IsOtherGroupsCollapse] forKey:@"IsOtherGroupsCollapse"];
+	[dict setValue:[NSNumber numberWithBool:self.ShowNewGroupButton] forKey:@"ShowNewGroupButton"];
+	[dict setValue:[NSNumber numberWithBool:self.HaveOtherGroup] forKey:@"HaveOtherGroup"];
+	[dict setValue:[NSNumber numberWithBool:self.ShowSharedExternallyBar] forKey:@"ShowSharedExternallyBar"];
+	[dict setValue:[self.AnnounGroup dictionary] forKey:@"AnnounGroup"];
+	
+	[dict setValue:[self.SMGroup dictionary] forKey:@"SMGroup"];
+	
+
+	NSMutableArray * mFollowingNormalGroups = [[NSMutableArray alloc] init];
+	for (QXGroup * p in FollowingNormalGroups) {
+		[mFollowingNormalGroups addObject:[p dictionary]];
+	}
+	[dict setValue:mFollowingNormalGroups forKey:@"FollowingNormalGroups"];
+	
+
+	NSMutableArray * mFollowingSharedGroups = [[NSMutableArray alloc] init];
+	for (QXGroup * p in FollowingSharedGroups) {
+		[mFollowingSharedGroups addObject:[p dictionary]];
+	}
+	[dict setValue:mFollowingSharedGroups forKey:@"FollowingSharedGroups"];
+	
+
+	NSMutableArray * mUnfollowedNormalGroups = [[NSMutableArray alloc] init];
+	for (QXGroup * p in UnfollowedNormalGroups) {
+		[mUnfollowedNormalGroups addObject:[p dictionary]];
+	}
+	[dict setValue:mUnfollowedNormalGroups forKey:@"UnfollowedNormalGroups"];
+	
+
+	NSMutableArray * mUnfollowedSharedGroups = [[NSMutableArray alloc] init];
+	for (QXGroup * p in UnfollowedSharedGroups) {
+		[mUnfollowedSharedGroups addObject:[p dictionary]];
+	}
+	[dict setValue:mUnfollowedSharedGroups forKey:@"UnfollowedSharedGroups"];
+	
+
+	return dict;
+}
+
+@end
+
+// --- Entry ---
+@implementation QXEntry
+
+@synthesize Id;
+@synthesize EType;
+@synthesize Title;
+@synthesize Slug;
+@synthesize Content;
+@synthesize TypeTitle;
+@synthesize RootId;
+@synthesize GroupId;
+@synthesize AuthorId;
+@synthesize CreatedAt;
+@synthesize UpdatedAt;
+@synthesize BumpedUpAt;
+@synthesize BaseOnEntryId;
+@synthesize AllAttachmentsURL;
+@synthesize Permalink;
+@synthesize IconName;
+@synthesize LocalHumanCreatedAt;
+@synthesize LocalHumanUpdatedAt;
+@synthesize WholeLastUpdateAtAgo;
+@synthesize WholeLastUpdateAt;
+@synthesize LastUpdateAtAgo;
+@synthesize WatchedAtAgo;
+@synthesize NextRemindAtLater;
+@synthesize MentionedUserIds;
+@synthesize DomainURL;
+@synthesize UpdatedAtUnixNano;
+@synthesize LastUpdateAt;
+@synthesize HtmlTitle;
+@synthesize HtmlContent;
+@synthesize HtmlContentPart;
+@synthesize TaskHtmlContentPart;
+@synthesize WatchlistHtml;
+@synthesize ToUsersHtml;
+@synthesize LikedByUsersHtml;
+@synthesize Link;
+@synthesize BaseOnLink;
+@synthesize BaseOnLinkTitle;
+@synthesize PresentationLink;
+@synthesize UploadURL;
+@synthesize IsShared;
+@synthesize IsPublished;
+@synthesize PublishedToUsers;
+@synthesize IsCanPublish;
+@synthesize IsMuted;
+@synthesize IsReminding;
+@synthesize IsSmartReminding;
+@synthesize IsNoReminding;
+@synthesize InnerMessage;
+@synthesize IsSystemMessage;
+@synthesize IsInnerMessage;
+@synthesize SystemMessageType;
+@synthesize BroadcastType;
+@synthesize IsBroadcast;
+@synthesize IsBroadcastTypeToAllAdmins;
+@synthesize IsBroadcastTypeToAllUsers;
+@synthesize IsBroadcastTypeToSomeOrgs;
+@synthesize IsFromSuperOrg;
+@synthesize IsFeedback;
+@synthesize FromOrg;
+@synthesize ToOrgs;
+@synthesize ToOrgsHtml;
+@synthesize IsHidePresentationTip;
+@synthesize IsKnowledgeBase;
+@synthesize IsPost;
+@synthesize IsComment;
+@synthesize IsTask;
+@synthesize IsChat;
+@synthesize IsTaskToDo;
+@synthesize IsTaskAck;
+@synthesize IsInWatchList;
+@synthesize IsToGroup;
+@synthesize CurrentUserCanEdit;
+@synthesize CanEdit;
+@synthesize CanReply;
+@synthesize ManagerCanEdit;
+@synthesize LikedByMe;
+@synthesize HasInlineTask;
+@synthesize TaskIsCompleted;
+@synthesize IsRoot;
+@synthesize IsUnread;
+@synthesize IsUpdated;
+@synthesize IsLastVersion;
+@synthesize Presentation;
+@synthesize AnyoneCanEdit;
+@synthesize IsInGroup;
+@synthesize IsFromEmail;
+@synthesize InlineHelp;
+@synthesize AllAttachmentsCount;
+@synthesize CommentsCount;
+@synthesize CurrentVersionCommentsCount;
+@synthesize AllLikesCount;
+@synthesize VersionCount;
+@synthesize UnreadCommentCount;
+@synthesize Author;
+@synthesize CurrentVersionEditor;
+@synthesize Group;
+@synthesize Task;
+@synthesize Conversation;
+@synthesize LinkedEntries;
+@synthesize Versions;
+@synthesize ToUsers;
+@synthesize MentionedUsers;
+@synthesize LikedByUsers;
+@synthesize Attachments;
+@synthesize CommentsAttachments;
+@synthesize FirstPicture;
+@synthesize Comments;
+@synthesize ExternalComments;
+@synthesize CurrentVersionComments;
+@synthesize OtherVersionsComments;
+@synthesize NewComment;
+@synthesize NewEntry;
+@synthesize GroupSlector;
+//@synthesize QortexSupportNotifyOptions;
+@synthesize IsQortexSupport;
+@synthesize QortexSupport;
+@synthesize IsQortexSupportKnowledgeBase;
+@synthesize IsSuperOrg;
+@synthesize IsSuperUser;
+@synthesize IsRequest;
+@synthesize ShareRequest;
+@synthesize VisibleForSuperUserInSuperOrg;
+@synthesize VisibleForSuperOrg;
+
+- (id) initWithDictionary:(NSDictionary*)dict{
+	self = [super init];
+	if (!self) {
+		return self;
+	}
+	if (![dict isKindOfClass:[NSDictionary class]]) {
+		return self;
+	}
+	[self setId:[dict valueForKey:@"Id"]];
+	[self setEType:[dict valueForKey:@"EType"]];
+	[self setTitle:[dict valueForKey:@"Title"]];
+	[self setSlug:[dict valueForKey:@"Slug"]];
+	[self setContent:[dict valueForKey:@"Content"]];
+	[self setTypeTitle:[dict valueForKey:@"TypeTitle"]];
+	[self setRootId:[dict valueForKey:@"RootId"]];
+	[self setGroupId:[dict valueForKey:@"GroupId"]];
+	[self setAuthorId:[dict valueForKey:@"AuthorId"]];
+	[self setCreatedAt:[QXQortexapi dateFromString:[dict valueForKey:@"CreatedAt"]]];
+	[self setUpdatedAt:[QXQortexapi dateFromString:[dict valueForKey:@"UpdatedAt"]]];
+	[self setBumpedUpAt:[QXQortexapi dateFromString:[dict valueForKey:@"BumpedUpAt"]]];
+	[self setBaseOnEntryId:[dict valueForKey:@"BaseOnEntryId"]];
+	[self setAllAttachmentsURL:[dict valueForKey:@"AllAttachmentsURL"]];
+	[self setPermalink:[dict valueForKey:@"Permalink"]];
+	[self setIconName:[dict valueForKey:@"IconName"]];
+	[self setLocalHumanCreatedAt:[dict valueForKey:@"LocalHumanCreatedAt"]];
+	[self setLocalHumanUpdatedAt:[dict valueForKey:@"LocalHumanUpdatedAt"]];
+	[self setWholeLastUpdateAtAgo:[dict valueForKey:@"WholeLastUpdateAtAgo"]];
+	[self setWholeLastUpdateAt:[QXQortexapi dateFromString:[dict valueForKey:@"WholeLastUpdateAt"]]];
+	[self setLastUpdateAtAgo:[dict valueForKey:@"LastUpdateAtAgo"]];
+	[self setWatchedAtAgo:[dict valueForKey:@"WatchedAtAgo"]];
+	[self setNextRemindAtLater:[dict valueForKey:@"NextRemindAtLater"]];
+	[self setMentionedUserIds:[dict valueForKey:@"MentionedUserIds"]];
+	[self setDomainURL:[dict valueForKey:@"DomainURL"]];
+	[self setUpdatedAtUnixNano:[dict valueForKey:@"UpdatedAtUnixNano"]];
+	[self setLastUpdateAt:[dict valueForKey:@"LastUpdateAt"]];
+	[self setHtmlTitle:[dict valueForKey:@"HtmlTitle"]];
+	[self setHtmlContent:[dict valueForKey:@"HtmlContent"]];
+	[self setHtmlContentPart:[dict valueForKey:@"HtmlContentPart"]];
+	[self setTaskHtmlContentPart:[dict valueForKey:@"TaskHtmlContentPart"]];
+	[self setWatchlistHtml:[dict valueForKey:@"WatchlistHtml"]];
+	[self setToUsersHtml:[dict valueForKey:@"ToUsersHtml"]];
+	[self setLikedByUsersHtml:[dict valueForKey:@"LikedByUsersHtml"]];
+	[self setLink:[dict valueForKey:@"Link"]];
+	[self setBaseOnLink:[dict valueForKey:@"BaseOnLink"]];
+	[self setBaseOnLinkTitle:[dict valueForKey:@"BaseOnLinkTitle"]];
+	[self setPresentationLink:[dict valueForKey:@"PresentationLink"]];
+	[self setUploadURL:[dict valueForKey:@"UploadURL"]];
+	[self setIsShared:[[dict valueForKey:@"IsShared"] boolValue]];
+	[self setIsPublished:[[dict valueForKey:@"IsPublished"] boolValue]];
+	[self setPublishedToUsers:[[dict valueForKey:@"PublishedToUsers"] boolValue]];
+	[self setIsCanPublish:[[dict valueForKey:@"IsCanPublish"] boolValue]];
+	[self setIsMuted:[[dict valueForKey:@"IsMuted"] boolValue]];
+	[self setIsReminding:[[dict valueForKey:@"IsReminding"] boolValue]];
+	[self setIsSmartReminding:[[dict valueForKey:@"IsSmartReminding"] boolValue]];
+	[self setIsNoReminding:[[dict valueForKey:@"IsNoReminding"] boolValue]];
+
+	id dictInnerMessage = [dict valueForKey:@"InnerMessage"];
+	if ([dictInnerMessage isKindOfClass:[NSDictionary class]]){
+		[self setInnerMessage:[[QXInnerMessage alloc] initWithDictionary:dictInnerMessage]];
+	}
+	[self setIsSystemMessage:[[dict valueForKey:@"IsSystemMessage"] boolValue]];
+	[self setIsInnerMessage:[[dict valueForKey:@"IsInnerMessage"] boolValue]];
+	[self setSystemMessageType:[dict valueForKey:@"SystemMessageType"]];
+	[self setBroadcastType:[dict valueForKey:@"BroadcastType"]];
+	[self setIsBroadcast:[[dict valueForKey:@"IsBroadcast"] boolValue]];
+	[self setIsBroadcastTypeToAllAdmins:[[dict valueForKey:@"IsBroadcastTypeToAllAdmins"] boolValue]];
+	[self setIsBroadcastTypeToAllUsers:[[dict valueForKey:@"IsBroadcastTypeToAllUsers"] boolValue]];
+	[self setIsBroadcastTypeToSomeOrgs:[[dict valueForKey:@"IsBroadcastTypeToSomeOrgs"] boolValue]];
+	[self setIsFromSuperOrg:[[dict valueForKey:@"IsFromSuperOrg"] boolValue]];
+	[self setIsFeedback:[[dict valueForKey:@"IsFeedback"] boolValue]];
+
+	id dictFromOrg = [dict valueForKey:@"FromOrg"];
+	if ([dictFromOrg isKindOfClass:[NSDictionary class]]){
+		[self setFromOrg:[[QXEmbedOrg alloc] initWithDictionary:dictFromOrg]];
+	}
+
+	NSMutableArray * mToOrgs = [[NSMutableArray alloc] init];
+	NSArray * lToOrgs = [dict valueForKey:@"ToOrgs"];
+	if ([lToOrgs isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lToOrgs) {
+			[mToOrgs addObject: [[QXEmbedOrg alloc] initWithDictionary:d]];
+		}
+		[self setToOrgs:mToOrgs];
+	}
+	[self setToOrgsHtml:[dict valueForKey:@"ToOrgsHtml"]];
+	[self setIsHidePresentationTip:[[dict valueForKey:@"IsHidePresentationTip"] boolValue]];
+	[self setIsKnowledgeBase:[[dict valueForKey:@"IsKnowledgeBase"] boolValue]];
+	[self setIsPost:[[dict valueForKey:@"IsPost"] boolValue]];
+	[self setIsComment:[[dict valueForKey:@"IsComment"] boolValue]];
+	[self setIsTask:[[dict valueForKey:@"IsTask"] boolValue]];
+	[self setIsChat:[[dict valueForKey:@"IsChat"] boolValue]];
+	[self setIsTaskToDo:[[dict valueForKey:@"IsTaskToDo"] boolValue]];
+	[self setIsTaskAck:[[dict valueForKey:@"IsTaskAck"] boolValue]];
+	[self setIsInWatchList:[[dict valueForKey:@"IsInWatchList"] boolValue]];
+	[self setIsToGroup:[dict valueForKey:@"IsToGroup"]];
+	[self setCurrentUserCanEdit:[[dict valueForKey:@"CurrentUserCanEdit"] boolValue]];
+	[self setCanEdit:[[dict valueForKey:@"CanEdit"] boolValue]];
+	[self setCanReply:[[dict valueForKey:@"CanReply"] boolValue]];
+	[self setManagerCanEdit:[[dict valueForKey:@"ManagerCanEdit"] boolValue]];
+	[self setLikedByMe:[[dict valueForKey:@"LikedByMe"] boolValue]];
+	[self setHasInlineTask:[[dict valueForKey:@"HasInlineTask"] boolValue]];
+	[self setTaskIsCompleted:[[dict valueForKey:@"TaskIsCompleted"] boolValue]];
+	[self setIsRoot:[[dict valueForKey:@"IsRoot"] boolValue]];
+	[self setIsUnread:[[dict valueForKey:@"IsUnread"] boolValue]];
+	[self setIsUpdated:[[dict valueForKey:@"IsUpdated"] boolValue]];
+	[self setIsLastVersion:[[dict valueForKey:@"IsLastVersion"] boolValue]];
+	[self setPresentation:[[dict valueForKey:@"Presentation"] boolValue]];
+	[self setAnyoneCanEdit:[[dict valueForKey:@"AnyoneCanEdit"] boolValue]];
+	[self setIsInGroup:[[dict valueForKey:@"IsInGroup"] boolValue]];
+	[self setIsFromEmail:[[dict valueForKey:@"IsFromEmail"] boolValue]];
+	[self setInlineHelp:[[dict valueForKey:@"InlineHelp"] boolValue]];
+	[self setAllAttachmentsCount:[dict valueForKey:@"AllAttachmentsCount"]];
+	[self setCommentsCount:[dict valueForKey:@"CommentsCount"]];
+	[self setCurrentVersionCommentsCount:[dict valueForKey:@"CurrentVersionCommentsCount"]];
+	[self setAllLikesCount:[dict valueForKey:@"AllLikesCount"]];
+	[self setVersionCount:[dict valueForKey:@"VersionCount"]];
+	[self setUnreadCommentCount:[dict valueForKey:@"UnreadCommentCount"]];
+
+	id dictAuthor = [dict valueForKey:@"Author"];
+	if ([dictAuthor isKindOfClass:[NSDictionary class]]){
+		[self setAuthor:[[QXEmbedUser alloc] initWithDictionary:dictAuthor]];
+	}
+
+	id dictCurrentVersionEditor = [dict valueForKey:@"CurrentVersionEditor"];
+	if ([dictCurrentVersionEditor isKindOfClass:[NSDictionary class]]){
+		[self setCurrentVersionEditor:[[QXEmbedUser alloc] initWithDictionary:dictCurrentVersionEditor]];
+	}
+
+	id dictGroup = [dict valueForKey:@"Group"];
+	if ([dictGroup isKindOfClass:[NSDictionary class]]){
+		[self setGroup:[[QXGroup alloc] initWithDictionary:dictGroup]];
+	}
+
+	id dictTask = [dict valueForKey:@"Task"];
+	if ([dictTask isKindOfClass:[NSDictionary class]]){
+		[self setTask:[[QXTask alloc] initWithDictionary:dictTask]];
+	}
+
+	id dictConversation = [dict valueForKey:@"Conversation"];
+	if ([dictConversation isKindOfClass:[NSDictionary class]]){
+		[self setConversation:[[QXConversation alloc] initWithDictionary:dictConversation]];
+	}
+
+	NSMutableArray * mLinkedEntries = [[NSMutableArray alloc] init];
+	NSArray * lLinkedEntries = [dict valueForKey:@"LinkedEntries"];
+	if ([lLinkedEntries isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lLinkedEntries) {
+			[mLinkedEntries addObject: [[QXLinkedEntry alloc] initWithDictionary:d]];
+		}
+		[self setLinkedEntries:mLinkedEntries];
+	}
+
+	NSMutableArray * mVersions = [[NSMutableArray alloc] init];
+	NSArray * lVersions = [dict valueForKey:@"Versions"];
+	if ([lVersions isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lVersions) {
+			[mVersions addObject: [[QXEntryVersion alloc] initWithDictionary:d]];
+		}
+		[self setVersions:mVersions];
+	}
+
+	NSMutableArray * mToUsers = [[NSMutableArray alloc] init];
+	NSArray * lToUsers = [dict valueForKey:@"ToUsers"];
+	if ([lToUsers isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lToUsers) {
+			[mToUsers addObject: [[QXEmbedUser alloc] initWithDictionary:d]];
+		}
+		[self setToUsers:mToUsers];
+	}
+
+	NSMutableArray * mMentionedUsers = [[NSMutableArray alloc] init];
+	NSArray * lMentionedUsers = [dict valueForKey:@"MentionedUsers"];
+	if ([lMentionedUsers isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lMentionedUsers) {
+			[mMentionedUsers addObject: [[QXEmbedUser alloc] initWithDictionary:d]];
+		}
+		[self setMentionedUsers:mMentionedUsers];
+	}
+
+	NSMutableArray * mLikedByUsers = [[NSMutableArray alloc] init];
+	NSArray * lLikedByUsers = [dict valueForKey:@"LikedByUsers"];
+	if ([lLikedByUsers isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lLikedByUsers) {
+			[mLikedByUsers addObject: [[QXEmbedUser alloc] initWithDictionary:d]];
+		}
+		[self setLikedByUsers:mLikedByUsers];
+	}
+
+	NSMutableArray * mAttachments = [[NSMutableArray alloc] init];
+	NSArray * lAttachments = [dict valueForKey:@"Attachments"];
+	if ([lAttachments isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lAttachments) {
+			[mAttachments addObject: [[QXAttachment alloc] initWithDictionary:d]];
+		}
+		[self setAttachments:mAttachments];
+	}
+
+	NSMutableArray * mCommentsAttachments = [[NSMutableArray alloc] init];
+	NSArray * lCommentsAttachments = [dict valueForKey:@"CommentsAttachments"];
+	if ([lCommentsAttachments isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lCommentsAttachments) {
+			[mCommentsAttachments addObject: [[QXAttachment alloc] initWithDictionary:d]];
+		}
+		[self setCommentsAttachments:mCommentsAttachments];
+	}
+
+	id dictFirstPicture = [dict valueForKey:@"FirstPicture"];
+	if ([dictFirstPicture isKindOfClass:[NSDictionary class]]){
+		[self setFirstPicture:[[QXAttachment alloc] initWithDictionary:dictFirstPicture]];
+	}
+
+	NSMutableArray * mComments = [[NSMutableArray alloc] init];
+	NSArray * lComments = [dict valueForKey:@"Comments"];
+	if ([lComments isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lComments) {
+			[mComments addObject: [[QXEntry alloc] initWithDictionary:d]];
+		}
+		[self setComments:mComments];
+	}
+
+	NSMutableArray * mExternalComments = [[NSMutableArray alloc] init];
+	NSArray * lExternalComments = [dict valueForKey:@"ExternalComments"];
+	if ([lExternalComments isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lExternalComments) {
+			[mExternalComments addObject: [[QXEntry alloc] initWithDictionary:d]];
+		}
+		[self setExternalComments:mExternalComments];
+	}
+
+	NSMutableArray * mCurrentVersionComments = [[NSMutableArray alloc] init];
+	NSArray * lCurrentVersionComments = [dict valueForKey:@"CurrentVersionComments"];
+	if ([lCurrentVersionComments isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lCurrentVersionComments) {
+			[mCurrentVersionComments addObject: [[QXEntry alloc] initWithDictionary:d]];
+		}
+		[self setCurrentVersionComments:mCurrentVersionComments];
+	}
+
+	NSMutableArray * mOtherVersionsComments = [[NSMutableArray alloc] init];
+	NSArray * lOtherVersionsComments = [dict valueForKey:@"OtherVersionsComments"];
+	if ([lOtherVersionsComments isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lOtherVersionsComments) {
+			[mOtherVersionsComments addObject: [[QXEntry alloc] initWithDictionary:d]];
+		}
+		[self setOtherVersionsComments:mOtherVersionsComments];
+	}
+
+	id dictNewComment = [dict valueForKey:@"NewComment"];
+	if ([dictNewComment isKindOfClass:[NSDictionary class]]){
+		[self setNewComment:[[QXEntry alloc] initWithDictionary:dictNewComment]];
+	}
+
+	id dictNewEntry = [dict valueForKey:@"NewEntry"];
+	if ([dictNewEntry isKindOfClass:[NSDictionary class]]){
+		[self setNewEntry:[[QXEntry alloc] initWithDictionary:dictNewEntry]];
+	}
+
+	id dictGroupSlector = [dict valueForKey:@"GroupSlector"];
+	if ([dictGroupSlector isKindOfClass:[NSDictionary class]]){
+		[self setGroupSlector:[[QXGroupSelector alloc] initWithDictionary:dictGroupSlector]];
+	}
+//	[self setQortexSupportNotifyOptions:[dict valueForKey:@"QortexSupportNotifyOptions"]];
+	[self setIsQortexSupport:[[dict valueForKey:@"IsQortexSupport"] boolValue]];
+
+	id dictQortexSupport = [dict valueForKey:@"QortexSupport"];
+	if ([dictQortexSupport isKindOfClass:[NSDictionary class]]){
+		[self setQortexSupport:[[QXQortexSupport alloc] initWithDictionary:dictQortexSupport]];
+	}
+	[self setIsQortexSupportKnowledgeBase:[[dict valueForKey:@"IsQortexSupportKnowledgeBase"] boolValue]];
+	[self setIsSuperOrg:[[dict valueForKey:@"IsSuperOrg"] boolValue]];
+	[self setIsSuperUser:[[dict valueForKey:@"IsSuperUser"] boolValue]];
+	[self setIsRequest:[[dict valueForKey:@"IsRequest"] boolValue]];
+
+	id dictShareRequest = [dict valueForKey:@"ShareRequest"];
+	if ([dictShareRequest isKindOfClass:[NSDictionary class]]){
+		[self setShareRequest:[[QXShareRequest alloc] initWithDictionary:dictShareRequest]];
+	}
+	[self setVisibleForSuperUserInSuperOrg:[[dict valueForKey:@"VisibleForSuperUserInSuperOrg"] boolValue]];
+	[self setVisibleForSuperOrg:[[dict valueForKey:@"VisibleForSuperOrg"] boolValue]];
+
+	return self;
+}
+
+- (NSDictionary*) dictionary {
+	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
+	[dict setValue:self.Id forKey:@"Id"];
+	[dict setValue:self.EType forKey:@"EType"];
+	[dict setValue:self.Title forKey:@"Title"];
+	[dict setValue:self.Slug forKey:@"Slug"];
+	[dict setValue:self.Content forKey:@"Content"];
+	[dict setValue:self.TypeTitle forKey:@"TypeTitle"];
+	[dict setValue:self.RootId forKey:@"RootId"];
+	[dict setValue:self.GroupId forKey:@"GroupId"];
+	[dict setValue:self.AuthorId forKey:@"AuthorId"];
+	[dict setValue:[QXQortexapi stringFromDate:self.CreatedAt] forKey:@"CreatedAt"];
+	[dict setValue:[QXQortexapi stringFromDate:self.UpdatedAt] forKey:@"UpdatedAt"];
+	[dict setValue:[QXQortexapi stringFromDate:self.BumpedUpAt] forKey:@"BumpedUpAt"];
+	[dict setValue:self.BaseOnEntryId forKey:@"BaseOnEntryId"];
+	[dict setValue:self.AllAttachmentsURL forKey:@"AllAttachmentsURL"];
+	[dict setValue:self.Permalink forKey:@"Permalink"];
+	[dict setValue:self.IconName forKey:@"IconName"];
+	[dict setValue:self.LocalHumanCreatedAt forKey:@"LocalHumanCreatedAt"];
+	[dict setValue:self.LocalHumanUpdatedAt forKey:@"LocalHumanUpdatedAt"];
+	[dict setValue:self.WholeLastUpdateAtAgo forKey:@"WholeLastUpdateAtAgo"];
+	[dict setValue:[QXQortexapi stringFromDate:self.WholeLastUpdateAt] forKey:@"WholeLastUpdateAt"];
+	[dict setValue:self.LastUpdateAtAgo forKey:@"LastUpdateAtAgo"];
+	[dict setValue:self.WatchedAtAgo forKey:@"WatchedAtAgo"];
+	[dict setValue:self.NextRemindAtLater forKey:@"NextRemindAtLater"];
+	[dict setValue:self.MentionedUserIds forKey:@"MentionedUserIds"];
+	[dict setValue:self.DomainURL forKey:@"DomainURL"];
+	[dict setValue:self.UpdatedAtUnixNano forKey:@"UpdatedAtUnixNano"];
+	[dict setValue:self.LastUpdateAt forKey:@"LastUpdateAt"];
+	[dict setValue:self.HtmlTitle forKey:@"HtmlTitle"];
+	[dict setValue:self.HtmlContent forKey:@"HtmlContent"];
+	[dict setValue:self.HtmlContentPart forKey:@"HtmlContentPart"];
+	[dict setValue:self.TaskHtmlContentPart forKey:@"TaskHtmlContentPart"];
+	[dict setValue:self.WatchlistHtml forKey:@"WatchlistHtml"];
+	[dict setValue:self.ToUsersHtml forKey:@"ToUsersHtml"];
+	[dict setValue:self.LikedByUsersHtml forKey:@"LikedByUsersHtml"];
+	[dict setValue:self.Link forKey:@"Link"];
+	[dict setValue:self.BaseOnLink forKey:@"BaseOnLink"];
+	[dict setValue:self.BaseOnLinkTitle forKey:@"BaseOnLinkTitle"];
+	[dict setValue:self.PresentationLink forKey:@"PresentationLink"];
+	[dict setValue:self.UploadURL forKey:@"UploadURL"];
+	[dict setValue:[NSNumber numberWithBool:self.IsShared] forKey:@"IsShared"];
+	[dict setValue:[NSNumber numberWithBool:self.IsPublished] forKey:@"IsPublished"];
+	[dict setValue:[NSNumber numberWithBool:self.PublishedToUsers] forKey:@"PublishedToUsers"];
+	[dict setValue:[NSNumber numberWithBool:self.IsCanPublish] forKey:@"IsCanPublish"];
+	[dict setValue:[NSNumber numberWithBool:self.IsMuted] forKey:@"IsMuted"];
+	[dict setValue:[NSNumber numberWithBool:self.IsReminding] forKey:@"IsReminding"];
+	[dict setValue:[NSNumber numberWithBool:self.IsSmartReminding] forKey:@"IsSmartReminding"];
+	[dict setValue:[NSNumber numberWithBool:self.IsNoReminding] forKey:@"IsNoReminding"];
+	[dict setValue:[self.InnerMessage dictionary] forKey:@"InnerMessage"];
+	
+	[dict setValue:[NSNumber numberWithBool:self.IsSystemMessage] forKey:@"IsSystemMessage"];
+	[dict setValue:[NSNumber numberWithBool:self.IsInnerMessage] forKey:@"IsInnerMessage"];
+	[dict setValue:self.SystemMessageType forKey:@"SystemMessageType"];
+	[dict setValue:self.BroadcastType forKey:@"BroadcastType"];
+	[dict setValue:[NSNumber numberWithBool:self.IsBroadcast] forKey:@"IsBroadcast"];
+	[dict setValue:[NSNumber numberWithBool:self.IsBroadcastTypeToAllAdmins] forKey:@"IsBroadcastTypeToAllAdmins"];
+	[dict setValue:[NSNumber numberWithBool:self.IsBroadcastTypeToAllUsers] forKey:@"IsBroadcastTypeToAllUsers"];
+	[dict setValue:[NSNumber numberWithBool:self.IsBroadcastTypeToSomeOrgs] forKey:@"IsBroadcastTypeToSomeOrgs"];
+	[dict setValue:[NSNumber numberWithBool:self.IsFromSuperOrg] forKey:@"IsFromSuperOrg"];
+	[dict setValue:[NSNumber numberWithBool:self.IsFeedback] forKey:@"IsFeedback"];
+	[dict setValue:[self.FromOrg dictionary] forKey:@"FromOrg"];
+	
+
+	NSMutableArray * mToOrgs = [[NSMutableArray alloc] init];
+	for (QXEmbedOrg * p in ToOrgs) {
+		[mToOrgs addObject:[p dictionary]];
+	}
+	[dict setValue:mToOrgs forKey:@"ToOrgs"];
+	
+	[dict setValue:self.ToOrgsHtml forKey:@"ToOrgsHtml"];
+	[dict setValue:[NSNumber numberWithBool:self.IsHidePresentationTip] forKey:@"IsHidePresentationTip"];
+	[dict setValue:[NSNumber numberWithBool:self.IsKnowledgeBase] forKey:@"IsKnowledgeBase"];
+	[dict setValue:[NSNumber numberWithBool:self.IsPost] forKey:@"IsPost"];
+	[dict setValue:[NSNumber numberWithBool:self.IsComment] forKey:@"IsComment"];
+	[dict setValue:[NSNumber numberWithBool:self.IsTask] forKey:@"IsTask"];
+	[dict setValue:[NSNumber numberWithBool:self.IsChat] forKey:@"IsChat"];
+	[dict setValue:[NSNumber numberWithBool:self.IsTaskToDo] forKey:@"IsTaskToDo"];
+	[dict setValue:[NSNumber numberWithBool:self.IsTaskAck] forKey:@"IsTaskAck"];
+	[dict setValue:[NSNumber numberWithBool:self.IsInWatchList] forKey:@"IsInWatchList"];
+	[dict setValue:self.IsToGroup forKey:@"IsToGroup"];
+	[dict setValue:[NSNumber numberWithBool:self.CurrentUserCanEdit] forKey:@"CurrentUserCanEdit"];
+	[dict setValue:[NSNumber numberWithBool:self.CanEdit] forKey:@"CanEdit"];
+	[dict setValue:[NSNumber numberWithBool:self.CanReply] forKey:@"CanReply"];
+	[dict setValue:[NSNumber numberWithBool:self.ManagerCanEdit] forKey:@"ManagerCanEdit"];
+	[dict setValue:[NSNumber numberWithBool:self.LikedByMe] forKey:@"LikedByMe"];
+	[dict setValue:[NSNumber numberWithBool:self.HasInlineTask] forKey:@"HasInlineTask"];
+	[dict setValue:[NSNumber numberWithBool:self.TaskIsCompleted] forKey:@"TaskIsCompleted"];
+	[dict setValue:[NSNumber numberWithBool:self.IsRoot] forKey:@"IsRoot"];
+	[dict setValue:[NSNumber numberWithBool:self.IsUnread] forKey:@"IsUnread"];
+	[dict setValue:[NSNumber numberWithBool:self.IsUpdated] forKey:@"IsUpdated"];
+	[dict setValue:[NSNumber numberWithBool:self.IsLastVersion] forKey:@"IsLastVersion"];
+	[dict setValue:[NSNumber numberWithBool:self.Presentation] forKey:@"Presentation"];
+	[dict setValue:[NSNumber numberWithBool:self.AnyoneCanEdit] forKey:@"AnyoneCanEdit"];
+	[dict setValue:[NSNumber numberWithBool:self.IsInGroup] forKey:@"IsInGroup"];
+	[dict setValue:[NSNumber numberWithBool:self.IsFromEmail] forKey:@"IsFromEmail"];
+	[dict setValue:[NSNumber numberWithBool:self.InlineHelp] forKey:@"InlineHelp"];
+	[dict setValue:self.AllAttachmentsCount forKey:@"AllAttachmentsCount"];
+	[dict setValue:self.CommentsCount forKey:@"CommentsCount"];
+	[dict setValue:self.CurrentVersionCommentsCount forKey:@"CurrentVersionCommentsCount"];
+	[dict setValue:self.AllLikesCount forKey:@"AllLikesCount"];
+	[dict setValue:self.VersionCount forKey:@"VersionCount"];
+	[dict setValue:self.UnreadCommentCount forKey:@"UnreadCommentCount"];
+	[dict setValue:[self.Author dictionary] forKey:@"Author"];
+	
+	[dict setValue:[self.CurrentVersionEditor dictionary] forKey:@"CurrentVersionEditor"];
+	
+	[dict setValue:[self.Group dictionary] forKey:@"Group"];
+	
+	[dict setValue:[self.Task dictionary] forKey:@"Task"];
+	
+	[dict setValue:[self.Conversation dictionary] forKey:@"Conversation"];
+	
+
+	NSMutableArray * mLinkedEntries = [[NSMutableArray alloc] init];
+	for (QXLinkedEntry * p in LinkedEntries) {
+		[mLinkedEntries addObject:[p dictionary]];
+	}
+	[dict setValue:mLinkedEntries forKey:@"LinkedEntries"];
+	
+
+	NSMutableArray * mVersions = [[NSMutableArray alloc] init];
+	for (QXEntryVersion * p in Versions) {
+		[mVersions addObject:[p dictionary]];
+	}
+	[dict setValue:mVersions forKey:@"Versions"];
+	
+
+	NSMutableArray * mToUsers = [[NSMutableArray alloc] init];
+	for (QXEmbedUser * p in ToUsers) {
+		[mToUsers addObject:[p dictionary]];
+	}
+	[dict setValue:mToUsers forKey:@"ToUsers"];
+	
+
+	NSMutableArray * mMentionedUsers = [[NSMutableArray alloc] init];
+	for (QXEmbedUser * p in MentionedUsers) {
+		[mMentionedUsers addObject:[p dictionary]];
+	}
+	[dict setValue:mMentionedUsers forKey:@"MentionedUsers"];
+	
+
+	NSMutableArray * mLikedByUsers = [[NSMutableArray alloc] init];
+	for (QXEmbedUser * p in LikedByUsers) {
+		[mLikedByUsers addObject:[p dictionary]];
+	}
+	[dict setValue:mLikedByUsers forKey:@"LikedByUsers"];
+	
+
+	NSMutableArray * mAttachments = [[NSMutableArray alloc] init];
+	for (QXAttachment * p in Attachments) {
+		[mAttachments addObject:[p dictionary]];
+	}
+	[dict setValue:mAttachments forKey:@"Attachments"];
+	
+
+	NSMutableArray * mCommentsAttachments = [[NSMutableArray alloc] init];
+	for (QXAttachment * p in CommentsAttachments) {
+		[mCommentsAttachments addObject:[p dictionary]];
+	}
+	[dict setValue:mCommentsAttachments forKey:@"CommentsAttachments"];
+	
+	[dict setValue:[self.FirstPicture dictionary] forKey:@"FirstPicture"];
+	
+
+	NSMutableArray * mComments = [[NSMutableArray alloc] init];
+	for (QXEntry * p in Comments) {
+		[mComments addObject:[p dictionary]];
+	}
+	[dict setValue:mComments forKey:@"Comments"];
+	
+
+	NSMutableArray * mExternalComments = [[NSMutableArray alloc] init];
+	for (QXEntry * p in ExternalComments) {
+		[mExternalComments addObject:[p dictionary]];
+	}
+	[dict setValue:mExternalComments forKey:@"ExternalComments"];
+	
+
+	NSMutableArray * mCurrentVersionComments = [[NSMutableArray alloc] init];
+	for (QXEntry * p in CurrentVersionComments) {
+		[mCurrentVersionComments addObject:[p dictionary]];
+	}
+	[dict setValue:mCurrentVersionComments forKey:@"CurrentVersionComments"];
+	
+
+	NSMutableArray * mOtherVersionsComments = [[NSMutableArray alloc] init];
+	for (QXEntry * p in OtherVersionsComments) {
+		[mOtherVersionsComments addObject:[p dictionary]];
+	}
+	[dict setValue:mOtherVersionsComments forKey:@"OtherVersionsComments"];
+	
+	[dict setValue:[self.NewComment dictionary] forKey:@"NewComment"];
+	
+	[dict setValue:[self.NewEntry dictionary] forKey:@"NewEntry"];
+	
+	[dict setValue:[self.GroupSlector dictionary] forKey:@"GroupSlector"];
+	
+//	[dict setValue:self.QortexSupportNotifyOptions forKey:@"QortexSupportNotifyOptions"];
+	[dict setValue:[NSNumber numberWithBool:self.IsQortexSupport] forKey:@"IsQortexSupport"];
+	[dict setValue:[self.QortexSupport dictionary] forKey:@"QortexSupport"];
+	
+	[dict setValue:[NSNumber numberWithBool:self.IsQortexSupportKnowledgeBase] forKey:@"IsQortexSupportKnowledgeBase"];
+	[dict setValue:[NSNumber numberWithBool:self.IsSuperOrg] forKey:@"IsSuperOrg"];
+	[dict setValue:[NSNumber numberWithBool:self.IsSuperUser] forKey:@"IsSuperUser"];
+	[dict setValue:[NSNumber numberWithBool:self.IsRequest] forKey:@"IsRequest"];
+	[dict setValue:[self.ShareRequest dictionary] forKey:@"ShareRequest"];
+	
+	[dict setValue:[NSNumber numberWithBool:self.VisibleForSuperUserInSuperOrg] forKey:@"VisibleForSuperUserInSuperOrg"];
+	[dict setValue:[NSNumber numberWithBool:self.VisibleForSuperOrg] forKey:@"VisibleForSuperOrg"];
 
 	return dict;
 }
@@ -2654,6 +4172,53 @@ static NSDateFormatter * _dateFormatter;
 	[dict setValue:self.PendingDuration forKey:@"PendingDuration"];
 	[dict setValue:self.ToOrgName forKey:@"ToOrgName"];
 	[dict setValue:self.ToOrgId forKey:@"ToOrgId"];
+
+	return dict;
+}
+
+@end
+
+// --- MyNotifications ---
+@implementation QXMyNotifications
+
+@synthesize NotificationItems;
+@synthesize HasMore;
+@synthesize LatestNotifyTime;
+
+- (id) initWithDictionary:(NSDictionary*)dict{
+	self = [super init];
+	if (!self) {
+		return self;
+	}
+	if (![dict isKindOfClass:[NSDictionary class]]) {
+		return self;
+	}
+
+	NSMutableArray * mNotificationItems = [[NSMutableArray alloc] init];
+	NSArray * lNotificationItems = [dict valueForKey:@"NotificationItems"];
+	if ([lNotificationItems isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lNotificationItems) {
+			[mNotificationItems addObject: [[QXNotificationItem alloc] initWithDictionary:d]];
+		}
+		[self setNotificationItems:mNotificationItems];
+	}
+	[self setHasMore:[[dict valueForKey:@"HasMore"] boolValue]];
+	[self setLatestNotifyTime:[dict valueForKey:@"LatestNotifyTime"]];
+
+	return self;
+}
+
+- (NSDictionary*) dictionary {
+	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
+
+	NSMutableArray * mNotificationItems = [[NSMutableArray alloc] init];
+	for (QXNotificationItem * p in NotificationItems) {
+		[mNotificationItems addObject:[p dictionary]];
+	}
+	[dict setValue:mNotificationItems forKey:@"NotificationItems"];
+	
+	[dict setValue:[NSNumber numberWithBool:self.HasMore] forKey:@"HasMore"];
+	[dict setValue:self.LatestNotifyTime forKey:@"LatestNotifyTime"];
 
 	return dict;
 }
@@ -2787,885 +4352,6 @@ static NSDateFormatter * _dateFormatter;
 	[dict setValue:[self.Preferences dictionary] forKey:@"Preferences"];
 	
 	[dict setValue:[NSNumber numberWithBool:self.NoDetail] forKey:@"NoDetail"];
-
-	return dict;
-}
-
-@end
-
-// --- Request ---
-@implementation QXRequest
-
-@synthesize CurrentPrefixURL;
-@synthesize Info;
-@synthesize ActionButton;
-@synthesize FromOrg;
-@synthesize ToOrg;
-@synthesize SharedGroup;
-@synthesize SharedOrgIdHex;
-@synthesize FromUserIdHex;
-@synthesize SharedInvitee;
-@synthesize SharedInviter;
-@synthesize SharedResponsor;
-@synthesize ToEmail;
-@synthesize State;
-
-- (id) initWithDictionary:(NSDictionary*)dict{
-	self = [super init];
-	if (!self) {
-		return self;
-	}
-	if (![dict isKindOfClass:[NSDictionary class]]) {
-		return self;
-	}
-	[self setCurrentPrefixURL:[dict valueForKey:@"CurrentPrefixURL"]];
-	[self setInfo:[dict valueForKey:@"Info"]];
-	[self setActionButton:[dict valueForKey:@"ActionButton"]];
-
-	id dictFromOrg = [dict valueForKey:@"FromOrg"];
-	if ([dictFromOrg isKindOfClass:[NSDictionary class]]){
-		[self setFromOrg:[[QXEmbedOrg alloc] initWithDictionary:dictFromOrg]];
-	}
-
-	id dictToOrg = [dict valueForKey:@"ToOrg"];
-	if ([dictToOrg isKindOfClass:[NSDictionary class]]){
-		[self setToOrg:[[QXEmbedOrg alloc] initWithDictionary:dictToOrg]];
-	}
-
-	id dictSharedGroup = [dict valueForKey:@"SharedGroup"];
-	if ([dictSharedGroup isKindOfClass:[NSDictionary class]]){
-		[self setSharedGroup:[[QXGroup alloc] initWithDictionary:dictSharedGroup]];
-	}
-	[self setSharedOrgIdHex:[dict valueForKey:@"SharedOrgIdHex"]];
-	[self setFromUserIdHex:[dict valueForKey:@"FromUserIdHex"]];
-
-	id dictSharedInvitee = [dict valueForKey:@"SharedInvitee"];
-	if ([dictSharedInvitee isKindOfClass:[NSDictionary class]]){
-		[self setSharedInvitee:[[QXEmbedUser alloc] initWithDictionary:dictSharedInvitee]];
-	}
-
-	id dictSharedInviter = [dict valueForKey:@"SharedInviter"];
-	if ([dictSharedInviter isKindOfClass:[NSDictionary class]]){
-		[self setSharedInviter:[[QXEmbedUser alloc] initWithDictionary:dictSharedInviter]];
-	}
-
-	id dictSharedResponsor = [dict valueForKey:@"SharedResponsor"];
-	if ([dictSharedResponsor isKindOfClass:[NSDictionary class]]){
-		[self setSharedResponsor:[[QXEmbedUser alloc] initWithDictionary:dictSharedResponsor]];
-	}
-	[self setToEmail:[dict valueForKey:@"ToEmail"]];
-	[self setState:[dict valueForKey:@"State"]];
-
-	return self;
-}
-
-- (NSDictionary*) dictionary {
-	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
-	[dict setValue:self.CurrentPrefixURL forKey:@"CurrentPrefixURL"];
-	[dict setValue:self.Info forKey:@"Info"];
-	[dict setValue:self.ActionButton forKey:@"ActionButton"];
-	[dict setValue:[self.FromOrg dictionary] forKey:@"FromOrg"];
-	
-	[dict setValue:[self.ToOrg dictionary] forKey:@"ToOrg"];
-	
-	[dict setValue:[self.SharedGroup dictionary] forKey:@"SharedGroup"];
-	
-	[dict setValue:self.SharedOrgIdHex forKey:@"SharedOrgIdHex"];
-	[dict setValue:self.FromUserIdHex forKey:@"FromUserIdHex"];
-	[dict setValue:[self.SharedInvitee dictionary] forKey:@"SharedInvitee"];
-	
-	[dict setValue:[self.SharedInviter dictionary] forKey:@"SharedInviter"];
-	
-	[dict setValue:[self.SharedResponsor dictionary] forKey:@"SharedResponsor"];
-	
-	[dict setValue:self.ToEmail forKey:@"ToEmail"];
-	[dict setValue:self.State forKey:@"State"];
-
-	return dict;
-}
-
-@end
-
-// --- Conversation ---
-@implementation QXConversation
-
-@synthesize Id;
-@synthesize Title;
-@synthesize UserIds;
-@synthesize Participants;
-@synthesize CreatedAt;
-@synthesize EndedAt;
-@synthesize LocalHumanCreatedAt;
-@synthesize Topic;
-@synthesize Private;
-@synthesize IsClose;
-@synthesize IsShared;
-@synthesize SharedMessageIds;
-@synthesize MessagesCount;
-@synthesize Messages;
-
-- (id) initWithDictionary:(NSDictionary*)dict{
-	self = [super init];
-	if (!self) {
-		return self;
-	}
-	if (![dict isKindOfClass:[NSDictionary class]]) {
-		return self;
-	}
-	[self setId:[dict valueForKey:@"Id"]];
-	[self setTitle:[dict valueForKey:@"Title"]];
-	[self setUserIds:[dict valueForKey:@"UserIds"]];
-
-	NSMutableArray * mParticipants = [[NSMutableArray alloc] init];
-	NSArray * lParticipants = [dict valueForKey:@"Participants"];
-	if ([lParticipants isKindOfClass:[NSArray class]]) {
-		for (NSDictionary * d in lParticipants) {
-			[mParticipants addObject: [[QXEmbedUser alloc] initWithDictionary:d]];
-		}
-		[self setParticipants:mParticipants];
-	}
-	[self setCreatedAt:[QXQortexapi dateFromString:[dict valueForKey:@"CreatedAt"]]];
-	[self setEndedAt:[QXQortexapi dateFromString:[dict valueForKey:@"EndedAt"]]];
-	[self setLocalHumanCreatedAt:[dict valueForKey:@"LocalHumanCreatedAt"]];
-	[self setTopic:[dict valueForKey:@"Topic"]];
-	[self setPrivate:[[dict valueForKey:@"Private"] boolValue]];
-	[self setIsClose:[[dict valueForKey:@"IsClose"] boolValue]];
-	[self setIsShared:[[dict valueForKey:@"IsShared"] boolValue]];
-	[self setSharedMessageIds:[dict valueForKey:@"SharedMessageIds"]];
-	[self setMessagesCount:[dict valueForKey:@"MessagesCount"]];
-
-	NSMutableArray * mMessages = [[NSMutableArray alloc] init];
-	NSArray * lMessages = [dict valueForKey:@"Messages"];
-	if ([lMessages isKindOfClass:[NSArray class]]) {
-		for (NSDictionary * d in lMessages) {
-			[mMessages addObject: [[QXMessage alloc] initWithDictionary:d]];
-		}
-		[self setMessages:mMessages];
-	}
-
-	return self;
-}
-
-- (NSDictionary*) dictionary {
-	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
-	[dict setValue:self.Id forKey:@"Id"];
-	[dict setValue:self.Title forKey:@"Title"];
-	[dict setValue:self.UserIds forKey:@"UserIds"];
-
-	NSMutableArray * mParticipants = [[NSMutableArray alloc] init];
-	for (QXEmbedUser * p in Participants) {
-		[mParticipants addObject:[p dictionary]];
-	}
-	[dict setValue:mParticipants forKey:@"Participants"];
-	
-	[dict setValue:[QXQortexapi stringFromDate:self.CreatedAt] forKey:@"CreatedAt"];
-	[dict setValue:[QXQortexapi stringFromDate:self.EndedAt] forKey:@"EndedAt"];
-	[dict setValue:self.LocalHumanCreatedAt forKey:@"LocalHumanCreatedAt"];
-	[dict setValue:self.Topic forKey:@"Topic"];
-	[dict setValue:[NSNumber numberWithBool:self.Private] forKey:@"Private"];
-	[dict setValue:[NSNumber numberWithBool:self.IsClose] forKey:@"IsClose"];
-	[dict setValue:[NSNumber numberWithBool:self.IsShared] forKey:@"IsShared"];
-	[dict setValue:self.SharedMessageIds forKey:@"SharedMessageIds"];
-	[dict setValue:self.MessagesCount forKey:@"MessagesCount"];
-
-	NSMutableArray * mMessages = [[NSMutableArray alloc] init];
-	for (QXMessage * p in Messages) {
-		[mMessages addObject:[p dictionary]];
-	}
-	[dict setValue:mMessages forKey:@"Messages"];
-	
-
-	return dict;
-}
-
-@end
-
-// --- NotificationItem ---
-@implementation QXNotificationItem
-
-@synthesize Id;
-@synthesize GroupId;
-@synthesize ToUser;
-@synthesize ForEntry;
-@synthesize FromUser;
-@synthesize FromOrg;
-@synthesize CausedByEntry;
-@synthesize NotifiedAt;
-@synthesize ReadAt;
-@synthesize Readed;
-@synthesize Type;
-@synthesize Link;
-@synthesize SharingRequestToEmail;
-
-- (id) initWithDictionary:(NSDictionary*)dict{
-	self = [super init];
-	if (!self) {
-		return self;
-	}
-	if (![dict isKindOfClass:[NSDictionary class]]) {
-		return self;
-	}
-	[self setId:[dict valueForKey:@"Id"]];
-	[self setGroupId:[dict valueForKey:@"GroupId"]];
-
-	id dictToUser = [dict valueForKey:@"ToUser"];
-	if ([dictToUser isKindOfClass:[NSDictionary class]]){
-		[self setToUser:[[QXEmbedUser alloc] initWithDictionary:dictToUser]];
-	}
-
-	id dictForEntry = [dict valueForKey:@"ForEntry"];
-	if ([dictForEntry isKindOfClass:[NSDictionary class]]){
-		[self setForEntry:[[QXEmbedEntry alloc] initWithDictionary:dictForEntry]];
-	}
-
-	id dictFromUser = [dict valueForKey:@"FromUser"];
-	if ([dictFromUser isKindOfClass:[NSDictionary class]]){
-		[self setFromUser:[[QXEmbedUser alloc] initWithDictionary:dictFromUser]];
-	}
-
-	id dictFromOrg = [dict valueForKey:@"FromOrg"];
-	if ([dictFromOrg isKindOfClass:[NSDictionary class]]){
-		[self setFromOrg:[[QXEmbedOrg alloc] initWithDictionary:dictFromOrg]];
-	}
-
-	id dictCausedByEntry = [dict valueForKey:@"CausedByEntry"];
-	if ([dictCausedByEntry isKindOfClass:[NSDictionary class]]){
-		[self setCausedByEntry:[[QXEmbedEntry alloc] initWithDictionary:dictCausedByEntry]];
-	}
-	[self setNotifiedAt:[QXQortexapi dateFromString:[dict valueForKey:@"NotifiedAt"]]];
-	[self setReadAt:[QXQortexapi dateFromString:[dict valueForKey:@"ReadAt"]]];
-	[self setReaded:[[dict valueForKey:@"Readed"] boolValue]];
-	[self setType:[dict valueForKey:@"Type"]];
-	[self setLink:[dict valueForKey:@"Link"]];
-	[self setSharingRequestToEmail:[dict valueForKey:@"SharingRequestToEmail"]];
-
-	return self;
-}
-
-- (NSDictionary*) dictionary {
-	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
-	[dict setValue:self.Id forKey:@"Id"];
-	[dict setValue:self.GroupId forKey:@"GroupId"];
-	[dict setValue:[self.ToUser dictionary] forKey:@"ToUser"];
-	
-	[dict setValue:[self.ForEntry dictionary] forKey:@"ForEntry"];
-	
-	[dict setValue:[self.FromUser dictionary] forKey:@"FromUser"];
-	
-	[dict setValue:[self.FromOrg dictionary] forKey:@"FromOrg"];
-	
-	[dict setValue:[self.CausedByEntry dictionary] forKey:@"CausedByEntry"];
-	
-	[dict setValue:[QXQortexapi stringFromDate:self.NotifiedAt] forKey:@"NotifiedAt"];
-	[dict setValue:[QXQortexapi stringFromDate:self.ReadAt] forKey:@"ReadAt"];
-	[dict setValue:[NSNumber numberWithBool:self.Readed] forKey:@"Readed"];
-	[dict setValue:self.Type forKey:@"Type"];
-	[dict setValue:self.Link forKey:@"Link"];
-	[dict setValue:self.SharingRequestToEmail forKey:@"SharingRequestToEmail"];
-
-	return dict;
-}
-
-@end
-
-// --- MyNotifications ---
-@implementation QXMyNotifications
-
-@synthesize NotificationItems;
-@synthesize HasMore;
-@synthesize LatestNotifyTime;
-
-- (id) initWithDictionary:(NSDictionary*)dict{
-	self = [super init];
-	if (!self) {
-		return self;
-	}
-	if (![dict isKindOfClass:[NSDictionary class]]) {
-		return self;
-	}
-
-	NSMutableArray * mNotificationItems = [[NSMutableArray alloc] init];
-	NSArray * lNotificationItems = [dict valueForKey:@"NotificationItems"];
-	if ([lNotificationItems isKindOfClass:[NSArray class]]) {
-		for (NSDictionary * d in lNotificationItems) {
-			[mNotificationItems addObject: [[QXNotificationItem alloc] initWithDictionary:d]];
-		}
-		[self setNotificationItems:mNotificationItems];
-	}
-	[self setHasMore:[[dict valueForKey:@"HasMore"] boolValue]];
-	[self setLatestNotifyTime:[dict valueForKey:@"LatestNotifyTime"]];
-
-	return self;
-}
-
-- (NSDictionary*) dictionary {
-	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
-
-	NSMutableArray * mNotificationItems = [[NSMutableArray alloc] init];
-	for (QXNotificationItem * p in NotificationItems) {
-		[mNotificationItems addObject:[p dictionary]];
-	}
-	[dict setValue:mNotificationItems forKey:@"NotificationItems"];
-	
-	[dict setValue:[NSNumber numberWithBool:self.HasMore] forKey:@"HasMore"];
-	[dict setValue:self.LatestNotifyTime forKey:@"LatestNotifyTime"];
-
-	return dict;
-}
-
-@end
-
-// --- Entry ---
-@implementation QXEntry
-
-@synthesize Id;
-@synthesize EType;
-@synthesize Title;
-@synthesize Slug;
-@synthesize Content;
-@synthesize TypeTitle;
-@synthesize RootId;
-@synthesize GroupId;
-@synthesize AuthorId;
-@synthesize CreatedAt;
-@synthesize UpdatedAt;
-@synthesize BumpedUpAt;
-@synthesize AllAttachmentsURL;
-@synthesize Permalink;
-@synthesize IconName;
-@synthesize LocalHumanCreatedAt;
-@synthesize LocalHumanUpdatedAt;
-@synthesize WholeLastUpdateAtAgo;
-@synthesize LastUpdateAtAgo;
-@synthesize WatchedAtAgo;
-@synthesize NextRemindAtLater;
-@synthesize MentionedUserIds;
-@synthesize DomainURL;
-@synthesize UpdatedAtUnixNano;
-@synthesize LastUpdateAt;
-@synthesize HtmlTitle;
-@synthesize HtmlContent;
-@synthesize HtmlContentPart;
-@synthesize TaskHtmlContentPart;
-@synthesize WatchlistHtml;
-@synthesize ToUsersHtml;
-@synthesize LikedByUsersHtml;
-@synthesize NotifyOptionsHtml;
-@synthesize Link;
-@synthesize PresentationLink;
-@synthesize UploadURL;
-@synthesize IsShared;
-@synthesize IsPublished;
-@synthesize IsCanPublish;
-@synthesize IsMuted;
-@synthesize IsReminding;
-@synthesize IsSmartReminding;
-@synthesize IsNoReminding;
-@synthesize IsSystemMessage;
-@synthesize IsInnerMessage;
-@synthesize SystemMessageType;
-@synthesize BroadcastType;
-@synthesize IsBroadcast;
-@synthesize IsBroadcastTypeToAllAdmins;
-@synthesize IsBroadcastTypeToAllUsers;
-@synthesize IsBroadcastTypeToSomeOrgs;
-@synthesize IsFromSuperOrg;
-@synthesize IsFeedback;
-@synthesize FromOrg;
-@synthesize ToOrgs;
-@synthesize ToOrgsHtml;
-@synthesize IsRequest;
-@synthesize Request;
-@synthesize VisibleForSuperUserInSuperOrg;
-@synthesize VisibleForSuperOrg;
-@synthesize IsKnowledgeBase;
-@synthesize IsPost;
-@synthesize IsComment;
-@synthesize IsTask;
-@synthesize IsChat;
-@synthesize IsTaskToDo;
-@synthesize IsTaskAck;
-@synthesize IsInWatchList;
-@synthesize IsToGroup;
-@synthesize CurrentUserCanEdit;
-@synthesize CanEdit;
-@synthesize CanReply;
-@synthesize ManagerCanEdit;
-@synthesize LikedByMe;
-@synthesize HasInlineTask;
-@synthesize TaskIsCompleted;
-@synthesize IsRoot;
-@synthesize IsUnread;
-@synthesize IsUpdated;
-@synthesize IsLastVersion;
-@synthesize Presentation;
-@synthesize AnyoneCanEdit;
-@synthesize IsInGroup;
-@synthesize IsFromEmail;
-@synthesize AllAttachmentsCount;
-@synthesize CommentsCount;
-@synthesize AllLikesCount;
-@synthesize VersionCount;
-@synthesize UnreadCommentCount;
-@synthesize Author;
-@synthesize CurrentVersionEditor;
-@synthesize Group;
-@synthesize Task;
-@synthesize Conversation;
-@synthesize LinkedEntries;
-@synthesize Versions;
-@synthesize ToUsers;
-@synthesize MentionedUsers;
-@synthesize LikedByUsers;
-@synthesize Attachments;
-@synthesize FirstPicture;
-@synthesize Comments;
-@synthesize ExternalComments;
-@synthesize CurrentVersionComments;
-@synthesize OtherVersionsComments;
-@synthesize NewComment;
-@synthesize NewEntry;
-@synthesize GroupSlector;
-
-- (id) initWithDictionary:(NSDictionary*)dict{
-	self = [super init];
-	if (!self) {
-		return self;
-	}
-	if (![dict isKindOfClass:[NSDictionary class]]) {
-		return self;
-	}
-	[self setId:[dict valueForKey:@"Id"]];
-	[self setEType:[dict valueForKey:@"EType"]];
-	[self setTitle:[dict valueForKey:@"Title"]];
-	[self setSlug:[dict valueForKey:@"Slug"]];
-	[self setContent:[dict valueForKey:@"Content"]];
-	[self setTypeTitle:[dict valueForKey:@"TypeTitle"]];
-	[self setRootId:[dict valueForKey:@"RootId"]];
-	[self setGroupId:[dict valueForKey:@"GroupId"]];
-	[self setAuthorId:[dict valueForKey:@"AuthorId"]];
-	[self setCreatedAt:[QXQortexapi dateFromString:[dict valueForKey:@"CreatedAt"]]];
-	[self setUpdatedAt:[QXQortexapi dateFromString:[dict valueForKey:@"UpdatedAt"]]];
-	[self setBumpedUpAt:[QXQortexapi dateFromString:[dict valueForKey:@"BumpedUpAt"]]];
-	[self setAllAttachmentsURL:[dict valueForKey:@"AllAttachmentsURL"]];
-	[self setPermalink:[dict valueForKey:@"Permalink"]];
-	[self setIconName:[dict valueForKey:@"IconName"]];
-	[self setLocalHumanCreatedAt:[dict valueForKey:@"LocalHumanCreatedAt"]];
-	[self setLocalHumanUpdatedAt:[dict valueForKey:@"LocalHumanUpdatedAt"]];
-	[self setWholeLastUpdateAtAgo:[dict valueForKey:@"WholeLastUpdateAtAgo"]];
-	[self setLastUpdateAtAgo:[dict valueForKey:@"LastUpdateAtAgo"]];
-	[self setWatchedAtAgo:[dict valueForKey:@"WatchedAtAgo"]];
-	[self setNextRemindAtLater:[dict valueForKey:@"NextRemindAtLater"]];
-	[self setMentionedUserIds:[dict valueForKey:@"MentionedUserIds"]];
-	[self setDomainURL:[dict valueForKey:@"DomainURL"]];
-	[self setUpdatedAtUnixNano:[dict valueForKey:@"UpdatedAtUnixNano"]];
-	[self setLastUpdateAt:[dict valueForKey:@"LastUpdateAt"]];
-	[self setHtmlTitle:[dict valueForKey:@"HtmlTitle"]];
-	[self setHtmlContent:[dict valueForKey:@"HtmlContent"]];
-	[self setHtmlContentPart:[dict valueForKey:@"HtmlContentPart"]];
-	[self setTaskHtmlContentPart:[dict valueForKey:@"TaskHtmlContentPart"]];
-	[self setWatchlistHtml:[dict valueForKey:@"WatchlistHtml"]];
-	[self setToUsersHtml:[dict valueForKey:@"ToUsersHtml"]];
-	[self setLikedByUsersHtml:[dict valueForKey:@"LikedByUsersHtml"]];
-	[self setNotifyOptionsHtml:[dict valueForKey:@"NotifyOptionsHtml"]];
-	[self setLink:[dict valueForKey:@"Link"]];
-	[self setPresentationLink:[dict valueForKey:@"PresentationLink"]];
-	[self setUploadURL:[dict valueForKey:@"UploadURL"]];
-	[self setIsShared:[[dict valueForKey:@"IsShared"] boolValue]];
-	[self setIsPublished:[[dict valueForKey:@"IsPublished"] boolValue]];
-	[self setIsCanPublish:[[dict valueForKey:@"IsCanPublish"] boolValue]];
-	[self setIsMuted:[[dict valueForKey:@"IsMuted"] boolValue]];
-	[self setIsReminding:[[dict valueForKey:@"IsReminding"] boolValue]];
-	[self setIsSmartReminding:[[dict valueForKey:@"IsSmartReminding"] boolValue]];
-	[self setIsNoReminding:[[dict valueForKey:@"IsNoReminding"] boolValue]];
-	[self setIsSystemMessage:[[dict valueForKey:@"IsSystemMessage"] boolValue]];
-	[self setIsInnerMessage:[[dict valueForKey:@"IsInnerMessage"] boolValue]];
-	[self setSystemMessageType:[dict valueForKey:@"SystemMessageType"]];
-	[self setBroadcastType:[dict valueForKey:@"BroadcastType"]];
-	[self setIsBroadcast:[[dict valueForKey:@"IsBroadcast"] boolValue]];
-	[self setIsBroadcastTypeToAllAdmins:[[dict valueForKey:@"IsBroadcastTypeToAllAdmins"] boolValue]];
-	[self setIsBroadcastTypeToAllUsers:[[dict valueForKey:@"IsBroadcastTypeToAllUsers"] boolValue]];
-	[self setIsBroadcastTypeToSomeOrgs:[[dict valueForKey:@"IsBroadcastTypeToSomeOrgs"] boolValue]];
-	[self setIsFromSuperOrg:[[dict valueForKey:@"IsFromSuperOrg"] boolValue]];
-	[self setIsFeedback:[[dict valueForKey:@"IsFeedback"] boolValue]];
-
-	id dictFromOrg = [dict valueForKey:@"FromOrg"];
-	if ([dictFromOrg isKindOfClass:[NSDictionary class]]){
-		[self setFromOrg:[[QXEmbedOrg alloc] initWithDictionary:dictFromOrg]];
-	}
-
-	NSMutableArray * mToOrgs = [[NSMutableArray alloc] init];
-	NSArray * lToOrgs = [dict valueForKey:@"ToOrgs"];
-	if ([lToOrgs isKindOfClass:[NSArray class]]) {
-		for (NSDictionary * d in lToOrgs) {
-			[mToOrgs addObject: [[QXEmbedOrg alloc] initWithDictionary:d]];
-		}
-		[self setToOrgs:mToOrgs];
-	}
-	[self setToOrgsHtml:[dict valueForKey:@"ToOrgsHtml"]];
-	[self setIsRequest:[[dict valueForKey:@"IsRequest"] boolValue]];
-
-	id dictRequest = [dict valueForKey:@"Request"];
-	if ([dictRequest isKindOfClass:[NSDictionary class]]){
-		[self setRequest:[[QXRequest alloc] initWithDictionary:dictRequest]];
-	}
-	[self setVisibleForSuperUserInSuperOrg:[[dict valueForKey:@"VisibleForSuperUserInSuperOrg"] boolValue]];
-	[self setVisibleForSuperOrg:[[dict valueForKey:@"VisibleForSuperOrg"] boolValue]];
-	[self setIsKnowledgeBase:[[dict valueForKey:@"IsKnowledgeBase"] boolValue]];
-	[self setIsPost:[[dict valueForKey:@"IsPost"] boolValue]];
-	[self setIsComment:[[dict valueForKey:@"IsComment"] boolValue]];
-	[self setIsTask:[[dict valueForKey:@"IsTask"] boolValue]];
-	[self setIsChat:[[dict valueForKey:@"IsChat"] boolValue]];
-	[self setIsTaskToDo:[[dict valueForKey:@"IsTaskToDo"] boolValue]];
-	[self setIsTaskAck:[[dict valueForKey:@"IsTaskAck"] boolValue]];
-	[self setIsInWatchList:[[dict valueForKey:@"IsInWatchList"] boolValue]];
-	[self setIsToGroup:[dict valueForKey:@"IsToGroup"]];
-	[self setCurrentUserCanEdit:[[dict valueForKey:@"CurrentUserCanEdit"] boolValue]];
-	[self setCanEdit:[[dict valueForKey:@"CanEdit"] boolValue]];
-	[self setCanReply:[[dict valueForKey:@"CanReply"] boolValue]];
-	[self setManagerCanEdit:[[dict valueForKey:@"ManagerCanEdit"] boolValue]];
-	[self setLikedByMe:[[dict valueForKey:@"LikedByMe"] boolValue]];
-	[self setHasInlineTask:[[dict valueForKey:@"HasInlineTask"] boolValue]];
-	[self setTaskIsCompleted:[[dict valueForKey:@"TaskIsCompleted"] boolValue]];
-	[self setIsRoot:[[dict valueForKey:@"IsRoot"] boolValue]];
-	[self setIsUnread:[[dict valueForKey:@"IsUnread"] boolValue]];
-	[self setIsUpdated:[[dict valueForKey:@"IsUpdated"] boolValue]];
-	[self setIsLastVersion:[[dict valueForKey:@"IsLastVersion"] boolValue]];
-	[self setPresentation:[[dict valueForKey:@"Presentation"] boolValue]];
-	[self setAnyoneCanEdit:[[dict valueForKey:@"AnyoneCanEdit"] boolValue]];
-	[self setIsInGroup:[[dict valueForKey:@"IsInGroup"] boolValue]];
-	[self setIsFromEmail:[[dict valueForKey:@"IsFromEmail"] boolValue]];
-	[self setAllAttachmentsCount:[dict valueForKey:@"AllAttachmentsCount"]];
-	[self setCommentsCount:[dict valueForKey:@"CommentsCount"]];
-	[self setAllLikesCount:[dict valueForKey:@"AllLikesCount"]];
-	[self setVersionCount:[dict valueForKey:@"VersionCount"]];
-	[self setUnreadCommentCount:[dict valueForKey:@"UnreadCommentCount"]];
-
-	id dictAuthor = [dict valueForKey:@"Author"];
-	if ([dictAuthor isKindOfClass:[NSDictionary class]]){
-		[self setAuthor:[[QXEmbedUser alloc] initWithDictionary:dictAuthor]];
-	}
-
-	id dictCurrentVersionEditor = [dict valueForKey:@"CurrentVersionEditor"];
-	if ([dictCurrentVersionEditor isKindOfClass:[NSDictionary class]]){
-		[self setCurrentVersionEditor:[[QXEmbedUser alloc] initWithDictionary:dictCurrentVersionEditor]];
-	}
-
-	id dictGroup = [dict valueForKey:@"Group"];
-	if ([dictGroup isKindOfClass:[NSDictionary class]]){
-		[self setGroup:[[QXGroup alloc] initWithDictionary:dictGroup]];
-	}
-
-	id dictTask = [dict valueForKey:@"Task"];
-	if ([dictTask isKindOfClass:[NSDictionary class]]){
-		[self setTask:[[QXTask alloc] initWithDictionary:dictTask]];
-	}
-
-	id dictConversation = [dict valueForKey:@"Conversation"];
-	if ([dictConversation isKindOfClass:[NSDictionary class]]){
-		[self setConversation:[[QXConversation alloc] initWithDictionary:dictConversation]];
-	}
-
-	NSMutableArray * mLinkedEntries = [[NSMutableArray alloc] init];
-	NSArray * lLinkedEntries = [dict valueForKey:@"LinkedEntries"];
-	if ([lLinkedEntries isKindOfClass:[NSArray class]]) {
-		for (NSDictionary * d in lLinkedEntries) {
-			[mLinkedEntries addObject: [[QXLinkedEntry alloc] initWithDictionary:d]];
-		}
-		[self setLinkedEntries:mLinkedEntries];
-	}
-
-	NSMutableArray * mVersions = [[NSMutableArray alloc] init];
-	NSArray * lVersions = [dict valueForKey:@"Versions"];
-	if ([lVersions isKindOfClass:[NSArray class]]) {
-		for (NSDictionary * d in lVersions) {
-			[mVersions addObject: [[QXEntryVersion alloc] initWithDictionary:d]];
-		}
-		[self setVersions:mVersions];
-	}
-
-	NSMutableArray * mToUsers = [[NSMutableArray alloc] init];
-	NSArray * lToUsers = [dict valueForKey:@"ToUsers"];
-	if ([lToUsers isKindOfClass:[NSArray class]]) {
-		for (NSDictionary * d in lToUsers) {
-			[mToUsers addObject: [[QXEmbedUser alloc] initWithDictionary:d]];
-		}
-		[self setToUsers:mToUsers];
-	}
-
-	NSMutableArray * mMentionedUsers = [[NSMutableArray alloc] init];
-	NSArray * lMentionedUsers = [dict valueForKey:@"MentionedUsers"];
-	if ([lMentionedUsers isKindOfClass:[NSArray class]]) {
-		for (NSDictionary * d in lMentionedUsers) {
-			[mMentionedUsers addObject: [[QXEmbedUser alloc] initWithDictionary:d]];
-		}
-		[self setMentionedUsers:mMentionedUsers];
-	}
-
-	NSMutableArray * mLikedByUsers = [[NSMutableArray alloc] init];
-	NSArray * lLikedByUsers = [dict valueForKey:@"LikedByUsers"];
-	if ([lLikedByUsers isKindOfClass:[NSArray class]]) {
-		for (NSDictionary * d in lLikedByUsers) {
-			[mLikedByUsers addObject: [[QXEmbedUser alloc] initWithDictionary:d]];
-		}
-		[self setLikedByUsers:mLikedByUsers];
-	}
-
-	NSMutableArray * mAttachments = [[NSMutableArray alloc] init];
-	NSArray * lAttachments = [dict valueForKey:@"Attachments"];
-	if ([lAttachments isKindOfClass:[NSArray class]]) {
-		for (NSDictionary * d in lAttachments) {
-			[mAttachments addObject: [[QXAttachment alloc] initWithDictionary:d]];
-		}
-		[self setAttachments:mAttachments];
-	}
-
-	id dictFirstPicture = [dict valueForKey:@"FirstPicture"];
-	if ([dictFirstPicture isKindOfClass:[NSDictionary class]]){
-		[self setFirstPicture:[[QXAttachment alloc] initWithDictionary:dictFirstPicture]];
-	}
-
-	NSMutableArray * mComments = [[NSMutableArray alloc] init];
-	NSArray * lComments = [dict valueForKey:@"Comments"];
-	if ([lComments isKindOfClass:[NSArray class]]) {
-		for (NSDictionary * d in lComments) {
-			[mComments addObject: [[QXEntry alloc] initWithDictionary:d]];
-		}
-		[self setComments:mComments];
-	}
-
-	NSMutableArray * mExternalComments = [[NSMutableArray alloc] init];
-	NSArray * lExternalComments = [dict valueForKey:@"ExternalComments"];
-	if ([lExternalComments isKindOfClass:[NSArray class]]) {
-		for (NSDictionary * d in lExternalComments) {
-			[mExternalComments addObject: [[QXEntry alloc] initWithDictionary:d]];
-		}
-		[self setExternalComments:mExternalComments];
-	}
-
-	NSMutableArray * mCurrentVersionComments = [[NSMutableArray alloc] init];
-	NSArray * lCurrentVersionComments = [dict valueForKey:@"CurrentVersionComments"];
-	if ([lCurrentVersionComments isKindOfClass:[NSArray class]]) {
-		for (NSDictionary * d in lCurrentVersionComments) {
-			[mCurrentVersionComments addObject: [[QXEntry alloc] initWithDictionary:d]];
-		}
-		[self setCurrentVersionComments:mCurrentVersionComments];
-	}
-
-	NSMutableArray * mOtherVersionsComments = [[NSMutableArray alloc] init];
-	NSArray * lOtherVersionsComments = [dict valueForKey:@"OtherVersionsComments"];
-	if ([lOtherVersionsComments isKindOfClass:[NSArray class]]) {
-		for (NSDictionary * d in lOtherVersionsComments) {
-			[mOtherVersionsComments addObject: [[QXEntry alloc] initWithDictionary:d]];
-		}
-		[self setOtherVersionsComments:mOtherVersionsComments];
-	}
-
-	id dictNewComment = [dict valueForKey:@"NewComment"];
-	if ([dictNewComment isKindOfClass:[NSDictionary class]]){
-		[self setNewComment:[[QXEntry alloc] initWithDictionary:dictNewComment]];
-	}
-
-	id dictNewEntry = [dict valueForKey:@"NewEntry"];
-	if ([dictNewEntry isKindOfClass:[NSDictionary class]]){
-		[self setNewEntry:[[QXEntry alloc] initWithDictionary:dictNewEntry]];
-	}
-
-	id dictGroupSlector = [dict valueForKey:@"GroupSlector"];
-	if ([dictGroupSlector isKindOfClass:[NSDictionary class]]){
-		[self setGroupSlector:[[QXGroupSelector alloc] initWithDictionary:dictGroupSlector]];
-	}
-
-	return self;
-}
-
-- (NSDictionary*) dictionary {
-	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
-	[dict setValue:self.Id forKey:@"Id"];
-	[dict setValue:self.EType forKey:@"EType"];
-	[dict setValue:self.Title forKey:@"Title"];
-	[dict setValue:self.Slug forKey:@"Slug"];
-	[dict setValue:self.Content forKey:@"Content"];
-	[dict setValue:self.TypeTitle forKey:@"TypeTitle"];
-	[dict setValue:self.RootId forKey:@"RootId"];
-	[dict setValue:self.GroupId forKey:@"GroupId"];
-	[dict setValue:self.AuthorId forKey:@"AuthorId"];
-	[dict setValue:[QXQortexapi stringFromDate:self.CreatedAt] forKey:@"CreatedAt"];
-	[dict setValue:[QXQortexapi stringFromDate:self.UpdatedAt] forKey:@"UpdatedAt"];
-	[dict setValue:[QXQortexapi stringFromDate:self.BumpedUpAt] forKey:@"BumpedUpAt"];
-	[dict setValue:self.AllAttachmentsURL forKey:@"AllAttachmentsURL"];
-	[dict setValue:self.Permalink forKey:@"Permalink"];
-	[dict setValue:self.IconName forKey:@"IconName"];
-	[dict setValue:self.LocalHumanCreatedAt forKey:@"LocalHumanCreatedAt"];
-	[dict setValue:self.LocalHumanUpdatedAt forKey:@"LocalHumanUpdatedAt"];
-	[dict setValue:self.WholeLastUpdateAtAgo forKey:@"WholeLastUpdateAtAgo"];
-	[dict setValue:self.LastUpdateAtAgo forKey:@"LastUpdateAtAgo"];
-	[dict setValue:self.WatchedAtAgo forKey:@"WatchedAtAgo"];
-	[dict setValue:self.NextRemindAtLater forKey:@"NextRemindAtLater"];
-	[dict setValue:self.MentionedUserIds forKey:@"MentionedUserIds"];
-	[dict setValue:self.DomainURL forKey:@"DomainURL"];
-	[dict setValue:self.UpdatedAtUnixNano forKey:@"UpdatedAtUnixNano"];
-	[dict setValue:self.LastUpdateAt forKey:@"LastUpdateAt"];
-	[dict setValue:self.HtmlTitle forKey:@"HtmlTitle"];
-	[dict setValue:self.HtmlContent forKey:@"HtmlContent"];
-	[dict setValue:self.HtmlContentPart forKey:@"HtmlContentPart"];
-	[dict setValue:self.TaskHtmlContentPart forKey:@"TaskHtmlContentPart"];
-	[dict setValue:self.WatchlistHtml forKey:@"WatchlistHtml"];
-	[dict setValue:self.ToUsersHtml forKey:@"ToUsersHtml"];
-	[dict setValue:self.LikedByUsersHtml forKey:@"LikedByUsersHtml"];
-	[dict setValue:self.NotifyOptionsHtml forKey:@"NotifyOptionsHtml"];
-	[dict setValue:self.Link forKey:@"Link"];
-	[dict setValue:self.PresentationLink forKey:@"PresentationLink"];
-	[dict setValue:self.UploadURL forKey:@"UploadURL"];
-	[dict setValue:[NSNumber numberWithBool:self.IsShared] forKey:@"IsShared"];
-	[dict setValue:[NSNumber numberWithBool:self.IsPublished] forKey:@"IsPublished"];
-	[dict setValue:[NSNumber numberWithBool:self.IsCanPublish] forKey:@"IsCanPublish"];
-	[dict setValue:[NSNumber numberWithBool:self.IsMuted] forKey:@"IsMuted"];
-	[dict setValue:[NSNumber numberWithBool:self.IsReminding] forKey:@"IsReminding"];
-	[dict setValue:[NSNumber numberWithBool:self.IsSmartReminding] forKey:@"IsSmartReminding"];
-	[dict setValue:[NSNumber numberWithBool:self.IsNoReminding] forKey:@"IsNoReminding"];
-	[dict setValue:[NSNumber numberWithBool:self.IsSystemMessage] forKey:@"IsSystemMessage"];
-	[dict setValue:[NSNumber numberWithBool:self.IsInnerMessage] forKey:@"IsInnerMessage"];
-	[dict setValue:self.SystemMessageType forKey:@"SystemMessageType"];
-	[dict setValue:self.BroadcastType forKey:@"BroadcastType"];
-	[dict setValue:[NSNumber numberWithBool:self.IsBroadcast] forKey:@"IsBroadcast"];
-	[dict setValue:[NSNumber numberWithBool:self.IsBroadcastTypeToAllAdmins] forKey:@"IsBroadcastTypeToAllAdmins"];
-	[dict setValue:[NSNumber numberWithBool:self.IsBroadcastTypeToAllUsers] forKey:@"IsBroadcastTypeToAllUsers"];
-	[dict setValue:[NSNumber numberWithBool:self.IsBroadcastTypeToSomeOrgs] forKey:@"IsBroadcastTypeToSomeOrgs"];
-	[dict setValue:[NSNumber numberWithBool:self.IsFromSuperOrg] forKey:@"IsFromSuperOrg"];
-	[dict setValue:[NSNumber numberWithBool:self.IsFeedback] forKey:@"IsFeedback"];
-	[dict setValue:[self.FromOrg dictionary] forKey:@"FromOrg"];
-	
-
-	NSMutableArray * mToOrgs = [[NSMutableArray alloc] init];
-	for (QXEmbedOrg * p in ToOrgs) {
-		[mToOrgs addObject:[p dictionary]];
-	}
-	[dict setValue:mToOrgs forKey:@"ToOrgs"];
-	
-	[dict setValue:self.ToOrgsHtml forKey:@"ToOrgsHtml"];
-	[dict setValue:[NSNumber numberWithBool:self.IsRequest] forKey:@"IsRequest"];
-	[dict setValue:[self.Request dictionary] forKey:@"Request"];
-	
-	[dict setValue:[NSNumber numberWithBool:self.VisibleForSuperUserInSuperOrg] forKey:@"VisibleForSuperUserInSuperOrg"];
-	[dict setValue:[NSNumber numberWithBool:self.VisibleForSuperOrg] forKey:@"VisibleForSuperOrg"];
-	[dict setValue:[NSNumber numberWithBool:self.IsKnowledgeBase] forKey:@"IsKnowledgeBase"];
-	[dict setValue:[NSNumber numberWithBool:self.IsPost] forKey:@"IsPost"];
-	[dict setValue:[NSNumber numberWithBool:self.IsComment] forKey:@"IsComment"];
-	[dict setValue:[NSNumber numberWithBool:self.IsTask] forKey:@"IsTask"];
-	[dict setValue:[NSNumber numberWithBool:self.IsChat] forKey:@"IsChat"];
-	[dict setValue:[NSNumber numberWithBool:self.IsTaskToDo] forKey:@"IsTaskToDo"];
-	[dict setValue:[NSNumber numberWithBool:self.IsTaskAck] forKey:@"IsTaskAck"];
-	[dict setValue:[NSNumber numberWithBool:self.IsInWatchList] forKey:@"IsInWatchList"];
-	[dict setValue:self.IsToGroup forKey:@"IsToGroup"];
-	[dict setValue:[NSNumber numberWithBool:self.CurrentUserCanEdit] forKey:@"CurrentUserCanEdit"];
-	[dict setValue:[NSNumber numberWithBool:self.CanEdit] forKey:@"CanEdit"];
-	[dict setValue:[NSNumber numberWithBool:self.CanReply] forKey:@"CanReply"];
-	[dict setValue:[NSNumber numberWithBool:self.ManagerCanEdit] forKey:@"ManagerCanEdit"];
-	[dict setValue:[NSNumber numberWithBool:self.LikedByMe] forKey:@"LikedByMe"];
-	[dict setValue:[NSNumber numberWithBool:self.HasInlineTask] forKey:@"HasInlineTask"];
-	[dict setValue:[NSNumber numberWithBool:self.TaskIsCompleted] forKey:@"TaskIsCompleted"];
-	[dict setValue:[NSNumber numberWithBool:self.IsRoot] forKey:@"IsRoot"];
-	[dict setValue:[NSNumber numberWithBool:self.IsUnread] forKey:@"IsUnread"];
-	[dict setValue:[NSNumber numberWithBool:self.IsUpdated] forKey:@"IsUpdated"];
-	[dict setValue:[NSNumber numberWithBool:self.IsLastVersion] forKey:@"IsLastVersion"];
-	[dict setValue:[NSNumber numberWithBool:self.Presentation] forKey:@"Presentation"];
-	[dict setValue:[NSNumber numberWithBool:self.AnyoneCanEdit] forKey:@"AnyoneCanEdit"];
-	[dict setValue:[NSNumber numberWithBool:self.IsInGroup] forKey:@"IsInGroup"];
-	[dict setValue:[NSNumber numberWithBool:self.IsFromEmail] forKey:@"IsFromEmail"];
-	[dict setValue:self.AllAttachmentsCount forKey:@"AllAttachmentsCount"];
-	[dict setValue:self.CommentsCount forKey:@"CommentsCount"];
-	[dict setValue:self.AllLikesCount forKey:@"AllLikesCount"];
-	[dict setValue:self.VersionCount forKey:@"VersionCount"];
-	[dict setValue:self.UnreadCommentCount forKey:@"UnreadCommentCount"];
-	[dict setValue:[self.Author dictionary] forKey:@"Author"];
-	
-	[dict setValue:[self.CurrentVersionEditor dictionary] forKey:@"CurrentVersionEditor"];
-	
-	[dict setValue:[self.Group dictionary] forKey:@"Group"];
-	
-	[dict setValue:[self.Task dictionary] forKey:@"Task"];
-	
-	[dict setValue:[self.Conversation dictionary] forKey:@"Conversation"];
-	
-
-	NSMutableArray * mLinkedEntries = [[NSMutableArray alloc] init];
-	for (QXLinkedEntry * p in LinkedEntries) {
-		[mLinkedEntries addObject:[p dictionary]];
-	}
-	[dict setValue:mLinkedEntries forKey:@"LinkedEntries"];
-	
-
-	NSMutableArray * mVersions = [[NSMutableArray alloc] init];
-	for (QXEntryVersion * p in Versions) {
-		[mVersions addObject:[p dictionary]];
-	}
-	[dict setValue:mVersions forKey:@"Versions"];
-	
-
-	NSMutableArray * mToUsers = [[NSMutableArray alloc] init];
-	for (QXEmbedUser * p in ToUsers) {
-		[mToUsers addObject:[p dictionary]];
-	}
-	[dict setValue:mToUsers forKey:@"ToUsers"];
-	
-
-	NSMutableArray * mMentionedUsers = [[NSMutableArray alloc] init];
-	for (QXEmbedUser * p in MentionedUsers) {
-		[mMentionedUsers addObject:[p dictionary]];
-	}
-	[dict setValue:mMentionedUsers forKey:@"MentionedUsers"];
-	
-
-	NSMutableArray * mLikedByUsers = [[NSMutableArray alloc] init];
-	for (QXEmbedUser * p in LikedByUsers) {
-		[mLikedByUsers addObject:[p dictionary]];
-	}
-	[dict setValue:mLikedByUsers forKey:@"LikedByUsers"];
-	
-
-	NSMutableArray * mAttachments = [[NSMutableArray alloc] init];
-	for (QXAttachment * p in Attachments) {
-		[mAttachments addObject:[p dictionary]];
-	}
-	[dict setValue:mAttachments forKey:@"Attachments"];
-	
-	[dict setValue:[self.FirstPicture dictionary] forKey:@"FirstPicture"];
-	
-
-	NSMutableArray * mComments = [[NSMutableArray alloc] init];
-	for (QXEntry * p in Comments) {
-		[mComments addObject:[p dictionary]];
-	}
-	[dict setValue:mComments forKey:@"Comments"];
-	
-
-	NSMutableArray * mExternalComments = [[NSMutableArray alloc] init];
-	for (QXEntry * p in ExternalComments) {
-		[mExternalComments addObject:[p dictionary]];
-	}
-	[dict setValue:mExternalComments forKey:@"ExternalComments"];
-	
-
-	NSMutableArray * mCurrentVersionComments = [[NSMutableArray alloc] init];
-	for (QXEntry * p in CurrentVersionComments) {
-		[mCurrentVersionComments addObject:[p dictionary]];
-	}
-	[dict setValue:mCurrentVersionComments forKey:@"CurrentVersionComments"];
-	
-
-	NSMutableArray * mOtherVersionsComments = [[NSMutableArray alloc] init];
-	for (QXEntry * p in OtherVersionsComments) {
-		[mOtherVersionsComments addObject:[p dictionary]];
-	}
-	[dict setValue:mOtherVersionsComments forKey:@"OtherVersionsComments"];
-	
-	[dict setValue:[self.NewComment dictionary] forKey:@"NewComment"];
-	
-	[dict setValue:[self.NewEntry dictionary] forKey:@"NewEntry"];
-	
-	[dict setValue:[self.GroupSlector dictionary] forKey:@"GroupSlector"];
-	
 
 	return dict;
 }
@@ -3933,6 +4619,299 @@ static NSDateFormatter * _dateFormatter;
 
 // === Interfaces ===
 
+
+
+// --- QXSwitchOrganizationParams ---
+@implementation QXAuthMemberServiceSwitchOrganizationParams : NSObject
+
+@synthesize OrgId;
+
+- (id) initWithDictionary:(NSDictionary*)dict{
+	self = [super init];
+	if (!self) {
+		return self;
+	}
+	if (![dict isKindOfClass:[NSDictionary class]]) {
+		return self;
+	}
+	[self setOrgId:[dict valueForKey:@"OrgId"]];
+
+	return self;
+}
+
+- (NSDictionary*) dictionary {
+	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
+	[dict setValue:self.OrgId forKey:@"OrgId"];
+
+	return dict;
+}
+
+@end
+
+// --- QXSwitchOrganizationResults ---
+@implementation QXAuthMemberServiceSwitchOrganizationResults : NSObject
+
+@synthesize Err;
+
+- (id) initWithDictionary:(NSDictionary*)dict{
+	self = [super init];
+	if (!self) {
+		return self;
+	}
+	if (![dict isKindOfClass:[NSDictionary class]]) {
+		return self;
+	}
+	[self setErr:[QXQortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
+
+	return self;
+}
+
+- (NSDictionary*) dictionary {
+	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
+	[dict setValue:self.Err forKey:@"Err"];
+
+	return dict;
+}
+
+@end
+
+// --- QXGetAbandonInfoParams ---
+@implementation QXAuthMemberServiceGetAbandonInfoParams : NSObject
+
+@synthesize AbandonOrgId;
+@synthesize MemberId;
+
+- (id) initWithDictionary:(NSDictionary*)dict{
+	self = [super init];
+	if (!self) {
+		return self;
+	}
+	if (![dict isKindOfClass:[NSDictionary class]]) {
+		return self;
+	}
+	[self setAbandonOrgId:[dict valueForKey:@"AbandonOrgId"]];
+	[self setMemberId:[dict valueForKey:@"MemberId"]];
+
+	return self;
+}
+
+- (NSDictionary*) dictionary {
+	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
+	[dict setValue:self.AbandonOrgId forKey:@"AbandonOrgId"];
+	[dict setValue:self.MemberId forKey:@"MemberId"];
+
+	return dict;
+}
+
+@end
+
+// --- QXGetAbandonInfoResults ---
+@implementation QXAuthMemberServiceGetAbandonInfoResults : NSObject
+
+@synthesize Info;
+@synthesize Err;
+
+- (id) initWithDictionary:(NSDictionary*)dict{
+	self = [super init];
+	if (!self) {
+		return self;
+	}
+	if (![dict isKindOfClass:[NSDictionary class]]) {
+		return self;
+	}
+
+	id dictInfo = [dict valueForKey:@"Info"];
+	if ([dictInfo isKindOfClass:[NSDictionary class]]){
+		[self setInfo:[[QXAbandonInfo alloc] initWithDictionary:dictInfo]];
+	}
+	[self setErr:[QXQortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
+
+	return self;
+}
+
+- (NSDictionary*) dictionary {
+	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
+	[dict setValue:[self.Info dictionary] forKey:@"Info"];
+	
+	[dict setValue:self.Err forKey:@"Err"];
+
+	return dict;
+}
+
+@end
+
+// --- QXGetShareRequestParams ---
+@implementation QXAuthMemberServiceGetShareRequestParams : NSObject
+
+@synthesize Token;
+
+- (id) initWithDictionary:(NSDictionary*)dict{
+	self = [super init];
+	if (!self) {
+		return self;
+	}
+	if (![dict isKindOfClass:[NSDictionary class]]) {
+		return self;
+	}
+	[self setToken:[dict valueForKey:@"Token"]];
+
+	return self;
+}
+
+- (NSDictionary*) dictionary {
+	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
+	[dict setValue:self.Token forKey:@"Token"];
+
+	return dict;
+}
+
+@end
+
+// --- QXGetShareRequestResults ---
+@implementation QXAuthMemberServiceGetShareRequestResults : NSObject
+
+@synthesize ShareRequest;
+@synthesize Err;
+
+- (id) initWithDictionary:(NSDictionary*)dict{
+	self = [super init];
+	if (!self) {
+		return self;
+	}
+	if (![dict isKindOfClass:[NSDictionary class]]) {
+		return self;
+	}
+
+	id dictShareRequest = [dict valueForKey:@"ShareRequest"];
+	if ([dictShareRequest isKindOfClass:[NSDictionary class]]){
+		[self setShareRequest:[[QXShareRequest alloc] initWithDictionary:dictShareRequest]];
+	}
+	[self setErr:[QXQortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
+
+	return self;
+}
+
+- (NSDictionary*) dictionary {
+	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
+	[dict setValue:[self.ShareRequest dictionary] forKey:@"ShareRequest"];
+	
+	[dict setValue:self.Err forKey:@"Err"];
+
+	return dict;
+}
+
+@end
+
+// --- QXRejectShareRequestByInviteeParams ---
+@implementation QXAuthMemberServiceRejectShareRequestByInviteeParams : NSObject
+
+@synthesize Token;
+
+- (id) initWithDictionary:(NSDictionary*)dict{
+	self = [super init];
+	if (!self) {
+		return self;
+	}
+	if (![dict isKindOfClass:[NSDictionary class]]) {
+		return self;
+	}
+	[self setToken:[dict valueForKey:@"Token"]];
+
+	return self;
+}
+
+- (NSDictionary*) dictionary {
+	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
+	[dict setValue:self.Token forKey:@"Token"];
+
+	return dict;
+}
+
+@end
+
+// --- QXRejectShareRequestByInviteeResults ---
+@implementation QXAuthMemberServiceRejectShareRequestByInviteeResults : NSObject
+
+@synthesize Err;
+
+- (id) initWithDictionary:(NSDictionary*)dict{
+	self = [super init];
+	if (!self) {
+		return self;
+	}
+	if (![dict isKindOfClass:[NSDictionary class]]) {
+		return self;
+	}
+	[self setErr:[QXQortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
+
+	return self;
+}
+
+- (NSDictionary*) dictionary {
+	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
+	[dict setValue:self.Err forKey:@"Err"];
+
+	return dict;
+}
+
+@end
+
+// --- QXAcceptShareRequestByInviteeParams ---
+@implementation QXAuthMemberServiceAcceptShareRequestByInviteeParams : NSObject
+
+@synthesize Token;
+@synthesize ToOrgId;
+
+- (id) initWithDictionary:(NSDictionary*)dict{
+	self = [super init];
+	if (!self) {
+		return self;
+	}
+	if (![dict isKindOfClass:[NSDictionary class]]) {
+		return self;
+	}
+	[self setToken:[dict valueForKey:@"Token"]];
+	[self setToOrgId:[dict valueForKey:@"ToOrgId"]];
+
+	return self;
+}
+
+- (NSDictionary*) dictionary {
+	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
+	[dict setValue:self.Token forKey:@"Token"];
+	[dict setValue:self.ToOrgId forKey:@"ToOrgId"];
+
+	return dict;
+}
+
+@end
+
+// --- QXAcceptShareRequestByInviteeResults ---
+@implementation QXAuthMemberServiceAcceptShareRequestByInviteeResults : NSObject
+
+@synthesize Err;
+
+- (id) initWithDictionary:(NSDictionary*)dict{
+	self = [super init];
+	if (!self) {
+		return self;
+	}
+	if (![dict isKindOfClass:[NSDictionary class]]) {
+		return self;
+	}
+	[self setErr:[QXQortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
+
+	return self;
+}
+
+- (NSDictionary*) dictionary {
+	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
+	[dict setValue:self.Err forKey:@"Err"];
+
+	return dict;
+}
+
+@end
 
 
 // --- QXGetTotalStatsParams ---
@@ -4365,192 +5344,9 @@ static NSDateFormatter * _dateFormatter;
 
 @end
 
+// --- QXIgnoreAccessParams ---
+@implementation QXAuthAdminServiceIgnoreAccessParams : NSObject
 
-// --- QXSwitchOrganizationParams ---
-@implementation QXAuthMemberServiceSwitchOrganizationParams : NSObject
-
-@synthesize OrgId;
-
-- (id) initWithDictionary:(NSDictionary*)dict{
-	self = [super init];
-	if (!self) {
-		return self;
-	}
-	if (![dict isKindOfClass:[NSDictionary class]]) {
-		return self;
-	}
-	[self setOrgId:[dict valueForKey:@"OrgId"]];
-
-	return self;
-}
-
-- (NSDictionary*) dictionary {
-	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
-	[dict setValue:self.OrgId forKey:@"OrgId"];
-
-	return dict;
-}
-
-@end
-
-// --- QXSwitchOrganizationResults ---
-@implementation QXAuthMemberServiceSwitchOrganizationResults : NSObject
-
-@synthesize Err;
-
-- (id) initWithDictionary:(NSDictionary*)dict{
-	self = [super init];
-	if (!self) {
-		return self;
-	}
-	if (![dict isKindOfClass:[NSDictionary class]]) {
-		return self;
-	}
-	[self setErr:[QXQortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
-
-	return self;
-}
-
-- (NSDictionary*) dictionary {
-	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
-	[dict setValue:self.Err forKey:@"Err"];
-
-	return dict;
-}
-
-@end
-
-// --- QXGetAbandonInfoParams ---
-@implementation QXAuthMemberServiceGetAbandonInfoParams : NSObject
-
-@synthesize AbandonOrgId;
-@synthesize MemberId;
-
-- (id) initWithDictionary:(NSDictionary*)dict{
-	self = [super init];
-	if (!self) {
-		return self;
-	}
-	if (![dict isKindOfClass:[NSDictionary class]]) {
-		return self;
-	}
-	[self setAbandonOrgId:[dict valueForKey:@"AbandonOrgId"]];
-	[self setMemberId:[dict valueForKey:@"MemberId"]];
-
-	return self;
-}
-
-- (NSDictionary*) dictionary {
-	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
-	[dict setValue:self.AbandonOrgId forKey:@"AbandonOrgId"];
-	[dict setValue:self.MemberId forKey:@"MemberId"];
-
-	return dict;
-}
-
-@end
-
-// --- QXGetAbandonInfoResults ---
-@implementation QXAuthMemberServiceGetAbandonInfoResults : NSObject
-
-@synthesize Info;
-@synthesize Err;
-
-- (id) initWithDictionary:(NSDictionary*)dict{
-	self = [super init];
-	if (!self) {
-		return self;
-	}
-	if (![dict isKindOfClass:[NSDictionary class]]) {
-		return self;
-	}
-
-	id dictInfo = [dict valueForKey:@"Info"];
-	if ([dictInfo isKindOfClass:[NSDictionary class]]){
-		[self setInfo:[[QXAbandonInfo alloc] initWithDictionary:dictInfo]];
-	}
-	[self setErr:[QXQortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
-
-	return self;
-}
-
-- (NSDictionary*) dictionary {
-	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
-	[dict setValue:[self.Info dictionary] forKey:@"Info"];
-	
-	[dict setValue:self.Err forKey:@"Err"];
-
-	return dict;
-}
-
-@end
-
-// --- QXGetSharingInviationByTokenParams ---
-@implementation QXAuthMemberServiceGetSharingInviationByTokenParams : NSObject
-
-@synthesize SharingInviationToken;
-
-- (id) initWithDictionary:(NSDictionary*)dict{
-	self = [super init];
-	if (!self) {
-		return self;
-	}
-	if (![dict isKindOfClass:[NSDictionary class]]) {
-		return self;
-	}
-	[self setSharingInviationToken:[dict valueForKey:@"SharingInviationToken"]];
-
-	return self;
-}
-
-- (NSDictionary*) dictionary {
-	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
-	[dict setValue:self.SharingInviationToken forKey:@"SharingInviationToken"];
-
-	return dict;
-}
-
-@end
-
-// --- QXGetSharingInviationByTokenResults ---
-@implementation QXAuthMemberServiceGetSharingInviationByTokenResults : NSObject
-
-@synthesize Invitation;
-@synthesize Err;
-
-- (id) initWithDictionary:(NSDictionary*)dict{
-	self = [super init];
-	if (!self) {
-		return self;
-	}
-	if (![dict isKindOfClass:[NSDictionary class]]) {
-		return self;
-	}
-
-	id dictInvitation = [dict valueForKey:@"Invitation"];
-	if ([dictInvitation isKindOfClass:[NSDictionary class]]){
-		[self setInvitation:[[QXSharingInvitation alloc] initWithDictionary:dictInvitation]];
-	}
-	[self setErr:[QXQortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
-
-	return self;
-}
-
-- (NSDictionary*) dictionary {
-	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
-	[dict setValue:[self.Invitation dictionary] forKey:@"Invitation"];
-	
-	[dict setValue:self.Err forKey:@"Err"];
-
-	return dict;
-}
-
-@end
-
-// --- QXRejectSharingBeforeForwardingParams ---
-@implementation QXAuthMemberServiceRejectSharingBeforeForwardingParams : NSObject
-
-@synthesize GroupId;
 @synthesize Email;
 
 - (id) initWithDictionary:(NSDictionary*)dict{
@@ -4561,7 +5357,6 @@ static NSDateFormatter * _dateFormatter;
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
-	[self setGroupId:[dict valueForKey:@"GroupId"]];
 	[self setEmail:[dict valueForKey:@"Email"]];
 
 	return self;
@@ -4569,7 +5364,6 @@ static NSDateFormatter * _dateFormatter;
 
 - (NSDictionary*) dictionary {
 	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
-	[dict setValue:self.GroupId forKey:@"GroupId"];
 	[dict setValue:self.Email forKey:@"Email"];
 
 	return dict;
@@ -4577,8 +5371,8 @@ static NSDateFormatter * _dateFormatter;
 
 @end
 
-// --- QXRejectSharingBeforeForwardingResults ---
-@implementation QXAuthMemberServiceRejectSharingBeforeForwardingResults : NSObject
+// --- QXIgnoreAccessResults ---
+@implementation QXAuthAdminServiceIgnoreAccessResults : NSObject
 
 @synthesize Err;
 
@@ -4604,11 +5398,9 @@ static NSDateFormatter * _dateFormatter;
 
 @end
 
-// --- QXRespondSharingRequestParams ---
-@implementation QXAuthMemberServiceRespondSharingRequestParams : NSObject
+// --- QXGetAutoApproveAccessParams ---
+@implementation QXAuthAdminServiceGetAutoApproveAccessParams : NSObject
 
-@synthesize Token;
-@synthesize ToOrgId;
 
 - (id) initWithDictionary:(NSDictionary*)dict{
 	self = [super init];
@@ -4618,27 +5410,22 @@ static NSDateFormatter * _dateFormatter;
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
-	[self setToken:[dict valueForKey:@"Token"]];
-	[self setToOrgId:[dict valueForKey:@"ToOrgId"]];
 
 	return self;
 }
 
 - (NSDictionary*) dictionary {
 	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
-	[dict setValue:self.Token forKey:@"Token"];
-	[dict setValue:self.ToOrgId forKey:@"ToOrgId"];
 
 	return dict;
 }
 
 @end
 
-// --- QXRespondSharingRequestResults ---
-@implementation QXAuthMemberServiceRespondSharingRequestResults : NSObject
+// --- QXGetAutoApproveAccessResults ---
+@implementation QXAuthAdminServiceGetAutoApproveAccessResults : NSObject
 
-@synthesize PrefixURL;
-@synthesize Validated;
+@synthesize Enabled;
 @synthesize Err;
 
 - (id) initWithDictionary:(NSDictionary*)dict{
@@ -4649,8 +5436,7 @@ static NSDateFormatter * _dateFormatter;
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
-	[self setPrefixURL:[dict valueForKey:@"PrefixURL"]];
-	[self setValidated:[dict valueForKey:@"Validated"]];
+	[self setEnabled:[[dict valueForKey:@"Enabled"] boolValue]];
 	[self setErr:[QXQortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -4658,8 +5444,129 @@ static NSDateFormatter * _dateFormatter;
 
 - (NSDictionary*) dictionary {
 	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
-	[dict setValue:self.PrefixURL forKey:@"PrefixURL"];
-	[dict setValue:self.Validated forKey:@"Validated"];
+	[dict setValue:[NSNumber numberWithBool:self.Enabled] forKey:@"Enabled"];
+	[dict setValue:self.Err forKey:@"Err"];
+
+	return dict;
+}
+
+@end
+
+// --- QXSetAutoApproveAccessParams ---
+@implementation QXAuthAdminServiceSetAutoApproveAccessParams : NSObject
+
+@synthesize Enable;
+
+- (id) initWithDictionary:(NSDictionary*)dict{
+	self = [super init];
+	if (!self) {
+		return self;
+	}
+	if (![dict isKindOfClass:[NSDictionary class]]) {
+		return self;
+	}
+	[self setEnable:[[dict valueForKey:@"Enable"] boolValue]];
+
+	return self;
+}
+
+- (NSDictionary*) dictionary {
+	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
+	[dict setValue:[NSNumber numberWithBool:self.Enable] forKey:@"Enable"];
+
+	return dict;
+}
+
+@end
+
+// --- QXSetAutoApproveAccessResults ---
+@implementation QXAuthAdminServiceSetAutoApproveAccessResults : NSObject
+
+@synthesize Err;
+
+- (id) initWithDictionary:(NSDictionary*)dict{
+	self = [super init];
+	if (!self) {
+		return self;
+	}
+	if (![dict isKindOfClass:[NSDictionary class]]) {
+		return self;
+	}
+	[self setErr:[QXQortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
+
+	return self;
+}
+
+- (NSDictionary*) dictionary {
+	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
+	[dict setValue:self.Err forKey:@"Err"];
+
+	return dict;
+}
+
+@end
+
+// --- QXGetMarketableUsersParams ---
+@implementation QXAuthAdminServiceGetMarketableUsersParams : NSObject
+
+
+- (id) initWithDictionary:(NSDictionary*)dict{
+	self = [super init];
+	if (!self) {
+		return self;
+	}
+	if (![dict isKindOfClass:[NSDictionary class]]) {
+		return self;
+	}
+
+	return self;
+}
+
+- (NSDictionary*) dictionary {
+	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
+
+	return dict;
+}
+
+@end
+
+// --- QXGetMarketableUsersResults ---
+@implementation QXAuthAdminServiceGetMarketableUsersResults : NSObject
+
+@synthesize MemberInfos;
+@synthesize Err;
+
+- (id) initWithDictionary:(NSDictionary*)dict{
+	self = [super init];
+	if (!self) {
+		return self;
+	}
+	if (![dict isKindOfClass:[NSDictionary class]]) {
+		return self;
+	}
+
+	NSMutableArray * mMemberInfos = [[NSMutableArray alloc] init];
+	NSArray * lMemberInfos = [dict valueForKey:@"MemberInfos"];
+	if ([lMemberInfos isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lMemberInfos) {
+			[mMemberInfos addObject: [[QXMarketableMemberInfo alloc] initWithDictionary:d]];
+		}
+		[self setMemberInfos:mMemberInfos];
+	}
+	[self setErr:[QXQortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
+
+	return self;
+}
+
+- (NSDictionary*) dictionary {
+	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
+
+	NSMutableArray * mMemberInfos = [[NSMutableArray alloc] init];
+	for (QXMarketableMemberInfo * p in MemberInfos) {
+		[mMemberInfos addObject:[p dictionary]];
+	}
+	[dict setValue:mMemberInfos forKey:@"MemberInfos"];
+	
 	[dict setValue:self.Err forKey:@"Err"];
 
 	return dict;
@@ -4730,10 +5637,71 @@ static NSDateFormatter * _dateFormatter;
 
 @end
 
-// --- QXGetQortexMessagesParams ---
-@implementation QXAuthUserServiceGetQortexMessagesParams : NSObject
+// --- QXGetNewChatEntryParams ---
+@implementation QXAuthUserServiceGetNewChatEntryParams : NSObject
 
-@synthesize MesssageType;
+@synthesize ChatId;
+
+- (id) initWithDictionary:(NSDictionary*)dict{
+	self = [super init];
+	if (!self) {
+		return self;
+	}
+	if (![dict isKindOfClass:[NSDictionary class]]) {
+		return self;
+	}
+	[self setChatId:[dict valueForKey:@"ChatId"]];
+
+	return self;
+}
+
+- (NSDictionary*) dictionary {
+	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
+	[dict setValue:self.ChatId forKey:@"ChatId"];
+
+	return dict;
+}
+
+@end
+
+// --- QXGetNewChatEntryResults ---
+@implementation QXAuthUserServiceGetNewChatEntryResults : NSObject
+
+@synthesize Entry;
+@synthesize Err;
+
+- (id) initWithDictionary:(NSDictionary*)dict{
+	self = [super init];
+	if (!self) {
+		return self;
+	}
+	if (![dict isKindOfClass:[NSDictionary class]]) {
+		return self;
+	}
+
+	id dictEntry = [dict valueForKey:@"Entry"];
+	if ([dictEntry isKindOfClass:[NSDictionary class]]){
+		[self setEntry:[[QXEntry alloc] initWithDictionary:dictEntry]];
+	}
+	[self setErr:[QXQortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
+
+	return self;
+}
+
+- (NSDictionary*) dictionary {
+	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
+	[dict setValue:[self.Entry dictionary] forKey:@"Entry"];
+	
+	[dict setValue:self.Err forKey:@"Err"];
+
+	return dict;
+}
+
+@end
+
+// --- QXGetQortexSupportEntriesParams ---
+@implementation QXAuthUserServiceGetQortexSupportEntriesParams : NSObject
+
 @synthesize Before;
 @synthesize Limit;
 @synthesize WithComments;
@@ -4746,7 +5714,6 @@ static NSDateFormatter * _dateFormatter;
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
-	[self setMesssageType:[dict valueForKey:@"MesssageType"]];
 	[self setBefore:[dict valueForKey:@"Before"]];
 	[self setLimit:[dict valueForKey:@"Limit"]];
 	[self setWithComments:[[dict valueForKey:@"WithComments"] boolValue]];
@@ -4756,7 +5723,6 @@ static NSDateFormatter * _dateFormatter;
 
 - (NSDictionary*) dictionary {
 	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
-	[dict setValue:self.MesssageType forKey:@"MesssageType"];
 	[dict setValue:self.Before forKey:@"Before"];
 	[dict setValue:self.Limit forKey:@"Limit"];
 	[dict setValue:[NSNumber numberWithBool:self.WithComments] forKey:@"WithComments"];
@@ -4766,8 +5732,8 @@ static NSDateFormatter * _dateFormatter;
 
 @end
 
-// --- QXGetQortexMessagesResults ---
-@implementation QXAuthUserServiceGetQortexMessagesResults : NSObject
+// --- QXGetQortexSupportEntriesResults ---
+@implementation QXAuthUserServiceGetQortexSupportEntriesResults : NSObject
 
 @synthesize Entries;
 @synthesize Err;
@@ -4802,460 +5768,6 @@ static NSDateFormatter * _dateFormatter;
 		[mEntries addObject:[p dictionary]];
 	}
 	[dict setValue:mEntries forKey:@"Entries"];
-	
-	[dict setValue:self.Err forKey:@"Err"];
-
-	return dict;
-}
-
-@end
-
-// --- QXCreateBroadcastParams ---
-@implementation QXAuthUserServiceCreateBroadcastParams : NSObject
-
-@synthesize Input;
-
-- (id) initWithDictionary:(NSDictionary*)dict{
-	self = [super init];
-	if (!self) {
-		return self;
-	}
-	if (![dict isKindOfClass:[NSDictionary class]]) {
-		return self;
-	}
-
-	id dictInput = [dict valueForKey:@"Input"];
-	if ([dictInput isKindOfClass:[NSDictionary class]]){
-		[self setInput:[[QXBroadcastInput alloc] initWithDictionary:dictInput]];
-	}
-
-	return self;
-}
-
-- (NSDictionary*) dictionary {
-	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
-	[dict setValue:[self.Input dictionary] forKey:@"Input"];
-	
-
-	return dict;
-}
-
-@end
-
-// --- QXCreateBroadcastResults ---
-@implementation QXAuthUserServiceCreateBroadcastResults : NSObject
-
-@synthesize Entry;
-@synthesize Err;
-
-- (id) initWithDictionary:(NSDictionary*)dict{
-	self = [super init];
-	if (!self) {
-		return self;
-	}
-	if (![dict isKindOfClass:[NSDictionary class]]) {
-		return self;
-	}
-
-	id dictEntry = [dict valueForKey:@"Entry"];
-	if ([dictEntry isKindOfClass:[NSDictionary class]]){
-		[self setEntry:[[QXEntry alloc] initWithDictionary:dictEntry]];
-	}
-	[self setErr:[QXQortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
-
-	return self;
-}
-
-- (NSDictionary*) dictionary {
-	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
-	[dict setValue:[self.Entry dictionary] forKey:@"Entry"];
-	
-	[dict setValue:self.Err forKey:@"Err"];
-
-	return dict;
-}
-
-@end
-
-// --- QXCreateBroadcastCommentParams ---
-@implementation QXAuthUserServiceCreateBroadcastCommentParams : NSObject
-
-@synthesize Input;
-
-- (id) initWithDictionary:(NSDictionary*)dict{
-	self = [super init];
-	if (!self) {
-		return self;
-	}
-	if (![dict isKindOfClass:[NSDictionary class]]) {
-		return self;
-	}
-
-	id dictInput = [dict valueForKey:@"Input"];
-	if ([dictInput isKindOfClass:[NSDictionary class]]){
-		[self setInput:[[QXBroadcastInput alloc] initWithDictionary:dictInput]];
-	}
-
-	return self;
-}
-
-- (NSDictionary*) dictionary {
-	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
-	[dict setValue:[self.Input dictionary] forKey:@"Input"];
-	
-
-	return dict;
-}
-
-@end
-
-// --- QXCreateBroadcastCommentResults ---
-@implementation QXAuthUserServiceCreateBroadcastCommentResults : NSObject
-
-@synthesize Entry;
-@synthesize Err;
-
-- (id) initWithDictionary:(NSDictionary*)dict{
-	self = [super init];
-	if (!self) {
-		return self;
-	}
-	if (![dict isKindOfClass:[NSDictionary class]]) {
-		return self;
-	}
-
-	id dictEntry = [dict valueForKey:@"Entry"];
-	if ([dictEntry isKindOfClass:[NSDictionary class]]){
-		[self setEntry:[[QXEntry alloc] initWithDictionary:dictEntry]];
-	}
-	[self setErr:[QXQortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
-
-	return self;
-}
-
-- (NSDictionary*) dictionary {
-	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
-	[dict setValue:[self.Entry dictionary] forKey:@"Entry"];
-	
-	[dict setValue:self.Err forKey:@"Err"];
-
-	return dict;
-}
-
-@end
-
-// --- QXGetSharingRequestEntryParams ---
-@implementation QXAuthUserServiceGetSharingRequestEntryParams : NSObject
-
-@synthesize EntryId;
-
-- (id) initWithDictionary:(NSDictionary*)dict{
-	self = [super init];
-	if (!self) {
-		return self;
-	}
-	if (![dict isKindOfClass:[NSDictionary class]]) {
-		return self;
-	}
-	[self setEntryId:[dict valueForKey:@"EntryId"]];
-
-	return self;
-}
-
-- (NSDictionary*) dictionary {
-	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
-	[dict setValue:self.EntryId forKey:@"EntryId"];
-
-	return dict;
-}
-
-@end
-
-// --- QXGetSharingRequestEntryResults ---
-@implementation QXAuthUserServiceGetSharingRequestEntryResults : NSObject
-
-@synthesize Entry;
-@synthesize Err;
-
-- (id) initWithDictionary:(NSDictionary*)dict{
-	self = [super init];
-	if (!self) {
-		return self;
-	}
-	if (![dict isKindOfClass:[NSDictionary class]]) {
-		return self;
-	}
-
-	id dictEntry = [dict valueForKey:@"Entry"];
-	if ([dictEntry isKindOfClass:[NSDictionary class]]){
-		[self setEntry:[[QXEntry alloc] initWithDictionary:dictEntry]];
-	}
-	[self setErr:[QXQortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
-
-	return self;
-}
-
-- (NSDictionary*) dictionary {
-	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
-	[dict setValue:[self.Entry dictionary] forKey:@"Entry"];
-	
-	[dict setValue:self.Err forKey:@"Err"];
-
-	return dict;
-}
-
-@end
-
-// --- QXGetBroadcastParams ---
-@implementation QXAuthUserServiceGetBroadcastParams : NSObject
-
-@synthesize EntryId;
-
-- (id) initWithDictionary:(NSDictionary*)dict{
-	self = [super init];
-	if (!self) {
-		return self;
-	}
-	if (![dict isKindOfClass:[NSDictionary class]]) {
-		return self;
-	}
-	[self setEntryId:[dict valueForKey:@"EntryId"]];
-
-	return self;
-}
-
-- (NSDictionary*) dictionary {
-	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
-	[dict setValue:self.EntryId forKey:@"EntryId"];
-
-	return dict;
-}
-
-@end
-
-// --- QXGetBroadcastResults ---
-@implementation QXAuthUserServiceGetBroadcastResults : NSObject
-
-@synthesize Entry;
-@synthesize Err;
-
-- (id) initWithDictionary:(NSDictionary*)dict{
-	self = [super init];
-	if (!self) {
-		return self;
-	}
-	if (![dict isKindOfClass:[NSDictionary class]]) {
-		return self;
-	}
-
-	id dictEntry = [dict valueForKey:@"Entry"];
-	if ([dictEntry isKindOfClass:[NSDictionary class]]){
-		[self setEntry:[[QXEntry alloc] initWithDictionary:dictEntry]];
-	}
-	[self setErr:[QXQortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
-
-	return self;
-}
-
-- (NSDictionary*) dictionary {
-	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
-	[dict setValue:[self.Entry dictionary] forKey:@"Entry"];
-	
-	[dict setValue:self.Err forKey:@"Err"];
-
-	return dict;
-}
-
-@end
-
-// --- QXGetBroadcastCommentParams ---
-@implementation QXAuthUserServiceGetBroadcastCommentParams : NSObject
-
-@synthesize EntryId;
-
-- (id) initWithDictionary:(NSDictionary*)dict{
-	self = [super init];
-	if (!self) {
-		return self;
-	}
-	if (![dict isKindOfClass:[NSDictionary class]]) {
-		return self;
-	}
-	[self setEntryId:[dict valueForKey:@"EntryId"]];
-
-	return self;
-}
-
-- (NSDictionary*) dictionary {
-	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
-	[dict setValue:self.EntryId forKey:@"EntryId"];
-
-	return dict;
-}
-
-@end
-
-// --- QXGetBroadcastCommentResults ---
-@implementation QXAuthUserServiceGetBroadcastCommentResults : NSObject
-
-@synthesize Entry;
-@synthesize Err;
-
-- (id) initWithDictionary:(NSDictionary*)dict{
-	self = [super init];
-	if (!self) {
-		return self;
-	}
-	if (![dict isKindOfClass:[NSDictionary class]]) {
-		return self;
-	}
-
-	id dictEntry = [dict valueForKey:@"Entry"];
-	if ([dictEntry isKindOfClass:[NSDictionary class]]){
-		[self setEntry:[[QXEntry alloc] initWithDictionary:dictEntry]];
-	}
-	[self setErr:[QXQortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
-
-	return self;
-}
-
-- (NSDictionary*) dictionary {
-	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
-	[dict setValue:[self.Entry dictionary] forKey:@"Entry"];
-	
-	[dict setValue:self.Err forKey:@"Err"];
-
-	return dict;
-}
-
-@end
-
-// --- QXUpdateBroadcastParams ---
-@implementation QXAuthUserServiceUpdateBroadcastParams : NSObject
-
-@synthesize Input;
-
-- (id) initWithDictionary:(NSDictionary*)dict{
-	self = [super init];
-	if (!self) {
-		return self;
-	}
-	if (![dict isKindOfClass:[NSDictionary class]]) {
-		return self;
-	}
-
-	id dictInput = [dict valueForKey:@"Input"];
-	if ([dictInput isKindOfClass:[NSDictionary class]]){
-		[self setInput:[[QXBroadcastInput alloc] initWithDictionary:dictInput]];
-	}
-
-	return self;
-}
-
-- (NSDictionary*) dictionary {
-	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
-	[dict setValue:[self.Input dictionary] forKey:@"Input"];
-	
-
-	return dict;
-}
-
-@end
-
-// --- QXUpdateBroadcastResults ---
-@implementation QXAuthUserServiceUpdateBroadcastResults : NSObject
-
-@synthesize Entry;
-@synthesize Err;
-
-- (id) initWithDictionary:(NSDictionary*)dict{
-	self = [super init];
-	if (!self) {
-		return self;
-	}
-	if (![dict isKindOfClass:[NSDictionary class]]) {
-		return self;
-	}
-
-	id dictEntry = [dict valueForKey:@"Entry"];
-	if ([dictEntry isKindOfClass:[NSDictionary class]]){
-		[self setEntry:[[QXEntry alloc] initWithDictionary:dictEntry]];
-	}
-	[self setErr:[QXQortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
-
-	return self;
-}
-
-- (NSDictionary*) dictionary {
-	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
-	[dict setValue:[self.Entry dictionary] forKey:@"Entry"];
-	
-	[dict setValue:self.Err forKey:@"Err"];
-
-	return dict;
-}
-
-@end
-
-// --- QXUpdateBroadcastCommentParams ---
-@implementation QXAuthUserServiceUpdateBroadcastCommentParams : NSObject
-
-@synthesize Input;
-
-- (id) initWithDictionary:(NSDictionary*)dict{
-	self = [super init];
-	if (!self) {
-		return self;
-	}
-	if (![dict isKindOfClass:[NSDictionary class]]) {
-		return self;
-	}
-
-	id dictInput = [dict valueForKey:@"Input"];
-	if ([dictInput isKindOfClass:[NSDictionary class]]){
-		[self setInput:[[QXBroadcastInput alloc] initWithDictionary:dictInput]];
-	}
-
-	return self;
-}
-
-- (NSDictionary*) dictionary {
-	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
-	[dict setValue:[self.Input dictionary] forKey:@"Input"];
-	
-
-	return dict;
-}
-
-@end
-
-// --- QXUpdateBroadcastCommentResults ---
-@implementation QXAuthUserServiceUpdateBroadcastCommentResults : NSObject
-
-@synthesize Entry;
-@synthesize Err;
-
-- (id) initWithDictionary:(NSDictionary*)dict{
-	self = [super init];
-	if (!self) {
-		return self;
-	}
-	if (![dict isKindOfClass:[NSDictionary class]]) {
-		return self;
-	}
-
-	id dictEntry = [dict valueForKey:@"Entry"];
-	if ([dictEntry isKindOfClass:[NSDictionary class]]){
-		[self setEntry:[[QXEntry alloc] initWithDictionary:dictEntry]];
-	}
-	[self setErr:[QXQortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
-
-	return self;
-}
-
-- (NSDictionary*) dictionary {
-	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
-	[dict setValue:[self.Entry dictionary] forKey:@"Entry"];
 	
 	[dict setValue:self.Err forKey:@"Err"];
 
@@ -6355,6 +6867,65 @@ static NSDateFormatter * _dateFormatter;
 		[mEntries addObject:[p dictionary]];
 	}
 	[dict setValue:mEntries forKey:@"Entries"];
+	
+	[dict setValue:self.Err forKey:@"Err"];
+
+	return dict;
+}
+
+@end
+
+// --- QXGetGroupAsideParams ---
+@implementation QXAuthUserServiceGetGroupAsideParams : NSObject
+
+
+- (id) initWithDictionary:(NSDictionary*)dict{
+	self = [super init];
+	if (!self) {
+		return self;
+	}
+	if (![dict isKindOfClass:[NSDictionary class]]) {
+		return self;
+	}
+
+	return self;
+}
+
+- (NSDictionary*) dictionary {
+	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
+
+	return dict;
+}
+
+@end
+
+// --- QXGetGroupAsideResults ---
+@implementation QXAuthUserServiceGetGroupAsideResults : NSObject
+
+@synthesize Ga;
+@synthesize Err;
+
+- (id) initWithDictionary:(NSDictionary*)dict{
+	self = [super init];
+	if (!self) {
+		return self;
+	}
+	if (![dict isKindOfClass:[NSDictionary class]]) {
+		return self;
+	}
+
+	id dictGa = [dict valueForKey:@"Ga"];
+	if ([dictGa isKindOfClass:[NSDictionary class]]){
+		[self setGa:[[QXGroupAside alloc] initWithDictionary:dictGa]];
+	}
+	[self setErr:[QXQortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
+
+	return self;
+}
+
+- (NSDictionary*) dictionary {
+	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
+	[dict setValue:[self.Ga dictionary] forKey:@"Ga"];
 	
 	[dict setValue:self.Err forKey:@"Err"];
 
@@ -8195,6 +8766,7 @@ static NSDateFormatter * _dateFormatter;
 @implementation QXAuthUserServiceGetClassifiedGroupsResults : NSObject
 
 @synthesize AnouncementGroup;
+@synthesize SmGroup;
 @synthesize FollowedNormalGroups;
 @synthesize FollowedSharedGroups;
 @synthesize UnFollowedNormalGroups;
@@ -8213,6 +8785,11 @@ static NSDateFormatter * _dateFormatter;
 	id dictAnouncementGroup = [dict valueForKey:@"AnouncementGroup"];
 	if ([dictAnouncementGroup isKindOfClass:[NSDictionary class]]){
 		[self setAnouncementGroup:[[QXGroup alloc] initWithDictionary:dictAnouncementGroup]];
+	}
+
+	id dictSmGroup = [dict valueForKey:@"SmGroup"];
+	if ([dictSmGroup isKindOfClass:[NSDictionary class]]){
+		[self setSmGroup:[[QXGroup alloc] initWithDictionary:dictSmGroup]];
 	}
 
 	NSMutableArray * mFollowedNormalGroups = [[NSMutableArray alloc] init];
@@ -8258,6 +8835,8 @@ static NSDateFormatter * _dateFormatter;
 - (NSDictionary*) dictionary {
 	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
 	[dict setValue:[self.AnouncementGroup dictionary] forKey:@"AnouncementGroup"];
+	
+	[dict setValue:[self.SmGroup dictionary] forKey:@"SmGroup"];
 	
 
 	NSMutableArray * mFollowedNormalGroups = [[NSMutableArray alloc] init];
@@ -9738,6 +10317,74 @@ static NSDateFormatter * _dateFormatter;
 
 @end
 
+// --- QXGetMyOrgsUnreadInfoParams ---
+@implementation QXAuthUserServiceGetMyOrgsUnreadInfoParams : NSObject
+
+
+- (id) initWithDictionary:(NSDictionary*)dict{
+	self = [super init];
+	if (!self) {
+		return self;
+	}
+	if (![dict isKindOfClass:[NSDictionary class]]) {
+		return self;
+	}
+
+	return self;
+}
+
+- (NSDictionary*) dictionary {
+	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
+
+	return dict;
+}
+
+@end
+
+// --- QXGetMyOrgsUnreadInfoResults ---
+@implementation QXAuthUserServiceGetMyOrgsUnreadInfoResults : NSObject
+
+@synthesize UnreadInfo;
+@synthesize Err;
+
+- (id) initWithDictionary:(NSDictionary*)dict{
+	self = [super init];
+	if (!self) {
+		return self;
+	}
+	if (![dict isKindOfClass:[NSDictionary class]]) {
+		return self;
+	}
+
+	NSMutableArray * mUnreadInfo = [[NSMutableArray alloc] init];
+	NSArray * lUnreadInfo = [dict valueForKey:@"UnreadInfo"];
+	if ([lUnreadInfo isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lUnreadInfo) {
+			[mUnreadInfo addObject: [[QXOrgUnreadInfo alloc] initWithDictionary:d]];
+		}
+		[self setUnreadInfo:mUnreadInfo];
+	}
+	[self setErr:[QXQortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
+
+	return self;
+}
+
+- (NSDictionary*) dictionary {
+	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
+
+	NSMutableArray * mUnreadInfo = [[NSMutableArray alloc] init];
+	for (QXOrgUnreadInfo * p in UnreadInfo) {
+		[mUnreadInfo addObject:[p dictionary]];
+	}
+	[dict setValue:mUnreadInfo forKey:@"UnreadInfo"];
+	
+	[dict setValue:self.Err forKey:@"Err"];
+
+	return dict;
+}
+
+@end
+
 // --- QXGetMyJoinedOrganizationsParams ---
 @implementation QXAuthUserServiceGetMyJoinedOrganizationsParams : NSObject
 
@@ -10060,13 +10707,10 @@ static NSDateFormatter * _dateFormatter;
 
 @end
 
-// --- QXAcceptSharedGroupRequestParams ---
-@implementation QXAuthUserServiceAcceptSharedGroupRequestParams : NSObject
+// --- QXAcceptShareRequestByAdminParams ---
+@implementation QXAuthUserServiceAcceptShareRequestByAdminParams : NSObject
 
-@synthesize FromOrgId;
-@synthesize SharedOrgId;
-@synthesize SharedGroupId;
-@synthesize FromUserId;
+@synthesize RequestId;
 
 - (id) initWithDictionary:(NSDictionary*)dict{
 	self = [super init];
@@ -10076,30 +10720,23 @@ static NSDateFormatter * _dateFormatter;
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
-	[self setFromOrgId:[dict valueForKey:@"FromOrgId"]];
-	[self setSharedOrgId:[dict valueForKey:@"SharedOrgId"]];
-	[self setSharedGroupId:[dict valueForKey:@"SharedGroupId"]];
-	[self setFromUserId:[dict valueForKey:@"FromUserId"]];
+	[self setRequestId:[dict valueForKey:@"RequestId"]];
 
 	return self;
 }
 
 - (NSDictionary*) dictionary {
 	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
-	[dict setValue:self.FromOrgId forKey:@"FromOrgId"];
-	[dict setValue:self.SharedOrgId forKey:@"SharedOrgId"];
-	[dict setValue:self.SharedGroupId forKey:@"SharedGroupId"];
-	[dict setValue:self.FromUserId forKey:@"FromUserId"];
+	[dict setValue:self.RequestId forKey:@"RequestId"];
 
 	return dict;
 }
 
 @end
 
-// --- QXAcceptSharedGroupRequestResults ---
-@implementation QXAuthUserServiceAcceptSharedGroupRequestResults : NSObject
+// --- QXAcceptShareRequestByAdminResults ---
+@implementation QXAuthUserServiceAcceptShareRequestByAdminResults : NSObject
 
-@synthesize Req;
 @synthesize Err;
 
 - (id) initWithDictionary:(NSDictionary*)dict{
@@ -10110,11 +10747,6 @@ static NSDateFormatter * _dateFormatter;
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
-
-	id dictReq = [dict valueForKey:@"Req"];
-	if ([dictReq isKindOfClass:[NSDictionary class]]){
-		[self setReq:[[QXRequest alloc] initWithDictionary:dictReq]];
-	}
 	[self setErr:[QXQortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -10122,8 +10754,6 @@ static NSDateFormatter * _dateFormatter;
 
 - (NSDictionary*) dictionary {
 	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
-	[dict setValue:[self.Req dictionary] forKey:@"Req"];
-	
 	[dict setValue:self.Err forKey:@"Err"];
 
 	return dict;
@@ -10131,13 +10761,10 @@ static NSDateFormatter * _dateFormatter;
 
 @end
 
-// --- QXRejectSharedGroupRequestParams ---
-@implementation QXAuthUserServiceRejectSharedGroupRequestParams : NSObject
+// --- QXRejectShareRequestByAdminParams ---
+@implementation QXAuthUserServiceRejectShareRequestByAdminParams : NSObject
 
-@synthesize FromOrgId;
-@synthesize SharedOrgId;
-@synthesize SharedGroupId;
-@synthesize FromUserId;
+@synthesize RequestId;
 
 - (id) initWithDictionary:(NSDictionary*)dict{
 	self = [super init];
@@ -10147,30 +10774,23 @@ static NSDateFormatter * _dateFormatter;
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
-	[self setFromOrgId:[dict valueForKey:@"FromOrgId"]];
-	[self setSharedOrgId:[dict valueForKey:@"SharedOrgId"]];
-	[self setSharedGroupId:[dict valueForKey:@"SharedGroupId"]];
-	[self setFromUserId:[dict valueForKey:@"FromUserId"]];
+	[self setRequestId:[dict valueForKey:@"RequestId"]];
 
 	return self;
 }
 
 - (NSDictionary*) dictionary {
 	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
-	[dict setValue:self.FromOrgId forKey:@"FromOrgId"];
-	[dict setValue:self.SharedOrgId forKey:@"SharedOrgId"];
-	[dict setValue:self.SharedGroupId forKey:@"SharedGroupId"];
-	[dict setValue:self.FromUserId forKey:@"FromUserId"];
+	[dict setValue:self.RequestId forKey:@"RequestId"];
 
 	return dict;
 }
 
 @end
 
-// --- QXRejectSharedGroupRequestResults ---
-@implementation QXAuthUserServiceRejectSharedGroupRequestResults : NSObject
+// --- QXRejectShareRequestByAdminResults ---
+@implementation QXAuthUserServiceRejectShareRequestByAdminResults : NSObject
 
-@synthesize Req;
 @synthesize Err;
 
 - (id) initWithDictionary:(NSDictionary*)dict{
@@ -10181,11 +10801,6 @@ static NSDateFormatter * _dateFormatter;
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
-
-	id dictReq = [dict valueForKey:@"Req"];
-	if ([dictReq isKindOfClass:[NSDictionary class]]){
-		[self setReq:[[QXRequest alloc] initWithDictionary:dictReq]];
-	}
 	[self setErr:[QXQortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -10193,8 +10808,6 @@ static NSDateFormatter * _dateFormatter;
 
 - (NSDictionary*) dictionary {
 	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
-	[dict setValue:[self.Req dictionary] forKey:@"Req"];
-	
 	[dict setValue:self.Err forKey:@"Err"];
 
 	return dict;
@@ -10602,8 +11215,8 @@ static NSDateFormatter * _dateFormatter;
 
 @end
 
-// --- QXUpdateMailUpdatesParams ---
-@implementation QXAuthUserServiceUpdateMailUpdatesParams : NSObject
+// --- QXUpdateMailPreferenceParams ---
+@implementation QXAuthUserServiceUpdateMailPreferenceParams : NSObject
 
 @synthesize Input;
 
@@ -10618,7 +11231,7 @@ static NSDateFormatter * _dateFormatter;
 
 	id dictInput = [dict valueForKey:@"Input"];
 	if ([dictInput isKindOfClass:[NSDictionary class]]){
-		[self setInput:[[QXMailUpdatesInput alloc] initWithDictionary:dictInput]];
+		[self setInput:[[QXMailPreferenceInput alloc] initWithDictionary:dictInput]];
 	}
 
 	return self;
@@ -10634,8 +11247,8 @@ static NSDateFormatter * _dateFormatter;
 
 @end
 
-// --- QXUpdateMailUpdatesResults ---
-@implementation QXAuthUserServiceUpdateMailUpdatesResults : NSObject
+// --- QXUpdateMailPreferenceResults ---
+@implementation QXAuthUserServiceUpdateMailPreferenceResults : NSObject
 
 @synthesize Err;
 
@@ -10842,12 +11455,11 @@ static NSDateFormatter * _dateFormatter;
 
 @end
 
-// --- QXSendSharingInvitationParams ---
-@implementation QXAuthUserServiceSendSharingInvitationParams : NSObject
+// --- QXSendShareRequestParams ---
+@implementation QXAuthUserServiceSendShareRequestParams : NSObject
 
 @synthesize GroupId;
 @synthesize Email;
-@synthesize IsResend;
 
 - (id) initWithDictionary:(NSDictionary*)dict{
 	self = [super init];
@@ -10859,7 +11471,6 @@ static NSDateFormatter * _dateFormatter;
 	}
 	[self setGroupId:[dict valueForKey:@"GroupId"]];
 	[self setEmail:[dict valueForKey:@"Email"]];
-	[self setIsResend:[[dict valueForKey:@"IsResend"] boolValue]];
 
 	return self;
 }
@@ -10868,18 +11479,16 @@ static NSDateFormatter * _dateFormatter;
 	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
 	[dict setValue:self.GroupId forKey:@"GroupId"];
 	[dict setValue:self.Email forKey:@"Email"];
-	[dict setValue:[NSNumber numberWithBool:self.IsResend] forKey:@"IsResend"];
 
 	return dict;
 }
 
 @end
 
-// --- QXSendSharingInvitationResults ---
-@implementation QXAuthUserServiceSendSharingInvitationResults : NSObject
+// --- QXSendShareRequestResults ---
+@implementation QXAuthUserServiceSendShareRequestResults : NSObject
 
-@synthesize Si;
-@synthesize Validated;
+@synthesize ShareRequest;
 @synthesize Err;
 
 - (id) initWithDictionary:(NSDictionary*)dict{
@@ -10891,11 +11500,10 @@ static NSDateFormatter * _dateFormatter;
 		return self;
 	}
 
-	id dictSi = [dict valueForKey:@"Si"];
-	if ([dictSi isKindOfClass:[NSDictionary class]]){
-		[self setSi:[[QXSharingInvitation alloc] initWithDictionary:dictSi]];
+	id dictShareRequest = [dict valueForKey:@"ShareRequest"];
+	if ([dictShareRequest isKindOfClass:[NSDictionary class]]){
+		[self setShareRequest:[[QXShareRequest alloc] initWithDictionary:dictShareRequest]];
 	}
-	[self setValidated:[dict valueForKey:@"Validated"]];
 	[self setErr:[QXQortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -10903,9 +11511,8 @@ static NSDateFormatter * _dateFormatter;
 
 - (NSDictionary*) dictionary {
 	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
-	[dict setValue:[self.Si dictionary] forKey:@"Si"];
+	[dict setValue:[self.ShareRequest dictionary] forKey:@"ShareRequest"];
 	
-	[dict setValue:self.Validated forKey:@"Validated"];
 	[dict setValue:self.Err forKey:@"Err"];
 
 	return dict;
@@ -10913,8 +11520,8 @@ static NSDateFormatter * _dateFormatter;
 
 @end
 
-// --- QXGetSharingInvitationsParams ---
-@implementation QXAuthUserServiceGetSharingInvitationsParams : NSObject
+// --- QXGetShareRequestsParams ---
+@implementation QXAuthUserServiceGetShareRequestsParams : NSObject
 
 @synthesize GroupId;
 
@@ -10940,8 +11547,8 @@ static NSDateFormatter * _dateFormatter;
 
 @end
 
-// --- QXGetSharingInvitationsResults ---
-@implementation QXAuthUserServiceGetSharingInvitationsResults : NSObject
+// --- QXGetShareRequestsResults ---
+@implementation QXAuthUserServiceGetShareRequestsResults : NSObject
 
 @synthesize Sis;
 @synthesize Err;
@@ -10959,7 +11566,7 @@ static NSDateFormatter * _dateFormatter;
 	NSArray * lSis = [dict valueForKey:@"Sis"];
 	if ([lSis isKindOfClass:[NSArray class]]) {
 		for (NSDictionary * d in lSis) {
-			[mSis addObject: [[QXSharingInvitation alloc] initWithDictionary:d]];
+			[mSis addObject: [[QXShareRequest alloc] initWithDictionary:d]];
 		}
 		[self setSis:mSis];
 	}
@@ -10972,7 +11579,7 @@ static NSDateFormatter * _dateFormatter;
 	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
 
 	NSMutableArray * mSis = [[NSMutableArray alloc] init];
-	for (QXSharingInvitation * p in Sis) {
+	for (QXShareRequest * p in Sis) {
 		[mSis addObject:[p dictionary]];
 	}
 	[dict setValue:mSis forKey:@"Sis"];
@@ -10984,11 +11591,10 @@ static NSDateFormatter * _dateFormatter;
 
 @end
 
-// --- QXCancelSharingInvitationParams ---
-@implementation QXAuthUserServiceCancelSharingInvitationParams : NSObject
+// --- QXCancelShareRequestParams ---
+@implementation QXAuthUserServiceCancelShareRequestParams : NSObject
 
-@synthesize GroupId;
-@synthesize Email;
+@synthesize RequestId;
 
 - (id) initWithDictionary:(NSDictionary*)dict{
 	self = [super init];
@@ -10998,24 +11604,22 @@ static NSDateFormatter * _dateFormatter;
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
-	[self setGroupId:[dict valueForKey:@"GroupId"]];
-	[self setEmail:[dict valueForKey:@"Email"]];
+	[self setRequestId:[dict valueForKey:@"RequestId"]];
 
 	return self;
 }
 
 - (NSDictionary*) dictionary {
 	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
-	[dict setValue:self.GroupId forKey:@"GroupId"];
-	[dict setValue:self.Email forKey:@"Email"];
+	[dict setValue:self.RequestId forKey:@"RequestId"];
 
 	return dict;
 }
 
 @end
 
-// --- QXCancelSharingInvitationResults ---
-@implementation QXAuthUserServiceCancelSharingInvitationResults : NSObject
+// --- QXCancelShareRequestResults ---
+@implementation QXAuthUserServiceCancelShareRequestResults : NSObject
 
 @synthesize Err;
 
@@ -11041,11 +11645,10 @@ static NSDateFormatter * _dateFormatter;
 
 @end
 
-// --- QXStopSharedGroupParams ---
-@implementation QXAuthUserServiceStopSharedGroupParams : NSObject
+// --- QXStopSharingGroupParams ---
+@implementation QXAuthUserServiceStopSharingGroupParams : NSObject
 
-@synthesize GroupId;
-@synthesize ToStopOrgId;
+@synthesize RequestId;
 
 - (id) initWithDictionary:(NSDictionary*)dict{
 	self = [super init];
@@ -11055,24 +11658,22 @@ static NSDateFormatter * _dateFormatter;
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
-	[self setGroupId:[dict valueForKey:@"GroupId"]];
-	[self setToStopOrgId:[dict valueForKey:@"ToStopOrgId"]];
+	[self setRequestId:[dict valueForKey:@"RequestId"]];
 
 	return self;
 }
 
 - (NSDictionary*) dictionary {
 	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
-	[dict setValue:self.GroupId forKey:@"GroupId"];
-	[dict setValue:self.ToStopOrgId forKey:@"ToStopOrgId"];
+	[dict setValue:self.RequestId forKey:@"RequestId"];
 
 	return dict;
 }
 
 @end
 
-// --- QXStopSharedGroupResults ---
-@implementation QXAuthUserServiceStopSharedGroupResults : NSObject
+// --- QXStopSharingGroupResults ---
+@implementation QXAuthUserServiceStopSharingGroupResults : NSObject
 
 @synthesize Err;
 
@@ -11098,10 +11699,9 @@ static NSDateFormatter * _dateFormatter;
 
 @end
 
-// --- QXLeaveSharedGroupParams ---
-@implementation QXAuthUserServiceLeaveSharedGroupParams : NSObject
+// --- QXDismissPresentationTipParams ---
+@implementation QXAuthUserServiceDismissPresentationTipParams : NSObject
 
-@synthesize GroupId;
 
 - (id) initWithDictionary:(NSDictionary*)dict{
 	self = [super init];
@@ -11111,22 +11711,20 @@ static NSDateFormatter * _dateFormatter;
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
-	[self setGroupId:[dict valueForKey:@"GroupId"]];
 
 	return self;
 }
 
 - (NSDictionary*) dictionary {
 	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
-	[dict setValue:self.GroupId forKey:@"GroupId"];
 
 	return dict;
 }
 
 @end
 
-// --- QXLeaveSharedGroupResults ---
-@implementation QXAuthUserServiceLeaveSharedGroupResults : NSObject
+// --- QXDismissPresentationTipResults ---
+@implementation QXAuthUserServiceDismissPresentationTipResults : NSObject
 
 @synthesize Err;
 
@@ -11226,80 +11824,10 @@ static NSDateFormatter * _dateFormatter;
 
 @end
 
-// --- QXShareChatParams ---
-@implementation QXAuthUserServiceShareChatParams : NSObject
-
-@synthesize Input;
-
-- (id) initWithDictionary:(NSDictionary*)dict{
-	self = [super init];
-	if (!self) {
-		return self;
-	}
-	if (![dict isKindOfClass:[NSDictionary class]]) {
-		return self;
-	}
-
-	id dictInput = [dict valueForKey:@"Input"];
-	if ([dictInput isKindOfClass:[NSDictionary class]]){
-		[self setInput:[[QXShareChatInput alloc] initWithDictionary:dictInput]];
-	}
-
-	return self;
-}
-
-- (NSDictionary*) dictionary {
-	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
-	[dict setValue:[self.Input dictionary] forKey:@"Input"];
-	
-
-	return dict;
-}
-
-@end
-
-// --- QXShareChatResults ---
-@implementation QXAuthUserServiceShareChatResults : NSObject
-
-@synthesize ChatEntry;
-@synthesize Validated;
-@synthesize Err;
-
-- (id) initWithDictionary:(NSDictionary*)dict{
-	self = [super init];
-	if (!self) {
-		return self;
-	}
-	if (![dict isKindOfClass:[NSDictionary class]]) {
-		return self;
-	}
-
-	id dictChatEntry = [dict valueForKey:@"ChatEntry"];
-	if ([dictChatEntry isKindOfClass:[NSDictionary class]]){
-		[self setChatEntry:[[QXEntry alloc] initWithDictionary:dictChatEntry]];
-	}
-	[self setValidated:[dict valueForKey:@"Validated"]];
-	[self setErr:[QXQortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
-
-	return self;
-}
-
-- (NSDictionary*) dictionary {
-	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
-	[dict setValue:[self.ChatEntry dictionary] forKey:@"ChatEntry"];
-	
-	[dict setValue:self.Validated forKey:@"Validated"];
-	[dict setValue:self.Err forKey:@"Err"];
-
-	return dict;
-}
-
-@end
-
 // --- QXGetPrivateChatParams ---
 @implementation QXAuthUserServiceGetPrivateChatParams : NSObject
 
-@synthesize EntryId;
+@synthesize ConversationId;
 @synthesize SearchKeyWords;
 
 - (id) initWithDictionary:(NSDictionary*)dict{
@@ -11310,7 +11838,7 @@ static NSDateFormatter * _dateFormatter;
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
-	[self setEntryId:[dict valueForKey:@"EntryId"]];
+	[self setConversationId:[dict valueForKey:@"ConversationId"]];
 	[self setSearchKeyWords:[dict valueForKey:@"SearchKeyWords"]];
 
 	return self;
@@ -11318,7 +11846,7 @@ static NSDateFormatter * _dateFormatter;
 
 - (NSDictionary*) dictionary {
 	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
-	[dict setValue:self.EntryId forKey:@"EntryId"];
+	[dict setValue:self.ConversationId forKey:@"ConversationId"];
 	[dict setValue:self.SearchKeyWords forKey:@"SearchKeyWords"];
 
 	return dict;
@@ -11361,12 +11889,405 @@ static NSDateFormatter * _dateFormatter;
 
 @end
 
+// --- QXCreateQortexSupportParams ---
+@implementation QXAuthUserServiceCreateQortexSupportParams : NSObject
+
+@synthesize Input;
+
+- (id) initWithDictionary:(NSDictionary*)dict{
+	self = [super init];
+	if (!self) {
+		return self;
+	}
+	if (![dict isKindOfClass:[NSDictionary class]]) {
+		return self;
+	}
+
+	id dictInput = [dict valueForKey:@"Input"];
+	if ([dictInput isKindOfClass:[NSDictionary class]]){
+		[self setInput:[[QXQortexSupportInput alloc] initWithDictionary:dictInput]];
+	}
+
+	return self;
+}
+
+- (NSDictionary*) dictionary {
+	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
+	[dict setValue:[self.Input dictionary] forKey:@"Input"];
+	
+
+	return dict;
+}
+
+@end
+
+// --- QXCreateQortexSupportResults ---
+@implementation QXAuthUserServiceCreateQortexSupportResults : NSObject
+
+@synthesize Entry;
+@synthesize Err;
+
+- (id) initWithDictionary:(NSDictionary*)dict{
+	self = [super init];
+	if (!self) {
+		return self;
+	}
+	if (![dict isKindOfClass:[NSDictionary class]]) {
+		return self;
+	}
+
+	id dictEntry = [dict valueForKey:@"Entry"];
+	if ([dictEntry isKindOfClass:[NSDictionary class]]){
+		[self setEntry:[[QXEntry alloc] initWithDictionary:dictEntry]];
+	}
+	[self setErr:[QXQortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
+
+	return self;
+}
+
+- (NSDictionary*) dictionary {
+	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
+	[dict setValue:[self.Entry dictionary] forKey:@"Entry"];
+	
+	[dict setValue:self.Err forKey:@"Err"];
+
+	return dict;
+}
+
+@end
+
+// --- QXCreateQortexSupportCommentParams ---
+@implementation QXAuthUserServiceCreateQortexSupportCommentParams : NSObject
+
+@synthesize Input;
+
+- (id) initWithDictionary:(NSDictionary*)dict{
+	self = [super init];
+	if (!self) {
+		return self;
+	}
+	if (![dict isKindOfClass:[NSDictionary class]]) {
+		return self;
+	}
+
+	id dictInput = [dict valueForKey:@"Input"];
+	if ([dictInput isKindOfClass:[NSDictionary class]]){
+		[self setInput:[[QXQortexSupportInput alloc] initWithDictionary:dictInput]];
+	}
+
+	return self;
+}
+
+- (NSDictionary*) dictionary {
+	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
+	[dict setValue:[self.Input dictionary] forKey:@"Input"];
+	
+
+	return dict;
+}
+
+@end
+
+// --- QXCreateQortexSupportCommentResults ---
+@implementation QXAuthUserServiceCreateQortexSupportCommentResults : NSObject
+
+@synthesize Entry;
+@synthesize Err;
+
+- (id) initWithDictionary:(NSDictionary*)dict{
+	self = [super init];
+	if (!self) {
+		return self;
+	}
+	if (![dict isKindOfClass:[NSDictionary class]]) {
+		return self;
+	}
+
+	id dictEntry = [dict valueForKey:@"Entry"];
+	if ([dictEntry isKindOfClass:[NSDictionary class]]){
+		[self setEntry:[[QXEntry alloc] initWithDictionary:dictEntry]];
+	}
+	[self setErr:[QXQortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
+
+	return self;
+}
+
+- (NSDictionary*) dictionary {
+	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
+	[dict setValue:[self.Entry dictionary] forKey:@"Entry"];
+	
+	[dict setValue:self.Err forKey:@"Err"];
+
+	return dict;
+}
+
+@end
+
+// --- QXGetQortexSupportParams ---
+@implementation QXAuthUserServiceGetQortexSupportParams : NSObject
+
+@synthesize EntryId;
+
+- (id) initWithDictionary:(NSDictionary*)dict{
+	self = [super init];
+	if (!self) {
+		return self;
+	}
+	if (![dict isKindOfClass:[NSDictionary class]]) {
+		return self;
+	}
+	[self setEntryId:[dict valueForKey:@"EntryId"]];
+
+	return self;
+}
+
+- (NSDictionary*) dictionary {
+	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
+	[dict setValue:self.EntryId forKey:@"EntryId"];
+
+	return dict;
+}
+
+@end
+
+// --- QXGetQortexSupportResults ---
+@implementation QXAuthUserServiceGetQortexSupportResults : NSObject
+
+@synthesize Entry;
+@synthesize Err;
+
+- (id) initWithDictionary:(NSDictionary*)dict{
+	self = [super init];
+	if (!self) {
+		return self;
+	}
+	if (![dict isKindOfClass:[NSDictionary class]]) {
+		return self;
+	}
+
+	id dictEntry = [dict valueForKey:@"Entry"];
+	if ([dictEntry isKindOfClass:[NSDictionary class]]){
+		[self setEntry:[[QXEntry alloc] initWithDictionary:dictEntry]];
+	}
+	[self setErr:[QXQortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
+
+	return self;
+}
+
+- (NSDictionary*) dictionary {
+	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
+	[dict setValue:[self.Entry dictionary] forKey:@"Entry"];
+	
+	[dict setValue:self.Err forKey:@"Err"];
+
+	return dict;
+}
+
+@end
+
+// --- QXGetQortexSupportCommentParams ---
+@implementation QXAuthUserServiceGetQortexSupportCommentParams : NSObject
+
+@synthesize EntryId;
+
+- (id) initWithDictionary:(NSDictionary*)dict{
+	self = [super init];
+	if (!self) {
+		return self;
+	}
+	if (![dict isKindOfClass:[NSDictionary class]]) {
+		return self;
+	}
+	[self setEntryId:[dict valueForKey:@"EntryId"]];
+
+	return self;
+}
+
+- (NSDictionary*) dictionary {
+	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
+	[dict setValue:self.EntryId forKey:@"EntryId"];
+
+	return dict;
+}
+
+@end
+
+// --- QXGetQortexSupportCommentResults ---
+@implementation QXAuthUserServiceGetQortexSupportCommentResults : NSObject
+
+@synthesize Entry;
+@synthesize Err;
+
+- (id) initWithDictionary:(NSDictionary*)dict{
+	self = [super init];
+	if (!self) {
+		return self;
+	}
+	if (![dict isKindOfClass:[NSDictionary class]]) {
+		return self;
+	}
+
+	id dictEntry = [dict valueForKey:@"Entry"];
+	if ([dictEntry isKindOfClass:[NSDictionary class]]){
+		[self setEntry:[[QXEntry alloc] initWithDictionary:dictEntry]];
+	}
+	[self setErr:[QXQortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
+
+	return self;
+}
+
+- (NSDictionary*) dictionary {
+	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
+	[dict setValue:[self.Entry dictionary] forKey:@"Entry"];
+	
+	[dict setValue:self.Err forKey:@"Err"];
+
+	return dict;
+}
+
+@end
+
+// --- QXUpdateQortexSupportParams ---
+@implementation QXAuthUserServiceUpdateQortexSupportParams : NSObject
+
+@synthesize Input;
+
+- (id) initWithDictionary:(NSDictionary*)dict{
+	self = [super init];
+	if (!self) {
+		return self;
+	}
+	if (![dict isKindOfClass:[NSDictionary class]]) {
+		return self;
+	}
+
+	id dictInput = [dict valueForKey:@"Input"];
+	if ([dictInput isKindOfClass:[NSDictionary class]]){
+		[self setInput:[[QXQortexSupportInput alloc] initWithDictionary:dictInput]];
+	}
+
+	return self;
+}
+
+- (NSDictionary*) dictionary {
+	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
+	[dict setValue:[self.Input dictionary] forKey:@"Input"];
+	
+
+	return dict;
+}
+
+@end
+
+// --- QXUpdateQortexSupportResults ---
+@implementation QXAuthUserServiceUpdateQortexSupportResults : NSObject
+
+@synthesize Entry;
+@synthesize Err;
+
+- (id) initWithDictionary:(NSDictionary*)dict{
+	self = [super init];
+	if (!self) {
+		return self;
+	}
+	if (![dict isKindOfClass:[NSDictionary class]]) {
+		return self;
+	}
+
+	id dictEntry = [dict valueForKey:@"Entry"];
+	if ([dictEntry isKindOfClass:[NSDictionary class]]){
+		[self setEntry:[[QXEntry alloc] initWithDictionary:dictEntry]];
+	}
+	[self setErr:[QXQortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
+
+	return self;
+}
+
+- (NSDictionary*) dictionary {
+	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
+	[dict setValue:[self.Entry dictionary] forKey:@"Entry"];
+	
+	[dict setValue:self.Err forKey:@"Err"];
+
+	return dict;
+}
+
+@end
+
+// --- QXUpdateQortexSupportCommentParams ---
+@implementation QXAuthUserServiceUpdateQortexSupportCommentParams : NSObject
+
+@synthesize Input;
+
+- (id) initWithDictionary:(NSDictionary*)dict{
+	self = [super init];
+	if (!self) {
+		return self;
+	}
+	if (![dict isKindOfClass:[NSDictionary class]]) {
+		return self;
+	}
+
+	id dictInput = [dict valueForKey:@"Input"];
+	if ([dictInput isKindOfClass:[NSDictionary class]]){
+		[self setInput:[[QXQortexSupportInput alloc] initWithDictionary:dictInput]];
+	}
+
+	return self;
+}
+
+- (NSDictionary*) dictionary {
+	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
+	[dict setValue:[self.Input dictionary] forKey:@"Input"];
+	
+
+	return dict;
+}
+
+@end
+
+// --- QXUpdateQortexSupportCommentResults ---
+@implementation QXAuthUserServiceUpdateQortexSupportCommentResults : NSObject
+
+@synthesize Entry;
+@synthesize Err;
+
+- (id) initWithDictionary:(NSDictionary*)dict{
+	self = [super init];
+	if (!self) {
+		return self;
+	}
+	if (![dict isKindOfClass:[NSDictionary class]]) {
+		return self;
+	}
+
+	id dictEntry = [dict valueForKey:@"Entry"];
+	if ([dictEntry isKindOfClass:[NSDictionary class]]){
+		[self setEntry:[[QXEntry alloc] initWithDictionary:dictEntry]];
+	}
+	[self setErr:[QXQortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
+
+	return self;
+}
+
+- (NSDictionary*) dictionary {
+	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
+	[dict setValue:[self.Entry dictionary] forKey:@"Entry"];
+	
+	[dict setValue:self.Err forKey:@"Err"];
+
+	return dict;
+}
+
+@end
+
 
 // --- QXGetSessionParams ---
 @implementation QXPublicServiceGetSessionParams : NSObject
 
 @synthesize Email;
 @synthesize Password;
+@synthesize Locale;
 
 - (id) initWithDictionary:(NSDictionary*)dict{
 	self = [super init];
@@ -11378,6 +12299,7 @@ static NSDateFormatter * _dateFormatter;
 	}
 	[self setEmail:[dict valueForKey:@"Email"]];
 	[self setPassword:[dict valueForKey:@"Password"]];
+	[self setLocale:[dict valueForKey:@"Locale"]];
 
 	return self;
 }
@@ -11386,6 +12308,7 @@ static NSDateFormatter * _dateFormatter;
 	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
 	[dict setValue:self.Email forKey:@"Email"];
 	[dict setValue:self.Password forKey:@"Password"];
+	[dict setValue:self.Locale forKey:@"Locale"];
 
 	return dict;
 }
@@ -11831,7 +12754,6 @@ static NSDateFormatter * _dateFormatter;
 // --- QXChangeEmailToAcceptSharingResults ---
 @implementation QXPublicServiceChangeEmailToAcceptSharingResults : NSObject
 
-@synthesize Validated;
 @synthesize Err;
 
 - (id) initWithDictionary:(NSDictionary*)dict{
@@ -11842,7 +12764,6 @@ static NSDateFormatter * _dateFormatter;
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
-	[self setValidated:[dict valueForKey:@"Validated"]];
 	[self setErr:[QXQortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
 	return self;
@@ -11850,7 +12771,6 @@ static NSDateFormatter * _dateFormatter;
 
 - (NSDictionary*) dictionary {
 	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
-	[dict setValue:self.Validated forKey:@"Validated"];
 	[dict setValue:self.Err forKey:@"Err"];
 
 	return dict;
@@ -11858,10 +12778,10 @@ static NSDateFormatter * _dateFormatter;
 
 @end
 
-// --- QXGetSharingInviationParams ---
-@implementation QXPublicServiceGetSharingInviationParams : NSObject
+// --- QXGetShareRequestParams ---
+@implementation QXPublicServiceGetShareRequestParams : NSObject
 
-@synthesize SharingInviationToken;
+@synthesize Token;
 @synthesize MemberId;
 
 - (id) initWithDictionary:(NSDictionary*)dict{
@@ -11872,7 +12792,7 @@ static NSDateFormatter * _dateFormatter;
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
-	[self setSharingInviationToken:[dict valueForKey:@"SharingInviationToken"]];
+	[self setToken:[dict valueForKey:@"Token"]];
 	[self setMemberId:[dict valueForKey:@"MemberId"]];
 
 	return self;
@@ -11880,7 +12800,7 @@ static NSDateFormatter * _dateFormatter;
 
 - (NSDictionary*) dictionary {
 	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
-	[dict setValue:self.SharingInviationToken forKey:@"SharingInviationToken"];
+	[dict setValue:self.Token forKey:@"Token"];
 	[dict setValue:self.MemberId forKey:@"MemberId"];
 
 	return dict;
@@ -11888,10 +12808,10 @@ static NSDateFormatter * _dateFormatter;
 
 @end
 
-// --- QXGetSharingInviationResults ---
-@implementation QXPublicServiceGetSharingInviationResults : NSObject
+// --- QXGetShareRequestResults ---
+@implementation QXPublicServiceGetShareRequestResults : NSObject
 
-@synthesize Invitation;
+@synthesize ShareRequest;
 @synthesize Err;
 
 - (id) initWithDictionary:(NSDictionary*)dict{
@@ -11903,9 +12823,9 @@ static NSDateFormatter * _dateFormatter;
 		return self;
 	}
 
-	id dictInvitation = [dict valueForKey:@"Invitation"];
-	if ([dictInvitation isKindOfClass:[NSDictionary class]]){
-		[self setInvitation:[[QXSharingInvitation alloc] initWithDictionary:dictInvitation]];
+	id dictShareRequest = [dict valueForKey:@"ShareRequest"];
+	if ([dictShareRequest isKindOfClass:[NSDictionary class]]){
+		[self setShareRequest:[[QXShareRequest alloc] initWithDictionary:dictShareRequest]];
 	}
 	[self setErr:[QXQortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
 
@@ -11914,7 +12834,7 @@ static NSDateFormatter * _dateFormatter;
 
 - (NSDictionary*) dictionary {
 	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
-	[dict setValue:[self.Invitation dictionary] forKey:@"Invitation"];
+	[dict setValue:[self.ShareRequest dictionary] forKey:@"ShareRequest"];
 	
 	[dict setValue:self.Err forKey:@"Err"];
 
@@ -12574,6 +13494,151 @@ static NSDateFormatter * _dateFormatter;
 
 
 
+@implementation QXAuthMemberService : NSObject
+
+- (NSDictionary*) dictionary {
+	return [NSDictionary dictionaryWithObjectsAndKeys:nil];
+}
+
+
+// --- SwitchOrganization ---
+- (NSError *) SwitchOrganization:(NSString *)orgId {
+	
+	QXAuthMemberServiceSwitchOrganizationResults *results = [QXAuthMemberServiceSwitchOrganizationResults alloc];
+	QXAuthMemberServiceSwitchOrganizationParams *params = [[QXAuthMemberServiceSwitchOrganizationParams alloc] init];
+	[params setOrgId:orgId];
+	
+	QXQortexapi * _api = [QXQortexapi get];
+	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthMemberService/SwitchOrganization.json", [_api BaseURL]]];
+	if([_api Verbose]) {
+		NSLog(@"Requesting URL: %@", url);
+	}
+	NSError *error;
+	NSDictionary * dict = [QXQortexapi request:url req:[NSDictionary dictionaryWithObjectsAndKeys: [self dictionary], @"This", [params dictionary], @"Params", nil] error:&error];
+	if(error != nil) {
+		if([_api Verbose]) {
+			NSLog(@"Error: %@", error);
+		}
+		results = [results init];
+		[results setErr:error];
+		return results.Err;
+	}
+	results = [results initWithDictionary: dict];
+	
+	return results.Err;
+}
+
+// --- GetAbandonInfo ---
+- (QXAuthMemberServiceGetAbandonInfoResults *) GetAbandonInfo:(NSString *)abandonOrgId memberId:(NSString *)memberId {
+	
+	QXAuthMemberServiceGetAbandonInfoResults *results = [QXAuthMemberServiceGetAbandonInfoResults alloc];
+	QXAuthMemberServiceGetAbandonInfoParams *params = [[QXAuthMemberServiceGetAbandonInfoParams alloc] init];
+	[params setAbandonOrgId:abandonOrgId];
+	[params setMemberId:memberId];
+	
+	QXQortexapi * _api = [QXQortexapi get];
+	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthMemberService/GetAbandonInfo.json", [_api BaseURL]]];
+	if([_api Verbose]) {
+		NSLog(@"Requesting URL: %@", url);
+	}
+	NSError *error;
+	NSDictionary * dict = [QXQortexapi request:url req:[NSDictionary dictionaryWithObjectsAndKeys: [self dictionary], @"This", [params dictionary], @"Params", nil] error:&error];
+	if(error != nil) {
+		if([_api Verbose]) {
+			NSLog(@"Error: %@", error);
+		}
+		results = [results init];
+		[results setErr:error];
+		return results;
+	}
+	results = [results initWithDictionary: dict];
+	
+	return results;
+}
+
+// --- GetShareRequest ---
+- (QXAuthMemberServiceGetShareRequestResults *) GetShareRequest:(NSString *)token {
+	
+	QXAuthMemberServiceGetShareRequestResults *results = [QXAuthMemberServiceGetShareRequestResults alloc];
+	QXAuthMemberServiceGetShareRequestParams *params = [[QXAuthMemberServiceGetShareRequestParams alloc] init];
+	[params setToken:token];
+	
+	QXQortexapi * _api = [QXQortexapi get];
+	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthMemberService/GetShareRequest.json", [_api BaseURL]]];
+	if([_api Verbose]) {
+		NSLog(@"Requesting URL: %@", url);
+	}
+	NSError *error;
+	NSDictionary * dict = [QXQortexapi request:url req:[NSDictionary dictionaryWithObjectsAndKeys: [self dictionary], @"This", [params dictionary], @"Params", nil] error:&error];
+	if(error != nil) {
+		if([_api Verbose]) {
+			NSLog(@"Error: %@", error);
+		}
+		results = [results init];
+		[results setErr:error];
+		return results;
+	}
+	results = [results initWithDictionary: dict];
+	
+	return results;
+}
+
+// --- RejectShareRequestByInvitee ---
+- (NSError *) RejectShareRequestByInvitee:(NSString *)token {
+	
+	QXAuthMemberServiceRejectShareRequestByInviteeResults *results = [QXAuthMemberServiceRejectShareRequestByInviteeResults alloc];
+	QXAuthMemberServiceRejectShareRequestByInviteeParams *params = [[QXAuthMemberServiceRejectShareRequestByInviteeParams alloc] init];
+	[params setToken:token];
+	
+	QXQortexapi * _api = [QXQortexapi get];
+	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthMemberService/RejectShareRequestByInvitee.json", [_api BaseURL]]];
+	if([_api Verbose]) {
+		NSLog(@"Requesting URL: %@", url);
+	}
+	NSError *error;
+	NSDictionary * dict = [QXQortexapi request:url req:[NSDictionary dictionaryWithObjectsAndKeys: [self dictionary], @"This", [params dictionary], @"Params", nil] error:&error];
+	if(error != nil) {
+		if([_api Verbose]) {
+			NSLog(@"Error: %@", error);
+		}
+		results = [results init];
+		[results setErr:error];
+		return results.Err;
+	}
+	results = [results initWithDictionary: dict];
+	
+	return results.Err;
+}
+
+// --- AcceptShareRequestByInvitee ---
+- (NSError *) AcceptShareRequestByInvitee:(NSString *)token toOrgId:(NSString *)toOrgId {
+	
+	QXAuthMemberServiceAcceptShareRequestByInviteeResults *results = [QXAuthMemberServiceAcceptShareRequestByInviteeResults alloc];
+	QXAuthMemberServiceAcceptShareRequestByInviteeParams *params = [[QXAuthMemberServiceAcceptShareRequestByInviteeParams alloc] init];
+	[params setToken:token];
+	[params setToOrgId:toOrgId];
+	
+	QXQortexapi * _api = [QXQortexapi get];
+	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthMemberService/AcceptShareRequestByInvitee.json", [_api BaseURL]]];
+	if([_api Verbose]) {
+		NSLog(@"Requesting URL: %@", url);
+	}
+	NSError *error;
+	NSDictionary * dict = [QXQortexapi request:url req:[NSDictionary dictionaryWithObjectsAndKeys: [self dictionary], @"This", [params dictionary], @"Params", nil] error:&error];
+	if(error != nil) {
+		if([_api Verbose]) {
+			NSLog(@"Error: %@", error);
+		}
+		results = [results init];
+		[results setErr:error];
+		return results.Err;
+	}
+	results = [results initWithDictionary: dict];
+	
+	return results.Err;
+}
+@end
+
 @implementation QXAuthAdminService : NSObject
 
 
@@ -12784,107 +13849,16 @@ static NSDateFormatter * _dateFormatter;
 	
 	return results;
 }
-@end
 
-@implementation QXAuthMemberService : NSObject
-
-- (NSDictionary*) dictionary {
-	return [NSDictionary dictionaryWithObjectsAndKeys:nil];
-}
-
-
-// --- SwitchOrganization ---
-- (NSError *) SwitchOrganization:(NSString *)orgId {
+// --- IgnoreAccess ---
+- (NSError *) IgnoreAccess:(NSString *)email {
 	
-	QXAuthMemberServiceSwitchOrganizationResults *results = [QXAuthMemberServiceSwitchOrganizationResults alloc];
-	QXAuthMemberServiceSwitchOrganizationParams *params = [[QXAuthMemberServiceSwitchOrganizationParams alloc] init];
-	[params setOrgId:orgId];
-	
-	QXQortexapi * _api = [QXQortexapi get];
-	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthMemberService/SwitchOrganization.json", [_api BaseURL]]];
-	if([_api Verbose]) {
-		NSLog(@"Requesting URL: %@", url);
-	}
-	NSError *error;
-	NSDictionary * dict = [QXQortexapi request:url req:[NSDictionary dictionaryWithObjectsAndKeys: [self dictionary], @"This", [params dictionary], @"Params", nil] error:&error];
-	if(error != nil) {
-		if([_api Verbose]) {
-			NSLog(@"Error: %@", error);
-		}
-		results = [results init];
-		[results setErr:error];
-		return results.Err;
-	}
-	results = [results initWithDictionary: dict];
-	
-	return results.Err;
-}
-
-// --- GetAbandonInfo ---
-- (QXAuthMemberServiceGetAbandonInfoResults *) GetAbandonInfo:(NSString *)abandonOrgId memberId:(NSString *)memberId {
-	
-	QXAuthMemberServiceGetAbandonInfoResults *results = [QXAuthMemberServiceGetAbandonInfoResults alloc];
-	QXAuthMemberServiceGetAbandonInfoParams *params = [[QXAuthMemberServiceGetAbandonInfoParams alloc] init];
-	[params setAbandonOrgId:abandonOrgId];
-	[params setMemberId:memberId];
-	
-	QXQortexapi * _api = [QXQortexapi get];
-	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthMemberService/GetAbandonInfo.json", [_api BaseURL]]];
-	if([_api Verbose]) {
-		NSLog(@"Requesting URL: %@", url);
-	}
-	NSError *error;
-	NSDictionary * dict = [QXQortexapi request:url req:[NSDictionary dictionaryWithObjectsAndKeys: [self dictionary], @"This", [params dictionary], @"Params", nil] error:&error];
-	if(error != nil) {
-		if([_api Verbose]) {
-			NSLog(@"Error: %@", error);
-		}
-		results = [results init];
-		[results setErr:error];
-		return results;
-	}
-	results = [results initWithDictionary: dict];
-	
-	return results;
-}
-
-// --- GetSharingInviationByToken ---
-- (QXAuthMemberServiceGetSharingInviationByTokenResults *) GetSharingInviationByToken:(NSString *)sharingInviationToken {
-	
-	QXAuthMemberServiceGetSharingInviationByTokenResults *results = [QXAuthMemberServiceGetSharingInviationByTokenResults alloc];
-	QXAuthMemberServiceGetSharingInviationByTokenParams *params = [[QXAuthMemberServiceGetSharingInviationByTokenParams alloc] init];
-	[params setSharingInviationToken:sharingInviationToken];
-	
-	QXQortexapi * _api = [QXQortexapi get];
-	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthMemberService/GetSharingInviationByToken.json", [_api BaseURL]]];
-	if([_api Verbose]) {
-		NSLog(@"Requesting URL: %@", url);
-	}
-	NSError *error;
-	NSDictionary * dict = [QXQortexapi request:url req:[NSDictionary dictionaryWithObjectsAndKeys: [self dictionary], @"This", [params dictionary], @"Params", nil] error:&error];
-	if(error != nil) {
-		if([_api Verbose]) {
-			NSLog(@"Error: %@", error);
-		}
-		results = [results init];
-		[results setErr:error];
-		return results;
-	}
-	results = [results initWithDictionary: dict];
-	
-	return results;
-}
-
-// --- RejectSharingBeforeForwarding ---
-- (NSError *) RejectSharingBeforeForwarding:(NSString *)groupId email:(NSString *)email {
-	
-	QXAuthMemberServiceRejectSharingBeforeForwardingResults *results = [QXAuthMemberServiceRejectSharingBeforeForwardingResults alloc];
-	QXAuthMemberServiceRejectSharingBeforeForwardingParams *params = [[QXAuthMemberServiceRejectSharingBeforeForwardingParams alloc] init];
-	[params setGroupId:groupId];
+	QXAuthAdminServiceIgnoreAccessResults *results = [QXAuthAdminServiceIgnoreAccessResults alloc];
+	QXAuthAdminServiceIgnoreAccessParams *params = [[QXAuthAdminServiceIgnoreAccessParams alloc] init];
 	[params setEmail:email];
 	
 	QXQortexapi * _api = [QXQortexapi get];
-	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthMemberService/RejectSharingBeforeForwarding.json", [_api BaseURL]]];
+	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthAdminService/IgnoreAccess.json", [_api BaseURL]]];
 	if([_api Verbose]) {
 		NSLog(@"Requesting URL: %@", url);
 	}
@@ -12903,16 +13877,67 @@ static NSDateFormatter * _dateFormatter;
 	return results.Err;
 }
 
-// --- RespondSharingRequest ---
-- (QXAuthMemberServiceRespondSharingRequestResults *) RespondSharingRequest:(NSString *)token toOrgId:(NSString *)toOrgId {
+// --- GetAutoApproveAccess ---
+- (QXAuthAdminServiceGetAutoApproveAccessResults *) GetAutoApproveAccess {
 	
-	QXAuthMemberServiceRespondSharingRequestResults *results = [QXAuthMemberServiceRespondSharingRequestResults alloc];
-	QXAuthMemberServiceRespondSharingRequestParams *params = [[QXAuthMemberServiceRespondSharingRequestParams alloc] init];
-	[params setToken:token];
-	[params setToOrgId:toOrgId];
+	QXAuthAdminServiceGetAutoApproveAccessResults *results = [QXAuthAdminServiceGetAutoApproveAccessResults alloc];
+	QXAuthAdminServiceGetAutoApproveAccessParams *params = [[QXAuthAdminServiceGetAutoApproveAccessParams alloc] init];
 	
 	QXQortexapi * _api = [QXQortexapi get];
-	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthMemberService/RespondSharingRequest.json", [_api BaseURL]]];
+	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthAdminService/GetAutoApproveAccess.json", [_api BaseURL]]];
+	if([_api Verbose]) {
+		NSLog(@"Requesting URL: %@", url);
+	}
+	NSError *error;
+	NSDictionary * dict = [QXQortexapi request:url req:[NSDictionary dictionaryWithObjectsAndKeys: [self dictionary], @"This", [params dictionary], @"Params", nil] error:&error];
+	if(error != nil) {
+		if([_api Verbose]) {
+			NSLog(@"Error: %@", error);
+		}
+		results = [results init];
+		[results setErr:error];
+		return results;
+	}
+	results = [results initWithDictionary: dict];
+	
+	return results;
+}
+
+// --- SetAutoApproveAccess ---
+- (NSError *) SetAutoApproveAccess:(BOOL)enable {
+	
+	QXAuthAdminServiceSetAutoApproveAccessResults *results = [QXAuthAdminServiceSetAutoApproveAccessResults alloc];
+	QXAuthAdminServiceSetAutoApproveAccessParams *params = [[QXAuthAdminServiceSetAutoApproveAccessParams alloc] init];
+	[params setEnable:enable];
+	
+	QXQortexapi * _api = [QXQortexapi get];
+	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthAdminService/SetAutoApproveAccess.json", [_api BaseURL]]];
+	if([_api Verbose]) {
+		NSLog(@"Requesting URL: %@", url);
+	}
+	NSError *error;
+	NSDictionary * dict = [QXQortexapi request:url req:[NSDictionary dictionaryWithObjectsAndKeys: [self dictionary], @"This", [params dictionary], @"Params", nil] error:&error];
+	if(error != nil) {
+		if([_api Verbose]) {
+			NSLog(@"Error: %@", error);
+		}
+		results = [results init];
+		[results setErr:error];
+		return results.Err;
+	}
+	results = [results initWithDictionary: dict];
+	
+	return results.Err;
+}
+
+// --- GetMarketableUsers ---
+- (QXAuthAdminServiceGetMarketableUsersResults *) GetMarketableUsers {
+	
+	QXAuthAdminServiceGetMarketableUsersResults *results = [QXAuthAdminServiceGetMarketableUsersResults alloc];
+	QXAuthAdminServiceGetMarketableUsersParams *params = [[QXAuthAdminServiceGetMarketableUsersParams alloc] init];
+	
+	QXQortexapi * _api = [QXQortexapi get];
+	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthAdminService/GetMarketableUsers.json", [_api BaseURL]]];
 	if([_api Verbose]) {
 		NSLog(@"Requesting URL: %@", url);
 	}
@@ -12986,207 +14011,44 @@ static NSDateFormatter * _dateFormatter;
 	return results;
 }
 
-// --- GetQortexMessages ---
-- (QXAuthUserServiceGetQortexMessagesResults *) GetQortexMessages:(NSString *)messsageType before:(NSString *)before limit:(NSNumber *)limit withComments:(BOOL)withComments {
+// --- GetNewChatEntry ---
+- (QXAuthUserServiceGetNewChatEntryResults *) GetNewChatEntry:(NSString *)chatId {
 	
-	QXAuthUserServiceGetQortexMessagesResults *results = [QXAuthUserServiceGetQortexMessagesResults alloc];
-	QXAuthUserServiceGetQortexMessagesParams *params = [[QXAuthUserServiceGetQortexMessagesParams alloc] init];
-	[params setMesssageType:messsageType];
+	QXAuthUserServiceGetNewChatEntryResults *results = [QXAuthUserServiceGetNewChatEntryResults alloc];
+	QXAuthUserServiceGetNewChatEntryParams *params = [[QXAuthUserServiceGetNewChatEntryParams alloc] init];
+	[params setChatId:chatId];
+	
+	QXQortexapi * _api = [QXQortexapi get];
+	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/GetNewChatEntry.json", [_api BaseURL]]];
+	if([_api Verbose]) {
+		NSLog(@"Requesting URL: %@", url);
+	}
+	NSError *error;
+	NSDictionary * dict = [QXQortexapi request:url req:[NSDictionary dictionaryWithObjectsAndKeys: [self dictionary], @"This", [params dictionary], @"Params", nil] error:&error];
+	if(error != nil) {
+		if([_api Verbose]) {
+			NSLog(@"Error: %@", error);
+		}
+		results = [results init];
+		[results setErr:error];
+		return results;
+	}
+	results = [results initWithDictionary: dict];
+	
+	return results;
+}
+
+// --- GetQortexSupportEntries ---
+- (QXAuthUserServiceGetQortexSupportEntriesResults *) GetQortexSupportEntries:(NSString *)before limit:(NSNumber *)limit withComments:(BOOL)withComments {
+	
+	QXAuthUserServiceGetQortexSupportEntriesResults *results = [QXAuthUserServiceGetQortexSupportEntriesResults alloc];
+	QXAuthUserServiceGetQortexSupportEntriesParams *params = [[QXAuthUserServiceGetQortexSupportEntriesParams alloc] init];
 	[params setBefore:before];
 	[params setLimit:limit];
 	[params setWithComments:withComments];
 	
 	QXQortexapi * _api = [QXQortexapi get];
-	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/GetQortexMessages.json", [_api BaseURL]]];
-	if([_api Verbose]) {
-		NSLog(@"Requesting URL: %@", url);
-	}
-	NSError *error;
-	NSDictionary * dict = [QXQortexapi request:url req:[NSDictionary dictionaryWithObjectsAndKeys: [self dictionary], @"This", [params dictionary], @"Params", nil] error:&error];
-	if(error != nil) {
-		if([_api Verbose]) {
-			NSLog(@"Error: %@", error);
-		}
-		results = [results init];
-		[results setErr:error];
-		return results;
-	}
-	results = [results initWithDictionary: dict];
-	
-	return results;
-}
-
-// --- CreateBroadcast ---
-- (QXAuthUserServiceCreateBroadcastResults *) CreateBroadcast:(QXBroadcastInput *)input {
-	
-	QXAuthUserServiceCreateBroadcastResults *results = [QXAuthUserServiceCreateBroadcastResults alloc];
-	QXAuthUserServiceCreateBroadcastParams *params = [[QXAuthUserServiceCreateBroadcastParams alloc] init];
-	[params setInput:input];
-	
-	QXQortexapi * _api = [QXQortexapi get];
-	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/CreateBroadcast.json", [_api BaseURL]]];
-	if([_api Verbose]) {
-		NSLog(@"Requesting URL: %@", url);
-	}
-	NSError *error;
-	NSDictionary * dict = [QXQortexapi request:url req:[NSDictionary dictionaryWithObjectsAndKeys: [self dictionary], @"This", [params dictionary], @"Params", nil] error:&error];
-	if(error != nil) {
-		if([_api Verbose]) {
-			NSLog(@"Error: %@", error);
-		}
-		results = [results init];
-		[results setErr:error];
-		return results;
-	}
-	results = [results initWithDictionary: dict];
-	
-	return results;
-}
-
-// --- CreateBroadcastComment ---
-- (QXAuthUserServiceCreateBroadcastCommentResults *) CreateBroadcastComment:(QXBroadcastInput *)input {
-	
-	QXAuthUserServiceCreateBroadcastCommentResults *results = [QXAuthUserServiceCreateBroadcastCommentResults alloc];
-	QXAuthUserServiceCreateBroadcastCommentParams *params = [[QXAuthUserServiceCreateBroadcastCommentParams alloc] init];
-	[params setInput:input];
-	
-	QXQortexapi * _api = [QXQortexapi get];
-	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/CreateBroadcastComment.json", [_api BaseURL]]];
-	if([_api Verbose]) {
-		NSLog(@"Requesting URL: %@", url);
-	}
-	NSError *error;
-	NSDictionary * dict = [QXQortexapi request:url req:[NSDictionary dictionaryWithObjectsAndKeys: [self dictionary], @"This", [params dictionary], @"Params", nil] error:&error];
-	if(error != nil) {
-		if([_api Verbose]) {
-			NSLog(@"Error: %@", error);
-		}
-		results = [results init];
-		[results setErr:error];
-		return results;
-	}
-	results = [results initWithDictionary: dict];
-	
-	return results;
-}
-
-// --- GetSharingRequestEntry ---
-- (QXAuthUserServiceGetSharingRequestEntryResults *) GetSharingRequestEntry:(NSString *)entryId {
-	
-	QXAuthUserServiceGetSharingRequestEntryResults *results = [QXAuthUserServiceGetSharingRequestEntryResults alloc];
-	QXAuthUserServiceGetSharingRequestEntryParams *params = [[QXAuthUserServiceGetSharingRequestEntryParams alloc] init];
-	[params setEntryId:entryId];
-	
-	QXQortexapi * _api = [QXQortexapi get];
-	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/GetSharingRequestEntry.json", [_api BaseURL]]];
-	if([_api Verbose]) {
-		NSLog(@"Requesting URL: %@", url);
-	}
-	NSError *error;
-	NSDictionary * dict = [QXQortexapi request:url req:[NSDictionary dictionaryWithObjectsAndKeys: [self dictionary], @"This", [params dictionary], @"Params", nil] error:&error];
-	if(error != nil) {
-		if([_api Verbose]) {
-			NSLog(@"Error: %@", error);
-		}
-		results = [results init];
-		[results setErr:error];
-		return results;
-	}
-	results = [results initWithDictionary: dict];
-	
-	return results;
-}
-
-// --- GetBroadcast ---
-- (QXAuthUserServiceGetBroadcastResults *) GetBroadcast:(NSString *)entryId {
-	
-	QXAuthUserServiceGetBroadcastResults *results = [QXAuthUserServiceGetBroadcastResults alloc];
-	QXAuthUserServiceGetBroadcastParams *params = [[QXAuthUserServiceGetBroadcastParams alloc] init];
-	[params setEntryId:entryId];
-	
-	QXQortexapi * _api = [QXQortexapi get];
-	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/GetBroadcast.json", [_api BaseURL]]];
-	if([_api Verbose]) {
-		NSLog(@"Requesting URL: %@", url);
-	}
-	NSError *error;
-	NSDictionary * dict = [QXQortexapi request:url req:[NSDictionary dictionaryWithObjectsAndKeys: [self dictionary], @"This", [params dictionary], @"Params", nil] error:&error];
-	if(error != nil) {
-		if([_api Verbose]) {
-			NSLog(@"Error: %@", error);
-		}
-		results = [results init];
-		[results setErr:error];
-		return results;
-	}
-	results = [results initWithDictionary: dict];
-	
-	return results;
-}
-
-// --- GetBroadcastComment ---
-- (QXAuthUserServiceGetBroadcastCommentResults *) GetBroadcastComment:(NSString *)entryId {
-	
-	QXAuthUserServiceGetBroadcastCommentResults *results = [QXAuthUserServiceGetBroadcastCommentResults alloc];
-	QXAuthUserServiceGetBroadcastCommentParams *params = [[QXAuthUserServiceGetBroadcastCommentParams alloc] init];
-	[params setEntryId:entryId];
-	
-	QXQortexapi * _api = [QXQortexapi get];
-	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/GetBroadcastComment.json", [_api BaseURL]]];
-	if([_api Verbose]) {
-		NSLog(@"Requesting URL: %@", url);
-	}
-	NSError *error;
-	NSDictionary * dict = [QXQortexapi request:url req:[NSDictionary dictionaryWithObjectsAndKeys: [self dictionary], @"This", [params dictionary], @"Params", nil] error:&error];
-	if(error != nil) {
-		if([_api Verbose]) {
-			NSLog(@"Error: %@", error);
-		}
-		results = [results init];
-		[results setErr:error];
-		return results;
-	}
-	results = [results initWithDictionary: dict];
-	
-	return results;
-}
-
-// --- UpdateBroadcast ---
-- (QXAuthUserServiceUpdateBroadcastResults *) UpdateBroadcast:(QXBroadcastInput *)input {
-	
-	QXAuthUserServiceUpdateBroadcastResults *results = [QXAuthUserServiceUpdateBroadcastResults alloc];
-	QXAuthUserServiceUpdateBroadcastParams *params = [[QXAuthUserServiceUpdateBroadcastParams alloc] init];
-	[params setInput:input];
-	
-	QXQortexapi * _api = [QXQortexapi get];
-	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/UpdateBroadcast.json", [_api BaseURL]]];
-	if([_api Verbose]) {
-		NSLog(@"Requesting URL: %@", url);
-	}
-	NSError *error;
-	NSDictionary * dict = [QXQortexapi request:url req:[NSDictionary dictionaryWithObjectsAndKeys: [self dictionary], @"This", [params dictionary], @"Params", nil] error:&error];
-	if(error != nil) {
-		if([_api Verbose]) {
-			NSLog(@"Error: %@", error);
-		}
-		results = [results init];
-		[results setErr:error];
-		return results;
-	}
-	results = [results initWithDictionary: dict];
-	
-	return results;
-}
-
-// --- UpdateBroadcastComment ---
-- (QXAuthUserServiceUpdateBroadcastCommentResults *) UpdateBroadcastComment:(QXBroadcastInput *)input {
-	
-	QXAuthUserServiceUpdateBroadcastCommentResults *results = [QXAuthUserServiceUpdateBroadcastCommentResults alloc];
-	QXAuthUserServiceUpdateBroadcastCommentParams *params = [[QXAuthUserServiceUpdateBroadcastCommentParams alloc] init];
-	[params setInput:input];
-	
-	QXQortexapi * _api = [QXQortexapi get];
-	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/UpdateBroadcastComment.json", [_api BaseURL]]];
+	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/GetQortexSupportEntries.json", [_api BaseURL]]];
 	if([_api Verbose]) {
 		NSLog(@"Requesting URL: %@", url);
 	}
@@ -13640,6 +14502,32 @@ static NSDateFormatter * _dateFormatter;
 	
 	QXQortexapi * _api = [QXQortexapi get];
 	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/GetMyFeedEntries.json", [_api BaseURL]]];
+	if([_api Verbose]) {
+		NSLog(@"Requesting URL: %@", url);
+	}
+	NSError *error;
+	NSDictionary * dict = [QXQortexapi request:url req:[NSDictionary dictionaryWithObjectsAndKeys: [self dictionary], @"This", [params dictionary], @"Params", nil] error:&error];
+	if(error != nil) {
+		if([_api Verbose]) {
+			NSLog(@"Error: %@", error);
+		}
+		results = [results init];
+		[results setErr:error];
+		return results;
+	}
+	results = [results initWithDictionary: dict];
+	
+	return results;
+}
+
+// --- GetGroupAside ---
+- (QXAuthUserServiceGetGroupAsideResults *) GetGroupAside {
+	
+	QXAuthUserServiceGetGroupAsideResults *results = [QXAuthUserServiceGetGroupAsideResults alloc];
+	QXAuthUserServiceGetGroupAsideParams *params = [[QXAuthUserServiceGetGroupAsideParams alloc] init];
+	
+	QXQortexapi * _api = [QXQortexapi get];
+	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/GetGroupAside.json", [_api BaseURL]]];
 	if([_api Verbose]) {
 		NSLog(@"Requesting URL: %@", url);
 	}
@@ -15079,6 +15967,32 @@ static NSDateFormatter * _dateFormatter;
 	return results;
 }
 
+// --- GetMyOrgsUnreadInfo ---
+- (QXAuthUserServiceGetMyOrgsUnreadInfoResults *) GetMyOrgsUnreadInfo {
+	
+	QXAuthUserServiceGetMyOrgsUnreadInfoResults *results = [QXAuthUserServiceGetMyOrgsUnreadInfoResults alloc];
+	QXAuthUserServiceGetMyOrgsUnreadInfoParams *params = [[QXAuthUserServiceGetMyOrgsUnreadInfoParams alloc] init];
+	
+	QXQortexapi * _api = [QXQortexapi get];
+	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/GetMyOrgsUnreadInfo.json", [_api BaseURL]]];
+	if([_api Verbose]) {
+		NSLog(@"Requesting URL: %@", url);
+	}
+	NSError *error;
+	NSDictionary * dict = [QXQortexapi request:url req:[NSDictionary dictionaryWithObjectsAndKeys: [self dictionary], @"This", [params dictionary], @"Params", nil] error:&error];
+	if(error != nil) {
+		if([_api Verbose]) {
+			NSLog(@"Error: %@", error);
+		}
+		results = [results init];
+		[results setErr:error];
+		return results;
+	}
+	results = [results initWithDictionary: dict];
+	
+	return results;
+}
+
 // --- GetMyJoinedOrganizations ---
 - (QXAuthUserServiceGetMyJoinedOrganizationsResults *) GetMyJoinedOrganizations {
 	
@@ -15212,18 +16126,15 @@ static NSDateFormatter * _dateFormatter;
 	return results.Err;
 }
 
-// --- AcceptSharedGroupRequest ---
-- (QXAuthUserServiceAcceptSharedGroupRequestResults *) AcceptSharedGroupRequest:(NSString *)fromOrgId sharedOrgId:(NSString *)sharedOrgId sharedGroupId:(NSString *)sharedGroupId fromUserId:(NSString *)fromUserId {
+// --- AcceptShareRequestByAdmin ---
+- (NSError *) AcceptShareRequestByAdmin:(NSString *)requestId {
 	
-	QXAuthUserServiceAcceptSharedGroupRequestResults *results = [QXAuthUserServiceAcceptSharedGroupRequestResults alloc];
-	QXAuthUserServiceAcceptSharedGroupRequestParams *params = [[QXAuthUserServiceAcceptSharedGroupRequestParams alloc] init];
-	[params setFromOrgId:fromOrgId];
-	[params setSharedOrgId:sharedOrgId];
-	[params setSharedGroupId:sharedGroupId];
-	[params setFromUserId:fromUserId];
+	QXAuthUserServiceAcceptShareRequestByAdminResults *results = [QXAuthUserServiceAcceptShareRequestByAdminResults alloc];
+	QXAuthUserServiceAcceptShareRequestByAdminParams *params = [[QXAuthUserServiceAcceptShareRequestByAdminParams alloc] init];
+	[params setRequestId:requestId];
 	
 	QXQortexapi * _api = [QXQortexapi get];
-	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/AcceptSharedGroupRequest.json", [_api BaseURL]]];
+	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/AcceptShareRequestByAdmin.json", [_api BaseURL]]];
 	if([_api Verbose]) {
 		NSLog(@"Requesting URL: %@", url);
 	}
@@ -15235,25 +16146,22 @@ static NSDateFormatter * _dateFormatter;
 		}
 		results = [results init];
 		[results setErr:error];
-		return results;
+		return results.Err;
 	}
 	results = [results initWithDictionary: dict];
 	
-	return results;
+	return results.Err;
 }
 
-// --- RejectSharedGroupRequest ---
-- (QXAuthUserServiceRejectSharedGroupRequestResults *) RejectSharedGroupRequest:(NSString *)fromOrgId sharedOrgId:(NSString *)sharedOrgId sharedGroupId:(NSString *)sharedGroupId fromUserId:(NSString *)fromUserId {
+// --- RejectShareRequestByAdmin ---
+- (NSError *) RejectShareRequestByAdmin:(NSString *)requestId {
 	
-	QXAuthUserServiceRejectSharedGroupRequestResults *results = [QXAuthUserServiceRejectSharedGroupRequestResults alloc];
-	QXAuthUserServiceRejectSharedGroupRequestParams *params = [[QXAuthUserServiceRejectSharedGroupRequestParams alloc] init];
-	[params setFromOrgId:fromOrgId];
-	[params setSharedOrgId:sharedOrgId];
-	[params setSharedGroupId:sharedGroupId];
-	[params setFromUserId:fromUserId];
+	QXAuthUserServiceRejectShareRequestByAdminResults *results = [QXAuthUserServiceRejectShareRequestByAdminResults alloc];
+	QXAuthUserServiceRejectShareRequestByAdminParams *params = [[QXAuthUserServiceRejectShareRequestByAdminParams alloc] init];
+	[params setRequestId:requestId];
 	
 	QXQortexapi * _api = [QXQortexapi get];
-	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/RejectSharedGroupRequest.json", [_api BaseURL]]];
+	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/RejectShareRequestByAdmin.json", [_api BaseURL]]];
 	if([_api Verbose]) {
 		NSLog(@"Requesting URL: %@", url);
 	}
@@ -15265,11 +16173,11 @@ static NSDateFormatter * _dateFormatter;
 		}
 		results = [results init];
 		[results setErr:error];
-		return results;
+		return results.Err;
 	}
 	results = [results initWithDictionary: dict];
 	
-	return results;
+	return results.Err;
 }
 
 // --- GetOrgSettings ---
@@ -15460,15 +16368,15 @@ static NSDateFormatter * _dateFormatter;
 	return results.Err;
 }
 
-// --- UpdateMailUpdates ---
-- (NSError *) UpdateMailUpdates:(QXMailUpdatesInput *)input {
+// --- UpdateMailPreference ---
+- (NSError *) UpdateMailPreference:(QXMailPreferenceInput *)input {
 	
-	QXAuthUserServiceUpdateMailUpdatesResults *results = [QXAuthUserServiceUpdateMailUpdatesResults alloc];
-	QXAuthUserServiceUpdateMailUpdatesParams *params = [[QXAuthUserServiceUpdateMailUpdatesParams alloc] init];
+	QXAuthUserServiceUpdateMailPreferenceResults *results = [QXAuthUserServiceUpdateMailPreferenceResults alloc];
+	QXAuthUserServiceUpdateMailPreferenceParams *params = [[QXAuthUserServiceUpdateMailPreferenceParams alloc] init];
 	[params setInput:input];
 	
 	QXQortexapi * _api = [QXQortexapi get];
-	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/UpdateMailUpdates.json", [_api BaseURL]]];
+	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/UpdateMailPreference.json", [_api BaseURL]]];
 	if([_api Verbose]) {
 		NSLog(@"Requesting URL: %@", url);
 	}
@@ -15568,17 +16476,16 @@ static NSDateFormatter * _dateFormatter;
 	return results;
 }
 
-// --- SendSharingInvitation ---
-- (QXAuthUserServiceSendSharingInvitationResults *) SendSharingInvitation:(NSString *)groupId email:(NSString *)email isResend:(BOOL)isResend {
+// --- SendShareRequest ---
+- (QXAuthUserServiceSendShareRequestResults *) SendShareRequest:(NSString *)groupId email:(NSString *)email {
 	
-	QXAuthUserServiceSendSharingInvitationResults *results = [QXAuthUserServiceSendSharingInvitationResults alloc];
-	QXAuthUserServiceSendSharingInvitationParams *params = [[QXAuthUserServiceSendSharingInvitationParams alloc] init];
+	QXAuthUserServiceSendShareRequestResults *results = [QXAuthUserServiceSendShareRequestResults alloc];
+	QXAuthUserServiceSendShareRequestParams *params = [[QXAuthUserServiceSendShareRequestParams alloc] init];
 	[params setGroupId:groupId];
 	[params setEmail:email];
-	[params setIsResend:isResend];
 	
 	QXQortexapi * _api = [QXQortexapi get];
-	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/SendSharingInvitation.json", [_api BaseURL]]];
+	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/SendShareRequest.json", [_api BaseURL]]];
 	if([_api Verbose]) {
 		NSLog(@"Requesting URL: %@", url);
 	}
@@ -15597,15 +16504,15 @@ static NSDateFormatter * _dateFormatter;
 	return results;
 }
 
-// --- GetSharingInvitations ---
-- (QXAuthUserServiceGetSharingInvitationsResults *) GetSharingInvitations:(NSString *)groupId {
+// --- GetShareRequests ---
+- (QXAuthUserServiceGetShareRequestsResults *) GetShareRequests:(NSString *)groupId {
 	
-	QXAuthUserServiceGetSharingInvitationsResults *results = [QXAuthUserServiceGetSharingInvitationsResults alloc];
-	QXAuthUserServiceGetSharingInvitationsParams *params = [[QXAuthUserServiceGetSharingInvitationsParams alloc] init];
+	QXAuthUserServiceGetShareRequestsResults *results = [QXAuthUserServiceGetShareRequestsResults alloc];
+	QXAuthUserServiceGetShareRequestsParams *params = [[QXAuthUserServiceGetShareRequestsParams alloc] init];
 	[params setGroupId:groupId];
 	
 	QXQortexapi * _api = [QXQortexapi get];
-	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/GetSharingInvitations.json", [_api BaseURL]]];
+	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/GetShareRequests.json", [_api BaseURL]]];
 	if([_api Verbose]) {
 		NSLog(@"Requesting URL: %@", url);
 	}
@@ -15624,16 +16531,15 @@ static NSDateFormatter * _dateFormatter;
 	return results;
 }
 
-// --- CancelSharingInvitation ---
-- (NSError *) CancelSharingInvitation:(NSString *)groupId email:(NSString *)email {
+// --- CancelShareRequest ---
+- (NSError *) CancelShareRequest:(NSString *)requestId {
 	
-	QXAuthUserServiceCancelSharingInvitationResults *results = [QXAuthUserServiceCancelSharingInvitationResults alloc];
-	QXAuthUserServiceCancelSharingInvitationParams *params = [[QXAuthUserServiceCancelSharingInvitationParams alloc] init];
-	[params setGroupId:groupId];
-	[params setEmail:email];
+	QXAuthUserServiceCancelShareRequestResults *results = [QXAuthUserServiceCancelShareRequestResults alloc];
+	QXAuthUserServiceCancelShareRequestParams *params = [[QXAuthUserServiceCancelShareRequestParams alloc] init];
+	[params setRequestId:requestId];
 	
 	QXQortexapi * _api = [QXQortexapi get];
-	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/CancelSharingInvitation.json", [_api BaseURL]]];
+	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/CancelShareRequest.json", [_api BaseURL]]];
 	if([_api Verbose]) {
 		NSLog(@"Requesting URL: %@", url);
 	}
@@ -15652,16 +16558,15 @@ static NSDateFormatter * _dateFormatter;
 	return results.Err;
 }
 
-// --- StopSharedGroup ---
-- (NSError *) StopSharedGroup:(NSString *)groupId toStopOrgId:(NSString *)toStopOrgId {
+// --- StopSharingGroup ---
+- (NSError *) StopSharingGroup:(NSString *)requestId {
 	
-	QXAuthUserServiceStopSharedGroupResults *results = [QXAuthUserServiceStopSharedGroupResults alloc];
-	QXAuthUserServiceStopSharedGroupParams *params = [[QXAuthUserServiceStopSharedGroupParams alloc] init];
-	[params setGroupId:groupId];
-	[params setToStopOrgId:toStopOrgId];
+	QXAuthUserServiceStopSharingGroupResults *results = [QXAuthUserServiceStopSharingGroupResults alloc];
+	QXAuthUserServiceStopSharingGroupParams *params = [[QXAuthUserServiceStopSharingGroupParams alloc] init];
+	[params setRequestId:requestId];
 	
 	QXQortexapi * _api = [QXQortexapi get];
-	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/StopSharedGroup.json", [_api BaseURL]]];
+	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/StopSharingGroup.json", [_api BaseURL]]];
 	if([_api Verbose]) {
 		NSLog(@"Requesting URL: %@", url);
 	}
@@ -15680,15 +16585,14 @@ static NSDateFormatter * _dateFormatter;
 	return results.Err;
 }
 
-// --- LeaveSharedGroup ---
-- (NSError *) LeaveSharedGroup:(NSString *)groupId {
+// --- DismissPresentationTip ---
+- (NSError *) DismissPresentationTip {
 	
-	QXAuthUserServiceLeaveSharedGroupResults *results = [QXAuthUserServiceLeaveSharedGroupResults alloc];
-	QXAuthUserServiceLeaveSharedGroupParams *params = [[QXAuthUserServiceLeaveSharedGroupParams alloc] init];
-	[params setGroupId:groupId];
+	QXAuthUserServiceDismissPresentationTipResults *results = [QXAuthUserServiceDismissPresentationTipResults alloc];
+	QXAuthUserServiceDismissPresentationTipParams *params = [[QXAuthUserServiceDismissPresentationTipParams alloc] init];
 	
 	QXQortexapi * _api = [QXQortexapi get];
-	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/LeaveSharedGroup.json", [_api BaseURL]]];
+	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/DismissPresentationTip.json", [_api BaseURL]]];
 	if([_api Verbose]) {
 		NSLog(@"Requesting URL: %@", url);
 	}
@@ -15735,15 +16639,16 @@ static NSDateFormatter * _dateFormatter;
 	return results;
 }
 
-// --- ShareChat ---
-- (QXAuthUserServiceShareChatResults *) ShareChat:(QXShareChatInput *)input {
+// --- GetPrivateChat ---
+- (QXAuthUserServiceGetPrivateChatResults *) GetPrivateChat:(NSString *)conversationId searchKeyWords:(NSString *)searchKeyWords {
 	
-	QXAuthUserServiceShareChatResults *results = [QXAuthUserServiceShareChatResults alloc];
-	QXAuthUserServiceShareChatParams *params = [[QXAuthUserServiceShareChatParams alloc] init];
-	[params setInput:input];
+	QXAuthUserServiceGetPrivateChatResults *results = [QXAuthUserServiceGetPrivateChatResults alloc];
+	QXAuthUserServiceGetPrivateChatParams *params = [[QXAuthUserServiceGetPrivateChatParams alloc] init];
+	[params setConversationId:conversationId];
+	[params setSearchKeyWords:searchKeyWords];
 	
 	QXQortexapi * _api = [QXQortexapi get];
-	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/ShareChat.json", [_api BaseURL]]];
+	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/GetPrivateChat.json", [_api BaseURL]]];
 	if([_api Verbose]) {
 		NSLog(@"Requesting URL: %@", url);
 	}
@@ -15762,16 +16667,150 @@ static NSDateFormatter * _dateFormatter;
 	return results;
 }
 
-// --- GetPrivateChat ---
-- (QXAuthUserServiceGetPrivateChatResults *) GetPrivateChat:(NSString *)entryId searchKeyWords:(NSString *)searchKeyWords {
+// --- CreateQortexSupport ---
+- (QXAuthUserServiceCreateQortexSupportResults *) CreateQortexSupport:(QXQortexSupportInput *)input {
 	
-	QXAuthUserServiceGetPrivateChatResults *results = [QXAuthUserServiceGetPrivateChatResults alloc];
-	QXAuthUserServiceGetPrivateChatParams *params = [[QXAuthUserServiceGetPrivateChatParams alloc] init];
-	[params setEntryId:entryId];
-	[params setSearchKeyWords:searchKeyWords];
+	QXAuthUserServiceCreateQortexSupportResults *results = [QXAuthUserServiceCreateQortexSupportResults alloc];
+	QXAuthUserServiceCreateQortexSupportParams *params = [[QXAuthUserServiceCreateQortexSupportParams alloc] init];
+	[params setInput:input];
 	
 	QXQortexapi * _api = [QXQortexapi get];
-	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/GetPrivateChat.json", [_api BaseURL]]];
+	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/CreateQortexSupport.json", [_api BaseURL]]];
+	if([_api Verbose]) {
+		NSLog(@"Requesting URL: %@", url);
+	}
+	NSError *error;
+	NSDictionary * dict = [QXQortexapi request:url req:[NSDictionary dictionaryWithObjectsAndKeys: [self dictionary], @"This", [params dictionary], @"Params", nil] error:&error];
+	if(error != nil) {
+		if([_api Verbose]) {
+			NSLog(@"Error: %@", error);
+		}
+		results = [results init];
+		[results setErr:error];
+		return results;
+	}
+	results = [results initWithDictionary: dict];
+	
+	return results;
+}
+
+// --- CreateQortexSupportComment ---
+- (QXAuthUserServiceCreateQortexSupportCommentResults *) CreateQortexSupportComment:(QXQortexSupportInput *)input {
+	
+	QXAuthUserServiceCreateQortexSupportCommentResults *results = [QXAuthUserServiceCreateQortexSupportCommentResults alloc];
+	QXAuthUserServiceCreateQortexSupportCommentParams *params = [[QXAuthUserServiceCreateQortexSupportCommentParams alloc] init];
+	[params setInput:input];
+	
+	QXQortexapi * _api = [QXQortexapi get];
+	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/CreateQortexSupportComment.json", [_api BaseURL]]];
+	if([_api Verbose]) {
+		NSLog(@"Requesting URL: %@", url);
+	}
+	NSError *error;
+	NSDictionary * dict = [QXQortexapi request:url req:[NSDictionary dictionaryWithObjectsAndKeys: [self dictionary], @"This", [params dictionary], @"Params", nil] error:&error];
+	if(error != nil) {
+		if([_api Verbose]) {
+			NSLog(@"Error: %@", error);
+		}
+		results = [results init];
+		[results setErr:error];
+		return results;
+	}
+	results = [results initWithDictionary: dict];
+	
+	return results;
+}
+
+// --- GetQortexSupport ---
+- (QXAuthUserServiceGetQortexSupportResults *) GetQortexSupport:(NSString *)entryId {
+	
+	QXAuthUserServiceGetQortexSupportResults *results = [QXAuthUserServiceGetQortexSupportResults alloc];
+	QXAuthUserServiceGetQortexSupportParams *params = [[QXAuthUserServiceGetQortexSupportParams alloc] init];
+	[params setEntryId:entryId];
+	
+	QXQortexapi * _api = [QXQortexapi get];
+	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/GetQortexSupport.json", [_api BaseURL]]];
+	if([_api Verbose]) {
+		NSLog(@"Requesting URL: %@", url);
+	}
+	NSError *error;
+	NSDictionary * dict = [QXQortexapi request:url req:[NSDictionary dictionaryWithObjectsAndKeys: [self dictionary], @"This", [params dictionary], @"Params", nil] error:&error];
+	if(error != nil) {
+		if([_api Verbose]) {
+			NSLog(@"Error: %@", error);
+		}
+		results = [results init];
+		[results setErr:error];
+		return results;
+	}
+	results = [results initWithDictionary: dict];
+	
+	return results;
+}
+
+// --- GetQortexSupportComment ---
+- (QXAuthUserServiceGetQortexSupportCommentResults *) GetQortexSupportComment:(NSString *)entryId {
+	
+	QXAuthUserServiceGetQortexSupportCommentResults *results = [QXAuthUserServiceGetQortexSupportCommentResults alloc];
+	QXAuthUserServiceGetQortexSupportCommentParams *params = [[QXAuthUserServiceGetQortexSupportCommentParams alloc] init];
+	[params setEntryId:entryId];
+	
+	QXQortexapi * _api = [QXQortexapi get];
+	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/GetQortexSupportComment.json", [_api BaseURL]]];
+	if([_api Verbose]) {
+		NSLog(@"Requesting URL: %@", url);
+	}
+	NSError *error;
+	NSDictionary * dict = [QXQortexapi request:url req:[NSDictionary dictionaryWithObjectsAndKeys: [self dictionary], @"This", [params dictionary], @"Params", nil] error:&error];
+	if(error != nil) {
+		if([_api Verbose]) {
+			NSLog(@"Error: %@", error);
+		}
+		results = [results init];
+		[results setErr:error];
+		return results;
+	}
+	results = [results initWithDictionary: dict];
+	
+	return results;
+}
+
+// --- UpdateQortexSupport ---
+- (QXAuthUserServiceUpdateQortexSupportResults *) UpdateQortexSupport:(QXQortexSupportInput *)input {
+	
+	QXAuthUserServiceUpdateQortexSupportResults *results = [QXAuthUserServiceUpdateQortexSupportResults alloc];
+	QXAuthUserServiceUpdateQortexSupportParams *params = [[QXAuthUserServiceUpdateQortexSupportParams alloc] init];
+	[params setInput:input];
+	
+	QXQortexapi * _api = [QXQortexapi get];
+	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/UpdateQortexSupport.json", [_api BaseURL]]];
+	if([_api Verbose]) {
+		NSLog(@"Requesting URL: %@", url);
+	}
+	NSError *error;
+	NSDictionary * dict = [QXQortexapi request:url req:[NSDictionary dictionaryWithObjectsAndKeys: [self dictionary], @"This", [params dictionary], @"Params", nil] error:&error];
+	if(error != nil) {
+		if([_api Verbose]) {
+			NSLog(@"Error: %@", error);
+		}
+		results = [results init];
+		[results setErr:error];
+		return results;
+	}
+	results = [results initWithDictionary: dict];
+	
+	return results;
+}
+
+// --- UpdateQortexSupportComment ---
+- (QXAuthUserServiceUpdateQortexSupportCommentResults *) UpdateQortexSupportComment:(QXQortexSupportInput *)input {
+	
+	QXAuthUserServiceUpdateQortexSupportCommentResults *results = [QXAuthUserServiceUpdateQortexSupportCommentResults alloc];
+	QXAuthUserServiceUpdateQortexSupportCommentParams *params = [[QXAuthUserServiceUpdateQortexSupportCommentParams alloc] init];
+	[params setInput:input];
+	
+	QXQortexapi * _api = [QXQortexapi get];
+	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/UpdateQortexSupportComment.json", [_api BaseURL]]];
 	if([_api Verbose]) {
 		NSLog(@"Requesting URL: %@", url);
 	}
@@ -15799,12 +16838,13 @@ static NSDateFormatter * _dateFormatter;
 
 
 // --- GetSession ---
-- (QXPublicServiceGetSessionResults *) GetSession:(NSString *)email password:(NSString *)password {
+- (QXPublicServiceGetSessionResults *) GetSession:(NSString *)email password:(NSString *)password locale:(NSString *)locale {
 	
 	QXPublicServiceGetSessionResults *results = [QXPublicServiceGetSessionResults alloc];
 	QXPublicServiceGetSessionParams *params = [[QXPublicServiceGetSessionParams alloc] init];
 	[params setEmail:email];
 	[params setPassword:password];
+	[params setLocale:locale];
 	
 	QXQortexapi * _api = [QXQortexapi get];
 	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/PublicService/GetSession.json", [_api BaseURL]]];
@@ -16012,7 +17052,7 @@ static NSDateFormatter * _dateFormatter;
 }
 
 // --- ChangeEmailToAcceptSharing ---
-- (QXPublicServiceChangeEmailToAcceptSharingResults *) ChangeEmailToAcceptSharing:(NSString *)token newEmail:(NSString *)newEmail {
+- (NSError *) ChangeEmailToAcceptSharing:(NSString *)token newEmail:(NSString *)newEmail {
 	
 	QXPublicServiceChangeEmailToAcceptSharingResults *results = [QXPublicServiceChangeEmailToAcceptSharingResults alloc];
 	QXPublicServiceChangeEmailToAcceptSharingParams *params = [[QXPublicServiceChangeEmailToAcceptSharingParams alloc] init];
@@ -16032,23 +17072,23 @@ static NSDateFormatter * _dateFormatter;
 		}
 		results = [results init];
 		[results setErr:error];
-		return results;
+		return results.Err;
 	}
 	results = [results initWithDictionary: dict];
 	
-	return results;
+	return results.Err;
 }
 
-// --- GetSharingInviation ---
-- (QXPublicServiceGetSharingInviationResults *) GetSharingInviation:(NSString *)sharingInviationToken memberId:(NSString *)memberId {
+// --- GetShareRequest ---
+- (QXPublicServiceGetShareRequestResults *) GetShareRequest:(NSString *)token memberId:(NSString *)memberId {
 	
-	QXPublicServiceGetSharingInviationResults *results = [QXPublicServiceGetSharingInviationResults alloc];
-	QXPublicServiceGetSharingInviationParams *params = [[QXPublicServiceGetSharingInviationParams alloc] init];
-	[params setSharingInviationToken:sharingInviationToken];
+	QXPublicServiceGetShareRequestResults *results = [QXPublicServiceGetShareRequestResults alloc];
+	QXPublicServiceGetShareRequestParams *params = [[QXPublicServiceGetShareRequestParams alloc] init];
+	[params setToken:token];
 	[params setMemberId:memberId];
 	
 	QXQortexapi * _api = [QXQortexapi get];
-	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/PublicService/GetSharingInviation.json", [_api BaseURL]]];
+	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/PublicService/GetShareRequest.json", [_api BaseURL]]];
 	if([_api Verbose]) {
 		NSLog(@"Requesting URL: %@", url);
 	}
