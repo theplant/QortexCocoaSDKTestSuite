@@ -15,6 +15,264 @@
 @end
 
 
+// --- MailPreferenceInput ---
+@interface QXMailPreferenceInput : NSObject
+
+@property (nonatomic, assign) BOOL Expecting;
+@property (nonatomic, strong) NSNumber * SendInterval;
+@property (nonatomic, strong) NSNumber * SendLag;
+
+- (id) initWithDictionary:(NSDictionary*)dict;
+- (NSDictionary*) dictionary;
+
+@end
+
+// --- Organization ---
+@interface QXOrganization : NSObject
+
+@property (nonatomic, strong) NSString * Id;
+@property (nonatomic, strong) NSString * Name;
+@property (nonatomic, strong) NSString * QortexURL;
+@property (nonatomic, strong) NSString * Summary;
+@property (nonatomic, strong) NSString * LogoURL;
+@property (nonatomic, strong) NSString * Address;
+@property (nonatomic, strong) NSString * Phone;
+@property (nonatomic, strong) NSString * Website;
+@property (nonatomic, strong) NSArray * Domains;
+@property (nonatomic, assign) BOOL RestrictSubscriptionMail;
+@property (nonatomic, assign) BOOL IsActive;
+
+- (id) initWithDictionary:(NSDictionary*)dict;
+- (NSDictionary*) dictionary;
+
+@end
+
+// --- Blog ---
+@interface QXBlog : NSObject
+
+@property (nonatomic, strong) NSString * Title;
+@property (nonatomic, strong) NSString * Description;
+@property (nonatomic, strong) NSString * SideContent;
+
+- (id) initWithDictionary:(NSDictionary*)dict;
+- (NSDictionary*) dictionary;
+
+@end
+
+// --- GroupSelectorItem ---
+@interface QXGroupSelectorItem : NSObject
+
+@property (nonatomic, strong) NSString * Id;
+@property (nonatomic, strong) NSString * Name;
+@property (nonatomic, assign) BOOL IsSelected;
+@property (nonatomic, assign) BOOL Accessible;
+
+- (id) initWithDictionary:(NSDictionary*)dict;
+- (NSDictionary*) dictionary;
+
+@end
+
+// --- Attachment ---
+@interface QXAttachment : NSObject
+
+@property (nonatomic, strong) NSString * Id;
+@property (nonatomic, strong) NSArray * OwnerId;
+@property (nonatomic, strong) NSString * Category;
+@property (nonatomic, strong) NSString * Filename;
+@property (nonatomic, strong) NSString * ShortFilename;
+@property (nonatomic, strong) NSString * ContentType;
+@property (nonatomic, strong) NSString * ContentId;
+@property (nonatomic, strong) NSString * MD5;
+@property (nonatomic, strong) NSNumber * ContentLength;
+@property (nonatomic, strong) NSString * Error;
+@property (nonatomic, strong) NSArray * GroupId;
+@property (nonatomic, strong) NSDate * UploadTime;
+@property (nonatomic, strong) NSNumber * Width;
+@property (nonatomic, strong) NSNumber * Height;
+@property (nonatomic, strong) NSString * URL;
+@property (nonatomic, strong) NSString * S1ThumbURL;
+@property (nonatomic, strong) NSString * MThumbURL;
+@property (nonatomic, strong) NSString * LThumbURL;
+@property (nonatomic, strong) NSString * ImageIconURL;
+@property (nonatomic, strong) NSString * FileIconURL;
+@property (nonatomic, strong) NSString * HumanSize;
+@property (nonatomic, assign) BOOL IsImage;
+@property (nonatomic, strong) NSString * FileKind;
+@property (nonatomic, strong) NSNumber * CrocodocStatus;
+
+- (id) initWithDictionary:(NSDictionary*)dict;
+- (NSDictionary*) dictionary;
+
+@end
+
+// --- LinkedEntry ---
+@interface QXLinkedEntry : NSObject
+
+@property (nonatomic, strong) NSString * Id;
+@property (nonatomic, strong) NSString * EType;
+@property (nonatomic, strong) NSString * Title;
+@property (nonatomic, strong) NSString * GroupId;
+@property (nonatomic, strong) NSString * AuthorId;
+@property (nonatomic, assign) BOOL IsRoot;
+@property (nonatomic, strong) NSString * RootId;
+@property (nonatomic, strong) NSString * RootEntryTitle;
+@property (nonatomic, strong) NSString * Link;
+
+- (id) initWithDictionary:(NSDictionary*)dict;
+- (NSDictionary*) dictionary;
+
+@end
+
+// --- OrgSettings ---
+@interface QXOrgSettings : NSObject
+
+@property (nonatomic, assign) BOOL AllowUsersCreateGroups;
+@property (nonatomic, assign) BOOL AllowUsersInvitePeople;
+
+- (id) initWithDictionary:(NSDictionary*)dict;
+- (NSDictionary*) dictionary;
+
+@end
+
+// --- GroupCount ---
+@interface QXGroupCount : NSObject
+
+@property (nonatomic, strong) NSString * GroupId;
+@property (nonatomic, strong) NSNumber * UnreadCount;
+
+- (id) initWithDictionary:(NSDictionary*)dict;
+- (NSDictionary*) dictionary;
+
+@end
+
+// --- GroupHeader ---
+@interface QXGroupHeader : NSObject
+
+@property (nonatomic, assign) BOOL HasToFollow;
+@property (nonatomic, assign) BOOL IsFollowing;
+@property (nonatomic, assign) BOOL IsManaging;
+@property (nonatomic, assign) BOOL HasFileTab;
+@property (nonatomic, assign) BOOL HasToDoTab;
+@property (nonatomic, assign) BOOL IsSystemMessage;
+@property (nonatomic, assign) BOOL SelectedGroup;
+
+- (id) initWithDictionary:(NSDictionary*)dict;
+- (NSDictionary*) dictionary;
+
+@end
+
+// --- InlineHelp ---
+@interface QXInlineHelp : NSObject
+
+@property (nonatomic, assign) BOOL QortexOverview;
+@property (nonatomic, assign) BOOL WhatNext;
+@property (nonatomic, assign) BOOL WhatChats;
+@property (nonatomic, strong) NSString * InviteOthersURL;
+@property (nonatomic, strong) NSString * WhatChatsURL;
+
+- (id) initWithDictionary:(NSDictionary*)dict;
+- (NSDictionary*) dictionary;
+
+@end
+
+// --- EmailChanger ---
+@interface QXEmailChanger : NSObject
+
+@property (nonatomic, strong) NSString * Token;
+@property (nonatomic, strong) NSString * Email;
+@property (nonatomic, strong) NSString * SharingToken;
+
+- (id) initWithDictionary:(NSDictionary*)dict;
+- (NSDictionary*) dictionary;
+
+@end
+
+// --- Newsletter ---
+@interface QXNewsletter : NSObject
+
+@property (nonatomic, strong) NSString * Email;
+
+- (id) initWithDictionary:(NSDictionary*)dict;
+- (NSDictionary*) dictionary;
+
+@end
+
+// --- ContactInfo ---
+@interface QXContactInfo : NSObject
+
+@property (nonatomic, strong) NSString * FirstName;
+@property (nonatomic, strong) NSString * LastName;
+@property (nonatomic, strong) NSString * CompanyName;
+@property (nonatomic, strong) NSString * CompanySize;
+@property (nonatomic, strong) NSString * Email;
+@property (nonatomic, strong) NSString * Phone;
+@property (nonatomic, strong) NSString * Country;
+@property (nonatomic, strong) NSString * City;
+@property (nonatomic, strong) NSString * HelpContent;
+
+- (id) initWithDictionary:(NSDictionary*)dict;
+- (NSDictionary*) dictionary;
+
+@end
+
+// --- TotalStats ---
+@interface QXTotalStats : NSObject
+
+@property (nonatomic, strong) NSNumber * OrgCount;
+@property (nonatomic, strong) NSNumber * MemberCount;
+@property (nonatomic, strong) NSNumber * GroupCount;
+@property (nonatomic, strong) NSNumber * EntryCount;
+@property (nonatomic, strong) NSNumber * CommentCount;
+@property (nonatomic, strong) NSNumber * ChatCount;
+
+- (id) initWithDictionary:(NSDictionary*)dict;
+- (NSDictionary*) dictionary;
+
+@end
+
+// --- AccessReq ---
+@interface QXAccessReq : NSObject
+
+@property (nonatomic, strong) NSString * Email;
+@property (nonatomic, strong) NSString * PriorityCode;
+@property (nonatomic, strong) NSString * AccessCode;
+@property (nonatomic, strong) NSString * Status;
+@property (nonatomic, strong) NSString * ApprovedBy;
+@property (nonatomic, strong) NSString * CreatedAt;
+@property (nonatomic, strong) NSString * UpdatedAt;
+
+- (id) initWithDictionary:(NSDictionary*)dict;
+- (NSDictionary*) dictionary;
+
+@end
+
+// --- InnerMessage ---
+@interface QXInnerMessage : NSObject
+
+@property (nonatomic, strong) NSString * ByUser;
+@property (nonatomic, strong) NSString * GroupName;
+@property (nonatomic, strong) NSString * GroupLink;
+@property (nonatomic, strong) NSString * OrgName;
+@property (nonatomic, assign) BOOL IsDeletedGroupMessage;
+@property (nonatomic, assign) BOOL IsCreatedGroupMessage;
+@property (nonatomic, assign) BOOL IsSetupOrgMessage;
+
+- (id) initWithDictionary:(NSDictionary*)dict;
+- (NSDictionary*) dictionary;
+
+@end
+
+// --- OrgUnreadInfo ---
+@interface QXOrgUnreadInfo : NSObject
+
+@property (nonatomic, strong) NSString * OrgId;
+@property (nonatomic, strong) NSNumber * FeedUnreadCount;
+
+- (id) initWithDictionary:(NSDictionary*)dict;
+- (NSDictionary*) dictionary;
+
+@end
+
 // --- MarketableMemberInfo ---
 @interface QXMarketableMemberInfo : NSObject
 
@@ -24,6 +282,41 @@
 @property (nonatomic, strong) NSString * Status;
 @property (nonatomic, strong) NSString * InvitOrg;
 @property (nonatomic, strong) NSString * GotoURL;
+
+- (id) initWithDictionary:(NSDictionary*)dict;
+- (NSDictionary*) dictionary;
+
+@end
+
+// --- EntryInput ---
+@interface QXEntryInput : NSObject
+
+@property (nonatomic, strong) NSString * Id;
+@property (nonatomic, strong) NSString * EType;
+@property (nonatomic, strong) NSString * Title;
+@property (nonatomic, strong) NSString * Content;
+@property (nonatomic, strong) NSString * GroupId;
+@property (nonatomic, strong) NSString * IsToGroup;
+@property (nonatomic, strong) NSString * ToUserIds;
+@property (nonatomic, strong) NSString * MentionedUserIds;
+@property (nonatomic, assign) BOOL IsAcknowledgement;
+@property (nonatomic, strong) NSString * TaskDue;
+@property (nonatomic, strong) NSString * RootId;
+@property (nonatomic, strong) NSString * IsCommentAcknowledgement;
+@property (nonatomic, strong) NSString * NewVersion;
+@property (nonatomic, strong) NSString * OldGroupId;
+@property (nonatomic, strong) NSString * LastUpdateAt;
+@property (nonatomic, assign) BOOL KnowledgeBase;
+@property (nonatomic, assign) BOOL AnyoneCanEdit;
+@property (nonatomic, assign) BOOL Presentation;
+@property (nonatomic, assign) BOOL IsFromEmail;
+@property (nonatomic, assign) BOOL IsPublished;
+@property (nonatomic, strong) NSString * Slug;
+@property (nonatomic, strong) NSString * Email;
+@property (nonatomic, strong) NSString * Name;
+@property (nonatomic, assign) BOOL InlineHelp;
+@property (nonatomic, strong) NSString * BaseOnEntryId;
+@property (nonatomic, assign) BOOL PublishedToUsers;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
 - (NSDictionary*) dictionary;
@@ -260,61 +553,6 @@
 
 @end
 
-// --- MailPreferenceInput ---
-@interface QXMailPreferenceInput : NSObject
-
-@property (nonatomic, assign) BOOL Expecting;
-@property (nonatomic, strong) NSNumber * SendInterval;
-@property (nonatomic, strong) NSNumber * SendLag;
-
-- (id) initWithDictionary:(NSDictionary*)dict;
-- (NSDictionary*) dictionary;
-
-@end
-
-// --- OrgSettings ---
-@interface QXOrgSettings : NSObject
-
-@property (nonatomic, assign) BOOL AllowUsersCreateGroups;
-@property (nonatomic, assign) BOOL AllowUsersInvitePeople;
-
-- (id) initWithDictionary:(NSDictionary*)dict;
-- (NSDictionary*) dictionary;
-
-@end
-
-// --- Organization ---
-@interface QXOrganization : NSObject
-
-@property (nonatomic, strong) NSString * Id;
-@property (nonatomic, strong) NSString * Name;
-@property (nonatomic, strong) NSString * QortexURL;
-@property (nonatomic, strong) NSString * Summary;
-@property (nonatomic, strong) NSString * LogoURL;
-@property (nonatomic, strong) NSString * Address;
-@property (nonatomic, strong) NSString * Phone;
-@property (nonatomic, strong) NSString * Website;
-@property (nonatomic, strong) NSArray * Domains;
-@property (nonatomic, assign) BOOL RestrictSubscriptionMail;
-@property (nonatomic, assign) BOOL IsActive;
-
-- (id) initWithDictionary:(NSDictionary*)dict;
-- (NSDictionary*) dictionary;
-
-@end
-
-// --- Blog ---
-@interface QXBlog : NSObject
-
-@property (nonatomic, strong) NSString * Title;
-@property (nonatomic, strong) NSString * Description;
-@property (nonatomic, strong) NSString * SideContent;
-
-- (id) initWithDictionary:(NSDictionary*)dict;
-- (NSDictionary*) dictionary;
-
-@end
-
 // --- Preferences ---
 @interface QXPreferences : NSObject
 
@@ -374,8 +612,6 @@
 // --- PanelStatus ---
 @interface QXPanelStatus : NSObject
 
-@property (nonatomic, assign) BOOL AsideGroupsCollapse;
-@property (nonatomic, assign) BOOL AsideOtherGroupsCollapse;
 @property (nonatomic, assign) BOOL HasToDo;
 @property (nonatomic, assign) BOOL HasDraft;
 @property (nonatomic, assign) BOOL HasWatchList;
@@ -398,270 +634,35 @@
 
 @end
 
-// --- GroupSelectorItem ---
-@interface QXGroupSelectorItem : NSObject
+// --- BlogEntry ---
+@interface QXBlogEntry : NSObject
 
 @property (nonatomic, strong) NSString * Id;
-@property (nonatomic, strong) NSString * Name;
-@property (nonatomic, assign) BOOL IsSelected;
-
-- (id) initWithDictionary:(NSDictionary*)dict;
-- (NSDictionary*) dictionary;
-
-@end
-
-// --- Attachment ---
-@interface QXAttachment : NSObject
-
-@property (nonatomic, strong) NSString * Id;
-@property (nonatomic, strong) NSArray * OwnerId;
-@property (nonatomic, strong) NSString * Category;
-@property (nonatomic, strong) NSString * Filename;
-@property (nonatomic, strong) NSString * ShortFilename;
-@property (nonatomic, strong) NSString * ContentType;
-@property (nonatomic, strong) NSString * ContentId;
-@property (nonatomic, strong) NSString * MD5;
-@property (nonatomic, strong) NSNumber * ContentLength;
-@property (nonatomic, strong) NSString * Error;
-@property (nonatomic, strong) NSArray * GroupId;
-@property (nonatomic, strong) NSDate * UploadTime;
-@property (nonatomic, strong) NSNumber * Width;
-@property (nonatomic, strong) NSNumber * Height;
-@property (nonatomic, strong) NSString * URL;
-@property (nonatomic, strong) NSString * S1ThumbURL;
-@property (nonatomic, strong) NSString * MThumbURL;
-@property (nonatomic, strong) NSString * LThumbURL;
-@property (nonatomic, strong) NSString * ImageIconURL;
-@property (nonatomic, strong) NSString * FileIconURL;
-@property (nonatomic, strong) NSString * HumanSize;
-@property (nonatomic, assign) BOOL IsImage;
-@property (nonatomic, strong) NSString * FileKind;
-
-- (id) initWithDictionary:(NSDictionary*)dict;
-- (NSDictionary*) dictionary;
-
-@end
-
-// --- LinkedEntry ---
-@interface QXLinkedEntry : NSObject
-
-@property (nonatomic, strong) NSString * Id;
-@property (nonatomic, strong) NSString * EType;
 @property (nonatomic, strong) NSString * Title;
-@property (nonatomic, strong) NSString * GroupId;
-@property (nonatomic, strong) NSString * AuthorId;
-@property (nonatomic, assign) BOOL IsRoot;
-@property (nonatomic, strong) NSString * RootId;
-@property (nonatomic, strong) NSString * RootEntryTitle;
-@property (nonatomic, strong) NSString * Link;
-
-- (id) initWithDictionary:(NSDictionary*)dict;
-- (NSDictionary*) dictionary;
-
-@end
-
-// --- EntryInput ---
-@interface QXEntryInput : NSObject
-
-@property (nonatomic, strong) NSString * Id;
-@property (nonatomic, strong) NSString * EType;
-@property (nonatomic, strong) NSString * Title;
-@property (nonatomic, strong) NSString * Content;
-@property (nonatomic, strong) NSString * GroupId;
-@property (nonatomic, strong) NSString * IsToGroup;
-@property (nonatomic, strong) NSString * ToUserIds;
-@property (nonatomic, strong) NSString * MentionedUserIds;
-@property (nonatomic, assign) BOOL IsAcknowledgement;
-@property (nonatomic, strong) NSString * TaskDue;
-@property (nonatomic, strong) NSString * RootId;
-@property (nonatomic, strong) NSString * IsCommentAcknowledgement;
-@property (nonatomic, strong) NSString * NewVersion;
-@property (nonatomic, strong) NSString * OldGroupId;
-@property (nonatomic, strong) NSString * LastUpdateAt;
-@property (nonatomic, assign) BOOL KnowledgeBase;
-@property (nonatomic, assign) BOOL AnyoneCanEdit;
-@property (nonatomic, assign) BOOL Presentation;
-@property (nonatomic, assign) BOOL IsFromEmail;
-@property (nonatomic, assign) BOOL IsPublished;
+@property (nonatomic, strong) NSString * HtmlTitle;
 @property (nonatomic, strong) NSString * Slug;
-@property (nonatomic, strong) NSString * Email;
-@property (nonatomic, strong) NSString * Name;
-@property (nonatomic, assign) BOOL InlineHelp;
-@property (nonatomic, strong) NSString * BaseOnEntryId;
-@property (nonatomic, assign) BOOL PublishedToUsers;
+@property (nonatomic, strong) NSDate * CreatedAt;
+@property (nonatomic, strong) NSString * LocalCreatedAt;
+@property (nonatomic, strong) NSString * Permalink;
+@property (nonatomic, strong) NSString * CreateCommentURL;
+@property (nonatomic, strong) NSString * HtmlContent;
+@property (nonatomic, strong) NSString * HtmlContentPart;
+@property (nonatomic, strong) QXEmbedUser * Author;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
 - (NSDictionary*) dictionary;
 
 @end
 
-// --- GroupCount ---
-@interface QXGroupCount : NSObject
+// --- MyCount ---
+@interface QXMyCount : NSObject
 
-@property (nonatomic, strong) NSString * GroupId;
-@property (nonatomic, strong) NSNumber * UnreadCount;
-
-- (id) initWithDictionary:(NSDictionary*)dict;
-- (NSDictionary*) dictionary;
-
-@end
-
-// --- GroupHeader ---
-@interface QXGroupHeader : NSObject
-
-@property (nonatomic, assign) BOOL HasToFollow;
-@property (nonatomic, assign) BOOL IsFollowing;
-@property (nonatomic, assign) BOOL IsManaging;
-@property (nonatomic, assign) BOOL HasFileTab;
-@property (nonatomic, assign) BOOL HasToDoTab;
-@property (nonatomic, assign) BOOL IsSystemMessage;
-@property (nonatomic, assign) BOOL SelectedGroup;
-
-- (id) initWithDictionary:(NSDictionary*)dict;
-- (NSDictionary*) dictionary;
-
-@end
-
-// --- InlineHelp ---
-@interface QXInlineHelp : NSObject
-
-@property (nonatomic, assign) BOOL QortexOverview;
-@property (nonatomic, assign) BOOL WhatNext;
-@property (nonatomic, assign) BOOL WhatChats;
-@property (nonatomic, strong) NSString * InviteOthersURL;
-@property (nonatomic, strong) NSString * WhatChatsURL;
-
-- (id) initWithDictionary:(NSDictionary*)dict;
-- (NSDictionary*) dictionary;
-
-@end
-
-// --- EmailChanger ---
-@interface QXEmailChanger : NSObject
-
-@property (nonatomic, strong) NSString * Token;
-@property (nonatomic, strong) NSString * Email;
-@property (nonatomic, strong) NSString * SharingToken;
-
-- (id) initWithDictionary:(NSDictionary*)dict;
-- (NSDictionary*) dictionary;
-
-@end
-
-// --- Newsletter ---
-@interface QXNewsletter : NSObject
-
-@property (nonatomic, strong) NSString * Email;
-
-- (id) initWithDictionary:(NSDictionary*)dict;
-- (NSDictionary*) dictionary;
-
-@end
-
-// --- ContactInfo ---
-@interface QXContactInfo : NSObject
-
-@property (nonatomic, strong) NSString * FirstName;
-@property (nonatomic, strong) NSString * LastName;
-@property (nonatomic, strong) NSString * CompanyName;
-@property (nonatomic, strong) NSString * CompanySize;
-@property (nonatomic, strong) NSString * Email;
-@property (nonatomic, strong) NSString * Phone;
-@property (nonatomic, strong) NSString * Country;
-@property (nonatomic, strong) NSString * City;
-@property (nonatomic, strong) NSString * HelpContent;
-
-- (id) initWithDictionary:(NSDictionary*)dict;
-- (NSDictionary*) dictionary;
-
-@end
-
-// --- TotalStats ---
-@interface QXTotalStats : NSObject
-
-@property (nonatomic, strong) NSNumber * OrgCount;
-@property (nonatomic, strong) NSNumber * MemberCount;
-@property (nonatomic, strong) NSNumber * GroupCount;
-@property (nonatomic, strong) NSNumber * EntryCount;
-@property (nonatomic, strong) NSNumber * CommentCount;
-@property (nonatomic, strong) NSNumber * ChatCount;
-
-- (id) initWithDictionary:(NSDictionary*)dict;
-- (NSDictionary*) dictionary;
-
-@end
-
-// --- AccessReq ---
-@interface QXAccessReq : NSObject
-
-@property (nonatomic, strong) NSString * Email;
-@property (nonatomic, strong) NSString * PriorityCode;
-@property (nonatomic, strong) NSString * AccessCode;
-@property (nonatomic, strong) NSString * Status;
-@property (nonatomic, strong) NSString * ApprovedBy;
-@property (nonatomic, strong) NSString * CreatedAt;
-@property (nonatomic, strong) NSString * UpdatedAt;
-
-- (id) initWithDictionary:(NSDictionary*)dict;
-- (NSDictionary*) dictionary;
-
-@end
-
-// --- InnerMessage ---
-@interface QXInnerMessage : NSObject
-
-@property (nonatomic, strong) NSString * ByUser;
-@property (nonatomic, strong) NSString * GroupName;
-@property (nonatomic, strong) NSString * GroupLink;
-@property (nonatomic, strong) NSString * OrgName;
-@property (nonatomic, assign) BOOL IsDeletedGroupMessage;
-@property (nonatomic, assign) BOOL IsCreatedGroupMessage;
-@property (nonatomic, assign) BOOL IsSetupOrgMessage;
-
-- (id) initWithDictionary:(NSDictionary*)dict;
-- (NSDictionary*) dictionary;
-
-@end
-
-// --- OrgUnreadInfo ---
-@interface QXOrgUnreadInfo : NSObject
-
-@property (nonatomic, strong) NSString * OrgId;
-@property (nonatomic, strong) NSNumber * FeedUnreadCount;
-
-- (id) initWithDictionary:(NSDictionary*)dict;
-- (NSDictionary*) dictionary;
-
-@end
-
-// --- AbandonInfo ---
-@interface QXAbandonInfo : NSObject
-
-@property (nonatomic, strong) QXEmbedOrg * AbandonFromOrg;
-@property (nonatomic, strong) NSArray * AvailableOrgs;
-
-- (id) initWithDictionary:(NSDictionary*)dict;
-- (NSDictionary*) dictionary;
-
-@end
-
-// --- Request ---
-@interface QXRequest : NSObject
-
-@property (nonatomic, strong) NSString * Id;
-@property (nonatomic, strong) NSString * CurrentPrefixURL;
-@property (nonatomic, strong) NSString * Info;
-@property (nonatomic, strong) NSString * ActionButton;
-@property (nonatomic, strong) QXEmbedOrg * FromOrg;
-@property (nonatomic, strong) QXEmbedOrg * ToOrg;
-@property (nonatomic, strong) QXEmbedGroup * SharedGroup;
-@property (nonatomic, strong) NSString * SharedOrgIdHex;
-@property (nonatomic, strong) NSString * FromUserIdHex;
-@property (nonatomic, strong) QXEmbedUser * SharedInvitee;
-@property (nonatomic, strong) QXEmbedUser * SharedInviter;
-@property (nonatomic, strong) QXEmbedUser * SharedResponsor;
-@property (nonatomic, strong) NSString * ToEmail;
-@property (nonatomic, strong) NSString * State;
+@property (nonatomic, strong) NSString * UserId;
+@property (nonatomic, strong) NSNumber * FollowedUnreadCount;
+@property (nonatomic, strong) NSNumber * NotificationUnreadCount;
+@property (nonatomic, strong) NSNumber * ActiveTasksCount;
+@property (nonatomic, strong) NSNumber * OfflineMessageCount;
+@property (nonatomic, strong) NSArray * GroupCounts;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
 - (NSDictionary*) dictionary;
@@ -683,85 +684,27 @@
 
 @end
 
-// --- QortexSupport ---
-@interface QXQortexSupport : NSObject
+// --- GroupSelector ---
+@interface QXGroupSelector : NSObject
 
-@property (nonatomic, strong) NSString * Audience;
-@property (nonatomic, assign) BOOL IsToOffical;
-@property (nonatomic, assign) BOOL IsToAllUsers;
-@property (nonatomic, assign) BOOL IsToAllAdmins;
-@property (nonatomic, assign) BOOL IsToOrganizations;
-@property (nonatomic, strong) QXEmbedOrg * FromOrg;
-@property (nonatomic, strong) NSArray * ToOrgs;
-@property (nonatomic, strong) NSString * ToOrgsHtml;
-
-- (id) initWithDictionary:(NSDictionary*)dict;
-- (NSDictionary*) dictionary;
-
-@end
-
-// --- Message ---
-@interface QXMessage : NSObject
-
-@property (nonatomic, strong) NSString * Id;
-@property (nonatomic, strong) NSString * ConversationId;
-@property (nonatomic, strong) NSString * UserId;
-@property (nonatomic, strong) NSString * Content;
-@property (nonatomic, strong) NSString * HtmlContent;
-@property (nonatomic, strong) NSDate * CreatedAt;
-@property (nonatomic, strong) QXEmbedUser * EmbedUser;
-@property (nonatomic, assign) BOOL ShowUser;
-@property (nonatomic, assign) BOOL IsOffline;
-@property (nonatomic, strong) NSString * HighlightedContent;
+@property (nonatomic, strong) NSString * Header;
+@property (nonatomic, strong) NSString * SelectedGroupId;
+@property (nonatomic, strong) QXGroupSelectorItem * SysMessage;
+@property (nonatomic, strong) NSArray * FollowingNormalGroups;
+@property (nonatomic, strong) NSArray * FollowingSharedGroups;
+@property (nonatomic, strong) NSArray * UnFollowingNormalGroups;
+@property (nonatomic, strong) NSArray * UnFollowingSharedGroups;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
 - (NSDictionary*) dictionary;
 
 @end
 
-// --- Invitation ---
-@interface QXInvitation : NSObject
+// --- AbandonInfo ---
+@interface QXAbandonInfo : NSObject
 
-@property (nonatomic, strong) NSString * Email;
-@property (nonatomic, strong) NSString * Token;
-@property (nonatomic, strong) NSString * SentAgo;
-@property (nonatomic, strong) QXEmbedUser * ByUser;
-@property (nonatomic, assign) BOOL HideInPendingList;
-
-- (id) initWithDictionary:(NSDictionary*)dict;
-- (NSDictionary*) dictionary;
-
-@end
-
-// --- OrgStats ---
-@interface QXOrgStats : NSObject
-
-@property (nonatomic, strong) QXOrganization * Organization;
-@property (nonatomic, strong) NSNumber * UserCount;
-@property (nonatomic, strong) NSNumber * GroupCount;
-@property (nonatomic, strong) NSNumber * SharedGroupCount;
-@property (nonatomic, strong) NSNumber * EntryCount;
-@property (nonatomic, strong) NSNumber * CommentCount;
-@property (nonatomic, strong) NSNumber * ChatCount;
-@property (nonatomic, strong) NSString * CreatedAt;
-@property (nonatomic, strong) NSString * LastUpdate;
-@property (nonatomic, strong) QXEmbedUser * Author;
-
-- (id) initWithDictionary:(NSDictionary*)dict;
-- (NSDictionary*) dictionary;
-
-@end
-
-// --- EntryVersion ---
-@interface QXEntryVersion : NSObject
-
-@property (nonatomic, strong) NSString * Id;
-@property (nonatomic, strong) NSString * GroupId;
-@property (nonatomic, strong) NSDate * UpdatedAt;
-@property (nonatomic, strong) NSString * LocalUpdatedAt;
-@property (nonatomic, strong) NSString * UpdatedAtUnixNano;
-@property (nonatomic, strong) QXEmbedUser * CurrentVersionEditor;
-@property (nonatomic, assign) BOOL IsNewVersion;
+@property (nonatomic, strong) QXEmbedOrg * AbandonFromOrg;
+@property (nonatomic, strong) NSArray * AvailableOrgs;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
 - (NSDictionary*) dictionary;
@@ -804,6 +747,64 @@
 
 @end
 
+// --- EntryVersion ---
+@interface QXEntryVersion : NSObject
+
+@property (nonatomic, strong) NSString * Id;
+@property (nonatomic, strong) NSString * GroupId;
+@property (nonatomic, strong) NSDate * UpdatedAt;
+@property (nonatomic, strong) NSString * LocalUpdatedAt;
+@property (nonatomic, strong) NSString * UpdatedAtUnixNano;
+@property (nonatomic, strong) QXEmbedUser * CurrentVersionEditor;
+@property (nonatomic, assign) BOOL IsNewVersion;
+
+- (id) initWithDictionary:(NSDictionary*)dict;
+- (NSDictionary*) dictionary;
+
+@end
+
+// --- OrgStats ---
+@interface QXOrgStats : NSObject
+
+@property (nonatomic, strong) QXOrganization * Organization;
+@property (nonatomic, strong) NSNumber * UserCount;
+@property (nonatomic, strong) NSNumber * GroupCount;
+@property (nonatomic, strong) NSNumber * SharedGroupCount;
+@property (nonatomic, strong) NSNumber * EntryCount;
+@property (nonatomic, strong) NSNumber * CommentCount;
+@property (nonatomic, strong) NSNumber * ChatCount;
+@property (nonatomic, strong) NSString * CreatedAt;
+@property (nonatomic, strong) NSString * LastUpdate;
+@property (nonatomic, strong) QXEmbedUser * Author;
+
+- (id) initWithDictionary:(NSDictionary*)dict;
+- (NSDictionary*) dictionary;
+
+@end
+
+// --- Request ---
+@interface QXRequest : NSObject
+
+@property (nonatomic, strong) NSString * Id;
+@property (nonatomic, strong) NSString * CurrentPrefixURL;
+@property (nonatomic, strong) NSString * Info;
+@property (nonatomic, strong) NSString * ActionButton;
+@property (nonatomic, strong) QXEmbedOrg * FromOrg;
+@property (nonatomic, strong) QXEmbedOrg * ToOrg;
+@property (nonatomic, strong) QXEmbedGroup * SharedGroup;
+@property (nonatomic, strong) NSString * SharedOrgIdHex;
+@property (nonatomic, strong) NSString * FromUserIdHex;
+@property (nonatomic, strong) QXEmbedUser * SharedInvitee;
+@property (nonatomic, strong) QXEmbedUser * SharedInviter;
+@property (nonatomic, strong) QXEmbedUser * SharedResponsor;
+@property (nonatomic, strong) NSString * ToEmail;
+@property (nonatomic, strong) NSString * State;
+
+- (id) initWithDictionary:(NSDictionary*)dict;
+- (NSDictionary*) dictionary;
+
+@end
+
 // --- ShareRequest ---
 @interface QXShareRequest : NSObject
 
@@ -834,20 +835,50 @@
 
 @end
 
-// --- BlogEntry ---
-@interface QXBlogEntry : NSObject
+// --- GroupSharingInfo ---
+@interface QXGroupSharingInfo : NSObject
+
+@property (nonatomic, assign) BOOL IsSharing;
+@property (nonatomic, strong) QXEmbedOrg * FromOrg;
+@property (nonatomic, strong) NSArray * AccpetedOrg;
+@property (nonatomic, strong) NSArray * ForwardedOrgs;
+@property (nonatomic, strong) NSArray * PendingToEmails;
+
+- (id) initWithDictionary:(NSDictionary*)dict;
+- (NSDictionary*) dictionary;
+
+@end
+
+// --- Message ---
+@interface QXMessage : NSObject
 
 @property (nonatomic, strong) NSString * Id;
-@property (nonatomic, strong) NSString * Title;
-@property (nonatomic, strong) NSString * HtmlTitle;
-@property (nonatomic, strong) NSString * Slug;
-@property (nonatomic, strong) NSDate * CreatedAt;
-@property (nonatomic, strong) NSString * LocalCreatedAt;
-@property (nonatomic, strong) NSString * Permalink;
-@property (nonatomic, strong) NSString * CreateCommentURL;
+@property (nonatomic, strong) NSString * ConversationId;
+@property (nonatomic, strong) NSString * UserId;
+@property (nonatomic, strong) NSString * Content;
 @property (nonatomic, strong) NSString * HtmlContent;
-@property (nonatomic, strong) NSString * HtmlContentPart;
-@property (nonatomic, strong) QXEmbedUser * Author;
+@property (nonatomic, strong) NSDate * CreatedAt;
+@property (nonatomic, strong) QXEmbedUser * EmbedUser;
+@property (nonatomic, assign) BOOL ShowUser;
+@property (nonatomic, assign) BOOL IsOffline;
+@property (nonatomic, strong) NSString * HighlightedContent;
+
+- (id) initWithDictionary:(NSDictionary*)dict;
+- (NSDictionary*) dictionary;
+
+@end
+
+// --- QortexSupport ---
+@interface QXQortexSupport : NSObject
+
+@property (nonatomic, strong) NSString * Audience;
+@property (nonatomic, assign) BOOL IsToOffical;
+@property (nonatomic, assign) BOOL IsToAllUsers;
+@property (nonatomic, assign) BOOL IsToAllAdmins;
+@property (nonatomic, assign) BOOL IsToOrganizations;
+@property (nonatomic, strong) QXEmbedOrg * FromOrg;
+@property (nonatomic, strong) NSArray * ToOrgs;
+@property (nonatomic, strong) NSString * ToOrgsHtml;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
 - (NSDictionary*) dictionary;
@@ -882,45 +913,36 @@
 
 @end
 
-// --- GroupSelector ---
-@interface QXGroupSelector : NSObject
+// --- Invitation ---
+@interface QXInvitation : NSObject
 
-@property (nonatomic, strong) NSString * Header;
-@property (nonatomic, strong) NSString * SelectedGroupId;
-@property (nonatomic, strong) QXGroupSelectorItem * SysMessage;
-@property (nonatomic, strong) NSArray * FollowingNormalGroups;
-@property (nonatomic, strong) NSArray * FollowingSharedGroups;
-@property (nonatomic, strong) NSArray * UnFollowingNormalGroups;
-@property (nonatomic, strong) NSArray * UnFollowingSharedGroups;
+@property (nonatomic, strong) NSString * Email;
+@property (nonatomic, strong) NSString * Token;
+@property (nonatomic, strong) NSString * SentAgo;
+@property (nonatomic, strong) QXEmbedUser * ByUser;
+@property (nonatomic, assign) BOOL HideInPendingList;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
 - (NSDictionary*) dictionary;
 
 @end
 
-// --- GroupSharingInfo ---
-@interface QXGroupSharingInfo : NSObject
+// --- NotificationItem ---
+@interface QXNotificationItem : NSObject
 
-@property (nonatomic, assign) BOOL IsSharing;
+@property (nonatomic, strong) NSString * Id;
+@property (nonatomic, strong) NSString * GroupId;
+@property (nonatomic, strong) QXEmbedUser * ToUser;
+@property (nonatomic, strong) QXEmbedEntry * ForEntry;
+@property (nonatomic, strong) QXEmbedUser * FromUser;
 @property (nonatomic, strong) QXEmbedOrg * FromOrg;
-@property (nonatomic, strong) NSArray * AccpetedOrg;
-@property (nonatomic, strong) NSArray * ForwardedOrgs;
-@property (nonatomic, strong) NSArray * PendingToEmails;
-
-- (id) initWithDictionary:(NSDictionary*)dict;
-- (NSDictionary*) dictionary;
-
-@end
-
-// --- MyCount ---
-@interface QXMyCount : NSObject
-
-@property (nonatomic, strong) NSString * UserId;
-@property (nonatomic, strong) NSNumber * FollowedUnreadCount;
-@property (nonatomic, strong) NSNumber * NotificationUnreadCount;
-@property (nonatomic, strong) NSNumber * ActiveTasksCount;
-@property (nonatomic, strong) NSNumber * OfflineMessageCount;
-@property (nonatomic, strong) NSArray * GroupCounts;
+@property (nonatomic, strong) QXEmbedEntry * CausedByEntry;
+@property (nonatomic, strong) NSDate * NotifiedAt;
+@property (nonatomic, strong) NSDate * ReadAt;
+@property (nonatomic, assign) BOOL Readed;
+@property (nonatomic, strong) NSString * Type;
+@property (nonatomic, strong) NSString * Link;
+@property (nonatomic, strong) NSString * SharingRequestToEmail;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
 - (NSDictionary*) dictionary;
@@ -968,6 +990,7 @@
 @property (nonatomic, assign) BOOL IsPrivate;
 @property (nonatomic, assign) BOOL Editable;
 @property (nonatomic, assign) BOOL Managable;
+@property (nonatomic, assign) BOOL Accessible;
 @property (nonatomic, assign) BOOL FollowedByMe;
 @property (nonatomic, assign) BOOL AdministratedByMe;
 @property (nonatomic, assign) BOOL IsPreShared;
@@ -987,22 +1010,76 @@
 
 @end
 
-// --- NotificationItem ---
-@interface QXNotificationItem : NSObject
+// --- User ---
+@interface QXUser : NSObject
 
 @property (nonatomic, strong) NSString * Id;
-@property (nonatomic, strong) NSString * GroupId;
-@property (nonatomic, strong) QXEmbedUser * ToUser;
-@property (nonatomic, strong) QXEmbedEntry * ForEntry;
-@property (nonatomic, strong) QXEmbedUser * FromUser;
+@property (nonatomic, strong) NSString * Email;
+@property (nonatomic, strong) NSString * Firstame;
+@property (nonatomic, strong) NSString * LastName;
+@property (nonatomic, strong) NSString * Name;
+@property (nonatomic, strong) NSString * Title;
+@property (nonatomic, strong) NSString * Avatar;
+@property (nonatomic, strong) NSString * JID;
+@property (nonatomic, strong) NSString * Timezone;
+@property (nonatomic, assign) BOOL IsSuperUser;
+@property (nonatomic, assign) BOOL IsSharedUser;
+@property (nonatomic, strong) NSString * OrgId;
+@property (nonatomic, strong) NSString * OriginalOrgId;
+@property (nonatomic, strong) NSString * PrefixURL;
+@property (nonatomic, strong) NSString * ProfileURL;
+@property (nonatomic, assign) BOOL IsLoggedInUser;
+@property (nonatomic, assign) BOOL IsAvailable;
+@property (nonatomic, assign) BOOL IsDisabled;
+@property (nonatomic, assign) BOOL IsDeleted;
+@property (nonatomic, assign) BOOL FromSharedGroup;
+@property (nonatomic, strong) NSString * FromOrganizationName;
+@property (nonatomic, assign) BOOL Editable;
+@property (nonatomic, assign) BOOL Followable;
+@property (nonatomic, assign) BOOL FollowedByMe;
+@property (nonatomic, assign) BOOL FollowingTheGroup;
+@property (nonatomic, strong) NSString * Department;
+@property (nonatomic, strong) NSString * Location;
+@property (nonatomic, strong) NSArray * FollowingGroups;
+@property (nonatomic, strong) QXPreferences * Preferences;
+@property (nonatomic, assign) BOOL NoDetail;
+
+- (id) initWithDictionary:(NSDictionary*)dict;
+- (NSDictionary*) dictionary;
+
+@end
+
+// --- MyNotifications ---
+@interface QXMyNotifications : NSObject
+
+@property (nonatomic, strong) NSArray * NotificationItems;
+@property (nonatomic, assign) BOOL HasMore;
+@property (nonatomic, strong) NSNumber * LatestNotifyTime;
+
+- (id) initWithDictionary:(NSDictionary*)dict;
+- (NSDictionary*) dictionary;
+
+@end
+
+// --- SharingInvitation ---
+@interface QXSharingInvitation : NSObject
+
 @property (nonatomic, strong) QXEmbedOrg * FromOrg;
-@property (nonatomic, strong) QXEmbedEntry * CausedByEntry;
-@property (nonatomic, strong) NSDate * NotifiedAt;
-@property (nonatomic, strong) NSDate * ReadAt;
-@property (nonatomic, assign) BOOL Readed;
-@property (nonatomic, strong) NSString * Type;
-@property (nonatomic, strong) NSString * Link;
-@property (nonatomic, strong) NSString * SharingRequestToEmail;
+@property (nonatomic, strong) NSString * FromUserId;
+@property (nonatomic, strong) QXGroup * SharedGroup;
+@property (nonatomic, assign) BOOL IsNewAccount;
+@property (nonatomic, strong) NSString * Email;
+@property (nonatomic, strong) NSString * Token;
+@property (nonatomic, strong) NSArray * JoinedOrgs;
+@property (nonatomic, assign) BOOL IsAccepted;
+@property (nonatomic, assign) BOOL IsRejected;
+@property (nonatomic, assign) BOOL IsPending;
+@property (nonatomic, assign) BOOL IsForwarded;
+@property (nonatomic, assign) BOOL IsCanceled;
+@property (nonatomic, assign) BOOL IsStopped;
+@property (nonatomic, strong) NSString * PendingDuration;
+@property (nonatomic, strong) NSString * ToOrgName;
+@property (nonatomic, strong) NSString * ToOrgId;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
 - (NSDictionary*) dictionary;
@@ -1016,7 +1093,6 @@
 @property (nonatomic, assign) BOOL IsOtherGroupsCollapse;
 @property (nonatomic, assign) BOOL ShowNewGroupButton;
 @property (nonatomic, assign) BOOL HaveOtherGroup;
-@property (nonatomic, assign) BOOL ShowSharedExternallyBar;
 @property (nonatomic, strong) QXGroup * AnnounGroup;
 @property (nonatomic, strong) QXGroup * SMGroup;
 @property (nonatomic, strong) NSArray * FollowingNormalGroups;
@@ -1075,6 +1151,7 @@
 @property (nonatomic, assign) BOOL IsPublished;
 @property (nonatomic, assign) BOOL PublishedToUsers;
 @property (nonatomic, assign) BOOL IsCanPublish;
+@property (nonatomic, assign) BOOL IsPreferMarkdown;
 @property (nonatomic, assign) BOOL IsMuted;
 @property (nonatomic, assign) BOOL IsReminding;
 @property (nonatomic, assign) BOOL IsSmartReminding;
@@ -1138,7 +1215,6 @@
 @property (nonatomic, strong) NSArray * Attachments;
 @property (nonatomic, strong) NSArray * CommentsAttachments;
 @property (nonatomic, strong) QXAttachment * FirstPicture;
-@property (nonatomic, strong) NSArray * Comments;
 @property (nonatomic, strong) NSArray * ExternalComments;
 @property (nonatomic, strong) NSArray * CurrentVersionComments;
 @property (nonatomic, strong) NSArray * OtherVersionsComments;
@@ -1155,82 +1231,6 @@
 @property (nonatomic, strong) QXShareRequest * ShareRequest;
 @property (nonatomic, assign) BOOL VisibleForSuperUserInSuperOrg;
 @property (nonatomic, assign) BOOL VisibleForSuperOrg;
-
-- (id) initWithDictionary:(NSDictionary*)dict;
-- (NSDictionary*) dictionary;
-
-@end
-
-// --- SharingInvitation ---
-@interface QXSharingInvitation : NSObject
-
-@property (nonatomic, strong) QXEmbedOrg * FromOrg;
-@property (nonatomic, strong) NSString * FromUserId;
-@property (nonatomic, strong) QXGroup * SharedGroup;
-@property (nonatomic, assign) BOOL IsNewAccount;
-@property (nonatomic, strong) NSString * Email;
-@property (nonatomic, strong) NSString * Token;
-@property (nonatomic, strong) NSArray * JoinedOrgs;
-@property (nonatomic, assign) BOOL IsAccepted;
-@property (nonatomic, assign) BOOL IsRejected;
-@property (nonatomic, assign) BOOL IsPending;
-@property (nonatomic, assign) BOOL IsForwarded;
-@property (nonatomic, assign) BOOL IsCanceled;
-@property (nonatomic, assign) BOOL IsStopped;
-@property (nonatomic, strong) NSString * PendingDuration;
-@property (nonatomic, strong) NSString * ToOrgName;
-@property (nonatomic, strong) NSString * ToOrgId;
-
-- (id) initWithDictionary:(NSDictionary*)dict;
-- (NSDictionary*) dictionary;
-
-@end
-
-// --- MyNotifications ---
-@interface QXMyNotifications : NSObject
-
-@property (nonatomic, strong) NSArray * NotificationItems;
-@property (nonatomic, assign) BOOL HasMore;
-@property (nonatomic, strong) NSNumber * LatestNotifyTime;
-
-- (id) initWithDictionary:(NSDictionary*)dict;
-- (NSDictionary*) dictionary;
-
-@end
-
-// --- User ---
-@interface QXUser : NSObject
-
-@property (nonatomic, strong) NSString * Id;
-@property (nonatomic, strong) NSString * Email;
-@property (nonatomic, strong) NSString * Firstame;
-@property (nonatomic, strong) NSString * LastName;
-@property (nonatomic, strong) NSString * Name;
-@property (nonatomic, strong) NSString * Title;
-@property (nonatomic, strong) NSString * Avatar;
-@property (nonatomic, strong) NSString * JID;
-@property (nonatomic, strong) NSString * Timezone;
-@property (nonatomic, assign) BOOL IsSuperUser;
-@property (nonatomic, assign) BOOL IsSharedUser;
-@property (nonatomic, strong) NSString * OrgId;
-@property (nonatomic, strong) NSString * OriginalOrgId;
-@property (nonatomic, strong) NSString * PrefixURL;
-@property (nonatomic, strong) NSString * ProfileURL;
-@property (nonatomic, assign) BOOL IsLoggedInUser;
-@property (nonatomic, assign) BOOL IsAvailable;
-@property (nonatomic, assign) BOOL IsDisabled;
-@property (nonatomic, assign) BOOL IsDeleted;
-@property (nonatomic, assign) BOOL FromSharedGroup;
-@property (nonatomic, strong) NSString * FromOrganizationName;
-@property (nonatomic, assign) BOOL Editable;
-@property (nonatomic, assign) BOOL Followable;
-@property (nonatomic, assign) BOOL FollowedByMe;
-@property (nonatomic, assign) BOOL FollowingTheGroup;
-@property (nonatomic, strong) NSString * Department;
-@property (nonatomic, strong) NSString * Location;
-@property (nonatomic, strong) NSArray * FollowingGroups;
-@property (nonatomic, strong) QXPreferences * Preferences;
-@property (nonatomic, assign) BOOL NoDetail;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
 - (NSDictionary*) dictionary;
@@ -1268,6 +1268,16 @@
 
 @end
 
+// --- DraftList ---
+@interface QXDraftList : NSObject
+
+@property (nonatomic, strong) NSArray * DraftItems;
+
+- (id) initWithDictionary:(NSDictionary*)dict;
+- (NSDictionary*) dictionary;
+
+@end
+
 // --- MyChats ---
 @interface QXMyChats : NSObject
 
@@ -1276,16 +1286,6 @@
 @property (nonatomic, strong) NSNumber * LatestCreateTime;
 @property (nonatomic, assign) BOOL WhatChats;
 @property (nonatomic, strong) NSString * PrefixURL;
-
-- (id) initWithDictionary:(NSDictionary*)dict;
-- (NSDictionary*) dictionary;
-
-@end
-
-// --- DraftList ---
-@interface QXDraftList : NSObject
-
-@property (nonatomic, strong) NSArray * DraftItems;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
 - (NSDictionary*) dictionary;
@@ -1825,7 +1825,6 @@
 @interface QXAuthUserServiceCreateCommentResults : NSObject
 
 @property (nonatomic, strong) QXEntry * Entry;
-@property (nonatomic, strong) Validated * Validated;
 @property (nonatomic, strong) NSError * Err;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
@@ -1869,7 +1868,6 @@
 @interface QXAuthUserServiceUpdateCommentResults : NSObject
 
 @property (nonatomic, strong) QXEntry * Entry;
-@property (nonatomic, strong) Validated * Validated;
 @property (nonatomic, strong) NSError * Err;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
@@ -1891,7 +1889,6 @@
 @interface QXAuthUserServiceUpdateEntryResults : NSObject
 
 @property (nonatomic, strong) QXEntry * Entry;
-@property (nonatomic, strong) Validated * Validated;
 @property (nonatomic, strong) NSError * Err;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
@@ -2023,6 +2020,53 @@
 
 // --- QXGetEntryAttachmentsResults ---
 @interface QXAuthUserServiceGetEntryAttachmentsResults : NSObject
+
+@property (nonatomic, strong) NSArray * Attachments;
+@property (nonatomic, strong) NSError * Err;
+
+- (id) initWithDictionary:(NSDictionary*)dict;
+- (NSDictionary*) dictionary;
+
+@end
+
+// --- QXGetDocViewSessionParams ---
+@interface QXAuthUserServiceGetDocViewSessionParams : NSObject
+
+@property (nonatomic, strong) NSString * Doi;
+@property (nonatomic, strong) NSString * GroupId;
+@property (nonatomic, strong) NSString * AttachmentId;
+
+- (id) initWithDictionary:(NSDictionary*)dict;
+- (NSDictionary*) dictionary;
+
+@end
+
+// --- QXGetDocViewSessionResults ---
+@interface QXAuthUserServiceGetDocViewSessionResults : NSObject
+
+@property (nonatomic, strong) NSString * SessionId;
+@property (nonatomic, strong) NSError * Err;
+
+- (id) initWithDictionary:(NSDictionary*)dict;
+- (NSDictionary*) dictionary;
+
+@end
+
+// --- QXDeleteEntryAttachmentParams ---
+@interface QXAuthUserServiceDeleteEntryAttachmentParams : NSObject
+
+@property (nonatomic, strong) NSString * Doi;
+@property (nonatomic, strong) NSString * GroupId;
+@property (nonatomic, strong) NSString * AttachmentId;
+@property (nonatomic, strong) NSString * OwnerId;
+
+- (id) initWithDictionary:(NSDictionary*)dict;
+- (NSDictionary*) dictionary;
+
+@end
+
+// --- QXDeleteEntryAttachmentResults ---
+@interface QXAuthUserServiceDeleteEntryAttachmentResults : NSObject
 
 @property (nonatomic, strong) NSArray * Attachments;
 @property (nonatomic, strong) NSError * Err;
@@ -2477,6 +2521,44 @@
 
 @end
 
+// --- QXChooseMarkdownEditorParams ---
+@interface QXAuthUserServiceChooseMarkdownEditorParams : NSObject
+
+
+- (id) initWithDictionary:(NSDictionary*)dict;
+- (NSDictionary*) dictionary;
+
+@end
+
+// --- QXChooseMarkdownEditorResults ---
+@interface QXAuthUserServiceChooseMarkdownEditorResults : NSObject
+
+@property (nonatomic, strong) NSError * Err;
+
+- (id) initWithDictionary:(NSDictionary*)dict;
+- (NSDictionary*) dictionary;
+
+@end
+
+// --- QXChooseStyledEditorParams ---
+@interface QXAuthUserServiceChooseStyledEditorParams : NSObject
+
+
+- (id) initWithDictionary:(NSDictionary*)dict;
+- (NSDictionary*) dictionary;
+
+@end
+
+// --- QXChooseStyledEditorResults ---
+@interface QXAuthUserServiceChooseStyledEditorResults : NSObject
+
+@property (nonatomic, strong) NSError * Err;
+
+- (id) initWithDictionary:(NSDictionary*)dict;
+- (NSDictionary*) dictionary;
+
+@end
+
 // --- QXGetNewGroupParams ---
 @interface QXAuthUserServiceGetNewGroupParams : NSObject
 
@@ -2532,7 +2614,6 @@
 @interface QXAuthUserServiceCreateGroupResults : NSObject
 
 @property (nonatomic, strong) QXGroup * Group;
-@property (nonatomic, strong) Validated * Validated;
 @property (nonatomic, strong) NSError * Err;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
@@ -2553,7 +2634,6 @@
 // --- QXUpdateGroupResults ---
 @interface QXAuthUserServiceUpdateGroupResults : NSObject
 
-@property (nonatomic, strong) Validated * Validated;
 @property (nonatomic, strong) NSError * Err;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
@@ -3058,7 +3138,6 @@
 @interface QXAuthUserServiceUpdateUserPreferencesResults : NSObject
 
 @property (nonatomic, strong) QXPreferences * Preferences;
-@property (nonatomic, strong) Validated * Validated;
 @property (nonatomic, strong) NSError * Err;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
@@ -3119,7 +3198,6 @@
 // --- QXUpdateUserProfileResults ---
 @interface QXAuthUserServiceUpdateUserProfileResults : NSObject
 
-@property (nonatomic, strong) Validated * Validated;
 @property (nonatomic, strong) NSError * Err;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
@@ -3326,7 +3404,6 @@
 @interface QXAuthUserServiceUpdateOrganizationResults : NSObject
 
 @property (nonatomic, strong) QXOrganization * Org;
-@property (nonatomic, strong) Validated * Validated;
 @property (nonatomic, strong) NSError * Err;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
@@ -3490,7 +3567,6 @@
 @interface QXAuthUserServiceInvitePeopleResults : NSObject
 
 @property (nonatomic, strong) NSArray * SendedEmails;
-@property (nonatomic, strong) Validated * Validated;
 @property (nonatomic, strong) NSError * Err;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
@@ -3538,6 +3614,26 @@
 
 @end
 
+// --- QXChangeLocaleParams ---
+@interface QXAuthUserServiceChangeLocaleParams : NSObject
+
+@property (nonatomic, strong) NSString * LocaleName;
+
+- (id) initWithDictionary:(NSDictionary*)dict;
+- (NSDictionary*) dictionary;
+
+@end
+
+// --- QXChangeLocaleResults ---
+@interface QXAuthUserServiceChangeLocaleResults : NSObject
+
+@property (nonatomic, strong) NSError * Err;
+
+- (id) initWithDictionary:(NSDictionary*)dict;
+- (NSDictionary*) dictionary;
+
+@end
+
 // --- QXUpdateMailPreferenceParams ---
 @interface QXAuthUserServiceUpdateMailPreferenceParams : NSObject
 
@@ -3572,7 +3668,6 @@
 @interface QXAuthUserServicePrepareChangingEmailResults : NSObject
 
 @property (nonatomic, strong) QXEmailChanger * Changer;
-@property (nonatomic, strong) Validated * Validated;
 @property (nonatomic, strong) NSError * Err;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
@@ -3613,7 +3708,6 @@
 // --- QXUpdateAccountResults ---
 @interface QXAuthUserServiceUpdateAccountResults : NSObject
 
-@property (nonatomic, strong) Validated * Validated;
 @property (nonatomic, strong) NSError * Err;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
@@ -3935,6 +4029,10 @@
 
 - (QXAuthUserServiceGetEntryAttachmentsResults *) GetEntryAttachments:(NSString *)entryId groupId:(NSString *)groupId;
 
+- (QXAuthUserServiceGetDocViewSessionResults *) GetDocViewSession:(NSString *)doi groupId:(NSString *)groupId attachmentId:(NSString *)attachmentId;
+
+- (QXAuthUserServiceDeleteEntryAttachmentResults *) DeleteEntryAttachment:(NSString *)doi groupId:(NSString *)groupId attachmentId:(NSString *)attachmentId ownerId:(NSString *)ownerId;
+
 - (QXAuthUserServiceGetOtherVersionsCommentsResults *) GetOtherVersionsComments:(NSString *)entryId groupId:(NSString *)groupId updateAtUnixNanoForVersion:(NSString *)updateAtUnixNanoForVersion hightlightKeywords:(NSString *)hightlightKeywords;
 
 - (QXAuthUserServiceGetGroupEntriesResults *) GetGroupEntries:(NSString *)groupId entryType:(NSString *)entryType before:(NSString *)before limit:(NSNumber *)limit withComments:(BOOL)withComments;
@@ -3975,13 +4073,17 @@
 
 - (NSError *) DeleteDraft:(NSString *)entryId groupId:(NSString *)groupId;
 
+- (NSError *) ChooseMarkdownEditor;
+
+- (NSError *) ChooseStyledEditor;
+
 - (QXAuthUserServiceGetNewGroupResults *) GetNewGroup;
 
 - (QXAuthUserServiceGetGroupResults *) GetGroup:(NSString *)groupId;
 
 - (QXAuthUserServiceCreateGroupResults *) CreateGroup:(QXGroupInput *)input;
 
-- (QXAuthUserServiceUpdateGroupResults *) UpdateGroup:(QXGroupInput *)input;
+- (NSError *) UpdateGroup:(QXGroupInput *)input;
 
 - (NSError *) UpdateGroupLogo:(NSString *)groupId logoURL:(NSString *)logoURL;
 
@@ -4035,7 +4137,7 @@
 
 - (QXAuthUserServiceGetNonStandardGroupEmbedUsersResults *) GetNonStandardGroupEmbedUsers;
 
-- (QXAuthUserServiceUpdateUserProfileResults *) UpdateUserProfile:(QXUserProfileInput *)input;
+- (NSError *) UpdateUserProfile:(QXUserProfileInput *)input;
 
 - (QXAuthUserServiceGetMyCountResults *) GetMyCount;
 
@@ -4077,13 +4179,15 @@
 
 - (NSError *) ResendInvitation:(NSString *)email;
 
+- (NSError *) ChangeLocale:(NSString *)localeName;
+
 - (NSError *) UpdateMailPreference:(QXMailPreferenceInput *)input;
 
 - (QXAuthUserServicePrepareChangingEmailResults *) PrepareChangingEmail:(NSString *)newEmail;
 
 - (NSError *) ConfirmChangingEmail:(NSString *)token;
 
-- (QXAuthUserServiceUpdateAccountResults *) UpdateAccount:(QXMemberAccountInput *)input;
+- (NSError *) UpdateAccount:(QXMemberAccountInput *)input;
 
 - (QXAuthUserServiceSendShareRequestResults *) SendShareRequest:(NSString *)groupId email:(NSString *)email;
 
@@ -4170,7 +4274,6 @@
 // --- QXFindPasswordResults ---
 @interface QXPublicServiceFindPasswordResults : NSObject
 
-@property (nonatomic, strong) Validated * Validated;
 @property (nonatomic, strong) NSError * Err;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
@@ -4195,7 +4298,6 @@
 
 @property (nonatomic, strong) NSString * MemberId;
 @property (nonatomic, strong) NSString * Email;
-@property (nonatomic, strong) Validated * Validated;
 @property (nonatomic, strong) NSError * Err;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
@@ -4220,7 +4322,6 @@
 @interface QXPublicServicePrepareChangingEmailResults : NSObject
 
 @property (nonatomic, strong) QXEmailChanger * Changer;
-@property (nonatomic, strong) Validated * Validated;
 @property (nonatomic, strong) NSError * Err;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
@@ -4327,7 +4428,6 @@
 @interface QXPublicServiceContactUsResults : NSObject
 
 @property (nonatomic, strong) QXContactInfo * Contact;
-@property (nonatomic, strong) Validated * Validated;
 @property (nonatomic, strong) NSError * Err;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
@@ -4419,7 +4519,6 @@
 @interface QXPublicServiceCreateNewsletterResults : NSObject
 
 @property (nonatomic, strong) QXNewsletter * Newsletter;
-@property (nonatomic, strong) Validated * Validated;
 @property (nonatomic, strong) NSError * Err;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
@@ -4440,7 +4539,6 @@
 // --- QXRequestNewSignupTokenResults ---
 @interface QXPublicServiceRequestNewSignupTokenResults : NSObject
 
-@property (nonatomic, strong) Validated * Validated;
 @property (nonatomic, strong) NSError * Err;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
@@ -4462,7 +4560,6 @@
 // --- QXRequestNewInvitationTokenResults ---
 @interface QXPublicServiceRequestNewInvitationTokenResults : NSObject
 
-@property (nonatomic, strong) Validated * Validated;
 @property (nonatomic, strong) NSError * Err;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
@@ -4483,7 +4580,6 @@
 // --- QXRequestNewSharingTokenResults ---
 @interface QXPublicServiceRequestNewSharingTokenResults : NSObject
 
-@property (nonatomic, strong) Validated * Validated;
 @property (nonatomic, strong) NSError * Err;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
@@ -4505,7 +4601,6 @@
 // --- QXInviteMeResults ---
 @interface QXPublicServiceInviteMeResults : NSObject
 
-@property (nonatomic, strong) Validated * Validated;
 @property (nonatomic, strong) NSError * Err;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
@@ -4546,7 +4641,7 @@
 
 - (QXAuthAdminService *) GetAuthAdminService:(NSString *)session;
 
-- (QXPublicServiceFindPasswordResults *) FindPassword:(NSString *)email;
+- (NSError *) FindPassword:(NSString *)email;
 
 - (QXPublicServiceResetPasswordResults *) ResetPassword:(NSString *)token password:(NSString *)password confirmedPassword:(NSString *)confirmedPassword;
 
@@ -4570,13 +4665,13 @@
 
 - (QXPublicServiceCreateNewsletterResults *) CreateNewsletter:(QXNewsletterInput *)input;
 
-- (QXPublicServiceRequestNewSignupTokenResults *) RequestNewSignupToken:(NSString *)email;
+- (NSError *) RequestNewSignupToken:(NSString *)email;
 
-- (QXPublicServiceRequestNewInvitationTokenResults *) RequestNewInvitationToken:(NSString *)orgId email:(NSString *)email;
+- (NSError *) RequestNewInvitationToken:(NSString *)orgId email:(NSString *)email;
 
-- (QXPublicServiceRequestNewSharingTokenResults *) RequestNewSharingToken:(NSString *)email;
+- (NSError *) RequestNewSharingToken:(NSString *)email;
 
-- (QXPublicServiceInviteMeResults *) InviteMe:(NSString *)organizationId email:(NSString *)email;
+- (NSError *) InviteMe:(NSString *)organizationId email:(NSString *)email;
 
 - (NSError *) RequestSignup:(NSString *)email;
 @end
