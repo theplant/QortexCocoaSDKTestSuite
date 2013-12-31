@@ -455,6 +455,7 @@
 				B58DA389172540AF00816CA3 /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		B58DA39C1725449E00816CA3 /* Build configuration list for PBXNativeTarget "CocoaTestSuite" */ = {
 			isa = XCConfigurationList;
@@ -463,6 +464,7 @@
 				B58DA39E1725449E00816CA3 /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
