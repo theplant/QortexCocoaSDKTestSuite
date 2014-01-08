@@ -1,1 +1,1 @@
-goapigen -pkg=github.com/theplant/qortexapi -lang=objc -prefix=QX -outdir=./Tests/
+hypermusk -pkg=github.com/theplant/qortexapi -lang=objc -prefix=QX -outdir=./Tests/
