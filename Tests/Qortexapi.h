@@ -5230,6 +5230,13 @@
 
 - (QXAuthUserServiceGetMyFeedEntriesResults *) GetMyFeedEntries:(NSString *)entryType before:(NSString *)before limit:(NSNumber *)limit withComments:(BOOL)withComments;
 
+- (void)getMyFeedEntries:(NSString *)entryType
+                  before:(NSString *)before
+                   limit:(NSNumber *)limit
+            withComments:(BOOL)withComments
+                 success:(void (^)(QXAuthUserServiceGetMyFeedEntriesResults *results))successBlock
+                 failure:(void (^)(NSError *error))failureBlock;
+
 - (QXAuthUserServiceGetGroupAsideResults *) GetGroupAside;
 
 - (QXAuthUserServiceGetNewFeedEntriesResults *) GetNewFeedEntries:(NSString *)entryType fromTimeUnixNano:(NSString *)fromTimeUnixNano limit:(NSNumber *)limit;
@@ -5281,6 +5288,10 @@
 - (QXAuthUserServiceGetGroupBySlugResults *) GetGroupBySlug:(NSString *)slug;
 
 - (QXAuthUserServiceGetGroupsResults *) GetGroups:(NSString *)keyword;
+
+- (void)getGroupsByKeyword:(NSString *)keyword
+                   success:(void (^)(QXAuthUserServiceGetGroupsResults *results))successBlock
+                   failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthUserServiceGetPublicGroupsResults *) GetPublicGroups:(NSString *)keyword;
 

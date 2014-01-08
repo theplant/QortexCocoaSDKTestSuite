@@ -77,6 +77,39 @@ static NSDateFormatter * _dateFormatter;
 	return [NSJSONSerialization JSONObjectWithData:returnData options:NSJSONReadingAllowFragments error:error];
 }
 
++ (void)request:(NSURL*)url
+     parameters:(NSDictionary *)parameters
+completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHandler {
+    __block NSError *error = nil;
+    NSOperationQueue *queue = [[NSOperationQueue alloc] init];
+
+    NSMutableURLRequest *httpRequest = [NSMutableURLRequest requestWithURL:url];
+    [httpRequest setHTTPMethod:@"POST"];
+    [httpRequest setValue:@"application/json;charset=utf-8" forHTTPHeaderField:@"Content-Type"];
+    QXQortexapi * _api = [QXQortexapi get];
+
+    NSData *requestBody = [NSJSONSerialization dataWithJSONObject:parameters options:NSJSONWritingPrettyPrinted error:&error];
+    if([_api Verbose]) {
+        NSLog(@"Request: %@", [NSString stringWithUTF8String:[requestBody bytes]]);
+    }
+    [httpRequest setHTTPBody:requestBody];
+
+    [NSURLConnection sendAsynchronousRequest:httpRequest
+                                       queue:queue
+                           completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+                               if([_api Verbose]) {
+                                   NSLog(@"Response: %@", [NSString stringWithUTF8String:[data bytes]]);
+                                   NSLog(@"Connection Error: %@", connectionError);
+                               }
+
+                               if (completionHandler) {
+                                   NSDictionary *results = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
+
+                                   completionHandler(results, error);
+                               }
+                           }];
+}
+
 + (NSError *)errorWithDictionary:(NSDictionary *)dict {
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return nil;
@@ -19182,6 +19215,42 @@ static NSDateFormatter * _dateFormatter;
 	return results;
 }
 
+- (void)getMyFeedEntries:(NSString *)entryType
+                  before:(NSString *)before
+                   limit:(NSNumber *)limit
+            withComments:(BOOL)withComments
+                 success:(void (^)(QXAuthUserServiceGetMyFeedEntriesResults *results))successBlock
+                 failure:(void (^)(NSError *error))failureBlock
+{
+    QXAuthUserServiceGetMyFeedEntriesParams *params = [[QXAuthUserServiceGetMyFeedEntriesParams alloc] init];
+    [params setEntryType:entryType];
+    [params setBefore:before];
+    [params setLimit:limit];
+    [params setWithComments:withComments];
+
+    QXQortexapi * _api = [QXQortexapi get];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/GetMyFeedEntries.json", [_api BaseURL]]];
+    if([_api Verbose]) {
+        NSLog(@"Requesting URL: %@", url);
+    }
+
+    [QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *results, NSError *error) {
+        if (error && failureBlock) {
+            if([_api Verbose]) {
+                NSLog(@"Error: %@", error);
+            }
+
+            failureBlock(error);
+        }
+
+        if (successBlock) {
+            QXAuthUserServiceGetMyFeedEntriesResults *entryResults = [[QXAuthUserServiceGetMyFeedEntriesResults alloc] initWithDictionary:results];
+
+            successBlock(entryResults);
+        }
+    }];
+}
+
 // --- GetGroupAside ---
 - (QXAuthUserServiceGetGroupAsideResults *) GetGroupAside {
 	
@@ -19894,6 +19963,36 @@ static NSDateFormatter * _dateFormatter;
 	results = [results initWithDictionary: dict];
 	
 	return results;
+}
+
+- (void)getGroupsByKeyword:(NSString *)keyword
+                   success:(void (^)(QXAuthUserServiceGetGroupsResults *results))successBlock
+                   failure:(void (^)(NSError *error))failureBlock
+{
+    QXAuthUserServiceGetGroupsParams *params = [[QXAuthUserServiceGetGroupsParams alloc] init];
+    [params setKeyword:keyword];
+
+    QXQortexapi * _api = [QXQortexapi get];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/GetGroups.json", [_api BaseURL]]];
+    if([_api Verbose]) {
+        NSLog(@"Requesting URL: %@", url);
+    }
+
+    [QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *results, NSError *error) {
+        if (error && failureBlock) {
+            if([_api Verbose]) {
+                NSLog(@"Error: %@", error);
+            }
+
+            failureBlock(error);
+        }
+
+        if (successBlock) {
+            QXAuthUserServiceGetGroupsResults *groupResults = [[QXAuthUserServiceGetGroupsResults alloc] initWithDictionary:results];
+
+            successBlock(groupResults);
+        }
+    }];
 }
 
 // --- GetPublicGroups ---
