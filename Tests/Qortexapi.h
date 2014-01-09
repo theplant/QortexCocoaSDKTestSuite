@@ -5228,6 +5228,14 @@
 
 - (QXAuthUserServiceGetGroupEntriesResults *) GetGroupEntries:(NSString *)groupId entryType:(NSString *)entryType before:(NSString *)before limit:(NSNumber *)limit withComments:(BOOL)withComments;
 
+- (void)getGroupEntries:(NSString *)groupId
+              entryType:(NSString *)entryType
+                 before:(NSString *)before
+                  limit:(NSNumber *)limit
+           withComments:(BOOL)withComments
+                success:(void (^)(QXAuthUserServiceGetGroupEntriesResults *results))successBlock
+                failure:(void (^)(NSError *error))failureBlock;
+
 - (QXAuthUserServiceGetMyFeedEntriesResults *) GetMyFeedEntries:(NSString *)entryType before:(NSString *)before limit:(NSNumber *)limit withComments:(BOOL)withComments;
 
 - (void)getMyFeedEntries:(NSString *)entryType

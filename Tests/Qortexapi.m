@@ -19185,6 +19185,45 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	return results;
 }
 
+- (void)getGroupEntries:(NSString *)groupId
+              entryType:(NSString *)entryType
+                 before:(NSString *)before
+                  limit:(NSNumber *)limit
+           withComments:(BOOL)withComments
+                success:(void (^)(QXAuthUserServiceGetGroupEntriesResults *results))successBlock
+                failure:(void (^)(NSError *error))failureBlock
+{
+	QXAuthUserServiceGetGroupEntriesParams *params = [[QXAuthUserServiceGetGroupEntriesParams alloc] init];
+	[params setGroupId:groupId];
+	[params setEntryType:entryType];
+	[params setBefore:before];
+	[params setLimit:limit];
+	[params setWithComments:withComments];
+
+	QXQortexapi * _api = [QXQortexapi get];
+	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/GetGroupEntries.json", [_api BaseURL]]];
+	if([_api Verbose]) {
+		NSLog(@"Requesting URL: %@", url);
+	}
+
+    [QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *results, NSError *error) {
+        if (error && failureBlock) {
+            if([_api Verbose]) {
+                NSLog(@"Error: %@", error);
+            }
+
+            failureBlock(error);
+        }
+
+        if (successBlock) {
+            QXAuthUserServiceGetGroupEntriesResults *entriesResults = [[QXAuthUserServiceGetGroupEntriesResults alloc] initWithDictionary:results];
+
+            successBlock(entriesResults);
+        }
+
+    }];
+}
+
 // --- GetMyFeedEntries ---
 - (QXAuthUserServiceGetMyFeedEntriesResults *) GetMyFeedEntries:(NSString *)entryType before:(NSString *)before limit:(NSNumber *)limit withComments:(BOOL)withComments {
 	
@@ -19940,7 +19979,7 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 
 // --- GetGroups ---
 - (QXAuthUserServiceGetGroupsResults *) GetGroups:(NSString *)keyword {
-	
+
 	QXAuthUserServiceGetGroupsResults *results = [QXAuthUserServiceGetGroupsResults alloc];
 	QXAuthUserServiceGetGroupsParams *params = [[QXAuthUserServiceGetGroupsParams alloc] init];
 	[params setKeyword:keyword];
