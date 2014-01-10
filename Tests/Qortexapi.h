@@ -13,11 +13,12 @@
 
 
 
-// --- TaskPwMap ---
-@interface QXTaskPwMap : NSObject
+// --- TaskSelectorItem ---
+@interface QXTaskSelectorItem : NSObject
 
-@property (nonatomic, strong) NSString * Id;
-@property (nonatomic, strong) NSNumber * PriorityWeight;
+@property (nonatomic, strong) NSNumber * StoreKey;
+@property (nonatomic, strong) NSString * DisplayText;
+@property (nonatomic, assign) BOOL IsCurrent;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
 - (NSDictionary*) dictionary;
@@ -225,18 +226,6 @@
 
 @end
 
-// --- TaskSelectorItem ---
-@interface QXTaskSelectorItem : NSObject
-
-@property (nonatomic, strong) NSNumber * StoreKey;
-@property (nonatomic, strong) NSString * DisplayText;
-@property (nonatomic, assign) BOOL IsCurrent;
-
-- (id) initWithDictionary:(NSDictionary*)dict;
-- (NSDictionary*) dictionary;
-
-@end
-
 // --- GroupCount ---
 @interface QXGroupCount : NSObject
 
@@ -385,6 +374,26 @@
 @property (nonatomic, strong) NSString * Status;
 @property (nonatomic, strong) NSString * InvitOrg;
 @property (nonatomic, strong) NSString * GotoURL;
+
+- (id) initWithDictionary:(NSDictionary*)dict;
+- (NSDictionary*) dictionary;
+
+@end
+
+// --- ToDoCSVItem ---
+@interface QXToDoCSVItem : NSObject
+
+@property (nonatomic, strong) NSString * Creator;
+@property (nonatomic, strong) NSString * Title;
+@property (nonatomic, strong) NSString * Content;
+@property (nonatomic, strong) NSString * Status;
+@property (nonatomic, strong) NSString * EstimateTime;
+@property (nonatomic, strong) NSString * TotalSpentTime;
+@property (nonatomic, strong) NSString * TimeUnit;
+@property (nonatomic, strong) NSString * SpentTimeDetail;
+@property (nonatomic, strong) NSString * CreateTime;
+@property (nonatomic, strong) NSString * UpdateTime;
+@property (nonatomic, strong) NSString * Due;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
 - (NSDictionary*) dictionary;
@@ -691,29 +700,114 @@
 
 @end
 
-// --- EntryVersion ---
-@interface QXEntryVersion : NSObject
+// --- TaskPwMap ---
+@interface QXTaskPwMap : NSObject
 
 @property (nonatomic, strong) NSString * Id;
-@property (nonatomic, strong) NSString * GroupId;
-@property (nonatomic, strong) NSDate * UpdatedAt;
-@property (nonatomic, strong) NSString * LocalUpdatedAt;
-@property (nonatomic, strong) NSString * UpdatedAtUnixNano;
-@property (nonatomic, strong) QXEmbedUser * CurrentVersionEditor;
-@property (nonatomic, assign) BOOL IsNewVersion;
+@property (nonatomic, strong) NSNumber * PriorityWeight;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
 - (NSDictionary*) dictionary;
 
 @end
 
-// --- TranslatedThread ---
-@interface QXTranslatedThread : NSObject
+// --- MyCount ---
+@interface QXMyCount : NSObject
 
+@property (nonatomic, strong) NSString * UserId;
+@property (nonatomic, strong) NSNumber * FollowedUnreadCount;
+@property (nonatomic, strong) NSNumber * NotificationUnreadCount;
+@property (nonatomic, strong) NSNumber * ActiveTasksCount;
+@property (nonatomic, strong) NSNumber * OfflineMessageCount;
+@property (nonatomic, strong) NSArray * GroupCounts;
+
+- (id) initWithDictionary:(NSDictionary*)dict;
+- (NSDictionary*) dictionary;
+
+@end
+
+// --- TaskOutline ---
+@interface QXTaskOutline : NSObject
+
+@property (nonatomic, strong) NSString * Id;
+@property (nonatomic, strong) NSString * EntryTitle;
+@property (nonatomic, strong) NSString * EntryLink;
+@property (nonatomic, assign) BOOL IsComment;
+@property (nonatomic, strong) QXEmbedUser * Assignee;
+@property (nonatomic, strong) NSString * AuthorName;
+@property (nonatomic, strong) QXEmbedGroup * Group;
+@property (nonatomic, strong) NSString * Age;
+@property (nonatomic, strong) NSDate * CreatedAt;
+@property (nonatomic, strong) NSString * Status;
+@property (nonatomic, strong) NSNumber * StatusCode;
+@property (nonatomic, strong) NSString * Due;
+@property (nonatomic, strong) NSString * Label;
+@property (nonatomic, strong) NSNumber * LabelCode;
+@property (nonatomic, strong) NSString * EstimateTime;
+@property (nonatomic, strong) NSNumber * EstimateTimeFloat64;
+@property (nonatomic, strong) NSString * SpentTime;
+@property (nonatomic, strong) NSNumber * PriorityWeight;
+@property (nonatomic, strong) NSNumber * Priority;
+@property (nonatomic, strong) NSString * CompleteAtStr;
+@property (nonatomic, strong) NSNumber * CompleteAtUnixNano;
+@property (nonatomic, assign) BOOL IsTitleCreatedBy;
+@property (nonatomic, assign) BOOL ActionNeeded;
+
+- (id) initWithDictionary:(NSDictionary*)dict;
+- (NSDictionary*) dictionary;
+
+@end
+
+// --- BlogEntry ---
+@interface QXBlogEntry : NSObject
+
+@property (nonatomic, strong) NSString * Id;
 @property (nonatomic, strong) NSString * Title;
-@property (nonatomic, strong) NSString * Content;
-@property (nonatomic, strong) NSArray * Comments;
-@property (nonatomic, assign) BOOL IsCommentOnly;
+@property (nonatomic, strong) NSString * HtmlTitle;
+@property (nonatomic, strong) NSString * Slug;
+@property (nonatomic, strong) NSDate * CreatedAt;
+@property (nonatomic, strong) NSString * LocalCreatedAt;
+@property (nonatomic, strong) NSString * Permalink;
+@property (nonatomic, strong) NSString * CreateCommentURL;
+@property (nonatomic, strong) NSString * HtmlContent;
+@property (nonatomic, strong) NSString * HtmlContentPart;
+@property (nonatomic, strong) QXEmbedUser * Author;
+
+- (id) initWithDictionary:(NSDictionary*)dict;
+- (NSDictionary*) dictionary;
+
+@end
+
+// --- GroupUsers ---
+@interface QXGroupUsers : NSObject
+
+@property (nonatomic, strong) NSString * GroupId;
+@property (nonatomic, strong) NSArray * EmbedUsers;
+
+- (id) initWithDictionary:(NSDictionary*)dict;
+- (NSDictionary*) dictionary;
+
+@end
+
+// --- Invitation ---
+@interface QXInvitation : NSObject
+
+@property (nonatomic, strong) NSString * Email;
+@property (nonatomic, strong) NSString * Token;
+@property (nonatomic, strong) NSString * SentAgo;
+@property (nonatomic, strong) QXEmbedUser * ByUser;
+@property (nonatomic, assign) BOOL HideInPendingList;
+
+- (id) initWithDictionary:(NSDictionary*)dict;
+- (NSDictionary*) dictionary;
+
+@end
+
+// --- AbandonInfo ---
+@interface QXAbandonInfo : NSObject
+
+@property (nonatomic, strong) QXEmbedOrg * AbandonFromOrg;
+@property (nonatomic, strong) NSArray * AvailableOrgs;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
 - (NSDictionary*) dictionary;
@@ -736,36 +830,6 @@
 
 @end
 
-// --- RelatedEntry ---
-@interface QXRelatedEntry : NSObject
-
-@property (nonatomic, strong) NSString * HtmlTitle;
-@property (nonatomic, strong) NSString * Link;
-@property (nonatomic, strong) NSString * LocalHumanCreatedAt;
-@property (nonatomic, strong) QXEmbedUser * Author;
-@property (nonatomic, assign) BOOL IsComment;
-@property (nonatomic, assign) BOOL IsEmbedded;
-
-- (id) initWithDictionary:(NSDictionary*)dict;
-- (NSDictionary*) dictionary;
-
-@end
-
-// --- MyCount ---
-@interface QXMyCount : NSObject
-
-@property (nonatomic, strong) NSString * UserId;
-@property (nonatomic, strong) NSNumber * FollowedUnreadCount;
-@property (nonatomic, strong) NSNumber * NotificationUnreadCount;
-@property (nonatomic, strong) NSNumber * ActiveTasksCount;
-@property (nonatomic, strong) NSNumber * OfflineMessageCount;
-@property (nonatomic, strong) NSArray * GroupCounts;
-
-- (id) initWithDictionary:(NSDictionary*)dict;
-- (NSDictionary*) dictionary;
-
-@end
-
 // --- TimeTrackingUpdateLog ---
 @interface QXTimeTrackingUpdateLog : NSObject
 
@@ -776,6 +840,163 @@
 @property (nonatomic, strong) NSNumber * NewSpentTime;
 @property (nonatomic, strong) QXEmbedUser * Owner;
 @property (nonatomic, strong) QXEmbedUser * Updater;
+
+- (id) initWithDictionary:(NSDictionary*)dict;
+- (NSDictionary*) dictionary;
+
+@end
+
+// --- LanguageSelector ---
+@interface QXLanguageSelector : NSObject
+
+@property (nonatomic, assign) BOOL IsFirst;
+@property (nonatomic, strong) NSString * Index;
+@property (nonatomic, strong) NSArray * SupportedLanguages;
+@property (nonatomic, strong) NSArray * PreferredLanguages;
+@property (nonatomic, strong) NSArray * RestLanguages;
+@property (nonatomic, strong) NSArray * UILanguages;
+
+- (id) initWithDictionary:(NSDictionary*)dict;
+- (NSDictionary*) dictionary;
+
+@end
+
+// --- AdvancedToDoSettings ---
+@interface QXAdvancedToDoSettings : NSObject
+
+@property (nonatomic, assign) BOOL Enabled;
+@property (nonatomic, assign) BOOL EnableTimeEstimate;
+@property (nonatomic, assign) BOOL EnableTimeTracking;
+@property (nonatomic, strong) NSNumber * TimeUnit;
+@property (nonatomic, strong) QXEmbedUser * ProjectManager;
+@property (nonatomic, strong) NSArray * Labels;
+@property (nonatomic, strong) NSArray * NotYetOpenStatuses;
+@property (nonatomic, strong) NSArray * OpenStatuses;
+@property (nonatomic, strong) NSArray * ClosedStatuses;
+@property (nonatomic, strong) QXTagIndex * DefaultNotYetOpenStatus;
+@property (nonatomic, strong) QXTagIndex * DefaultOpenStatus;
+@property (nonatomic, strong) QXTagIndex * DefaultClosedStatus;
+@property (nonatomic, strong) NSNumber * LabelCounter;
+@property (nonatomic, strong) NSNumber * NotYetOpenStatusCounter;
+@property (nonatomic, strong) NSNumber * OpenStatusCounter;
+@property (nonatomic, strong) NSNumber * ClosedStatusCounter;
+@property (nonatomic, strong) NSArray * EnabledSharingOrgs;
+@property (nonatomic, assign) BOOL ShowedThrowawayStatusSuggestion;
+
+- (id) initWithDictionary:(NSDictionary*)dict;
+- (NSDictionary*) dictionary;
+
+@end
+
+// --- TranslatedThread ---
+@interface QXTranslatedThread : NSObject
+
+@property (nonatomic, strong) NSString * Title;
+@property (nonatomic, strong) NSString * Content;
+@property (nonatomic, strong) NSArray * Comments;
+@property (nonatomic, assign) BOOL IsCommentOnly;
+
+- (id) initWithDictionary:(NSDictionary*)dict;
+- (NSDictionary*) dictionary;
+
+@end
+
+// --- EntryVersion ---
+@interface QXEntryVersion : NSObject
+
+@property (nonatomic, strong) NSString * Id;
+@property (nonatomic, strong) NSString * GroupId;
+@property (nonatomic, strong) NSDate * UpdatedAt;
+@property (nonatomic, strong) NSString * LocalUpdatedAt;
+@property (nonatomic, strong) NSString * UpdatedAtUnixNano;
+@property (nonatomic, strong) QXEmbedUser * CurrentVersionEditor;
+@property (nonatomic, assign) BOOL IsNewVersion;
+
+- (id) initWithDictionary:(NSDictionary*)dict;
+- (NSDictionary*) dictionary;
+
+@end
+
+// --- Request ---
+@interface QXRequest : NSObject
+
+@property (nonatomic, strong) NSString * Id;
+@property (nonatomic, strong) NSString * CurrentPrefixURL;
+@property (nonatomic, strong) NSString * Info;
+@property (nonatomic, strong) NSString * ActionButton;
+@property (nonatomic, strong) QXEmbedOrg * FromOrg;
+@property (nonatomic, strong) QXEmbedOrg * ToOrg;
+@property (nonatomic, strong) QXEmbedGroup * SharedGroup;
+@property (nonatomic, strong) NSString * SharedOrgIdHex;
+@property (nonatomic, strong) NSString * FromUserIdHex;
+@property (nonatomic, strong) QXEmbedUser * SharedInvitee;
+@property (nonatomic, strong) QXEmbedUser * SharedInviter;
+@property (nonatomic, strong) QXEmbedUser * SharedResponsor;
+@property (nonatomic, strong) NSString * ToEmail;
+@property (nonatomic, strong) NSString * State;
+
+- (id) initWithDictionary:(NSDictionary*)dict;
+- (NSDictionary*) dictionary;
+
+@end
+
+// --- ShareRequest ---
+@interface QXShareRequest : NSObject
+
+@property (nonatomic, strong) NSString * Id;
+@property (nonatomic, strong) QXEmbedUser * FromUser;
+@property (nonatomic, strong) QXEmbedUser * ToUser;
+@property (nonatomic, strong) QXEmbedUser * Responser;
+@property (nonatomic, strong) QXEmbedOrg * FromOrg;
+@property (nonatomic, strong) QXEmbedOrg * ToOrg;
+@property (nonatomic, strong) NSArray * JoinedOrgs;
+@property (nonatomic, strong) QXEmbedGroup * SharedGroup;
+@property (nonatomic, strong) NSString * Token;
+@property (nonatomic, strong) NSString * ToEmail;
+@property (nonatomic, strong) NSString * PendingDuration;
+@property (nonatomic, assign) BOOL IsNewAccount;
+@property (nonatomic, assign) BOOL IsPending;
+@property (nonatomic, assign) BOOL IsAccepted;
+@property (nonatomic, assign) BOOL IsRejected;
+@property (nonatomic, assign) BOOL IsForwarded;
+@property (nonatomic, assign) BOOL IsCanceled;
+@property (nonatomic, assign) BOOL IsStopped;
+@property (nonatomic, strong) NSString * Info;
+@property (nonatomic, strong) NSString * ActionButton;
+@property (nonatomic, strong) NSString * RequestBarHtml;
+
+- (id) initWithDictionary:(NSDictionary*)dict;
+- (NSDictionary*) dictionary;
+
+@end
+
+// --- GroupSharingInfo ---
+@interface QXGroupSharingInfo : NSObject
+
+@property (nonatomic, assign) BOOL IsSharing;
+@property (nonatomic, strong) QXEmbedOrg * FromOrg;
+@property (nonatomic, strong) NSArray * AccpetedOrgs;
+@property (nonatomic, strong) NSArray * ForwardedOrgs;
+@property (nonatomic, strong) NSArray * PendingToEmails;
+
+- (id) initWithDictionary:(NSDictionary*)dict;
+- (NSDictionary*) dictionary;
+
+@end
+
+// --- Message ---
+@interface QXMessage : NSObject
+
+@property (nonatomic, strong) NSString * Id;
+@property (nonatomic, strong) NSString * ConversationId;
+@property (nonatomic, strong) NSString * UserId;
+@property (nonatomic, strong) NSString * Content;
+@property (nonatomic, strong) NSString * HtmlContent;
+@property (nonatomic, strong) NSDate * CreatedAt;
+@property (nonatomic, strong) QXEmbedUser * EmbedUser;
+@property (nonatomic, assign) BOOL ShowUser;
+@property (nonatomic, assign) BOOL IsOffline;
+@property (nonatomic, strong) NSString * HighlightedContent;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
 - (NSDictionary*) dictionary;
@@ -827,176 +1048,17 @@
 
 @end
 
-// --- AdvancedToDoSettings ---
-@interface QXAdvancedToDoSettings : NSObject
+// --- QortexSupport ---
+@interface QXQortexSupport : NSObject
 
-@property (nonatomic, assign) BOOL Enabled;
-@property (nonatomic, assign) BOOL EnableTimeEstimate;
-@property (nonatomic, assign) BOOL EnableTimeTracking;
-@property (nonatomic, strong) NSNumber * TimeUnit;
-@property (nonatomic, strong) QXEmbedUser * ProjectManager;
-@property (nonatomic, strong) NSArray * Labels;
-@property (nonatomic, strong) NSArray * NotYetOpenStatuses;
-@property (nonatomic, strong) NSArray * OpenStatuses;
-@property (nonatomic, strong) NSArray * ClosedStatuses;
-@property (nonatomic, strong) QXTagIndex * DefaultNotYetOpenStatus;
-@property (nonatomic, strong) QXTagIndex * DefaultOpenStatus;
-@property (nonatomic, strong) QXTagIndex * DefaultClosedStatus;
-@property (nonatomic, strong) NSNumber * LabelCounter;
-@property (nonatomic, strong) NSNumber * NotYetOpenStatusCounter;
-@property (nonatomic, strong) NSNumber * OpenStatusCounter;
-@property (nonatomic, strong) NSNumber * ClosedStatusCounter;
-@property (nonatomic, strong) NSArray * EnabledSharingOrgs;
-@property (nonatomic, assign) BOOL ShowedThrowawayStatusSuggestion;
-
-- (id) initWithDictionary:(NSDictionary*)dict;
-- (NSDictionary*) dictionary;
-
-@end
-
-// --- Message ---
-@interface QXMessage : NSObject
-
-@property (nonatomic, strong) NSString * Id;
-@property (nonatomic, strong) NSString * ConversationId;
-@property (nonatomic, strong) NSString * UserId;
-@property (nonatomic, strong) NSString * Content;
-@property (nonatomic, strong) NSString * HtmlContent;
-@property (nonatomic, strong) NSDate * CreatedAt;
-@property (nonatomic, strong) QXEmbedUser * EmbedUser;
-@property (nonatomic, assign) BOOL ShowUser;
-@property (nonatomic, assign) BOOL IsOffline;
-@property (nonatomic, strong) NSString * HighlightedContent;
-
-- (id) initWithDictionary:(NSDictionary*)dict;
-- (NSDictionary*) dictionary;
-
-@end
-
-// --- Request ---
-@interface QXRequest : NSObject
-
-@property (nonatomic, strong) NSString * Id;
-@property (nonatomic, strong) NSString * CurrentPrefixURL;
-@property (nonatomic, strong) NSString * Info;
-@property (nonatomic, strong) NSString * ActionButton;
+@property (nonatomic, strong) NSString * Audience;
+@property (nonatomic, assign) BOOL IsToOffical;
+@property (nonatomic, assign) BOOL IsToAllUsers;
+@property (nonatomic, assign) BOOL IsToAllAdmins;
+@property (nonatomic, assign) BOOL IsToOrganizations;
 @property (nonatomic, strong) QXEmbedOrg * FromOrg;
-@property (nonatomic, strong) QXEmbedOrg * ToOrg;
-@property (nonatomic, strong) QXEmbedGroup * SharedGroup;
-@property (nonatomic, strong) NSString * SharedOrgIdHex;
-@property (nonatomic, strong) NSString * FromUserIdHex;
-@property (nonatomic, strong) QXEmbedUser * SharedInvitee;
-@property (nonatomic, strong) QXEmbedUser * SharedInviter;
-@property (nonatomic, strong) QXEmbedUser * SharedResponsor;
-@property (nonatomic, strong) NSString * ToEmail;
-@property (nonatomic, strong) NSString * State;
-
-- (id) initWithDictionary:(NSDictionary*)dict;
-- (NSDictionary*) dictionary;
-
-@end
-
-// --- BlogEntry ---
-@interface QXBlogEntry : NSObject
-
-@property (nonatomic, strong) NSString * Id;
-@property (nonatomic, strong) NSString * Title;
-@property (nonatomic, strong) NSString * HtmlTitle;
-@property (nonatomic, strong) NSString * Slug;
-@property (nonatomic, strong) NSDate * CreatedAt;
-@property (nonatomic, strong) NSString * LocalCreatedAt;
-@property (nonatomic, strong) NSString * Permalink;
-@property (nonatomic, strong) NSString * CreateCommentURL;
-@property (nonatomic, strong) NSString * HtmlContent;
-@property (nonatomic, strong) NSString * HtmlContentPart;
-@property (nonatomic, strong) QXEmbedUser * Author;
-
-- (id) initWithDictionary:(NSDictionary*)dict;
-- (NSDictionary*) dictionary;
-
-@end
-
-// --- ShareRequest ---
-@interface QXShareRequest : NSObject
-
-@property (nonatomic, strong) NSString * Id;
-@property (nonatomic, strong) QXEmbedUser * FromUser;
-@property (nonatomic, strong) QXEmbedUser * ToUser;
-@property (nonatomic, strong) QXEmbedUser * Responser;
-@property (nonatomic, strong) QXEmbedOrg * FromOrg;
-@property (nonatomic, strong) QXEmbedOrg * ToOrg;
-@property (nonatomic, strong) NSArray * JoinedOrgs;
-@property (nonatomic, strong) QXEmbedGroup * SharedGroup;
-@property (nonatomic, strong) NSString * Token;
-@property (nonatomic, strong) NSString * ToEmail;
-@property (nonatomic, strong) NSString * PendingDuration;
-@property (nonatomic, assign) BOOL IsNewAccount;
-@property (nonatomic, assign) BOOL IsPending;
-@property (nonatomic, assign) BOOL IsAccepted;
-@property (nonatomic, assign) BOOL IsRejected;
-@property (nonatomic, assign) BOOL IsForwarded;
-@property (nonatomic, assign) BOOL IsCanceled;
-@property (nonatomic, assign) BOOL IsStopped;
-@property (nonatomic, strong) NSString * Info;
-@property (nonatomic, strong) NSString * ActionButton;
-@property (nonatomic, strong) NSString * RequestBarHtml;
-
-- (id) initWithDictionary:(NSDictionary*)dict;
-- (NSDictionary*) dictionary;
-
-@end
-
-// --- GroupSharingInfo ---
-@interface QXGroupSharingInfo : NSObject
-
-@property (nonatomic, assign) BOOL IsSharing;
-@property (nonatomic, strong) QXEmbedOrg * FromOrg;
-@property (nonatomic, strong) NSArray * AccpetedOrgs;
-@property (nonatomic, strong) NSArray * ForwardedOrgs;
-@property (nonatomic, strong) NSArray * PendingToEmails;
-
-- (id) initWithDictionary:(NSDictionary*)dict;
-- (NSDictionary*) dictionary;
-
-@end
-
-// --- GroupUsers ---
-@interface QXGroupUsers : NSObject
-
-@property (nonatomic, strong) NSString * GroupId;
-@property (nonatomic, strong) NSArray * EmbedUsers;
-
-- (id) initWithDictionary:(NSDictionary*)dict;
-- (NSDictionary*) dictionary;
-
-@end
-
-// --- TaskOutline ---
-@interface QXTaskOutline : NSObject
-
-@property (nonatomic, strong) NSString * Id;
-@property (nonatomic, strong) NSString * EntryTitle;
-@property (nonatomic, strong) NSString * EntryLink;
-@property (nonatomic, assign) BOOL IsComment;
-@property (nonatomic, strong) QXEmbedUser * Assignee;
-@property (nonatomic, strong) NSString * AuthorName;
-@property (nonatomic, strong) QXEmbedGroup * Group;
-@property (nonatomic, strong) NSString * Age;
-@property (nonatomic, strong) NSDate * CreatedAt;
-@property (nonatomic, strong) NSString * Status;
-@property (nonatomic, strong) NSNumber * StatusCode;
-@property (nonatomic, strong) NSString * Due;
-@property (nonatomic, strong) NSString * Label;
-@property (nonatomic, strong) NSNumber * LabelCode;
-@property (nonatomic, strong) NSString * EstimateTime;
-@property (nonatomic, strong) NSNumber * EstimateTimeFloat64;
-@property (nonatomic, strong) NSString * SpentTime;
-@property (nonatomic, strong) NSNumber * PriorityWeight;
-@property (nonatomic, strong) NSNumber * Priority;
-@property (nonatomic, strong) NSString * CompleteAtStr;
-@property (nonatomic, strong) NSNumber * CompleteAtUnixNano;
-@property (nonatomic, assign) BOOL IsTitleCreatedBy;
-@property (nonatomic, assign) BOOL ActionNeeded;
+@property (nonatomic, strong) NSArray * ToOrgs;
+@property (nonatomic, strong) NSString * ToOrgsHtml;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
 - (NSDictionary*) dictionary;
@@ -1021,57 +1083,15 @@
 
 @end
 
-// --- Invitation ---
-@interface QXInvitation : NSObject
+// --- RelatedEntry ---
+@interface QXRelatedEntry : NSObject
 
-@property (nonatomic, strong) NSString * Email;
-@property (nonatomic, strong) NSString * Token;
-@property (nonatomic, strong) NSString * SentAgo;
-@property (nonatomic, strong) QXEmbedUser * ByUser;
-@property (nonatomic, assign) BOOL HideInPendingList;
-
-- (id) initWithDictionary:(NSDictionary*)dict;
-- (NSDictionary*) dictionary;
-
-@end
-
-// --- AbandonInfo ---
-@interface QXAbandonInfo : NSObject
-
-@property (nonatomic, strong) QXEmbedOrg * AbandonFromOrg;
-@property (nonatomic, strong) NSArray * AvailableOrgs;
-
-- (id) initWithDictionary:(NSDictionary*)dict;
-- (NSDictionary*) dictionary;
-
-@end
-
-// --- QortexSupport ---
-@interface QXQortexSupport : NSObject
-
-@property (nonatomic, strong) NSString * Audience;
-@property (nonatomic, assign) BOOL IsToOffical;
-@property (nonatomic, assign) BOOL IsToAllUsers;
-@property (nonatomic, assign) BOOL IsToAllAdmins;
-@property (nonatomic, assign) BOOL IsToOrganizations;
-@property (nonatomic, strong) QXEmbedOrg * FromOrg;
-@property (nonatomic, strong) NSArray * ToOrgs;
-@property (nonatomic, strong) NSString * ToOrgsHtml;
-
-- (id) initWithDictionary:(NSDictionary*)dict;
-- (NSDictionary*) dictionary;
-
-@end
-
-// --- LanguageSelector ---
-@interface QXLanguageSelector : NSObject
-
-@property (nonatomic, assign) BOOL IsFirst;
-@property (nonatomic, strong) NSString * Index;
-@property (nonatomic, strong) NSArray * SupportedLanguages;
-@property (nonatomic, strong) NSArray * PreferredLanguages;
-@property (nonatomic, strong) NSArray * RestLanguages;
-@property (nonatomic, strong) NSArray * UILanguages;
+@property (nonatomic, strong) NSString * HtmlTitle;
+@property (nonatomic, strong) NSString * Link;
+@property (nonatomic, strong) NSString * LocalHumanCreatedAt;
+@property (nonatomic, strong) QXEmbedUser * Author;
+@property (nonatomic, assign) BOOL IsComment;
+@property (nonatomic, assign) BOOL IsEmbedded;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
 - (NSDictionary*) dictionary;
@@ -1095,28 +1115,65 @@
 
 @end
 
-// --- LanguageSelectors ---
-@interface QXLanguageSelectors : NSObject
+// --- Group ---
+@interface QXGroup : NSObject
 
-@property (nonatomic, strong) NSArray * Selectors;
-@property (nonatomic, strong) NSString * LabelText;
+@property (nonatomic, strong) NSString * Id;
+@property (nonatomic, strong) NSString * Name;
+@property (nonatomic, strong) NSString * Description;
+@property (nonatomic, strong) NSString * GType;
+@property (nonatomic, strong) NSString * LogoURL;
+@property (nonatomic, strong) NSString * IconName;
+@property (nonatomic, strong) NSString * Link;
+@property (nonatomic, strong) NSString * TaskLink;
+@property (nonatomic, strong) NSString * Slug;
+@property (nonatomic, strong) QXEmbedUser * Author;
+@property (nonatomic, assign) BOOL IsAdmin;
+@property (nonatomic, assign) BOOL IsPrivate;
+@property (nonatomic, assign) BOOL Editable;
+@property (nonatomic, assign) BOOL Managable;
+@property (nonatomic, assign) BOOL Accessible;
+@property (nonatomic, assign) BOOL FollowedByMe;
+@property (nonatomic, assign) BOOL AdministratedByMe;
+@property (nonatomic, assign) BOOL IsPreShared;
+@property (nonatomic, assign) BOOL IsShared;
+@property (nonatomic, assign) BOOL IsDefaultLogoURL;
+@property (nonatomic, strong) NSString * HostOrgName;
+@property (nonatomic, assign) BOOL IsDispayHostOrgName;
+@property (nonatomic, strong) NSNumber * EntriesCount;
+@property (nonatomic, strong) NSNumber * FollowersCount;
+@property (nonatomic, assign) BOOL IsAnnouncement;
+@property (nonatomic, assign) BOOL IsQortexSupport;
+@property (nonatomic, strong) NSArray * GroupOwners;
+@property (nonatomic, strong) QXGroupSharingInfo * SharingInfo;
+@property (nonatomic, strong) NSString * GroupEmailAddress;
+@property (nonatomic, strong) QXAdvancedToDoSettings * ToDoSettings;
+@property (nonatomic, strong) NSString * TodoGroupingRoute;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
 - (NSDictionary*) dictionary;
 
 @end
 
-// --- GroupTasksOutline ---
-@interface QXGroupTasksOutline : NSObject
+// --- Conversation ---
+@interface QXConversation : NSObject
 
-@property (nonatomic, strong) QXEmbedGroup * Group;
-@property (nonatomic, strong) NSArray * AcksAndPendingToDos;
-@property (nonatomic, strong) NSArray * SimpleToDos;
-@property (nonatomic, strong) NSArray * OpenToDos;
-@property (nonatomic, strong) NSNumber * OpenEstimateTotal;
-@property (nonatomic, strong) NSArray * NotStartedToDos;
-@property (nonatomic, strong) NSNumber * NotStartedEstimateTotal;
-@property (nonatomic, strong) NSString * EstimateUnit;
+@property (nonatomic, strong) NSString * Id;
+@property (nonatomic, strong) NSString * Title;
+@property (nonatomic, strong) NSArray * UserIds;
+@property (nonatomic, strong) NSArray * Participants;
+@property (nonatomic, strong) NSDate * CreatedAt;
+@property (nonatomic, strong) NSDate * EndedAt;
+@property (nonatomic, strong) NSString * LocalHumanCreatedAt;
+@property (nonatomic, strong) NSString * Topic;
+@property (nonatomic, assign) BOOL Private;
+@property (nonatomic, assign) BOOL IsClose;
+@property (nonatomic, assign) BOOL IsShared;
+@property (nonatomic, assign) BOOL HasOfflineMessage;
+@property (nonatomic, strong) NSString * OfflineLocalTime;
+@property (nonatomic, strong) NSArray * SharedMessageIds;
+@property (nonatomic, strong) NSNumber * MessagesCount;
+@property (nonatomic, strong) NSArray * Messages;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
 - (NSDictionary*) dictionary;
@@ -1164,31 +1221,6 @@
 
 @end
 
-// --- Conversation ---
-@interface QXConversation : NSObject
-
-@property (nonatomic, strong) NSString * Id;
-@property (nonatomic, strong) NSString * Title;
-@property (nonatomic, strong) NSArray * UserIds;
-@property (nonatomic, strong) NSArray * Participants;
-@property (nonatomic, strong) NSDate * CreatedAt;
-@property (nonatomic, strong) NSDate * EndedAt;
-@property (nonatomic, strong) NSString * LocalHumanCreatedAt;
-@property (nonatomic, strong) NSString * Topic;
-@property (nonatomic, assign) BOOL Private;
-@property (nonatomic, assign) BOOL IsClose;
-@property (nonatomic, assign) BOOL IsShared;
-@property (nonatomic, assign) BOOL HasOfflineMessage;
-@property (nonatomic, strong) NSString * OfflineLocalTime;
-@property (nonatomic, strong) NSArray * SharedMessageIds;
-@property (nonatomic, strong) NSNumber * MessagesCount;
-@property (nonatomic, strong) NSArray * Messages;
-
-- (id) initWithDictionary:(NSDictionary*)dict;
-- (NSDictionary*) dictionary;
-
-@end
-
 // --- NotificationItem ---
 @interface QXNotificationItem : NSObject
 
@@ -1211,52 +1243,68 @@
 
 @end
 
-// --- Group ---
-@interface QXGroup : NSObject
+// --- LanguageSelectors ---
+@interface QXLanguageSelectors : NSObject
 
-@property (nonatomic, strong) NSString * Id;
-@property (nonatomic, strong) NSString * Name;
-@property (nonatomic, strong) NSString * Description;
-@property (nonatomic, strong) NSString * GType;
-@property (nonatomic, strong) NSString * LogoURL;
-@property (nonatomic, strong) NSString * IconName;
-@property (nonatomic, strong) NSString * Link;
-@property (nonatomic, strong) NSString * TaskLink;
-@property (nonatomic, strong) NSString * Slug;
-@property (nonatomic, strong) QXEmbedUser * Author;
-@property (nonatomic, assign) BOOL IsAdmin;
-@property (nonatomic, assign) BOOL IsPrivate;
-@property (nonatomic, assign) BOOL Editable;
-@property (nonatomic, assign) BOOL Managable;
-@property (nonatomic, assign) BOOL Accessible;
-@property (nonatomic, assign) BOOL FollowedByMe;
-@property (nonatomic, assign) BOOL AdministratedByMe;
-@property (nonatomic, assign) BOOL IsPreShared;
-@property (nonatomic, assign) BOOL IsShared;
-@property (nonatomic, assign) BOOL IsDefaultLogoURL;
-@property (nonatomic, strong) NSString * HostOrgName;
-@property (nonatomic, assign) BOOL IsDispayHostOrgName;
-@property (nonatomic, strong) NSNumber * EntriesCount;
-@property (nonatomic, strong) NSNumber * FollowersCount;
-@property (nonatomic, assign) BOOL IsAnnouncement;
-@property (nonatomic, assign) BOOL IsQortexSupport;
-@property (nonatomic, strong) NSArray * GroupOwners;
-@property (nonatomic, strong) QXGroupSharingInfo * SharingInfo;
-@property (nonatomic, strong) NSString * GroupEmailAddress;
-@property (nonatomic, strong) QXAdvancedToDoSettings * ToDoSettings;
-@property (nonatomic, strong) NSString * TodoGroupingRoute;
+@property (nonatomic, strong) NSArray * Selectors;
+@property (nonatomic, strong) NSString * LabelText;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
 - (NSDictionary*) dictionary;
 
 @end
 
-// --- OpenAdvancedToDosPage ---
-@interface QXOpenAdvancedToDosPage : NSObject
+// --- GroupTasksOutline ---
+@interface QXGroupTasksOutline : NSObject
 
-@property (nonatomic, strong) QXEmbedUser * Assignee;
-@property (nonatomic, strong) NSArray * ActionNeededToDos;
-@property (nonatomic, strong) NSArray * ToDosBuckets;
+@property (nonatomic, strong) QXEmbedGroup * Group;
+@property (nonatomic, strong) NSArray * AcksAndPendingToDos;
+@property (nonatomic, strong) NSArray * SimpleToDos;
+@property (nonatomic, strong) NSArray * OpenToDos;
+@property (nonatomic, strong) NSNumber * OpenEstimateTotal;
+@property (nonatomic, strong) NSArray * NotStartedToDos;
+@property (nonatomic, strong) NSNumber * NotStartedEstimateTotal;
+@property (nonatomic, strong) NSString * EstimateUnit;
+
+- (id) initWithDictionary:(NSDictionary*)dict;
+- (NSDictionary*) dictionary;
+
+@end
+
+// --- Preferences ---
+@interface QXPreferences : NSObject
+
+@property (nonatomic, strong) NSString * Timezone;
+@property (nonatomic, strong) NSString * TimezoneOffset;
+@property (nonatomic, assign) BOOL PreferFullName;
+@property (nonatomic, assign) BOOL EnterForNewLine;
+@property (nonatomic, assign) BOOL AsideGroupsCollapse;
+@property (nonatomic, assign) BOOL AsideOtherGroupsCollapse;
+@property (nonatomic, strong) NSNumber * ShowMarkUnreadThreshold;
+@property (nonatomic, assign) BOOL AdminModeOn;
+@property (nonatomic, assign) BOOL PreferMarkdown;
+@property (nonatomic, assign) BOOL AutoFollowPublicGroup;
+@property (nonatomic, assign) BOOL EnableHTML5Notification;
+@property (nonatomic, strong) QXLanguageSelectors * PreferredLanguageSelectors;
+
+- (id) initWithDictionary:(NSDictionary*)dict;
+- (NSDictionary*) dictionary;
+
+@end
+
+// --- GroupAside ---
+@interface QXGroupAside : NSObject
+
+@property (nonatomic, assign) BOOL IsMyGroupsCollapse;
+@property (nonatomic, assign) BOOL IsOtherGroupsCollapse;
+@property (nonatomic, assign) BOOL ShowNewGroupButton;
+@property (nonatomic, assign) BOOL HaveOtherGroup;
+@property (nonatomic, strong) QXGroup * AnnounGroup;
+@property (nonatomic, strong) QXGroup * SMGroup;
+@property (nonatomic, strong) NSArray * FollowingNormalGroups;
+@property (nonatomic, strong) NSArray * FollowingSharedGroups;
+@property (nonatomic, strong) NSArray * UnfollowedNormalGroups;
+@property (nonatomic, strong) NSArray * UnfollowedSharedGroups;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
 - (NSDictionary*) dictionary;
@@ -1293,21 +1341,12 @@
 
 @end
 
-// --- Preferences ---
-@interface QXPreferences : NSObject
+// --- OpenAdvancedToDosPage ---
+@interface QXOpenAdvancedToDosPage : NSObject
 
-@property (nonatomic, strong) NSString * Timezone;
-@property (nonatomic, strong) NSString * TimezoneOffset;
-@property (nonatomic, assign) BOOL PreferFullName;
-@property (nonatomic, assign) BOOL EnterForNewLine;
-@property (nonatomic, assign) BOOL AsideGroupsCollapse;
-@property (nonatomic, assign) BOOL AsideOtherGroupsCollapse;
-@property (nonatomic, strong) NSNumber * ShowMarkUnreadThreshold;
-@property (nonatomic, assign) BOOL AdminModeOn;
-@property (nonatomic, assign) BOOL PreferMarkdown;
-@property (nonatomic, assign) BOOL AutoFollowPublicGroup;
-@property (nonatomic, assign) BOOL EnableHTML5Notification;
-@property (nonatomic, strong) QXLanguageSelectors * PreferredLanguageSelectors;
+@property (nonatomic, strong) QXEmbedUser * Assignee;
+@property (nonatomic, strong) NSArray * ActionNeededToDos;
+@property (nonatomic, strong) NSArray * ToDosBuckets;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
 - (NSDictionary*) dictionary;
@@ -1322,6 +1361,31 @@
 @property (nonatomic, assign) BOOL WithLoadMoreLink;
 @property (nonatomic, strong) NSArray * Tasks;
 @property (nonatomic, strong) QXGroup * Group;
+
+- (id) initWithDictionary:(NSDictionary*)dict;
+- (NSDictionary*) dictionary;
+
+@end
+
+// --- MyTask ---
+@interface QXMyTask : NSObject
+
+@property (nonatomic, strong) NSString * PrefixURL;
+@property (nonatomic, strong) NSArray * NeedActionTasks;
+@property (nonatomic, strong) NSArray * GroupTasks;
+@property (nonatomic, strong) NSArray * ClosedTasks;
+
+- (id) initWithDictionary:(NSDictionary*)dict;
+- (NSDictionary*) dictionary;
+
+@end
+
+// --- MyNotifications ---
+@interface QXMyNotifications : NSObject
+
+@property (nonatomic, strong) NSArray * NotificationItems;
+@property (nonatomic, assign) BOOL HasMore;
+@property (nonatomic, strong) NSNumber * LatestNotifyTime;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
 - (NSDictionary*) dictionary;
@@ -1355,25 +1419,6 @@
 
 @end
 
-// --- GroupAside ---
-@interface QXGroupAside : NSObject
-
-@property (nonatomic, assign) BOOL IsMyGroupsCollapse;
-@property (nonatomic, assign) BOOL IsOtherGroupsCollapse;
-@property (nonatomic, assign) BOOL ShowNewGroupButton;
-@property (nonatomic, assign) BOOL HaveOtherGroup;
-@property (nonatomic, strong) QXGroup * AnnounGroup;
-@property (nonatomic, strong) QXGroup * SMGroup;
-@property (nonatomic, strong) NSArray * FollowingNormalGroups;
-@property (nonatomic, strong) NSArray * FollowingSharedGroups;
-@property (nonatomic, strong) NSArray * UnfollowedNormalGroups;
-@property (nonatomic, strong) NSArray * UnfollowedSharedGroups;
-
-- (id) initWithDictionary:(NSDictionary*)dict;
-- (NSDictionary*) dictionary;
-
-@end
-
 // --- SharingInvitation ---
 @interface QXSharingInvitation : NSObject
 
@@ -1393,84 +1438,6 @@
 @property (nonatomic, strong) NSString * PendingDuration;
 @property (nonatomic, strong) NSString * ToOrgName;
 @property (nonatomic, strong) NSString * ToOrgId;
-
-- (id) initWithDictionary:(NSDictionary*)dict;
-- (NSDictionary*) dictionary;
-
-@end
-
-// --- MyTask ---
-@interface QXMyTask : NSObject
-
-@property (nonatomic, strong) NSString * PrefixURL;
-@property (nonatomic, strong) NSArray * NeedActionTasks;
-@property (nonatomic, strong) NSArray * GroupTasks;
-@property (nonatomic, strong) NSArray * ClosedTasks;
-
-- (id) initWithDictionary:(NSDictionary*)dict;
-- (NSDictionary*) dictionary;
-
-@end
-
-// --- MyNotifications ---
-@interface QXMyNotifications : NSObject
-
-@property (nonatomic, strong) NSArray * NotificationItems;
-@property (nonatomic, assign) BOOL HasMore;
-@property (nonatomic, strong) NSNumber * LatestNotifyTime;
-
-- (id) initWithDictionary:(NSDictionary*)dict;
-- (NSDictionary*) dictionary;
-
-@end
-
-// --- OrgStats ---
-@interface QXOrgStats : NSObject
-
-@property (nonatomic, strong) QXOrganization * Organization;
-@property (nonatomic, strong) NSNumber * UserCount;
-@property (nonatomic, strong) NSNumber * GroupCount;
-@property (nonatomic, strong) NSNumber * SharedGroupCount;
-@property (nonatomic, strong) NSNumber * EntryCount;
-@property (nonatomic, strong) NSNumber * CommentCount;
-@property (nonatomic, strong) NSNumber * ChatCount;
-@property (nonatomic, strong) NSString * CreatedAt;
-@property (nonatomic, strong) NSString * LastUpdate;
-@property (nonatomic, strong) QXEmbedUser * Author;
-
-- (id) initWithDictionary:(NSDictionary*)dict;
-- (NSDictionary*) dictionary;
-
-@end
-
-// --- Member ---
-@interface QXMember : NSObject
-
-@property (nonatomic, strong) NSString * Name;
-@property (nonatomic, strong) NSString * Email;
-@property (nonatomic, strong) NSString * ComfirmationSentAt;
-@property (nonatomic, strong) NSString * SignupConfirmedAt;
-@property (nonatomic, strong) NSString * SignupStatus;
-@property (nonatomic, strong) NSArray * JoinedOrgs;
-
-- (id) initWithDictionary:(NSDictionary*)dict;
-- (NSDictionary*) dictionary;
-
-@end
-
-// --- GroupAdvancedSettingPage ---
-@interface QXGroupAdvancedSettingPage : NSObject
-
-@property (nonatomic, strong) QXGroup * Group;
-@property (nonatomic, strong) NSArray * Followers;
-@property (nonatomic, strong) QXOrganization * CurrentOrg;
-@property (nonatomic, strong) QXGroupSharingInfo * SharingInfo;
-@property (nonatomic, assign) BOOL CreatingGroup;
-@property (nonatomic, assign) BOOL Editable;
-@property (nonatomic, strong) NSDictionary * ThrowawayStatusSuggestions;
-@property (nonatomic, strong) NSDictionary * ThrowawayNotYetOpenTagIndexes;
-@property (nonatomic, strong) NSDictionary * ThrowawayOpenTagIndexes;
-@property (nonatomic, strong) NSDictionary * ThrowawayClosedTagIndexes;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
 - (NSDictionary*) dictionary;
@@ -1559,6 +1526,59 @@
 @property (nonatomic, assign) BOOL NeedShowAppliedText;
 @property (nonatomic, assign) BOOL NeedToBeEditMode;
 @property (nonatomic, assign) BOOL IsEditing;
+
+- (id) initWithDictionary:(NSDictionary*)dict;
+- (NSDictionary*) dictionary;
+
+@end
+
+// --- GroupAdvancedSettingPage ---
+@interface QXGroupAdvancedSettingPage : NSObject
+
+@property (nonatomic, strong) QXGroup * Group;
+@property (nonatomic, strong) NSArray * Followers;
+@property (nonatomic, strong) QXOrganization * CurrentOrg;
+@property (nonatomic, strong) QXGroupSharingInfo * SharingInfo;
+@property (nonatomic, assign) BOOL CreatingGroup;
+@property (nonatomic, assign) BOOL Editable;
+@property (nonatomic, strong) NSDictionary * ThrowawayStatusSuggestions;
+@property (nonatomic, strong) NSDictionary * ThrowawayNotYetOpenTagIndexes;
+@property (nonatomic, strong) NSDictionary * ThrowawayOpenTagIndexes;
+@property (nonatomic, strong) NSDictionary * ThrowawayClosedTagIndexes;
+
+- (id) initWithDictionary:(NSDictionary*)dict;
+- (NSDictionary*) dictionary;
+
+@end
+
+// --- Member ---
+@interface QXMember : NSObject
+
+@property (nonatomic, strong) NSString * Name;
+@property (nonatomic, strong) NSString * Email;
+@property (nonatomic, strong) NSString * ComfirmationSentAt;
+@property (nonatomic, strong) NSString * SignupConfirmedAt;
+@property (nonatomic, strong) NSString * SignupStatus;
+@property (nonatomic, strong) NSArray * JoinedOrgs;
+
+- (id) initWithDictionary:(NSDictionary*)dict;
+- (NSDictionary*) dictionary;
+
+@end
+
+// --- OrgStats ---
+@interface QXOrgStats : NSObject
+
+@property (nonatomic, strong) QXOrganization * Organization;
+@property (nonatomic, strong) NSNumber * UserCount;
+@property (nonatomic, strong) NSNumber * GroupCount;
+@property (nonatomic, strong) NSNumber * SharedGroupCount;
+@property (nonatomic, strong) NSNumber * EntryCount;
+@property (nonatomic, strong) NSNumber * CommentCount;
+@property (nonatomic, strong) NSNumber * ChatCount;
+@property (nonatomic, strong) NSString * CreatedAt;
+@property (nonatomic, strong) NSString * LastUpdate;
+@property (nonatomic, strong) QXEmbedUser * Author;
 
 - (id) initWithDictionary:(NSDictionary*)dict;
 - (NSDictionary*) dictionary;
@@ -1756,7 +1776,6 @@
 
 
 // === Interfaces ===
-
 
 // --- QXGetNewOrganizationParams ---
 @interface QXAuthMemberServiceGetNewOrganizationParams : NSObject
@@ -1965,29 +1984,37 @@
 @end
 
 
-@interface QXAuthMemberService : NSObject
-- (NSDictionary*) dictionary;
-
+@interface QXAuthMemberService : NSObject- (NSDictionary*) dictionary;
 
 - (QXAuthMemberServiceGetNewOrganizationResults *) GetNewOrganization:(NSString *)memberId;
+- (void) getNewOrganization:(NSString *)memberId success:(void (^)(QXAuthMemberServiceGetNewOrganizationResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthMemberServiceGetMyOrganizationsResults *) GetMyOrganizations;
+- (void) getMyOrganizations:(void (^)(QXAuthMemberServiceGetMyOrganizationsResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthMemberServiceCreateOrganizationResults *) CreateOrganization:(QXOrganizationInput *)input;
+- (void) createOrganization:(QXOrganizationInput *)input success:(void (^)(QXAuthMemberServiceCreateOrganizationResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (NSError *) JoinOrganization:(NSString *)orgId;
+- (void) joinOrganization:(NSString *)orgId success:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (NSError *) LeaveOrganization:(NSString *)orgId;
+- (void) leaveOrganization:(NSString *)orgId success:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (NSError *) SwitchOrganization:(NSString *)orgId;
+- (void) switchOrganization:(NSString *)orgId success:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthMemberServiceGetAbandonInfoResults *) GetAbandonInfo:(NSString *)abandonOrgId memberId:(NSString *)memberId;
+- (void) getAbandonInfo:(NSString *)abandonOrgId memberId:(NSString *)memberId success:(void (^)(QXAuthMemberServiceGetAbandonInfoResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthMemberServiceGetShareRequestResults *) GetShareRequest:(NSString *)token;
+- (void) getShareRequest:(NSString *)token success:(void (^)(QXAuthMemberServiceGetShareRequestResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (NSError *) RejectShareRequestByInvitee:(NSString *)token;
+- (void) rejectShareRequestByInvitee:(NSString *)token success:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (NSError *) AcceptShareRequestByInvitee:(NSString *)token toOrgId:(NSString *)toOrgId;
+- (void) acceptShareRequestByInvitee:(NSString *)token toOrgId:(NSString *)toOrgId success:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock;
 @end
 
 
@@ -2242,28 +2269,40 @@
 
 
 - (QXAuthAdminServiceGetTotalStatsResults *) GetTotalStats;
+- (void) getTotalStats:(void (^)(QXAuthAdminServiceGetTotalStatsResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthAdminServiceGetWeeklyTotalStatsResults *) GetWeeklyTotalStats;
+- (void) getWeeklyTotalStats:(void (^)(QXAuthAdminServiceGetWeeklyTotalStatsResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthAdminServiceGetOrgStatsResults *) GetOrgStats;
+- (void) getOrgStats:(void (^)(QXAuthAdminServiceGetOrgStatsResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthAdminServiceGetAccessRequestsResults *) GetAccessRequests;
+- (void) getAccessRequests:(void (^)(QXAuthAdminServiceGetAccessRequestsResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (NSError *) ApproveAccess:(NSString *)email;
+- (void) approveAccess:(NSString *)email success:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (NSError *) ResendApprovedMail:(NSString *)email;
+- (void) resendApprovedMail:(NSString *)email success:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthAdminServiceGetAllMembersResults *) GetAllMembers;
+- (void) getAllMembers:(void (^)(QXAuthAdminServiceGetAllMembersResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (NSError *) IgnoreAccess:(NSString *)email;
+- (void) ignoreAccess:(NSString *)email success:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthAdminServiceGetAutoApproveAccessResults *) GetAutoApproveAccess;
+- (void) getAutoApproveAccess:(void (^)(QXAuthAdminServiceGetAutoApproveAccessResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (NSError *) SetAutoApproveAccess:(BOOL)enable;
+- (void) setAutoApproveAccess:(BOOL)enable success:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthAdminServiceGetMarketableUsersResults *) GetMarketableUsers;
+- (void) getMarketableUsers:(void (^)(QXAuthAdminServiceGetMarketableUsersResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthAdminServiceGetTotalOnlineUsersResults *) GetTotalOnlineUsers;
+- (void) getTotalOnlineUsers:(void (^)(QXAuthAdminServiceGetTotalOnlineUsersResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 @end
 
 
@@ -5170,6 +5209,27 @@
 
 @end
 
+// --- QXToDoCSVParams ---
+@interface QXAuthUserServiceToDoCSVParams : NSObject
+
+@property (nonatomic, strong) NSString * GroupId;
+
+- (id) initWithDictionary:(NSDictionary*)dict;
+- (NSDictionary*) dictionary;
+
+@end
+
+// --- QXToDoCSVResults ---
+@interface QXAuthUserServiceToDoCSVResults : NSObject
+
+@property (nonatomic, strong) NSArray * Todos;
+@property (nonatomic, strong) NSError * Err;
+
+- (id) initWithDictionary:(NSDictionary*)dict;
+- (NSDictionary*) dictionary;
+
+@end
+
 
 @interface QXAuthUserService : NSObject
 
@@ -5181,297 +5241,418 @@
 
 
 - (QXAuthUserServiceGetNewEntryResults *) GetNewEntry:(NSString *)groupId;
+- (void) getNewEntry:(NSString *)groupId success:(void (^)(QXAuthUserServiceGetNewEntryResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthUserServiceGetNewChatEntryResults *) GetNewChatEntry:(NSString *)chatId;
+- (void) getNewChatEntry:(NSString *)chatId success:(void (^)(QXAuthUserServiceGetNewChatEntryResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthUserServiceGetQortexSupportEntriesResults *) GetQortexSupportEntries:(NSString *)before limit:(NSNumber *)limit withComments:(BOOL)withComments;
+- (void) getQortexSupportEntries:(NSString *)before limit:(NSNumber *)limit withComments:(BOOL)withComments success:(void (^)(QXAuthUserServiceGetQortexSupportEntriesResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthUserServiceCreateEntryResults *) CreateEntry:(QXEntryInput *)input;
+- (void) createEntry:(QXEntryInput *)input success:(void (^)(QXAuthUserServiceCreateEntryResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthUserServiceCreateTaskResults *) CreateTask:(QXEntryInput *)input;
+- (void) createTask:(QXEntryInput *)input success:(void (^)(QXAuthUserServiceCreateTaskResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthUserServiceCloseTaskResults *) CloseTask:(NSString *)entryId groupId:(NSString *)groupId taskId:(NSString *)taskId;
+- (void) closeTask:(NSString *)entryId groupId:(NSString *)groupId taskId:(NSString *)taskId success:(void (^)(QXAuthUserServiceCloseTaskResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthUserServiceCreateCommentResults *) CreateComment:(QXEntryInput *)input;
+- (void) createComment:(QXEntryInput *)input success:(void (^)(QXAuthUserServiceCreateCommentResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthUserServiceGetCommentResults *) GetComment:(NSString *)entryId groupId:(NSString *)groupId;
+- (void) getComment:(NSString *)entryId groupId:(NSString *)groupId success:(void (^)(QXAuthUserServiceGetCommentResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthUserServiceUpdateCommentResults *) UpdateComment:(QXEntryInput *)input;
+- (void) updateComment:(QXEntryInput *)input success:(void (^)(QXAuthUserServiceUpdateCommentResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthUserServiceUpdateEntryResults *) UpdateEntry:(QXEntryInput *)input;
+- (void) updateEntry:(QXEntryInput *)input success:(void (^)(QXAuthUserServiceUpdateEntryResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthUserServiceGetLatestUpdatedEntryIdByTitleResults *) GetLatestUpdatedEntryIdByTitle:(NSString *)title groupId:(NSString *)groupId;
+- (void) getLatestUpdatedEntryIdByTitle:(NSString *)title groupId:(NSString *)groupId success:(void (^)(QXAuthUserServiceGetLatestUpdatedEntryIdByTitleResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthUserServiceGetEntryResults *) GetEntry:(NSString *)entryId groupId:(NSString *)groupId updateAtUnixNanoForVersion:(NSString *)updateAtUnixNanoForVersion hightlightKeywords:(NSString *)hightlightKeywords;
+- (void) getEntry:(NSString *)entryId groupId:(NSString *)groupId updateAtUnixNanoForVersion:(NSString *)updateAtUnixNanoForVersion hightlightKeywords:(NSString *)hightlightKeywords success:(void (^)(QXAuthUserServiceGetEntryResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthUserServiceDeleteEntryResults *) DeleteEntry:(NSString *)entryId groupId:(NSString *)groupId dType:(NSString *)dType;
+- (void) deleteEntry:(NSString *)entryId groupId:(NSString *)groupId dType:(NSString *)dType success:(void (^)(QXAuthUserServiceDeleteEntryResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (NSError *) MuteEntry:(NSString *)entryId groupId:(NSString *)groupId;
+- (void) muteEntry:(NSString *)entryId groupId:(NSString *)groupId success:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (NSError *) UndoMuteEntry:(NSString *)entryId groupId:(NSString *)groupId;
+- (void) undoMuteEntry:(NSString *)entryId groupId:(NSString *)groupId success:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthUserServiceGetMachineTranslatableLangaugesResults *) GetMachineTranslatableLangauges;
+- (void) getMachineTranslatableLangauges:(void (^)(QXAuthUserServiceGetMachineTranslatableLangaugesResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthUserServiceMachineTranslateResults *) MachineTranslate:(NSString *)entryId groupId:(NSString *)groupId targetlang:(NSString *)targetlang;
+- (void) machineTranslate:(NSString *)entryId groupId:(NSString *)groupId targetlang:(NSString *)targetlang success:(void (^)(QXAuthUserServiceMachineTranslateResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthUserServiceOriginalThreadResults *) OriginalThread:(NSString *)entryId groupId:(NSString *)groupId;
+- (void) originalThread:(NSString *)entryId groupId:(NSString *)groupId success:(void (^)(QXAuthUserServiceOriginalThreadResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthUserServiceGetEntryAttachmentsResults *) GetEntryAttachments:(NSString *)entryId groupId:(NSString *)groupId;
+- (void) getEntryAttachments:(NSString *)entryId groupId:(NSString *)groupId success:(void (^)(QXAuthUserServiceGetEntryAttachmentsResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthUserServiceGetDocViewSessionResults *) GetDocViewSession:(NSString *)doi groupId:(NSString *)groupId attachmentId:(NSString *)attachmentId;
+- (void) getDocViewSession:(NSString *)doi groupId:(NSString *)groupId attachmentId:(NSString *)attachmentId success:(void (^)(QXAuthUserServiceGetDocViewSessionResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthUserServiceDeleteEntryAttachmentResults *) DeleteEntryAttachment:(NSString *)doi groupId:(NSString *)groupId attachmentId:(NSString *)attachmentId ownerId:(NSString *)ownerId;
+- (void) deleteEntryAttachment:(NSString *)doi groupId:(NSString *)groupId attachmentId:(NSString *)attachmentId ownerId:(NSString *)ownerId success:(void (^)(QXAuthUserServiceDeleteEntryAttachmentResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthUserServiceGetOtherVersionsCommentsResults *) GetOtherVersionsComments:(NSString *)entryId groupId:(NSString *)groupId updateAtUnixNanoForVersion:(NSString *)updateAtUnixNanoForVersion;
+- (void) getOtherVersionsComments:(NSString *)entryId groupId:(NSString *)groupId updateAtUnixNanoForVersion:(NSString *)updateAtUnixNanoForVersion success:(void (^)(QXAuthUserServiceGetOtherVersionsCommentsResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthUserServiceGetOtherVersionsTaskLogsResults *) GetOtherVersionsTaskLogs:(NSString *)entryId groupId:(NSString *)groupId updateAtUnixNanoForVersion:(NSString *)updateAtUnixNanoForVersion;
+- (void) getOtherVersionsTaskLogs:(NSString *)entryId groupId:(NSString *)groupId updateAtUnixNanoForVersion:(NSString *)updateAtUnixNanoForVersion success:(void (^)(QXAuthUserServiceGetOtherVersionsTaskLogsResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthUserServiceGetGroupEntriesResults *) GetGroupEntries:(NSString *)groupId entryType:(NSString *)entryType before:(NSString *)before limit:(NSNumber *)limit withComments:(BOOL)withComments;
-
-- (void)getGroupEntries:(NSString *)groupId
-              entryType:(NSString *)entryType
-                 before:(NSString *)before
-                  limit:(NSNumber *)limit
-           withComments:(BOOL)withComments
-                success:(void (^)(QXAuthUserServiceGetGroupEntriesResults *results))successBlock
-                failure:(void (^)(NSError *error))failureBlock;
+- (void) getGroupEntries:(NSString *)groupId entryType:(NSString *)entryType before:(NSString *)before limit:(NSNumber *)limit withComments:(BOOL)withComments success:(void (^)(QXAuthUserServiceGetGroupEntriesResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthUserServiceGetMyFeedEntriesResults *) GetMyFeedEntries:(NSString *)entryType before:(NSString *)before limit:(NSNumber *)limit withComments:(BOOL)withComments;
-
-- (void)getMyFeedEntries:(NSString *)entryType
-                  before:(NSString *)before
-                   limit:(NSNumber *)limit
-            withComments:(BOOL)withComments
-                 success:(void (^)(QXAuthUserServiceGetMyFeedEntriesResults *results))successBlock
-                 failure:(void (^)(NSError *error))failureBlock;
+- (void) getMyFeedEntries:(NSString *)entryType before:(NSString *)before limit:(NSNumber *)limit withComments:(BOOL)withComments success:(void (^)(QXAuthUserServiceGetMyFeedEntriesResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthUserServiceGetGroupAsideResults *) GetGroupAside;
+- (void) getGroupAside:(void (^)(QXAuthUserServiceGetGroupAsideResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthUserServiceGetNewFeedEntriesResults *) GetNewFeedEntries:(NSString *)entryType fromTimeUnixNano:(NSString *)fromTimeUnixNano limit:(NSNumber *)limit;
+- (void) getNewFeedEntries:(NSString *)entryType fromTimeUnixNano:(NSString *)fromTimeUnixNano limit:(NSNumber *)limit success:(void (^)(QXAuthUserServiceGetNewFeedEntriesResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthUserServiceGetUserEntriesResults *) GetUserEntries:(NSString *)userId entryType:(NSString *)entryType before:(NSString *)before limit:(NSNumber *)limit;
+- (void) getUserEntries:(NSString *)userId entryType:(NSString *)entryType before:(NSString *)before limit:(NSNumber *)limit success:(void (^)(QXAuthUserServiceGetUserEntriesResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthUserServiceGetMyNotificationItemsResults *) GetMyNotificationItems:(NSString *)before limit:(NSNumber *)limit;
+- (void) getMyNotificationItems:(NSString *)before limit:(NSNumber *)limit success:(void (^)(QXAuthUserServiceGetMyNotificationItemsResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthUserServiceMarkAllAsReadResults *) MarkAllAsRead:(NSString *)groupId;
+- (void) markAllAsRead:(NSString *)groupId success:(void (^)(QXAuthUserServiceMarkAllAsReadResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthUserServiceGetWatchListResults *) GetWatchList:(NSString *)before limit:(NSNumber *)limit;
+- (void) getWatchList:(NSString *)before limit:(NSNumber *)limit success:(void (^)(QXAuthUserServiceGetWatchListResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthUserServiceAddToWatchListResults *) AddToWatchList:(NSString *)entryId groupId:(NSString *)groupId remindMode:(NSString *)remindMode;
+- (void) addToWatchList:(NSString *)entryId groupId:(NSString *)groupId remindMode:(NSString *)remindMode success:(void (^)(QXAuthUserServiceAddToWatchListResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthUserServiceStopWatchingResults *) StopWatching:(NSString *)entryId groupId:(NSString *)groupId;
+- (void) stopWatching:(NSString *)entryId groupId:(NSString *)groupId success:(void (^)(QXAuthUserServiceStopWatchingResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (NSError *) ReadWatching:(NSString *)entryId groupId:(NSString *)groupId;
+- (void) readWatching:(NSString *)entryId groupId:(NSString *)groupId success:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthUserServiceRemindMeResults *) RemindMe;
+- (void) remindMe:(void (^)(QXAuthUserServiceRemindMeResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthUserServiceStartSmartRemindingResults *) StartSmartReminding:(NSString *)groupId watchItemId:(NSString *)watchItemId;
+- (void) startSmartReminding:(NSString *)groupId watchItemId:(NSString *)watchItemId success:(void (^)(QXAuthUserServiceStartSmartRemindingResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthUserServiceStopRemindingResults *) StopReminding:(NSString *)groupId watchItemId:(NSString *)watchItemId;
+- (void) stopReminding:(NSString *)groupId watchItemId:(NSString *)watchItemId success:(void (^)(QXAuthUserServiceStopRemindingResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthUserServiceUpdateLikeResults *) UpdateLike:(QXLikeInput *)input;
+- (void) updateLike:(QXLikeInput *)input success:(void (^)(QXAuthUserServiceUpdateLikeResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthUserServiceGetDraftListResults *) GetDraftList:(NSString *)before limit:(NSNumber *)limit;
+- (void) getDraftList:(NSString *)before limit:(NSNumber *)limit success:(void (^)(QXAuthUserServiceGetDraftListResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthUserServiceGetDraftResults *) GetDraft:(NSString *)entryId groupId:(NSString *)groupId;
+- (void) getDraft:(NSString *)entryId groupId:(NSString *)groupId success:(void (^)(QXAuthUserServiceGetDraftResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (NSError *) DeleteDraft:(NSString *)entryId groupId:(NSString *)groupId;
+- (void) deleteDraft:(NSString *)entryId groupId:(NSString *)groupId success:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (NSError *) ChooseMarkdownEditor;
+- (void) chooseMarkdownEditor:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (NSError *) ChooseStyledEditor;
+- (void) chooseStyledEditor:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthUserServiceGetNewGroupResults *) GetNewGroup;
+- (void) getNewGroup:(void (^)(QXAuthUserServiceGetNewGroupResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthUserServiceGetGroupResults *) GetGroup:(NSString *)groupId;
+- (void) getGroup:(NSString *)groupId success:(void (^)(QXAuthUserServiceGetGroupResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthUserServiceCreateGroupResults *) CreateGroup:(QXGroupInput *)input;
+- (void) createGroup:(QXGroupInput *)input success:(void (^)(QXAuthUserServiceCreateGroupResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (NSError *) UpdateGroup:(QXGroupInput *)input;
+- (void) updateGroup:(QXGroupInput *)input success:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (NSError *) UpdateGroupLogo:(NSString *)groupId logoURL:(NSString *)logoURL;
+- (void) updateGroupLogo:(NSString *)groupId logoURL:(NSString *)logoURL success:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (NSError *) DeleteGroup:(NSString *)groupId;
+- (void) deleteGroup:(NSString *)groupId success:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthUserServiceGetGroupBySlugResults *) GetGroupBySlug:(NSString *)slug;
+- (void) getGroupBySlug:(NSString *)slug success:(void (^)(QXAuthUserServiceGetGroupBySlugResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthUserServiceGetGroupsResults *) GetGroups:(NSString *)keyword;
-
-- (void)getGroupsByKeyword:(NSString *)keyword
-                   success:(void (^)(QXAuthUserServiceGetGroupsResults *results))successBlock
-                   failure:(void (^)(NSError *error))failureBlock;
+- (void) getGroups:(NSString *)keyword success:(void (^)(QXAuthUserServiceGetGroupsResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthUserServiceGetPublicGroupsResults *) GetPublicGroups:(NSString *)keyword;
+- (void) getPublicGroups:(NSString *)keyword success:(void (^)(QXAuthUserServiceGetPublicGroupsResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (NSError *) AddUserToGroup:(NSString *)groupId userId:(NSString *)userId;
+- (void) addUserToGroup:(NSString *)groupId userId:(NSString *)userId success:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (NSError *) RemoveUserFromGroup:(NSString *)groupId userId:(NSString *)userId;
+- (void) removeUserFromGroup:(NSString *)groupId userId:(NSString *)userId success:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthUserServiceGetClassifiedGroupsResults *) GetClassifiedGroups;
+- (void) getClassifiedGroups:(void (^)(QXAuthUserServiceGetClassifiedGroupsResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (NSError *) BulkUpdateTasksInGroup:(NSString *)groupId taskPwMap:(NSArray *)taskPwMap taskInputs:(NSArray *)taskInputs;
+- (void) bulkUpdateTasksInGroup:(NSString *)groupId taskPwMap:(NSArray *)taskPwMap taskInputs:(NSArray *)taskInputs success:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthUserServiceGetAuthUserResults *) GetAuthUser;
+- (void) getAuthUser:(void (^)(QXAuthUserServiceGetAuthUserResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthUserServiceGetOrgUsersResults *) GetOrgUsers:(NSString *)keyword startFullName:(NSString *)startFullName limit:(NSNumber *)limit;
+- (void) getOrgUsers:(NSString *)keyword startFullName:(NSString *)startFullName limit:(NSNumber *)limit success:(void (^)(QXAuthUserServiceGetOrgUsersResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthUserServiceGetGroupUsersResults *) GetGroupUsers:(NSString *)groupId keyword:(NSString *)keyword onlyFollowers:(BOOL)onlyFollowers startFullName:(NSString *)startFullName limit:(NSNumber *)limit;
+- (void) getGroupUsers:(NSString *)groupId keyword:(NSString *)keyword onlyFollowers:(BOOL)onlyFollowers startFullName:(NSString *)startFullName limit:(NSNumber *)limit success:(void (^)(QXAuthUserServiceGetGroupUsersResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthUserServiceGetUserResults *) GetUser:(NSString *)userId;
+- (void) getUser:(NSString *)userId success:(void (^)(QXAuthUserServiceGetUserResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (NSError *) EnableUser:(NSString *)userId;
+- (void) enableUser:(NSString *)userId success:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (NSError *) DisableUser:(NSString *)userId;
+- (void) disableUser:(NSString *)userId success:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (NSError *) DeleteUser:(NSString *)userId;
+- (void) deleteUser:(NSString *)userId success:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (NSError *) PromoteToSuperUser:(NSString *)userId;
+- (void) promoteToSuperUser:(NSString *)userId success:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (NSError *) DemoteFromSuperUser:(NSString *)userId;
+- (void) demoteFromSuperUser:(NSString *)userId success:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (NSError *) FollowUser:(NSString *)userId;
+- (void) followUser:(NSString *)userId success:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (NSError *) UnfollowUser:(NSString *)userId;
+- (void) unfollowUser:(NSString *)userId success:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthUserServiceGetMyFollowingUsersResults *) GetMyFollowingUsers;
+- (void) getMyFollowingUsers:(void (^)(QXAuthUserServiceGetMyFollowingUsersResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthUserServiceGetPanelStatusResults *) GetPanelStatus;
+- (void) getPanelStatus:(void (^)(QXAuthUserServiceGetPanelStatusResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthUserServiceGetUserPreferencesResults *) GetUserPreferences;
+- (void) getUserPreferences:(void (^)(QXAuthUserServiceGetUserPreferencesResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthUserServiceUpdateUserPreferencesResults *) UpdateUserPreferences:(QXPreferencesInput *)input;
+- (void) updateUserPreferences:(QXPreferencesInput *)input success:(void (^)(QXAuthUserServiceUpdateUserPreferencesResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthUserServiceGetOrgEmbedUsersResults *) GetOrgEmbedUsers;
+- (void) getOrgEmbedUsers:(void (^)(QXAuthUserServiceGetOrgEmbedUsersResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthUserServiceGetNonStandardGroupEmbedUsersResults *) GetNonStandardGroupEmbedUsers;
+- (void) getNonStandardGroupEmbedUsers:(void (^)(QXAuthUserServiceGetNonStandardGroupEmbedUsersResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (NSError *) UpdateUserProfile:(QXUserProfileInput *)input;
+- (void) updateUserProfile:(QXUserProfileInput *)input success:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (NSError *) SetPreferredLanguages:(NSArray *)languageCodes;
+- (void) setPreferredLanguages:(NSArray *)languageCodes success:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthUserServiceGetMyCountResults *) GetMyCount;
+- (void) getMyCount:(void (^)(QXAuthUserServiceGetMyCountResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthUserServiceReadEntryResults *) ReadEntry:(NSString *)entryId groupId:(NSString *)groupId;
+- (void) readEntry:(NSString *)entryId groupId:(NSString *)groupId success:(void (^)(QXAuthUserServiceReadEntryResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthUserServiceGetJoinOrgInvitationsResults *) GetJoinOrgInvitations;
+- (void) getJoinOrgInvitations:(void (^)(QXAuthUserServiceGetJoinOrgInvitationsResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthUserServiceGetOrganizationResults *) GetOrganization:(NSString *)orgId;
+- (void) getOrganization:(NSString *)orgId success:(void (^)(QXAuthUserServiceGetOrganizationResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthUserServiceGetOrganizationsResults *) GetOrganizations:(NSArray *)orgIds;
+- (void) getOrganizations:(NSArray *)orgIds success:(void (^)(QXAuthUserServiceGetOrganizationsResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthUserServiceGetMyOrgsUnreadInfoResults *) GetMyOrgsUnreadInfo;
+- (void) getMyOrgsUnreadInfo:(void (^)(QXAuthUserServiceGetMyOrgsUnreadInfoResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthUserServiceGetMyJoinedOrganizationsResults *) GetMyJoinedOrganizations;
+- (void) getMyJoinedOrganizations:(void (^)(QXAuthUserServiceGetMyJoinedOrganizationsResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthUserServiceGetCurrentOrganizationResults *) GetCurrentOrganization;
+- (void) getCurrentOrganization:(void (^)(QXAuthUserServiceGetCurrentOrganizationResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthUserServiceSearchOrganizationsResults *) SearchOrganizations:(NSString *)keyword;
+- (void) searchOrganizations:(NSString *)keyword success:(void (^)(QXAuthUserServiceSearchOrganizationsResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthUserServiceUpdateOrganizationResults *) UpdateOrganization:(QXOrganizationInput *)input;
+- (void) updateOrganization:(QXOrganizationInput *)input success:(void (^)(QXAuthUserServiceUpdateOrganizationResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (NSError *) SwitchOrganization:(NSString *)orgId;
+- (void) switchOrganization:(NSString *)orgId success:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (NSError *) AcceptShareRequestByAdmin:(NSString *)requestId;
+- (void) acceptShareRequestByAdmin:(NSString *)requestId success:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (NSError *) RejectShareRequestByAdmin:(NSString *)requestId;
+- (void) rejectShareRequestByAdmin:(NSString *)requestId success:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (NSError *) StartTrial;
+- (void) startTrial:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthUserServiceGetOrgSettingsResults *) GetOrgSettings;
+- (void) getOrgSettings:(void (^)(QXAuthUserServiceGetOrgSettingsResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (NSError *) UpdateOrgSettings:(QXOrgSettingsInput *)orgSettingInput;
+- (void) updateOrgSettings:(QXOrgSettingsInput *)orgSettingInput success:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthUserServiceCanCreateGroupResults *) CanCreateGroup;
+- (void) canCreateGroup:(void (^)(QXAuthUserServiceCanCreateGroupResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthUserServiceCanInvitePeopleResults *) CanInvitePeople;
+- (void) canInvitePeople:(void (^)(QXAuthUserServiceCanInvitePeopleResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthUserServiceInvitePeopleResults *) InvitePeople:(NSArray *)emails allowEmpty:(BOOL)allowEmpty skipInvalidEmail:(BOOL)skipInvalidEmail customMessage:(NSString *)customMessage;
+- (void) invitePeople:(NSArray *)emails allowEmpty:(BOOL)allowEmpty skipInvalidEmail:(BOOL)skipInvalidEmail customMessage:(NSString *)customMessage success:(void (^)(QXAuthUserServiceInvitePeopleResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (NSError *) CancelInvitation:(NSString *)email;
+- (void) cancelInvitation:(NSString *)email success:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (NSError *) ResendInvitation:(NSString *)email;
+- (void) resendInvitation:(NSString *)email success:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (NSError *) ChangeLocale:(NSString *)localeName;
+- (void) changeLocale:(NSString *)localeName success:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (NSError *) UpdateGroupAdvancedToDoSettings:(NSString *)gId settings:(NSString *)settings;
+- (void) updateGroupAdvancedToDoSettings:(NSString *)gId settings:(NSString *)settings success:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (NSError *) UpdateMailPreference:(QXMailPreferenceInput *)input;
+- (void) updateMailPreference:(QXMailPreferenceInput *)input success:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthUserServicePrepareChangingEmailResults *) PrepareChangingEmail:(NSString *)newEmail;
+- (void) prepareChangingEmail:(NSString *)newEmail success:(void (^)(QXAuthUserServicePrepareChangingEmailResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (NSError *) ConfirmChangingEmail:(NSString *)token;
+- (void) confirmChangingEmail:(NSString *)token success:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (NSError *) UpdateAccount:(QXMemberAccountInput *)input;
+- (void) updateAccount:(QXMemberAccountInput *)input success:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthUserServiceSendShareRequestResults *) SendShareRequest:(NSString *)groupId email:(NSString *)email;
+- (void) sendShareRequest:(NSString *)groupId email:(NSString *)email success:(void (^)(QXAuthUserServiceSendShareRequestResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthUserServiceGetShareRequestsResults *) GetShareRequests:(NSString *)groupId;
+- (void) getShareRequests:(NSString *)groupId success:(void (^)(QXAuthUserServiceGetShareRequestsResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (NSError *) CancelShareRequest:(NSString *)requestId;
+- (void) cancelShareRequest:(NSString *)requestId success:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (NSError *) StopSharingGroup:(NSString *)requestId;
+- (void) stopSharingGroup:(NSString *)requestId success:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (NSError *) DismissPresentationTip;
+- (void) dismissPresentationTip:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthUserServiceGetMyChatEntriesResults *) GetMyChatEntries:(NSString *)before limit:(NSNumber *)limit;
+- (void) getMyChatEntries:(NSString *)before limit:(NSNumber *)limit success:(void (^)(QXAuthUserServiceGetMyChatEntriesResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthUserServiceGetPrivateChatResults *) GetPrivateChat:(NSString *)conversationId searchKeyWords:(NSString *)searchKeyWords;
+- (void) getPrivateChat:(NSString *)conversationId searchKeyWords:(NSString *)searchKeyWords success:(void (^)(QXAuthUserServiceGetPrivateChatResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthUserServiceCreateQortexSupportResults *) CreateQortexSupport:(QXQortexSupportInput *)input;
+- (void) createQortexSupport:(QXQortexSupportInput *)input success:(void (^)(QXAuthUserServiceCreateQortexSupportResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthUserServiceCreateQortexSupportCommentResults *) CreateQortexSupportComment:(QXQortexSupportInput *)input;
+- (void) createQortexSupportComment:(QXQortexSupportInput *)input success:(void (^)(QXAuthUserServiceCreateQortexSupportCommentResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthUserServiceGetQortexSupportResults *) GetQortexSupport:(NSString *)entryId;
+- (void) getQortexSupport:(NSString *)entryId success:(void (^)(QXAuthUserServiceGetQortexSupportResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthUserServiceGetQortexSupportCommentResults *) GetQortexSupportComment:(NSString *)entryId;
+- (void) getQortexSupportComment:(NSString *)entryId success:(void (^)(QXAuthUserServiceGetQortexSupportCommentResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthUserServiceUpdateQortexSupportResults *) UpdateQortexSupport:(QXQortexSupportInput *)input;
+- (void) updateQortexSupport:(QXQortexSupportInput *)input success:(void (^)(QXAuthUserServiceUpdateQortexSupportResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthUserServiceUpdateQortexSupportCommentResults *) UpdateQortexSupportComment:(QXQortexSupportInput *)input;
+- (void) updateQortexSupportComment:(QXQortexSupportInput *)input success:(void (^)(QXAuthUserServiceUpdateQortexSupportCommentResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthUserServiceGetQortexSupportHelpLinkResults *) GetQortexSupportHelpLink:(NSString *)title;
+- (void) getQortexSupportHelpLink:(NSString *)title success:(void (^)(QXAuthUserServiceGetQortexSupportHelpLinkResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthUserServiceNewTaskResults *) NewTask:(NSString *)groupId;
+- (void) newTask:(NSString *)groupId success:(void (^)(QXAuthUserServiceNewTaskResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthUserServiceEditTaskResults *) EditTask:(NSString *)groupId taskId:(NSString *)taskId;
+- (void) editTask:(NSString *)groupId taskId:(NSString *)taskId success:(void (^)(QXAuthUserServiceEditTaskResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthUserServiceGetAdvancedTaskResults *) GetAdvancedTask:(NSString *)taskId;
+- (void) getAdvancedTask:(NSString *)taskId success:(void (^)(QXAuthUserServiceGetAdvancedTaskResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthUserServiceClaimTaskResults *) ClaimTask:(NSString *)taskId groupId:(NSString *)groupId;
+- (void) claimTask:(NSString *)taskId groupId:(NSString *)groupId success:(void (^)(QXAuthUserServiceClaimTaskResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthUserServiceUpdateTaskResults *) UpdateTask:(QXTaskInput *)input;
+- (void) updateTask:(QXTaskInput *)input success:(void (^)(QXAuthUserServiceUpdateTaskResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthUserServiceGetTasksForMeResults *) GetTasksForMe;
+- (void) getTasksForMe:(void (^)(QXAuthUserServiceGetTasksForMeResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthUserServiceGetOpenTasksIMadeResults *) GetOpenTasksIMade;
+- (void) getOpenTasksIMade:(void (^)(QXAuthUserServiceGetOpenTasksIMadeResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthUserServiceGetClosedTasksIMadeResults *) GetClosedTasksIMade:(NSString *)before limit:(NSNumber *)limit;
+- (void) getClosedTasksIMade:(NSString *)before limit:(NSNumber *)limit success:(void (^)(QXAuthUserServiceGetClosedTasksIMadeResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthUserServiceGetOpenTasksIWorkedOnResults *) GetOpenTasksIWorkedOn;
+- (void) getOpenTasksIWorkedOn:(void (^)(QXAuthUserServiceGetOpenTasksIWorkedOnResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthUserServiceGetClosedTasksIWorkedOnResults *) GetClosedTasksIWorkedOn:(NSString *)before limit:(NSNumber *)limit;
+- (void) getClosedTasksIWorkedOn:(NSString *)before limit:(NSNumber *)limit success:(void (^)(QXAuthUserServiceGetClosedTasksIWorkedOnResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthUserServiceGetGroupAdvancedToDoSettingResults *) GetGroupAdvancedToDoSetting:(NSString *)gId;
+- (void) getGroupAdvancedToDoSetting:(NSString *)gId success:(void (^)(QXAuthUserServiceGetGroupAdvancedToDoSettingResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthUserServiceAllOpenAdvancedToDosInGroupResults *) AllOpenAdvancedToDosInGroup:(NSString *)groupId;
+- (void) allOpenAdvancedToDosInGroup:(NSString *)groupId success:(void (^)(QXAuthUserServiceAllOpenAdvancedToDosInGroupResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthUserServiceAllOpenAdvancedToDosGroupingByUserInGroupResults *) AllOpenAdvancedToDosGroupingByUserInGroup:(NSString *)groupId;
+- (void) allOpenAdvancedToDosGroupingByUserInGroup:(NSString *)groupId success:(void (^)(QXAuthUserServiceAllOpenAdvancedToDosGroupingByUserInGroupResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthUserServiceAllOpenAdvancedToDosGroupingByStatusInGroupResults *) AllOpenAdvancedToDosGroupingByStatusInGroup:(NSString *)groupId;
+- (void) allOpenAdvancedToDosGroupingByStatusInGroup:(NSString *)groupId success:(void (^)(QXAuthUserServiceAllOpenAdvancedToDosGroupingByStatusInGroupResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthUserServiceAllOpenAdvancedToDosGroupingByLabelInGroupResults *) AllOpenAdvancedToDosGroupingByLabelInGroup:(NSString *)groupId;
+- (void) allOpenAdvancedToDosGroupingByLabelInGroup:(NSString *)groupId success:(void (^)(QXAuthUserServiceAllOpenAdvancedToDosGroupingByLabelInGroupResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthUserServiceAllOpenBasicToDosInGroupResults *) AllOpenBasicToDosInGroup:(NSString *)groupId;
+- (void) allOpenBasicToDosInGroup:(NSString *)groupId success:(void (^)(QXAuthUserServiceAllOpenBasicToDosInGroupResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthUserServiceAllOpenBasicToDosGroupingByUserInGroupResults *) AllOpenBasicToDosGroupingByUserInGroup:(NSString *)groupId;
+- (void) allOpenBasicToDosGroupingByUserInGroup:(NSString *)groupId success:(void (^)(QXAuthUserServiceAllOpenBasicToDosGroupingByUserInGroupResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthUserServiceAllClosedBasicToDosInGroupResults *) AllClosedBasicToDosInGroup:(NSString *)groupId afterTimeS:(NSString *)afterTimeS;
+- (void) allClosedBasicToDosInGroup:(NSString *)groupId afterTimeS:(NSString *)afterTimeS success:(void (^)(QXAuthUserServiceAllClosedBasicToDosInGroupResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthUserServiceAllClosedAdvancedToDosInGroupResults *) AllClosedAdvancedToDosInGroup:(NSString *)groupId;
+- (void) allClosedAdvancedToDosInGroup:(NSString *)groupId success:(void (^)(QXAuthUserServiceAllClosedAdvancedToDosInGroupResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthUserServiceMoreClosedAdvancedToDosWithStatusInGroupResults *) MoreClosedAdvancedToDosWithStatusInGroup:(NSString *)groupId status:(NSNumber *)status afterTime:(NSString *)afterTime;
+- (void) moreClosedAdvancedToDosWithStatusInGroup:(NSString *)groupId status:(NSNumber *)status afterTime:(NSString *)afterTime success:(void (^)(QXAuthUserServiceMoreClosedAdvancedToDosWithStatusInGroupResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthUserServiceCountOfClosedToDosInGroupResults *) CountOfClosedToDosInGroup:(NSNumber *)ttype groupId:(NSString *)groupId;
+- (void) countOfClosedToDosInGroup:(NSNumber *)ttype groupId:(NSString *)groupId success:(void (^)(QXAuthUserServiceCountOfClosedToDosInGroupResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
+
+- (QXAuthUserServiceToDoCSVResults *) ToDoCSV:(NSString *)groupId;
+- (void) toDoCSV:(NSString *)groupId success:(void (^)(QXAuthUserServiceToDoCSVResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 @end
 
 
@@ -5887,50 +6068,69 @@
 @end
 
 
-@interface QXPublicService : NSObject
-- (NSDictionary*) dictionary;
-
+@interface QXPublicService : NSObject- (NSDictionary*) dictionary;
 
 - (QXPublicServiceGetSessionResults *) GetSession:(NSString *)email password:(NSString *)password locale:(NSString *)locale;
+- (void) getSession:(NSString *)email password:(NSString *)password locale:(NSString *)locale success:(void (^)(QXPublicServiceGetSessionResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthUserService *) GetAuthUserService:(NSString *)session;
+- (void) getAuthUserService:(NSString *)session success:(void (^)(QXAuthUserService* AuthUserService))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXPublicServiceGetAuthorizedAdminResults *) GetAuthorizedAdmin:(NSString *)session;
+- (void) getAuthorizedAdmin:(NSString *)session success:(void (^)(QXPublicServiceGetAuthorizedAdminResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXAuthAdminService *) GetAuthAdminService:(NSString *)session;
+- (void) getAuthAdminService:(NSString *)session success:(void (^)(QXAuthAdminService* AuthAdminService))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (NSError *) FindPassword:(NSString *)email;
+- (void) findPassword:(NSString *)email success:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXPublicServiceResetPasswordResults *) ResetPassword:(NSString *)token password:(NSString *)password confirmedPassword:(NSString *)confirmedPassword;
+- (void) resetPassword:(NSString *)token password:(NSString *)password confirmedPassword:(NSString *)confirmedPassword success:(void (^)(QXPublicServiceResetPasswordResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXPublicServicePrepareChangingEmailResults *) PrepareChangingEmail:(NSString *)memberId newEmail:(NSString *)newEmail sharingToken:(NSString *)sharingToken invitationToken:(NSString *)invitationToken;
+- (void) prepareChangingEmail:(NSString *)memberId newEmail:(NSString *)newEmail sharingToken:(NSString *)sharingToken invitationToken:(NSString *)invitationToken success:(void (^)(QXPublicServicePrepareChangingEmailResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXPublicServiceConfirmChangingEmailResults *) ConfirmChangingEmail:(NSString *)token;
+- (void) confirmChangingEmail:(NSString *)token success:(void (^)(QXPublicServiceConfirmChangingEmailResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (NSError *) CancelChangingEmail:(NSString *)token;
+- (void) cancelChangingEmail:(NSString *)token success:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (NSError *) ChangeEmailToAcceptSharing:(NSString *)token newEmail:(NSString *)newEmail;
+- (void) changeEmailToAcceptSharing:(NSString *)token newEmail:(NSString *)newEmail success:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXPublicServiceGetShareRequestResults *) GetShareRequest:(NSString *)token memberId:(NSString *)memberId;
+- (void) getShareRequest:(NSString *)token memberId:(NSString *)memberId success:(void (^)(QXPublicServiceGetShareRequestResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXPublicServiceContactUsResults *) ContactUs:(QXContactInput *)input;
+- (void) contactUs:(QXContactInput *)input success:(void (^)(QXPublicServiceContactUsResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXPublicServiceGetBlogEntriesResults *) GetBlogEntries:(NSString *)doi pageNum:(NSNumber *)pageNum limit:(NSNumber *)limit;
+- (void) getBlogEntries:(NSString *)doi pageNum:(NSNumber *)pageNum limit:(NSNumber *)limit success:(void (^)(QXPublicServiceGetBlogEntriesResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXPublicServiceGetBlogEntryBySlugResults *) GetBlogEntryBySlug:(NSString *)doi slug:(NSString *)slug;
+- (void) getBlogEntryBySlug:(NSString *)doi slug:(NSString *)slug success:(void (^)(QXPublicServiceGetBlogEntryBySlugResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXPublicServiceGenerateBlogEntrySlugResults *) GenerateBlogEntrySlug:(NSString *)doi slug:(NSString *)slug;
+- (void) generateBlogEntrySlug:(NSString *)doi slug:(NSString *)slug success:(void (^)(QXPublicServiceGenerateBlogEntrySlugResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (QXPublicServiceCreateNewsletterResults *) CreateNewsletter:(QXNewsletterInput *)input;
+- (void) createNewsletter:(QXNewsletterInput *)input success:(void (^)(QXPublicServiceCreateNewsletterResults *results))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (NSError *) RequestNewSignupToken:(NSString *)email;
+- (void) requestNewSignupToken:(NSString *)email success:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (NSError *) RequestNewInvitationToken:(NSString *)orgId email:(NSString *)email;
+- (void) requestNewInvitationToken:(NSString *)orgId email:(NSString *)email success:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (NSError *) RequestNewSharingToken:(NSString *)email;
+- (void) requestNewSharingToken:(NSString *)email success:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (NSError *) InviteMe:(NSString *)organizationId email:(NSString *)email;
+- (void) inviteMe:(NSString *)organizationId email:(NSString *)email success:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 - (NSError *) RequestSignup:(NSString *)email;
+- (void) requestSignup:(NSString *)email success:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock;
 @end
 

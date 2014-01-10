@@ -78,36 +78,36 @@ static NSDateFormatter * _dateFormatter;
 }
 
 + (void)request:(NSURL*)url
-     parameters:(NSDictionary *)parameters
+	 parameters:(NSDictionary *)parameters
 completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHandler {
-    __block NSError *error = nil;
-    NSOperationQueue *queue = [[NSOperationQueue alloc] init];
+	__block NSError *error = nil;
+	NSOperationQueue *queue = [[NSOperationQueue alloc] init];
 
-    NSMutableURLRequest *httpRequest = [NSMutableURLRequest requestWithURL:url];
-    [httpRequest setHTTPMethod:@"POST"];
-    [httpRequest setValue:@"application/json;charset=utf-8" forHTTPHeaderField:@"Content-Type"];
-    QXQortexapi * _api = [QXQortexapi get];
+	NSMutableURLRequest *httpRequest = [NSMutableURLRequest requestWithURL:url];
+	[httpRequest setHTTPMethod:@"POST"];
+	[httpRequest setValue:@"application/json;charset=utf-8" forHTTPHeaderField:@"Content-Type"];
+	QXQortexapi * _api = [QXQortexapi get];
 
-    NSData *requestBody = [NSJSONSerialization dataWithJSONObject:parameters options:NSJSONWritingPrettyPrinted error:&error];
-    if([_api Verbose]) {
-        NSLog(@"Request: %@", [NSString stringWithUTF8String:[requestBody bytes]]);
-    }
-    [httpRequest setHTTPBody:requestBody];
+	NSData *requestBody = [NSJSONSerialization dataWithJSONObject:parameters options:NSJSONWritingPrettyPrinted error:&error];
+	if([_api Verbose]) {
+		NSLog(@"Request: %@", [NSString stringWithUTF8String:[requestBody bytes]]);
+	}
+	[httpRequest setHTTPBody:requestBody];
 
-    [NSURLConnection sendAsynchronousRequest:httpRequest
-                                       queue:queue
-                           completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-                               if([_api Verbose]) {
-                                   NSLog(@"Response: %@", [NSString stringWithUTF8String:[data bytes]]);
-                                   NSLog(@"Connection Error: %@", connectionError);
-                               }
+	[NSURLConnection sendAsynchronousRequest:httpRequest
+									   queue:queue
+						   completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+							   if([_api Verbose]) {
+								   NSLog(@"Response: %@", [NSString stringWithUTF8String:[data bytes]]);
+								   NSLog(@"Connection Error: %@", connectionError);
+							   }
 
-                               if (completionHandler) {
-                                   NSDictionary *results = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
+							   if (completionHandler) {
+								   NSDictionary *results = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
 
-                                   completionHandler(results, error);
-                               }
-                           }];
+								   completionHandler(results, error);
+							   }
+						   }];
 }
 
 + (NSError *)errorWithDictionary:(NSDictionary *)dict {
@@ -141,11 +141,12 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 @end
 
 
-// --- TaskPwMap ---
-@implementation QXTaskPwMap
+// --- TaskSelectorItem ---
+@implementation QXTaskSelectorItem
 
-@synthesize Id;
-@synthesize PriorityWeight;
+@synthesize StoreKey;
+@synthesize DisplayText;
+@synthesize IsCurrent;
 
 - (id) initWithDictionary:(NSDictionary*)dict{
 	self = [super init];
@@ -155,16 +156,18 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
-	[self setId:[dict valueForKey:@"Id"]];
-	[self setPriorityWeight:[dict valueForKey:@"PriorityWeight"]];
+	[self setStoreKey:[dict valueForKey:@"StoreKey"]];
+	[self setDisplayText:[dict valueForKey:@"DisplayText"]];
+	[self setIsCurrent:[[dict valueForKey:@"IsCurrent"] boolValue]];
 
 	return self;
 }
 
 - (NSDictionary*) dictionary {
 	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
-	[dict setValue:self.Id forKey:@"Id"];
-	[dict setValue:self.PriorityWeight forKey:@"PriorityWeight"];
+	[dict setValue:self.StoreKey forKey:@"StoreKey"];
+	[dict setValue:self.DisplayText forKey:@"DisplayText"];
+	[dict setValue:[NSNumber numberWithBool:self.IsCurrent] forKey:@"IsCurrent"];
 
 	return dict;
 }
@@ -735,39 +738,6 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 
 @end
 
-// --- TaskSelectorItem ---
-@implementation QXTaskSelectorItem
-
-@synthesize StoreKey;
-@synthesize DisplayText;
-@synthesize IsCurrent;
-
-- (id) initWithDictionary:(NSDictionary*)dict{
-	self = [super init];
-	if (!self) {
-		return self;
-	}
-	if (![dict isKindOfClass:[NSDictionary class]]) {
-		return self;
-	}
-	[self setStoreKey:[dict valueForKey:@"StoreKey"]];
-	[self setDisplayText:[dict valueForKey:@"DisplayText"]];
-	[self setIsCurrent:[[dict valueForKey:@"IsCurrent"] boolValue]];
-
-	return self;
-}
-
-- (NSDictionary*) dictionary {
-	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
-	[dict setValue:self.StoreKey forKey:@"StoreKey"];
-	[dict setValue:self.DisplayText forKey:@"DisplayText"];
-	[dict setValue:[NSNumber numberWithBool:self.IsCurrent] forKey:@"IsCurrent"];
-
-	return dict;
-}
-
-@end
-
 // --- GroupCount ---
 @implementation QXGroupCount
 
@@ -1191,6 +1161,63 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	[dict setValue:self.Status forKey:@"Status"];
 	[dict setValue:self.InvitOrg forKey:@"InvitOrg"];
 	[dict setValue:self.GotoURL forKey:@"GotoURL"];
+
+	return dict;
+}
+
+@end
+
+// --- ToDoCSVItem ---
+@implementation QXToDoCSVItem
+
+@synthesize Creator;
+@synthesize Title;
+@synthesize Content;
+@synthesize Status;
+@synthesize EstimateTime;
+@synthesize TotalSpentTime;
+@synthesize TimeUnit;
+@synthesize SpentTimeDetail;
+@synthesize CreateTime;
+@synthesize UpdateTime;
+@synthesize Due;
+
+- (id) initWithDictionary:(NSDictionary*)dict{
+	self = [super init];
+	if (!self) {
+		return self;
+	}
+	if (![dict isKindOfClass:[NSDictionary class]]) {
+		return self;
+	}
+	[self setCreator:[dict valueForKey:@"Creator"]];
+	[self setTitle:[dict valueForKey:@"Title"]];
+	[self setContent:[dict valueForKey:@"Content"]];
+	[self setStatus:[dict valueForKey:@"Status"]];
+	[self setEstimateTime:[dict valueForKey:@"EstimateTime"]];
+	[self setTotalSpentTime:[dict valueForKey:@"TotalSpentTime"]];
+	[self setTimeUnit:[dict valueForKey:@"TimeUnit"]];
+	[self setSpentTimeDetail:[dict valueForKey:@"SpentTimeDetail"]];
+	[self setCreateTime:[dict valueForKey:@"CreateTime"]];
+	[self setUpdateTime:[dict valueForKey:@"UpdateTime"]];
+	[self setDue:[dict valueForKey:@"Due"]];
+
+	return self;
+}
+
+- (NSDictionary*) dictionary {
+	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
+	[dict setValue:self.Creator forKey:@"Creator"];
+	[dict setValue:self.Title forKey:@"Title"];
+	[dict setValue:self.Content forKey:@"Content"];
+	[dict setValue:self.Status forKey:@"Status"];
+	[dict setValue:self.EstimateTime forKey:@"EstimateTime"];
+	[dict setValue:self.TotalSpentTime forKey:@"TotalSpentTime"];
+	[dict setValue:self.TimeUnit forKey:@"TimeUnit"];
+	[dict setValue:self.SpentTimeDetail forKey:@"SpentTimeDetail"];
+	[dict setValue:self.CreateTime forKey:@"CreateTime"];
+	[dict setValue:self.UpdateTime forKey:@"UpdateTime"];
+	[dict setValue:self.Due forKey:@"Due"];
 
 	return dict;
 }
@@ -2043,16 +2070,11 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 
 @end
 
-// --- EntryVersion ---
-@implementation QXEntryVersion
+// --- TaskPwMap ---
+@implementation QXTaskPwMap
 
 @synthesize Id;
-@synthesize GroupId;
-@synthesize UpdatedAt;
-@synthesize LocalUpdatedAt;
-@synthesize UpdatedAtUnixNano;
-@synthesize CurrentVersionEditor;
-@synthesize IsNewVersion;
+@synthesize PriorityWeight;
 
 - (id) initWithDictionary:(NSDictionary*)dict{
 	self = [super init];
@@ -2063,16 +2085,7 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 		return self;
 	}
 	[self setId:[dict valueForKey:@"Id"]];
-	[self setGroupId:[dict valueForKey:@"GroupId"]];
-	[self setUpdatedAt:[QXQortexapi dateFromString:[dict valueForKey:@"UpdatedAt"]]];
-	[self setLocalUpdatedAt:[dict valueForKey:@"LocalUpdatedAt"]];
-	[self setUpdatedAtUnixNano:[dict valueForKey:@"UpdatedAtUnixNano"]];
-
-	id dictCurrentVersionEditor = [dict valueForKey:@"CurrentVersionEditor"];
-	if ([dictCurrentVersionEditor isKindOfClass:[NSDictionary class]]){
-		[self setCurrentVersionEditor:[[QXEmbedUser alloc] initWithDictionary:dictCurrentVersionEditor]];
-	}
-	[self setIsNewVersion:[[dict valueForKey:@"IsNewVersion"] boolValue]];
+	[self setPriorityWeight:[dict valueForKey:@"PriorityWeight"]];
 
 	return self;
 }
@@ -2080,26 +2093,22 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 - (NSDictionary*) dictionary {
 	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
 	[dict setValue:self.Id forKey:@"Id"];
-	[dict setValue:self.GroupId forKey:@"GroupId"];
-	[dict setValue:[QXQortexapi stringFromDate:self.UpdatedAt] forKey:@"UpdatedAt"];
-	[dict setValue:self.LocalUpdatedAt forKey:@"LocalUpdatedAt"];
-	[dict setValue:self.UpdatedAtUnixNano forKey:@"UpdatedAtUnixNano"];
-	[dict setValue:[self.CurrentVersionEditor dictionary] forKey:@"CurrentVersionEditor"];
-	
-	[dict setValue:[NSNumber numberWithBool:self.IsNewVersion] forKey:@"IsNewVersion"];
+	[dict setValue:self.PriorityWeight forKey:@"PriorityWeight"];
 
 	return dict;
 }
 
 @end
 
-// --- TranslatedThread ---
-@implementation QXTranslatedThread
+// --- MyCount ---
+@implementation QXMyCount
 
-@synthesize Title;
-@synthesize Content;
-@synthesize Comments;
-@synthesize IsCommentOnly;
+@synthesize UserId;
+@synthesize FollowedUnreadCount;
+@synthesize NotificationUnreadCount;
+@synthesize ActiveTasksCount;
+@synthesize OfflineMessageCount;
+@synthesize GroupCounts;
 
 - (id) initWithDictionary:(NSDictionary*)dict{
 	self = [super init];
@@ -2109,34 +2118,340 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
-	[self setTitle:[dict valueForKey:@"Title"]];
-	[self setContent:[dict valueForKey:@"Content"]];
+	[self setUserId:[dict valueForKey:@"UserId"]];
+	[self setFollowedUnreadCount:[dict valueForKey:@"FollowedUnreadCount"]];
+	[self setNotificationUnreadCount:[dict valueForKey:@"NotificationUnreadCount"]];
+	[self setActiveTasksCount:[dict valueForKey:@"ActiveTasksCount"]];
+	[self setOfflineMessageCount:[dict valueForKey:@"OfflineMessageCount"]];
 
-	NSMutableArray * mComments = [[NSMutableArray alloc] init];
-	NSArray * lComments = [dict valueForKey:@"Comments"];
-	if ([lComments isKindOfClass:[NSArray class]]) {
-		for (NSDictionary * d in lComments) {
-			[mComments addObject: [[QXTranslatedComment alloc] initWithDictionary:d]];
+	NSMutableArray * mGroupCounts = [[NSMutableArray alloc] init];
+	NSArray * lGroupCounts = [dict valueForKey:@"GroupCounts"];
+	if ([lGroupCounts isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lGroupCounts) {
+			[mGroupCounts addObject: [[QXGroupCount alloc] initWithDictionary:d]];
 		}
-		[self setComments:mComments];
+		[self setGroupCounts:mGroupCounts];
 	}
-	[self setIsCommentOnly:[[dict valueForKey:@"IsCommentOnly"] boolValue]];
 
 	return self;
 }
 
 - (NSDictionary*) dictionary {
 	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
-	[dict setValue:self.Title forKey:@"Title"];
-	[dict setValue:self.Content forKey:@"Content"];
+	[dict setValue:self.UserId forKey:@"UserId"];
+	[dict setValue:self.FollowedUnreadCount forKey:@"FollowedUnreadCount"];
+	[dict setValue:self.NotificationUnreadCount forKey:@"NotificationUnreadCount"];
+	[dict setValue:self.ActiveTasksCount forKey:@"ActiveTasksCount"];
+	[dict setValue:self.OfflineMessageCount forKey:@"OfflineMessageCount"];
 
-	NSMutableArray * mComments = [[NSMutableArray alloc] init];
-	for (QXTranslatedComment * p in Comments) {
-		[mComments addObject:[p dictionary]];
+	NSMutableArray * mGroupCounts = [[NSMutableArray alloc] init];
+	for (QXGroupCount * p in GroupCounts) {
+		[mGroupCounts addObject:[p dictionary]];
 	}
-	[dict setValue:mComments forKey:@"Comments"];
+	[dict setValue:mGroupCounts forKey:@"GroupCounts"];
 	
-	[dict setValue:[NSNumber numberWithBool:self.IsCommentOnly] forKey:@"IsCommentOnly"];
+
+	return dict;
+}
+
+@end
+
+// --- TaskOutline ---
+@implementation QXTaskOutline
+
+@synthesize Id;
+@synthesize EntryTitle;
+@synthesize EntryLink;
+@synthesize IsComment;
+@synthesize Assignee;
+@synthesize AuthorName;
+@synthesize Group;
+@synthesize Age;
+@synthesize CreatedAt;
+@synthesize Status;
+@synthesize StatusCode;
+@synthesize Due;
+@synthesize Label;
+@synthesize LabelCode;
+@synthesize EstimateTime;
+@synthesize EstimateTimeFloat64;
+@synthesize SpentTime;
+@synthesize PriorityWeight;
+@synthesize Priority;
+@synthesize CompleteAtStr;
+@synthesize CompleteAtUnixNano;
+@synthesize IsTitleCreatedBy;
+@synthesize ActionNeeded;
+
+- (id) initWithDictionary:(NSDictionary*)dict{
+	self = [super init];
+	if (!self) {
+		return self;
+	}
+	if (![dict isKindOfClass:[NSDictionary class]]) {
+		return self;
+	}
+	[self setId:[dict valueForKey:@"Id"]];
+	[self setEntryTitle:[dict valueForKey:@"EntryTitle"]];
+	[self setEntryLink:[dict valueForKey:@"EntryLink"]];
+	[self setIsComment:[[dict valueForKey:@"IsComment"] boolValue]];
+
+	id dictAssignee = [dict valueForKey:@"Assignee"];
+	if ([dictAssignee isKindOfClass:[NSDictionary class]]){
+		[self setAssignee:[[QXEmbedUser alloc] initWithDictionary:dictAssignee]];
+	}
+	[self setAuthorName:[dict valueForKey:@"AuthorName"]];
+
+	id dictGroup = [dict valueForKey:@"Group"];
+	if ([dictGroup isKindOfClass:[NSDictionary class]]){
+		[self setGroup:[[QXEmbedGroup alloc] initWithDictionary:dictGroup]];
+	}
+	[self setAge:[dict valueForKey:@"Age"]];
+	[self setCreatedAt:[QXQortexapi dateFromString:[dict valueForKey:@"CreatedAt"]]];
+	[self setStatus:[dict valueForKey:@"Status"]];
+	[self setStatusCode:[dict valueForKey:@"StatusCode"]];
+	[self setDue:[dict valueForKey:@"Due"]];
+	[self setLabel:[dict valueForKey:@"Label"]];
+	[self setLabelCode:[dict valueForKey:@"LabelCode"]];
+	[self setEstimateTime:[dict valueForKey:@"EstimateTime"]];
+	[self setEstimateTimeFloat64:[dict valueForKey:@"EstimateTimeFloat64"]];
+	[self setSpentTime:[dict valueForKey:@"SpentTime"]];
+	[self setPriorityWeight:[dict valueForKey:@"PriorityWeight"]];
+	[self setPriority:[dict valueForKey:@"Priority"]];
+	[self setCompleteAtStr:[dict valueForKey:@"CompleteAtStr"]];
+	[self setCompleteAtUnixNano:[dict valueForKey:@"CompleteAtUnixNano"]];
+	[self setIsTitleCreatedBy:[[dict valueForKey:@"IsTitleCreatedBy"] boolValue]];
+	[self setActionNeeded:[[dict valueForKey:@"ActionNeeded"] boolValue]];
+
+	return self;
+}
+
+- (NSDictionary*) dictionary {
+	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
+	[dict setValue:self.Id forKey:@"Id"];
+	[dict setValue:self.EntryTitle forKey:@"EntryTitle"];
+	[dict setValue:self.EntryLink forKey:@"EntryLink"];
+	[dict setValue:[NSNumber numberWithBool:self.IsComment] forKey:@"IsComment"];
+	[dict setValue:[self.Assignee dictionary] forKey:@"Assignee"];
+	
+	[dict setValue:self.AuthorName forKey:@"AuthorName"];
+	[dict setValue:[self.Group dictionary] forKey:@"Group"];
+	
+	[dict setValue:self.Age forKey:@"Age"];
+	[dict setValue:[QXQortexapi stringFromDate:self.CreatedAt] forKey:@"CreatedAt"];
+	[dict setValue:self.Status forKey:@"Status"];
+	[dict setValue:self.StatusCode forKey:@"StatusCode"];
+	[dict setValue:self.Due forKey:@"Due"];
+	[dict setValue:self.Label forKey:@"Label"];
+	[dict setValue:self.LabelCode forKey:@"LabelCode"];
+	[dict setValue:self.EstimateTime forKey:@"EstimateTime"];
+	[dict setValue:self.EstimateTimeFloat64 forKey:@"EstimateTimeFloat64"];
+	[dict setValue:self.SpentTime forKey:@"SpentTime"];
+	[dict setValue:self.PriorityWeight forKey:@"PriorityWeight"];
+	[dict setValue:self.Priority forKey:@"Priority"];
+	[dict setValue:self.CompleteAtStr forKey:@"CompleteAtStr"];
+	[dict setValue:self.CompleteAtUnixNano forKey:@"CompleteAtUnixNano"];
+	[dict setValue:[NSNumber numberWithBool:self.IsTitleCreatedBy] forKey:@"IsTitleCreatedBy"];
+	[dict setValue:[NSNumber numberWithBool:self.ActionNeeded] forKey:@"ActionNeeded"];
+
+	return dict;
+}
+
+@end
+
+// --- BlogEntry ---
+@implementation QXBlogEntry
+
+@synthesize Id;
+@synthesize Title;
+@synthesize HtmlTitle;
+@synthesize Slug;
+@synthesize CreatedAt;
+@synthesize LocalCreatedAt;
+@synthesize Permalink;
+@synthesize CreateCommentURL;
+@synthesize HtmlContent;
+@synthesize HtmlContentPart;
+@synthesize Author;
+
+- (id) initWithDictionary:(NSDictionary*)dict{
+	self = [super init];
+	if (!self) {
+		return self;
+	}
+	if (![dict isKindOfClass:[NSDictionary class]]) {
+		return self;
+	}
+	[self setId:[dict valueForKey:@"Id"]];
+	[self setTitle:[dict valueForKey:@"Title"]];
+	[self setHtmlTitle:[dict valueForKey:@"HtmlTitle"]];
+	[self setSlug:[dict valueForKey:@"Slug"]];
+	[self setCreatedAt:[QXQortexapi dateFromString:[dict valueForKey:@"CreatedAt"]]];
+	[self setLocalCreatedAt:[dict valueForKey:@"LocalCreatedAt"]];
+	[self setPermalink:[dict valueForKey:@"Permalink"]];
+	[self setCreateCommentURL:[dict valueForKey:@"CreateCommentURL"]];
+	[self setHtmlContent:[dict valueForKey:@"HtmlContent"]];
+	[self setHtmlContentPart:[dict valueForKey:@"HtmlContentPart"]];
+
+	id dictAuthor = [dict valueForKey:@"Author"];
+	if ([dictAuthor isKindOfClass:[NSDictionary class]]){
+		[self setAuthor:[[QXEmbedUser alloc] initWithDictionary:dictAuthor]];
+	}
+
+	return self;
+}
+
+- (NSDictionary*) dictionary {
+	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
+	[dict setValue:self.Id forKey:@"Id"];
+	[dict setValue:self.Title forKey:@"Title"];
+	[dict setValue:self.HtmlTitle forKey:@"HtmlTitle"];
+	[dict setValue:self.Slug forKey:@"Slug"];
+	[dict setValue:[QXQortexapi stringFromDate:self.CreatedAt] forKey:@"CreatedAt"];
+	[dict setValue:self.LocalCreatedAt forKey:@"LocalCreatedAt"];
+	[dict setValue:self.Permalink forKey:@"Permalink"];
+	[dict setValue:self.CreateCommentURL forKey:@"CreateCommentURL"];
+	[dict setValue:self.HtmlContent forKey:@"HtmlContent"];
+	[dict setValue:self.HtmlContentPart forKey:@"HtmlContentPart"];
+	[dict setValue:[self.Author dictionary] forKey:@"Author"];
+	
+
+	return dict;
+}
+
+@end
+
+// --- GroupUsers ---
+@implementation QXGroupUsers
+
+@synthesize GroupId;
+@synthesize EmbedUsers;
+
+- (id) initWithDictionary:(NSDictionary*)dict{
+	self = [super init];
+	if (!self) {
+		return self;
+	}
+	if (![dict isKindOfClass:[NSDictionary class]]) {
+		return self;
+	}
+	[self setGroupId:[dict valueForKey:@"GroupId"]];
+
+	NSMutableArray * mEmbedUsers = [[NSMutableArray alloc] init];
+	NSArray * lEmbedUsers = [dict valueForKey:@"EmbedUsers"];
+	if ([lEmbedUsers isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lEmbedUsers) {
+			[mEmbedUsers addObject: [[QXEmbedUser alloc] initWithDictionary:d]];
+		}
+		[self setEmbedUsers:mEmbedUsers];
+	}
+
+	return self;
+}
+
+- (NSDictionary*) dictionary {
+	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
+	[dict setValue:self.GroupId forKey:@"GroupId"];
+
+	NSMutableArray * mEmbedUsers = [[NSMutableArray alloc] init];
+	for (QXEmbedUser * p in EmbedUsers) {
+		[mEmbedUsers addObject:[p dictionary]];
+	}
+	[dict setValue:mEmbedUsers forKey:@"EmbedUsers"];
+	
+
+	return dict;
+}
+
+@end
+
+// --- Invitation ---
+@implementation QXInvitation
+
+@synthesize Email;
+@synthesize Token;
+@synthesize SentAgo;
+@synthesize ByUser;
+@synthesize HideInPendingList;
+
+- (id) initWithDictionary:(NSDictionary*)dict{
+	self = [super init];
+	if (!self) {
+		return self;
+	}
+	if (![dict isKindOfClass:[NSDictionary class]]) {
+		return self;
+	}
+	[self setEmail:[dict valueForKey:@"Email"]];
+	[self setToken:[dict valueForKey:@"Token"]];
+	[self setSentAgo:[dict valueForKey:@"SentAgo"]];
+
+	id dictByUser = [dict valueForKey:@"ByUser"];
+	if ([dictByUser isKindOfClass:[NSDictionary class]]){
+		[self setByUser:[[QXEmbedUser alloc] initWithDictionary:dictByUser]];
+	}
+	[self setHideInPendingList:[[dict valueForKey:@"HideInPendingList"] boolValue]];
+
+	return self;
+}
+
+- (NSDictionary*) dictionary {
+	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
+	[dict setValue:self.Email forKey:@"Email"];
+	[dict setValue:self.Token forKey:@"Token"];
+	[dict setValue:self.SentAgo forKey:@"SentAgo"];
+	[dict setValue:[self.ByUser dictionary] forKey:@"ByUser"];
+	
+	[dict setValue:[NSNumber numberWithBool:self.HideInPendingList] forKey:@"HideInPendingList"];
+
+	return dict;
+}
+
+@end
+
+// --- AbandonInfo ---
+@implementation QXAbandonInfo
+
+@synthesize AbandonFromOrg;
+@synthesize AvailableOrgs;
+
+- (id) initWithDictionary:(NSDictionary*)dict{
+	self = [super init];
+	if (!self) {
+		return self;
+	}
+	if (![dict isKindOfClass:[NSDictionary class]]) {
+		return self;
+	}
+
+	id dictAbandonFromOrg = [dict valueForKey:@"AbandonFromOrg"];
+	if ([dictAbandonFromOrg isKindOfClass:[NSDictionary class]]){
+		[self setAbandonFromOrg:[[QXEmbedOrg alloc] initWithDictionary:dictAbandonFromOrg]];
+	}
+
+	NSMutableArray * mAvailableOrgs = [[NSMutableArray alloc] init];
+	NSArray * lAvailableOrgs = [dict valueForKey:@"AvailableOrgs"];
+	if ([lAvailableOrgs isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lAvailableOrgs) {
+			[mAvailableOrgs addObject: [[QXEmbedOrg alloc] initWithDictionary:d]];
+		}
+		[self setAvailableOrgs:mAvailableOrgs];
+	}
+
+	return self;
+}
+
+- (NSDictionary*) dictionary {
+	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
+	[dict setValue:[self.AbandonFromOrg dictionary] forKey:@"AbandonFromOrg"];
+	
+
+	NSMutableArray * mAvailableOrgs = [[NSMutableArray alloc] init];
+	for (QXEmbedOrg * p in AvailableOrgs) {
+		[mAvailableOrgs addObject:[p dictionary]];
+	}
+	[dict setValue:mAvailableOrgs forKey:@"AvailableOrgs"];
+	
 
 	return dict;
 }
@@ -2249,109 +2564,6 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 
 @end
 
-// --- RelatedEntry ---
-@implementation QXRelatedEntry
-
-@synthesize HtmlTitle;
-@synthesize Link;
-@synthesize LocalHumanCreatedAt;
-@synthesize Author;
-@synthesize IsComment;
-@synthesize IsEmbedded;
-
-- (id) initWithDictionary:(NSDictionary*)dict{
-	self = [super init];
-	if (!self) {
-		return self;
-	}
-	if (![dict isKindOfClass:[NSDictionary class]]) {
-		return self;
-	}
-	[self setHtmlTitle:[dict valueForKey:@"HtmlTitle"]];
-	[self setLink:[dict valueForKey:@"Link"]];
-	[self setLocalHumanCreatedAt:[dict valueForKey:@"LocalHumanCreatedAt"]];
-
-	id dictAuthor = [dict valueForKey:@"Author"];
-	if ([dictAuthor isKindOfClass:[NSDictionary class]]){
-		[self setAuthor:[[QXEmbedUser alloc] initWithDictionary:dictAuthor]];
-	}
-	[self setIsComment:[[dict valueForKey:@"IsComment"] boolValue]];
-	[self setIsEmbedded:[[dict valueForKey:@"IsEmbedded"] boolValue]];
-
-	return self;
-}
-
-- (NSDictionary*) dictionary {
-	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
-	[dict setValue:self.HtmlTitle forKey:@"HtmlTitle"];
-	[dict setValue:self.Link forKey:@"Link"];
-	[dict setValue:self.LocalHumanCreatedAt forKey:@"LocalHumanCreatedAt"];
-	[dict setValue:[self.Author dictionary] forKey:@"Author"];
-	
-	[dict setValue:[NSNumber numberWithBool:self.IsComment] forKey:@"IsComment"];
-	[dict setValue:[NSNumber numberWithBool:self.IsEmbedded] forKey:@"IsEmbedded"];
-
-	return dict;
-}
-
-@end
-
-// --- MyCount ---
-@implementation QXMyCount
-
-@synthesize UserId;
-@synthesize FollowedUnreadCount;
-@synthesize NotificationUnreadCount;
-@synthesize ActiveTasksCount;
-@synthesize OfflineMessageCount;
-@synthesize GroupCounts;
-
-- (id) initWithDictionary:(NSDictionary*)dict{
-	self = [super init];
-	if (!self) {
-		return self;
-	}
-	if (![dict isKindOfClass:[NSDictionary class]]) {
-		return self;
-	}
-	[self setUserId:[dict valueForKey:@"UserId"]];
-	[self setFollowedUnreadCount:[dict valueForKey:@"FollowedUnreadCount"]];
-	[self setNotificationUnreadCount:[dict valueForKey:@"NotificationUnreadCount"]];
-	[self setActiveTasksCount:[dict valueForKey:@"ActiveTasksCount"]];
-	[self setOfflineMessageCount:[dict valueForKey:@"OfflineMessageCount"]];
-
-	NSMutableArray * mGroupCounts = [[NSMutableArray alloc] init];
-	NSArray * lGroupCounts = [dict valueForKey:@"GroupCounts"];
-	if ([lGroupCounts isKindOfClass:[NSArray class]]) {
-		for (NSDictionary * d in lGroupCounts) {
-			[mGroupCounts addObject: [[QXGroupCount alloc] initWithDictionary:d]];
-		}
-		[self setGroupCounts:mGroupCounts];
-	}
-
-	return self;
-}
-
-- (NSDictionary*) dictionary {
-	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
-	[dict setValue:self.UserId forKey:@"UserId"];
-	[dict setValue:self.FollowedUnreadCount forKey:@"FollowedUnreadCount"];
-	[dict setValue:self.NotificationUnreadCount forKey:@"NotificationUnreadCount"];
-	[dict setValue:self.ActiveTasksCount forKey:@"ActiveTasksCount"];
-	[dict setValue:self.OfflineMessageCount forKey:@"OfflineMessageCount"];
-
-	NSMutableArray * mGroupCounts = [[NSMutableArray alloc] init];
-	for (QXGroupCount * p in GroupCounts) {
-		[mGroupCounts addObject:[p dictionary]];
-	}
-	[dict setValue:mGroupCounts forKey:@"GroupCounts"];
-	
-
-	return dict;
-}
-
-@end
-
 // --- TimeTrackingUpdateLog ---
 @implementation QXTimeTrackingUpdateLog
 
@@ -2407,45 +2619,15 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 
 @end
 
-// --- EntryInput ---
-@implementation QXEntryInput
+// --- LanguageSelector ---
+@implementation QXLanguageSelector
 
-@synthesize Id;
-@synthesize EType;
-@synthesize Title;
-@synthesize Content;
-@synthesize GroupId;
-@synthesize IsToGroup;
-@synthesize ToUserIds;
-@synthesize TodoUserIds;
-@synthesize MentionedUserIds;
-@synthesize IsAcknowledgement;
-@synthesize IsToDo;
-@synthesize TaskDue;
-@synthesize TodoStatus;
-@synthesize Priority;
-@synthesize Label;
-@synthesize EstimateTime;
-@synthesize RootId;
-@synthesize NewVersion;
-@synthesize OldGroupId;
-@synthesize LastUpdateAt;
-@synthesize KnowledgeBase;
-@synthesize AnyoneCanEdit;
-@synthesize Presentation;
-@synthesize IsFromEmail;
-@synthesize IsPublished;
-@synthesize Slug;
-@synthesize Email;
-@synthesize Name;
-@synthesize InlineHelp;
-@synthesize LinkTitle;
-@synthesize BaseOnEntryId;
-@synthesize PublishedToUsers;
-@synthesize LocaleName;
-@synthesize BasedPostId;
-@synthesize GroupIdOfBasedPost;
-@synthesize SelectionTextInFo;
+@synthesize IsFirst;
+@synthesize Index;
+@synthesize SupportedLanguages;
+@synthesize PreferredLanguages;
+@synthesize RestLanguages;
+@synthesize UILanguages;
 
 - (id) initWithDictionary:(NSDictionary*)dict{
 	self = [super init];
@@ -2455,45 +2637,43 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
-	[self setId:[dict valueForKey:@"Id"]];
-	[self setEType:[dict valueForKey:@"EType"]];
-	[self setTitle:[dict valueForKey:@"Title"]];
-	[self setContent:[dict valueForKey:@"Content"]];
-	[self setGroupId:[dict valueForKey:@"GroupId"]];
-	[self setIsToGroup:[dict valueForKey:@"IsToGroup"]];
-	[self setToUserIds:[dict valueForKey:@"ToUserIds"]];
-	[self setTodoUserIds:[dict valueForKey:@"TodoUserIds"]];
-	[self setMentionedUserIds:[dict valueForKey:@"MentionedUserIds"]];
-	[self setIsAcknowledgement:[[dict valueForKey:@"IsAcknowledgement"] boolValue]];
-	[self setIsToDo:[[dict valueForKey:@"IsToDo"] boolValue]];
-	[self setTaskDue:[dict valueForKey:@"TaskDue"]];
-	[self setTodoStatus:[dict valueForKey:@"TodoStatus"]];
-	[self setPriority:[dict valueForKey:@"Priority"]];
-	[self setLabel:[dict valueForKey:@"Label"]];
-	[self setEstimateTime:[dict valueForKey:@"EstimateTime"]];
-	[self setRootId:[dict valueForKey:@"RootId"]];
-	[self setNewVersion:[[dict valueForKey:@"NewVersion"] boolValue]];
-	[self setOldGroupId:[dict valueForKey:@"OldGroupId"]];
-	[self setLastUpdateAt:[dict valueForKey:@"LastUpdateAt"]];
-	[self setKnowledgeBase:[[dict valueForKey:@"KnowledgeBase"] boolValue]];
-	[self setAnyoneCanEdit:[[dict valueForKey:@"AnyoneCanEdit"] boolValue]];
-	[self setPresentation:[[dict valueForKey:@"Presentation"] boolValue]];
-	[self setIsFromEmail:[[dict valueForKey:@"IsFromEmail"] boolValue]];
-	[self setIsPublished:[[dict valueForKey:@"IsPublished"] boolValue]];
-	[self setSlug:[dict valueForKey:@"Slug"]];
-	[self setEmail:[dict valueForKey:@"Email"]];
-	[self setName:[dict valueForKey:@"Name"]];
-	[self setInlineHelp:[[dict valueForKey:@"InlineHelp"] boolValue]];
-	[self setLinkTitle:[dict valueForKey:@"LinkTitle"]];
-	[self setBaseOnEntryId:[dict valueForKey:@"BaseOnEntryId"]];
-	[self setPublishedToUsers:[[dict valueForKey:@"PublishedToUsers"] boolValue]];
-	[self setLocaleName:[dict valueForKey:@"LocaleName"]];
-	[self setBasedPostId:[dict valueForKey:@"BasedPostId"]];
-	[self setGroupIdOfBasedPost:[dict valueForKey:@"GroupIdOfBasedPost"]];
+	[self setIsFirst:[[dict valueForKey:@"IsFirst"] boolValue]];
+	[self setIndex:[dict valueForKey:@"Index"]];
 
-	id dictSelectionTextInFo = [dict valueForKey:@"SelectionTextInFo"];
-	if ([dictSelectionTextInFo isKindOfClass:[NSDictionary class]]){
-		[self setSelectionTextInFo:[[QXSelectionTextInFo alloc] initWithDictionary:dictSelectionTextInFo]];
+	NSMutableArray * mSupportedLanguages = [[NSMutableArray alloc] init];
+	NSArray * lSupportedLanguages = [dict valueForKey:@"SupportedLanguages"];
+	if ([lSupportedLanguages isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lSupportedLanguages) {
+			[mSupportedLanguages addObject: [[QXSupportedLanguage alloc] initWithDictionary:d]];
+		}
+		[self setSupportedLanguages:mSupportedLanguages];
+	}
+
+	NSMutableArray * mPreferredLanguages = [[NSMutableArray alloc] init];
+	NSArray * lPreferredLanguages = [dict valueForKey:@"PreferredLanguages"];
+	if ([lPreferredLanguages isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lPreferredLanguages) {
+			[mPreferredLanguages addObject: [[QXSupportedLanguage alloc] initWithDictionary:d]];
+		}
+		[self setPreferredLanguages:mPreferredLanguages];
+	}
+
+	NSMutableArray * mRestLanguages = [[NSMutableArray alloc] init];
+	NSArray * lRestLanguages = [dict valueForKey:@"RestLanguages"];
+	if ([lRestLanguages isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lRestLanguages) {
+			[mRestLanguages addObject: [[QXSupportedLanguage alloc] initWithDictionary:d]];
+		}
+		[self setRestLanguages:mRestLanguages];
+	}
+
+	NSMutableArray * mUILanguages = [[NSMutableArray alloc] init];
+	NSArray * lUILanguages = [dict valueForKey:@"UILanguages"];
+	if ([lUILanguages isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lUILanguages) {
+			[mUILanguages addObject: [[QXSupportedLanguage alloc] initWithDictionary:d]];
+		}
+		[self setUILanguages:mUILanguages];
 	}
 
 	return self;
@@ -2501,42 +2681,35 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 
 - (NSDictionary*) dictionary {
 	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
-	[dict setValue:self.Id forKey:@"Id"];
-	[dict setValue:self.EType forKey:@"EType"];
-	[dict setValue:self.Title forKey:@"Title"];
-	[dict setValue:self.Content forKey:@"Content"];
-	[dict setValue:self.GroupId forKey:@"GroupId"];
-	[dict setValue:self.IsToGroup forKey:@"IsToGroup"];
-	[dict setValue:self.ToUserIds forKey:@"ToUserIds"];
-	[dict setValue:self.TodoUserIds forKey:@"TodoUserIds"];
-	[dict setValue:self.MentionedUserIds forKey:@"MentionedUserIds"];
-	[dict setValue:[NSNumber numberWithBool:self.IsAcknowledgement] forKey:@"IsAcknowledgement"];
-	[dict setValue:[NSNumber numberWithBool:self.IsToDo] forKey:@"IsToDo"];
-	[dict setValue:self.TaskDue forKey:@"TaskDue"];
-	[dict setValue:self.TodoStatus forKey:@"TodoStatus"];
-	[dict setValue:self.Priority forKey:@"Priority"];
-	[dict setValue:self.Label forKey:@"Label"];
-	[dict setValue:self.EstimateTime forKey:@"EstimateTime"];
-	[dict setValue:self.RootId forKey:@"RootId"];
-	[dict setValue:[NSNumber numberWithBool:self.NewVersion] forKey:@"NewVersion"];
-	[dict setValue:self.OldGroupId forKey:@"OldGroupId"];
-	[dict setValue:self.LastUpdateAt forKey:@"LastUpdateAt"];
-	[dict setValue:[NSNumber numberWithBool:self.KnowledgeBase] forKey:@"KnowledgeBase"];
-	[dict setValue:[NSNumber numberWithBool:self.AnyoneCanEdit] forKey:@"AnyoneCanEdit"];
-	[dict setValue:[NSNumber numberWithBool:self.Presentation] forKey:@"Presentation"];
-	[dict setValue:[NSNumber numberWithBool:self.IsFromEmail] forKey:@"IsFromEmail"];
-	[dict setValue:[NSNumber numberWithBool:self.IsPublished] forKey:@"IsPublished"];
-	[dict setValue:self.Slug forKey:@"Slug"];
-	[dict setValue:self.Email forKey:@"Email"];
-	[dict setValue:self.Name forKey:@"Name"];
-	[dict setValue:[NSNumber numberWithBool:self.InlineHelp] forKey:@"InlineHelp"];
-	[dict setValue:self.LinkTitle forKey:@"LinkTitle"];
-	[dict setValue:self.BaseOnEntryId forKey:@"BaseOnEntryId"];
-	[dict setValue:[NSNumber numberWithBool:self.PublishedToUsers] forKey:@"PublishedToUsers"];
-	[dict setValue:self.LocaleName forKey:@"LocaleName"];
-	[dict setValue:self.BasedPostId forKey:@"BasedPostId"];
-	[dict setValue:self.GroupIdOfBasedPost forKey:@"GroupIdOfBasedPost"];
-	[dict setValue:[self.SelectionTextInFo dictionary] forKey:@"SelectionTextInFo"];
+	[dict setValue:[NSNumber numberWithBool:self.IsFirst] forKey:@"IsFirst"];
+	[dict setValue:self.Index forKey:@"Index"];
+
+	NSMutableArray * mSupportedLanguages = [[NSMutableArray alloc] init];
+	for (QXSupportedLanguage * p in SupportedLanguages) {
+		[mSupportedLanguages addObject:[p dictionary]];
+	}
+	[dict setValue:mSupportedLanguages forKey:@"SupportedLanguages"];
+	
+
+	NSMutableArray * mPreferredLanguages = [[NSMutableArray alloc] init];
+	for (QXSupportedLanguage * p in PreferredLanguages) {
+		[mPreferredLanguages addObject:[p dictionary]];
+	}
+	[dict setValue:mPreferredLanguages forKey:@"PreferredLanguages"];
+	
+
+	NSMutableArray * mRestLanguages = [[NSMutableArray alloc] init];
+	for (QXSupportedLanguage * p in RestLanguages) {
+		[mRestLanguages addObject:[p dictionary]];
+	}
+	[dict setValue:mRestLanguages forKey:@"RestLanguages"];
+	
+
+	NSMutableArray * mUILanguages = [[NSMutableArray alloc] init];
+	for (QXSupportedLanguage * p in UILanguages) {
+		[mUILanguages addObject:[p dictionary]];
+	}
+	[dict setValue:mUILanguages forKey:@"UILanguages"];
 	
 
 	return dict;
@@ -2698,19 +2871,66 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 
 @end
 
-// --- Message ---
-@implementation QXMessage
+// --- TranslatedThread ---
+@implementation QXTranslatedThread
+
+@synthesize Title;
+@synthesize Content;
+@synthesize Comments;
+@synthesize IsCommentOnly;
+
+- (id) initWithDictionary:(NSDictionary*)dict{
+	self = [super init];
+	if (!self) {
+		return self;
+	}
+	if (![dict isKindOfClass:[NSDictionary class]]) {
+		return self;
+	}
+	[self setTitle:[dict valueForKey:@"Title"]];
+	[self setContent:[dict valueForKey:@"Content"]];
+
+	NSMutableArray * mComments = [[NSMutableArray alloc] init];
+	NSArray * lComments = [dict valueForKey:@"Comments"];
+	if ([lComments isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lComments) {
+			[mComments addObject: [[QXTranslatedComment alloc] initWithDictionary:d]];
+		}
+		[self setComments:mComments];
+	}
+	[self setIsCommentOnly:[[dict valueForKey:@"IsCommentOnly"] boolValue]];
+
+	return self;
+}
+
+- (NSDictionary*) dictionary {
+	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
+	[dict setValue:self.Title forKey:@"Title"];
+	[dict setValue:self.Content forKey:@"Content"];
+
+	NSMutableArray * mComments = [[NSMutableArray alloc] init];
+	for (QXTranslatedComment * p in Comments) {
+		[mComments addObject:[p dictionary]];
+	}
+	[dict setValue:mComments forKey:@"Comments"];
+	
+	[dict setValue:[NSNumber numberWithBool:self.IsCommentOnly] forKey:@"IsCommentOnly"];
+
+	return dict;
+}
+
+@end
+
+// --- EntryVersion ---
+@implementation QXEntryVersion
 
 @synthesize Id;
-@synthesize ConversationId;
-@synthesize UserId;
-@synthesize Content;
-@synthesize HtmlContent;
-@synthesize CreatedAt;
-@synthesize EmbedUser;
-@synthesize ShowUser;
-@synthesize IsOffline;
-@synthesize HighlightedContent;
+@synthesize GroupId;
+@synthesize UpdatedAt;
+@synthesize LocalUpdatedAt;
+@synthesize UpdatedAtUnixNano;
+@synthesize CurrentVersionEditor;
+@synthesize IsNewVersion;
 
 - (id) initWithDictionary:(NSDictionary*)dict{
 	self = [super init];
@@ -2721,19 +2941,16 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 		return self;
 	}
 	[self setId:[dict valueForKey:@"Id"]];
-	[self setConversationId:[dict valueForKey:@"ConversationId"]];
-	[self setUserId:[dict valueForKey:@"UserId"]];
-	[self setContent:[dict valueForKey:@"Content"]];
-	[self setHtmlContent:[dict valueForKey:@"HtmlContent"]];
-	[self setCreatedAt:[QXQortexapi dateFromString:[dict valueForKey:@"CreatedAt"]]];
+	[self setGroupId:[dict valueForKey:@"GroupId"]];
+	[self setUpdatedAt:[QXQortexapi dateFromString:[dict valueForKey:@"UpdatedAt"]]];
+	[self setLocalUpdatedAt:[dict valueForKey:@"LocalUpdatedAt"]];
+	[self setUpdatedAtUnixNano:[dict valueForKey:@"UpdatedAtUnixNano"]];
 
-	id dictEmbedUser = [dict valueForKey:@"EmbedUser"];
-	if ([dictEmbedUser isKindOfClass:[NSDictionary class]]){
-		[self setEmbedUser:[[QXEmbedUser alloc] initWithDictionary:dictEmbedUser]];
+	id dictCurrentVersionEditor = [dict valueForKey:@"CurrentVersionEditor"];
+	if ([dictCurrentVersionEditor isKindOfClass:[NSDictionary class]]){
+		[self setCurrentVersionEditor:[[QXEmbedUser alloc] initWithDictionary:dictCurrentVersionEditor]];
 	}
-	[self setShowUser:[[dict valueForKey:@"ShowUser"] boolValue]];
-	[self setIsOffline:[[dict valueForKey:@"IsOffline"] boolValue]];
-	[self setHighlightedContent:[dict valueForKey:@"HighlightedContent"]];
+	[self setIsNewVersion:[[dict valueForKey:@"IsNewVersion"] boolValue]];
 
 	return self;
 }
@@ -2741,16 +2958,13 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 - (NSDictionary*) dictionary {
 	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
 	[dict setValue:self.Id forKey:@"Id"];
-	[dict setValue:self.ConversationId forKey:@"ConversationId"];
-	[dict setValue:self.UserId forKey:@"UserId"];
-	[dict setValue:self.Content forKey:@"Content"];
-	[dict setValue:self.HtmlContent forKey:@"HtmlContent"];
-	[dict setValue:[QXQortexapi stringFromDate:self.CreatedAt] forKey:@"CreatedAt"];
-	[dict setValue:[self.EmbedUser dictionary] forKey:@"EmbedUser"];
+	[dict setValue:self.GroupId forKey:@"GroupId"];
+	[dict setValue:[QXQortexapi stringFromDate:self.UpdatedAt] forKey:@"UpdatedAt"];
+	[dict setValue:self.LocalUpdatedAt forKey:@"LocalUpdatedAt"];
+	[dict setValue:self.UpdatedAtUnixNano forKey:@"UpdatedAtUnixNano"];
+	[dict setValue:[self.CurrentVersionEditor dictionary] forKey:@"CurrentVersionEditor"];
 	
-	[dict setValue:[NSNumber numberWithBool:self.ShowUser] forKey:@"ShowUser"];
-	[dict setValue:[NSNumber numberWithBool:self.IsOffline] forKey:@"IsOffline"];
-	[dict setValue:self.HighlightedContent forKey:@"HighlightedContent"];
+	[dict setValue:[NSNumber numberWithBool:self.IsNewVersion] forKey:@"IsNewVersion"];
 
 	return dict;
 }
@@ -2847,68 +3061,6 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	
 	[dict setValue:self.ToEmail forKey:@"ToEmail"];
 	[dict setValue:self.State forKey:@"State"];
-
-	return dict;
-}
-
-@end
-
-// --- BlogEntry ---
-@implementation QXBlogEntry
-
-@synthesize Id;
-@synthesize Title;
-@synthesize HtmlTitle;
-@synthesize Slug;
-@synthesize CreatedAt;
-@synthesize LocalCreatedAt;
-@synthesize Permalink;
-@synthesize CreateCommentURL;
-@synthesize HtmlContent;
-@synthesize HtmlContentPart;
-@synthesize Author;
-
-- (id) initWithDictionary:(NSDictionary*)dict{
-	self = [super init];
-	if (!self) {
-		return self;
-	}
-	if (![dict isKindOfClass:[NSDictionary class]]) {
-		return self;
-	}
-	[self setId:[dict valueForKey:@"Id"]];
-	[self setTitle:[dict valueForKey:@"Title"]];
-	[self setHtmlTitle:[dict valueForKey:@"HtmlTitle"]];
-	[self setSlug:[dict valueForKey:@"Slug"]];
-	[self setCreatedAt:[QXQortexapi dateFromString:[dict valueForKey:@"CreatedAt"]]];
-	[self setLocalCreatedAt:[dict valueForKey:@"LocalCreatedAt"]];
-	[self setPermalink:[dict valueForKey:@"Permalink"]];
-	[self setCreateCommentURL:[dict valueForKey:@"CreateCommentURL"]];
-	[self setHtmlContent:[dict valueForKey:@"HtmlContent"]];
-	[self setHtmlContentPart:[dict valueForKey:@"HtmlContentPart"]];
-
-	id dictAuthor = [dict valueForKey:@"Author"];
-	if ([dictAuthor isKindOfClass:[NSDictionary class]]){
-		[self setAuthor:[[QXEmbedUser alloc] initWithDictionary:dictAuthor]];
-	}
-
-	return self;
-}
-
-- (NSDictionary*) dictionary {
-	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
-	[dict setValue:self.Id forKey:@"Id"];
-	[dict setValue:self.Title forKey:@"Title"];
-	[dict setValue:self.HtmlTitle forKey:@"HtmlTitle"];
-	[dict setValue:self.Slug forKey:@"Slug"];
-	[dict setValue:[QXQortexapi stringFromDate:self.CreatedAt] forKey:@"CreatedAt"];
-	[dict setValue:self.LocalCreatedAt forKey:@"LocalCreatedAt"];
-	[dict setValue:self.Permalink forKey:@"Permalink"];
-	[dict setValue:self.CreateCommentURL forKey:@"CreateCommentURL"];
-	[dict setValue:self.HtmlContent forKey:@"HtmlContent"];
-	[dict setValue:self.HtmlContentPart forKey:@"HtmlContentPart"];
-	[dict setValue:[self.Author dictionary] forKey:@"Author"];
-	
 
 	return dict;
 }
@@ -3118,76 +3270,19 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 
 @end
 
-// --- GroupUsers ---
-@implementation QXGroupUsers
-
-@synthesize GroupId;
-@synthesize EmbedUsers;
-
-- (id) initWithDictionary:(NSDictionary*)dict{
-	self = [super init];
-	if (!self) {
-		return self;
-	}
-	if (![dict isKindOfClass:[NSDictionary class]]) {
-		return self;
-	}
-	[self setGroupId:[dict valueForKey:@"GroupId"]];
-
-	NSMutableArray * mEmbedUsers = [[NSMutableArray alloc] init];
-	NSArray * lEmbedUsers = [dict valueForKey:@"EmbedUsers"];
-	if ([lEmbedUsers isKindOfClass:[NSArray class]]) {
-		for (NSDictionary * d in lEmbedUsers) {
-			[mEmbedUsers addObject: [[QXEmbedUser alloc] initWithDictionary:d]];
-		}
-		[self setEmbedUsers:mEmbedUsers];
-	}
-
-	return self;
-}
-
-- (NSDictionary*) dictionary {
-	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
-	[dict setValue:self.GroupId forKey:@"GroupId"];
-
-	NSMutableArray * mEmbedUsers = [[NSMutableArray alloc] init];
-	for (QXEmbedUser * p in EmbedUsers) {
-		[mEmbedUsers addObject:[p dictionary]];
-	}
-	[dict setValue:mEmbedUsers forKey:@"EmbedUsers"];
-	
-
-	return dict;
-}
-
-@end
-
-// --- TaskOutline ---
-@implementation QXTaskOutline
+// --- Message ---
+@implementation QXMessage
 
 @synthesize Id;
-@synthesize EntryTitle;
-@synthesize EntryLink;
-@synthesize IsComment;
-@synthesize Assignee;
-@synthesize AuthorName;
-@synthesize Group;
-@synthesize Age;
+@synthesize ConversationId;
+@synthesize UserId;
+@synthesize Content;
+@synthesize HtmlContent;
 @synthesize CreatedAt;
-@synthesize Status;
-@synthesize StatusCode;
-@synthesize Due;
-@synthesize Label;
-@synthesize LabelCode;
-@synthesize EstimateTime;
-@synthesize EstimateTimeFloat64;
-@synthesize SpentTime;
-@synthesize PriorityWeight;
-@synthesize Priority;
-@synthesize CompleteAtStr;
-@synthesize CompleteAtUnixNano;
-@synthesize IsTitleCreatedBy;
-@synthesize ActionNeeded;
+@synthesize EmbedUser;
+@synthesize ShowUser;
+@synthesize IsOffline;
+@synthesize HighlightedContent;
 
 - (id) initWithDictionary:(NSDictionary*)dict{
 	self = [super init];
@@ -3198,36 +3293,19 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 		return self;
 	}
 	[self setId:[dict valueForKey:@"Id"]];
-	[self setEntryTitle:[dict valueForKey:@"EntryTitle"]];
-	[self setEntryLink:[dict valueForKey:@"EntryLink"]];
-	[self setIsComment:[[dict valueForKey:@"IsComment"] boolValue]];
-
-	id dictAssignee = [dict valueForKey:@"Assignee"];
-	if ([dictAssignee isKindOfClass:[NSDictionary class]]){
-		[self setAssignee:[[QXEmbedUser alloc] initWithDictionary:dictAssignee]];
-	}
-	[self setAuthorName:[dict valueForKey:@"AuthorName"]];
-
-	id dictGroup = [dict valueForKey:@"Group"];
-	if ([dictGroup isKindOfClass:[NSDictionary class]]){
-		[self setGroup:[[QXEmbedGroup alloc] initWithDictionary:dictGroup]];
-	}
-	[self setAge:[dict valueForKey:@"Age"]];
+	[self setConversationId:[dict valueForKey:@"ConversationId"]];
+	[self setUserId:[dict valueForKey:@"UserId"]];
+	[self setContent:[dict valueForKey:@"Content"]];
+	[self setHtmlContent:[dict valueForKey:@"HtmlContent"]];
 	[self setCreatedAt:[QXQortexapi dateFromString:[dict valueForKey:@"CreatedAt"]]];
-	[self setStatus:[dict valueForKey:@"Status"]];
-	[self setStatusCode:[dict valueForKey:@"StatusCode"]];
-	[self setDue:[dict valueForKey:@"Due"]];
-	[self setLabel:[dict valueForKey:@"Label"]];
-	[self setLabelCode:[dict valueForKey:@"LabelCode"]];
-	[self setEstimateTime:[dict valueForKey:@"EstimateTime"]];
-	[self setEstimateTimeFloat64:[dict valueForKey:@"EstimateTimeFloat64"]];
-	[self setSpentTime:[dict valueForKey:@"SpentTime"]];
-	[self setPriorityWeight:[dict valueForKey:@"PriorityWeight"]];
-	[self setPriority:[dict valueForKey:@"Priority"]];
-	[self setCompleteAtStr:[dict valueForKey:@"CompleteAtStr"]];
-	[self setCompleteAtUnixNano:[dict valueForKey:@"CompleteAtUnixNano"]];
-	[self setIsTitleCreatedBy:[[dict valueForKey:@"IsTitleCreatedBy"] boolValue]];
-	[self setActionNeeded:[[dict valueForKey:@"ActionNeeded"] boolValue]];
+
+	id dictEmbedUser = [dict valueForKey:@"EmbedUser"];
+	if ([dictEmbedUser isKindOfClass:[NSDictionary class]]){
+		[self setEmbedUser:[[QXEmbedUser alloc] initWithDictionary:dictEmbedUser]];
+	}
+	[self setShowUser:[[dict valueForKey:@"ShowUser"] boolValue]];
+	[self setIsOffline:[[dict valueForKey:@"IsOffline"] boolValue]];
+	[self setHighlightedContent:[dict valueForKey:@"HighlightedContent"]];
 
 	return self;
 }
@@ -3235,30 +3313,220 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 - (NSDictionary*) dictionary {
 	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
 	[dict setValue:self.Id forKey:@"Id"];
-	[dict setValue:self.EntryTitle forKey:@"EntryTitle"];
-	[dict setValue:self.EntryLink forKey:@"EntryLink"];
-	[dict setValue:[NSNumber numberWithBool:self.IsComment] forKey:@"IsComment"];
-	[dict setValue:[self.Assignee dictionary] forKey:@"Assignee"];
-	
-	[dict setValue:self.AuthorName forKey:@"AuthorName"];
-	[dict setValue:[self.Group dictionary] forKey:@"Group"];
-	
-	[dict setValue:self.Age forKey:@"Age"];
+	[dict setValue:self.ConversationId forKey:@"ConversationId"];
+	[dict setValue:self.UserId forKey:@"UserId"];
+	[dict setValue:self.Content forKey:@"Content"];
+	[dict setValue:self.HtmlContent forKey:@"HtmlContent"];
 	[dict setValue:[QXQortexapi stringFromDate:self.CreatedAt] forKey:@"CreatedAt"];
-	[dict setValue:self.Status forKey:@"Status"];
-	[dict setValue:self.StatusCode forKey:@"StatusCode"];
-	[dict setValue:self.Due forKey:@"Due"];
-	[dict setValue:self.Label forKey:@"Label"];
-	[dict setValue:self.LabelCode forKey:@"LabelCode"];
-	[dict setValue:self.EstimateTime forKey:@"EstimateTime"];
-	[dict setValue:self.EstimateTimeFloat64 forKey:@"EstimateTimeFloat64"];
-	[dict setValue:self.SpentTime forKey:@"SpentTime"];
-	[dict setValue:self.PriorityWeight forKey:@"PriorityWeight"];
+	[dict setValue:[self.EmbedUser dictionary] forKey:@"EmbedUser"];
+	
+	[dict setValue:[NSNumber numberWithBool:self.ShowUser] forKey:@"ShowUser"];
+	[dict setValue:[NSNumber numberWithBool:self.IsOffline] forKey:@"IsOffline"];
+	[dict setValue:self.HighlightedContent forKey:@"HighlightedContent"];
+
+	return dict;
+}
+
+@end
+
+// --- EntryInput ---
+@implementation QXEntryInput
+
+@synthesize Id;
+@synthesize EType;
+@synthesize Title;
+@synthesize Content;
+@synthesize GroupId;
+@synthesize IsToGroup;
+@synthesize ToUserIds;
+@synthesize TodoUserIds;
+@synthesize MentionedUserIds;
+@synthesize IsAcknowledgement;
+@synthesize IsToDo;
+@synthesize TaskDue;
+@synthesize TodoStatus;
+@synthesize Priority;
+@synthesize Label;
+@synthesize EstimateTime;
+@synthesize RootId;
+@synthesize NewVersion;
+@synthesize OldGroupId;
+@synthesize LastUpdateAt;
+@synthesize KnowledgeBase;
+@synthesize AnyoneCanEdit;
+@synthesize Presentation;
+@synthesize IsFromEmail;
+@synthesize IsPublished;
+@synthesize Slug;
+@synthesize Email;
+@synthesize Name;
+@synthesize InlineHelp;
+@synthesize LinkTitle;
+@synthesize BaseOnEntryId;
+@synthesize PublishedToUsers;
+@synthesize LocaleName;
+@synthesize BasedPostId;
+@synthesize GroupIdOfBasedPost;
+@synthesize SelectionTextInFo;
+
+- (id) initWithDictionary:(NSDictionary*)dict{
+	self = [super init];
+	if (!self) {
+		return self;
+	}
+	if (![dict isKindOfClass:[NSDictionary class]]) {
+		return self;
+	}
+	[self setId:[dict valueForKey:@"Id"]];
+	[self setEType:[dict valueForKey:@"EType"]];
+	[self setTitle:[dict valueForKey:@"Title"]];
+	[self setContent:[dict valueForKey:@"Content"]];
+	[self setGroupId:[dict valueForKey:@"GroupId"]];
+	[self setIsToGroup:[dict valueForKey:@"IsToGroup"]];
+	[self setToUserIds:[dict valueForKey:@"ToUserIds"]];
+	[self setTodoUserIds:[dict valueForKey:@"TodoUserIds"]];
+	[self setMentionedUserIds:[dict valueForKey:@"MentionedUserIds"]];
+	[self setIsAcknowledgement:[[dict valueForKey:@"IsAcknowledgement"] boolValue]];
+	[self setIsToDo:[[dict valueForKey:@"IsToDo"] boolValue]];
+	[self setTaskDue:[dict valueForKey:@"TaskDue"]];
+	[self setTodoStatus:[dict valueForKey:@"TodoStatus"]];
+	[self setPriority:[dict valueForKey:@"Priority"]];
+	[self setLabel:[dict valueForKey:@"Label"]];
+	[self setEstimateTime:[dict valueForKey:@"EstimateTime"]];
+	[self setRootId:[dict valueForKey:@"RootId"]];
+	[self setNewVersion:[[dict valueForKey:@"NewVersion"] boolValue]];
+	[self setOldGroupId:[dict valueForKey:@"OldGroupId"]];
+	[self setLastUpdateAt:[dict valueForKey:@"LastUpdateAt"]];
+	[self setKnowledgeBase:[[dict valueForKey:@"KnowledgeBase"] boolValue]];
+	[self setAnyoneCanEdit:[[dict valueForKey:@"AnyoneCanEdit"] boolValue]];
+	[self setPresentation:[[dict valueForKey:@"Presentation"] boolValue]];
+	[self setIsFromEmail:[[dict valueForKey:@"IsFromEmail"] boolValue]];
+	[self setIsPublished:[[dict valueForKey:@"IsPublished"] boolValue]];
+	[self setSlug:[dict valueForKey:@"Slug"]];
+	[self setEmail:[dict valueForKey:@"Email"]];
+	[self setName:[dict valueForKey:@"Name"]];
+	[self setInlineHelp:[[dict valueForKey:@"InlineHelp"] boolValue]];
+	[self setLinkTitle:[dict valueForKey:@"LinkTitle"]];
+	[self setBaseOnEntryId:[dict valueForKey:@"BaseOnEntryId"]];
+	[self setPublishedToUsers:[[dict valueForKey:@"PublishedToUsers"] boolValue]];
+	[self setLocaleName:[dict valueForKey:@"LocaleName"]];
+	[self setBasedPostId:[dict valueForKey:@"BasedPostId"]];
+	[self setGroupIdOfBasedPost:[dict valueForKey:@"GroupIdOfBasedPost"]];
+
+	id dictSelectionTextInFo = [dict valueForKey:@"SelectionTextInFo"];
+	if ([dictSelectionTextInFo isKindOfClass:[NSDictionary class]]){
+		[self setSelectionTextInFo:[[QXSelectionTextInFo alloc] initWithDictionary:dictSelectionTextInFo]];
+	}
+
+	return self;
+}
+
+- (NSDictionary*) dictionary {
+	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
+	[dict setValue:self.Id forKey:@"Id"];
+	[dict setValue:self.EType forKey:@"EType"];
+	[dict setValue:self.Title forKey:@"Title"];
+	[dict setValue:self.Content forKey:@"Content"];
+	[dict setValue:self.GroupId forKey:@"GroupId"];
+	[dict setValue:self.IsToGroup forKey:@"IsToGroup"];
+	[dict setValue:self.ToUserIds forKey:@"ToUserIds"];
+	[dict setValue:self.TodoUserIds forKey:@"TodoUserIds"];
+	[dict setValue:self.MentionedUserIds forKey:@"MentionedUserIds"];
+	[dict setValue:[NSNumber numberWithBool:self.IsAcknowledgement] forKey:@"IsAcknowledgement"];
+	[dict setValue:[NSNumber numberWithBool:self.IsToDo] forKey:@"IsToDo"];
+	[dict setValue:self.TaskDue forKey:@"TaskDue"];
+	[dict setValue:self.TodoStatus forKey:@"TodoStatus"];
 	[dict setValue:self.Priority forKey:@"Priority"];
-	[dict setValue:self.CompleteAtStr forKey:@"CompleteAtStr"];
-	[dict setValue:self.CompleteAtUnixNano forKey:@"CompleteAtUnixNano"];
-	[dict setValue:[NSNumber numberWithBool:self.IsTitleCreatedBy] forKey:@"IsTitleCreatedBy"];
-	[dict setValue:[NSNumber numberWithBool:self.ActionNeeded] forKey:@"ActionNeeded"];
+	[dict setValue:self.Label forKey:@"Label"];
+	[dict setValue:self.EstimateTime forKey:@"EstimateTime"];
+	[dict setValue:self.RootId forKey:@"RootId"];
+	[dict setValue:[NSNumber numberWithBool:self.NewVersion] forKey:@"NewVersion"];
+	[dict setValue:self.OldGroupId forKey:@"OldGroupId"];
+	[dict setValue:self.LastUpdateAt forKey:@"LastUpdateAt"];
+	[dict setValue:[NSNumber numberWithBool:self.KnowledgeBase] forKey:@"KnowledgeBase"];
+	[dict setValue:[NSNumber numberWithBool:self.AnyoneCanEdit] forKey:@"AnyoneCanEdit"];
+	[dict setValue:[NSNumber numberWithBool:self.Presentation] forKey:@"Presentation"];
+	[dict setValue:[NSNumber numberWithBool:self.IsFromEmail] forKey:@"IsFromEmail"];
+	[dict setValue:[NSNumber numberWithBool:self.IsPublished] forKey:@"IsPublished"];
+	[dict setValue:self.Slug forKey:@"Slug"];
+	[dict setValue:self.Email forKey:@"Email"];
+	[dict setValue:self.Name forKey:@"Name"];
+	[dict setValue:[NSNumber numberWithBool:self.InlineHelp] forKey:@"InlineHelp"];
+	[dict setValue:self.LinkTitle forKey:@"LinkTitle"];
+	[dict setValue:self.BaseOnEntryId forKey:@"BaseOnEntryId"];
+	[dict setValue:[NSNumber numberWithBool:self.PublishedToUsers] forKey:@"PublishedToUsers"];
+	[dict setValue:self.LocaleName forKey:@"LocaleName"];
+	[dict setValue:self.BasedPostId forKey:@"BasedPostId"];
+	[dict setValue:self.GroupIdOfBasedPost forKey:@"GroupIdOfBasedPost"];
+	[dict setValue:[self.SelectionTextInFo dictionary] forKey:@"SelectionTextInFo"];
+	
+
+	return dict;
+}
+
+@end
+
+// --- QortexSupport ---
+@implementation QXQortexSupport
+
+@synthesize Audience;
+@synthesize IsToOffical;
+@synthesize IsToAllUsers;
+@synthesize IsToAllAdmins;
+@synthesize IsToOrganizations;
+@synthesize FromOrg;
+@synthesize ToOrgs;
+@synthesize ToOrgsHtml;
+
+- (id) initWithDictionary:(NSDictionary*)dict{
+	self = [super init];
+	if (!self) {
+		return self;
+	}
+	if (![dict isKindOfClass:[NSDictionary class]]) {
+		return self;
+	}
+	[self setAudience:[dict valueForKey:@"Audience"]];
+	[self setIsToOffical:[[dict valueForKey:@"IsToOffical"] boolValue]];
+	[self setIsToAllUsers:[[dict valueForKey:@"IsToAllUsers"] boolValue]];
+	[self setIsToAllAdmins:[[dict valueForKey:@"IsToAllAdmins"] boolValue]];
+	[self setIsToOrganizations:[[dict valueForKey:@"IsToOrganizations"] boolValue]];
+
+	id dictFromOrg = [dict valueForKey:@"FromOrg"];
+	if ([dictFromOrg isKindOfClass:[NSDictionary class]]){
+		[self setFromOrg:[[QXEmbedOrg alloc] initWithDictionary:dictFromOrg]];
+	}
+
+	NSMutableArray * mToOrgs = [[NSMutableArray alloc] init];
+	NSArray * lToOrgs = [dict valueForKey:@"ToOrgs"];
+	if ([lToOrgs isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lToOrgs) {
+			[mToOrgs addObject: [[QXEmbedOrg alloc] initWithDictionary:d]];
+		}
+		[self setToOrgs:mToOrgs];
+	}
+	[self setToOrgsHtml:[dict valueForKey:@"ToOrgsHtml"]];
+
+	return self;
+}
+
+- (NSDictionary*) dictionary {
+	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
+	[dict setValue:self.Audience forKey:@"Audience"];
+	[dict setValue:[NSNumber numberWithBool:self.IsToOffical] forKey:@"IsToOffical"];
+	[dict setValue:[NSNumber numberWithBool:self.IsToAllUsers] forKey:@"IsToAllUsers"];
+	[dict setValue:[NSNumber numberWithBool:self.IsToAllAdmins] forKey:@"IsToAllAdmins"];
+	[dict setValue:[NSNumber numberWithBool:self.IsToOrganizations] forKey:@"IsToOrganizations"];
+	[dict setValue:[self.FromOrg dictionary] forKey:@"FromOrg"];
+	
+
+	NSMutableArray * mToOrgs = [[NSMutableArray alloc] init];
+	for (QXEmbedOrg * p in ToOrgs) {
+		[mToOrgs addObject:[p dictionary]];
+	}
+	[dict setValue:mToOrgs forKey:@"ToOrgs"];
+	
+	[dict setValue:self.ToOrgsHtml forKey:@"ToOrgsHtml"];
 
 	return dict;
 }
@@ -3335,55 +3603,15 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 
 @end
 
-// --- Invitation ---
-@implementation QXInvitation
+// --- RelatedEntry ---
+@implementation QXRelatedEntry
 
-@synthesize Email;
-@synthesize Token;
-@synthesize SentAgo;
-@synthesize ByUser;
-@synthesize HideInPendingList;
-
-- (id) initWithDictionary:(NSDictionary*)dict{
-	self = [super init];
-	if (!self) {
-		return self;
-	}
-	if (![dict isKindOfClass:[NSDictionary class]]) {
-		return self;
-	}
-	[self setEmail:[dict valueForKey:@"Email"]];
-	[self setToken:[dict valueForKey:@"Token"]];
-	[self setSentAgo:[dict valueForKey:@"SentAgo"]];
-
-	id dictByUser = [dict valueForKey:@"ByUser"];
-	if ([dictByUser isKindOfClass:[NSDictionary class]]){
-		[self setByUser:[[QXEmbedUser alloc] initWithDictionary:dictByUser]];
-	}
-	[self setHideInPendingList:[[dict valueForKey:@"HideInPendingList"] boolValue]];
-
-	return self;
-}
-
-- (NSDictionary*) dictionary {
-	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
-	[dict setValue:self.Email forKey:@"Email"];
-	[dict setValue:self.Token forKey:@"Token"];
-	[dict setValue:self.SentAgo forKey:@"SentAgo"];
-	[dict setValue:[self.ByUser dictionary] forKey:@"ByUser"];
-	
-	[dict setValue:[NSNumber numberWithBool:self.HideInPendingList] forKey:@"HideInPendingList"];
-
-	return dict;
-}
-
-@end
-
-// --- AbandonInfo ---
-@implementation QXAbandonInfo
-
-@synthesize AbandonFromOrg;
-@synthesize AvailableOrgs;
+@synthesize HtmlTitle;
+@synthesize Link;
+@synthesize LocalHumanCreatedAt;
+@synthesize Author;
+@synthesize IsComment;
+@synthesize IsEmbedded;
 
 - (id) initWithDictionary:(NSDictionary*)dict{
 	self = [super init];
@@ -3393,200 +3621,29 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
+	[self setHtmlTitle:[dict valueForKey:@"HtmlTitle"]];
+	[self setLink:[dict valueForKey:@"Link"]];
+	[self setLocalHumanCreatedAt:[dict valueForKey:@"LocalHumanCreatedAt"]];
 
-	id dictAbandonFromOrg = [dict valueForKey:@"AbandonFromOrg"];
-	if ([dictAbandonFromOrg isKindOfClass:[NSDictionary class]]){
-		[self setAbandonFromOrg:[[QXEmbedOrg alloc] initWithDictionary:dictAbandonFromOrg]];
+	id dictAuthor = [dict valueForKey:@"Author"];
+	if ([dictAuthor isKindOfClass:[NSDictionary class]]){
+		[self setAuthor:[[QXEmbedUser alloc] initWithDictionary:dictAuthor]];
 	}
-
-	NSMutableArray * mAvailableOrgs = [[NSMutableArray alloc] init];
-	NSArray * lAvailableOrgs = [dict valueForKey:@"AvailableOrgs"];
-	if ([lAvailableOrgs isKindOfClass:[NSArray class]]) {
-		for (NSDictionary * d in lAvailableOrgs) {
-			[mAvailableOrgs addObject: [[QXEmbedOrg alloc] initWithDictionary:d]];
-		}
-		[self setAvailableOrgs:mAvailableOrgs];
-	}
+	[self setIsComment:[[dict valueForKey:@"IsComment"] boolValue]];
+	[self setIsEmbedded:[[dict valueForKey:@"IsEmbedded"] boolValue]];
 
 	return self;
 }
 
 - (NSDictionary*) dictionary {
 	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
-	[dict setValue:[self.AbandonFromOrg dictionary] forKey:@"AbandonFromOrg"];
+	[dict setValue:self.HtmlTitle forKey:@"HtmlTitle"];
+	[dict setValue:self.Link forKey:@"Link"];
+	[dict setValue:self.LocalHumanCreatedAt forKey:@"LocalHumanCreatedAt"];
+	[dict setValue:[self.Author dictionary] forKey:@"Author"];
 	
-
-	NSMutableArray * mAvailableOrgs = [[NSMutableArray alloc] init];
-	for (QXEmbedOrg * p in AvailableOrgs) {
-		[mAvailableOrgs addObject:[p dictionary]];
-	}
-	[dict setValue:mAvailableOrgs forKey:@"AvailableOrgs"];
-	
-
-	return dict;
-}
-
-@end
-
-// --- QortexSupport ---
-@implementation QXQortexSupport
-
-@synthesize Audience;
-@synthesize IsToOffical;
-@synthesize IsToAllUsers;
-@synthesize IsToAllAdmins;
-@synthesize IsToOrganizations;
-@synthesize FromOrg;
-@synthesize ToOrgs;
-@synthesize ToOrgsHtml;
-
-- (id) initWithDictionary:(NSDictionary*)dict{
-	self = [super init];
-	if (!self) {
-		return self;
-	}
-	if (![dict isKindOfClass:[NSDictionary class]]) {
-		return self;
-	}
-	[self setAudience:[dict valueForKey:@"Audience"]];
-	[self setIsToOffical:[[dict valueForKey:@"IsToOffical"] boolValue]];
-	[self setIsToAllUsers:[[dict valueForKey:@"IsToAllUsers"] boolValue]];
-	[self setIsToAllAdmins:[[dict valueForKey:@"IsToAllAdmins"] boolValue]];
-	[self setIsToOrganizations:[[dict valueForKey:@"IsToOrganizations"] boolValue]];
-
-	id dictFromOrg = [dict valueForKey:@"FromOrg"];
-	if ([dictFromOrg isKindOfClass:[NSDictionary class]]){
-		[self setFromOrg:[[QXEmbedOrg alloc] initWithDictionary:dictFromOrg]];
-	}
-
-	NSMutableArray * mToOrgs = [[NSMutableArray alloc] init];
-	NSArray * lToOrgs = [dict valueForKey:@"ToOrgs"];
-	if ([lToOrgs isKindOfClass:[NSArray class]]) {
-		for (NSDictionary * d in lToOrgs) {
-			[mToOrgs addObject: [[QXEmbedOrg alloc] initWithDictionary:d]];
-		}
-		[self setToOrgs:mToOrgs];
-	}
-	[self setToOrgsHtml:[dict valueForKey:@"ToOrgsHtml"]];
-
-	return self;
-}
-
-- (NSDictionary*) dictionary {
-	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
-	[dict setValue:self.Audience forKey:@"Audience"];
-	[dict setValue:[NSNumber numberWithBool:self.IsToOffical] forKey:@"IsToOffical"];
-	[dict setValue:[NSNumber numberWithBool:self.IsToAllUsers] forKey:@"IsToAllUsers"];
-	[dict setValue:[NSNumber numberWithBool:self.IsToAllAdmins] forKey:@"IsToAllAdmins"];
-	[dict setValue:[NSNumber numberWithBool:self.IsToOrganizations] forKey:@"IsToOrganizations"];
-	[dict setValue:[self.FromOrg dictionary] forKey:@"FromOrg"];
-	
-
-	NSMutableArray * mToOrgs = [[NSMutableArray alloc] init];
-	for (QXEmbedOrg * p in ToOrgs) {
-		[mToOrgs addObject:[p dictionary]];
-	}
-	[dict setValue:mToOrgs forKey:@"ToOrgs"];
-	
-	[dict setValue:self.ToOrgsHtml forKey:@"ToOrgsHtml"];
-
-	return dict;
-}
-
-@end
-
-// --- LanguageSelector ---
-@implementation QXLanguageSelector
-
-@synthesize IsFirst;
-@synthesize Index;
-@synthesize SupportedLanguages;
-@synthesize PreferredLanguages;
-@synthesize RestLanguages;
-@synthesize UILanguages;
-
-- (id) initWithDictionary:(NSDictionary*)dict{
-	self = [super init];
-	if (!self) {
-		return self;
-	}
-	if (![dict isKindOfClass:[NSDictionary class]]) {
-		return self;
-	}
-	[self setIsFirst:[[dict valueForKey:@"IsFirst"] boolValue]];
-	[self setIndex:[dict valueForKey:@"Index"]];
-
-	NSMutableArray * mSupportedLanguages = [[NSMutableArray alloc] init];
-	NSArray * lSupportedLanguages = [dict valueForKey:@"SupportedLanguages"];
-	if ([lSupportedLanguages isKindOfClass:[NSArray class]]) {
-		for (NSDictionary * d in lSupportedLanguages) {
-			[mSupportedLanguages addObject: [[QXSupportedLanguage alloc] initWithDictionary:d]];
-		}
-		[self setSupportedLanguages:mSupportedLanguages];
-	}
-
-	NSMutableArray * mPreferredLanguages = [[NSMutableArray alloc] init];
-	NSArray * lPreferredLanguages = [dict valueForKey:@"PreferredLanguages"];
-	if ([lPreferredLanguages isKindOfClass:[NSArray class]]) {
-		for (NSDictionary * d in lPreferredLanguages) {
-			[mPreferredLanguages addObject: [[QXSupportedLanguage alloc] initWithDictionary:d]];
-		}
-		[self setPreferredLanguages:mPreferredLanguages];
-	}
-
-	NSMutableArray * mRestLanguages = [[NSMutableArray alloc] init];
-	NSArray * lRestLanguages = [dict valueForKey:@"RestLanguages"];
-	if ([lRestLanguages isKindOfClass:[NSArray class]]) {
-		for (NSDictionary * d in lRestLanguages) {
-			[mRestLanguages addObject: [[QXSupportedLanguage alloc] initWithDictionary:d]];
-		}
-		[self setRestLanguages:mRestLanguages];
-	}
-
-	NSMutableArray * mUILanguages = [[NSMutableArray alloc] init];
-	NSArray * lUILanguages = [dict valueForKey:@"UILanguages"];
-	if ([lUILanguages isKindOfClass:[NSArray class]]) {
-		for (NSDictionary * d in lUILanguages) {
-			[mUILanguages addObject: [[QXSupportedLanguage alloc] initWithDictionary:d]];
-		}
-		[self setUILanguages:mUILanguages];
-	}
-
-	return self;
-}
-
-- (NSDictionary*) dictionary {
-	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
-	[dict setValue:[NSNumber numberWithBool:self.IsFirst] forKey:@"IsFirst"];
-	[dict setValue:self.Index forKey:@"Index"];
-
-	NSMutableArray * mSupportedLanguages = [[NSMutableArray alloc] init];
-	for (QXSupportedLanguage * p in SupportedLanguages) {
-		[mSupportedLanguages addObject:[p dictionary]];
-	}
-	[dict setValue:mSupportedLanguages forKey:@"SupportedLanguages"];
-	
-
-	NSMutableArray * mPreferredLanguages = [[NSMutableArray alloc] init];
-	for (QXSupportedLanguage * p in PreferredLanguages) {
-		[mPreferredLanguages addObject:[p dictionary]];
-	}
-	[dict setValue:mPreferredLanguages forKey:@"PreferredLanguages"];
-	
-
-	NSMutableArray * mRestLanguages = [[NSMutableArray alloc] init];
-	for (QXSupportedLanguage * p in RestLanguages) {
-		[mRestLanguages addObject:[p dictionary]];
-	}
-	[dict setValue:mRestLanguages forKey:@"RestLanguages"];
-	
-
-	NSMutableArray * mUILanguages = [[NSMutableArray alloc] init];
-	for (QXSupportedLanguage * p in UILanguages) {
-		[mUILanguages addObject:[p dictionary]];
-	}
-	[dict setValue:mUILanguages forKey:@"UILanguages"];
-	
+	[dict setValue:[NSNumber numberWithBool:self.IsComment] forKey:@"IsComment"];
+	[dict setValue:[NSNumber numberWithBool:self.IsEmbedded] forKey:@"IsEmbedded"];
 
 	return dict;
 }
@@ -3674,11 +3731,40 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 
 @end
 
-// --- LanguageSelectors ---
-@implementation QXLanguageSelectors
+// --- Group ---
+@implementation QXGroup
 
-@synthesize Selectors;
-@synthesize LabelText;
+@synthesize Id;
+@synthesize Name;
+@synthesize Description;
+@synthesize GType;
+@synthesize LogoURL;
+@synthesize IconName;
+@synthesize Link;
+@synthesize TaskLink;
+@synthesize Slug;
+@synthesize Author;
+@synthesize IsAdmin;
+@synthesize IsPrivate;
+@synthesize Editable;
+@synthesize Managable;
+@synthesize Accessible;
+@synthesize FollowedByMe;
+@synthesize AdministratedByMe;
+@synthesize IsPreShared;
+@synthesize IsShared;
+@synthesize IsDefaultLogoURL;
+@synthesize HostOrgName;
+@synthesize IsDispayHostOrgName;
+@synthesize EntriesCount;
+@synthesize FollowersCount;
+@synthesize IsAnnouncement;
+@synthesize IsQortexSupport;
+@synthesize GroupOwners;
+@synthesize SharingInfo;
+@synthesize GroupEmailAddress;
+@synthesize ToDoSettings;
+@synthesize TodoGroupingRoute;
 
 - (id) initWithDictionary:(NSDictionary*)dict{
 	self = [super init];
@@ -3688,47 +3774,128 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
+	[self setId:[dict valueForKey:@"Id"]];
+	[self setName:[dict valueForKey:@"Name"]];
+	[self setDescription:[dict valueForKey:@"Description"]];
+	[self setGType:[dict valueForKey:@"GType"]];
+	[self setLogoURL:[dict valueForKey:@"LogoURL"]];
+	[self setIconName:[dict valueForKey:@"IconName"]];
+	[self setLink:[dict valueForKey:@"Link"]];
+	[self setTaskLink:[dict valueForKey:@"TaskLink"]];
+	[self setSlug:[dict valueForKey:@"Slug"]];
 
-	NSMutableArray * mSelectors = [[NSMutableArray alloc] init];
-	NSArray * lSelectors = [dict valueForKey:@"Selectors"];
-	if ([lSelectors isKindOfClass:[NSArray class]]) {
-		for (NSDictionary * d in lSelectors) {
-			[mSelectors addObject: [[QXLanguageSelector alloc] initWithDictionary:d]];
-		}
-		[self setSelectors:mSelectors];
+	id dictAuthor = [dict valueForKey:@"Author"];
+	if ([dictAuthor isKindOfClass:[NSDictionary class]]){
+		[self setAuthor:[[QXEmbedUser alloc] initWithDictionary:dictAuthor]];
 	}
-	[self setLabelText:[dict valueForKey:@"LabelText"]];
+	[self setIsAdmin:[[dict valueForKey:@"IsAdmin"] boolValue]];
+	[self setIsPrivate:[[dict valueForKey:@"IsPrivate"] boolValue]];
+	[self setEditable:[[dict valueForKey:@"Editable"] boolValue]];
+	[self setManagable:[[dict valueForKey:@"Managable"] boolValue]];
+	[self setAccessible:[[dict valueForKey:@"Accessible"] boolValue]];
+	[self setFollowedByMe:[[dict valueForKey:@"FollowedByMe"] boolValue]];
+	[self setAdministratedByMe:[[dict valueForKey:@"AdministratedByMe"] boolValue]];
+	[self setIsPreShared:[[dict valueForKey:@"IsPreShared"] boolValue]];
+	[self setIsShared:[[dict valueForKey:@"IsShared"] boolValue]];
+	[self setIsDefaultLogoURL:[[dict valueForKey:@"IsDefaultLogoURL"] boolValue]];
+	[self setHostOrgName:[dict valueForKey:@"HostOrgName"]];
+	[self setIsDispayHostOrgName:[[dict valueForKey:@"IsDispayHostOrgName"] boolValue]];
+	[self setEntriesCount:[dict valueForKey:@"EntriesCount"]];
+	[self setFollowersCount:[dict valueForKey:@"FollowersCount"]];
+	[self setIsAnnouncement:[[dict valueForKey:@"IsAnnouncement"] boolValue]];
+	[self setIsQortexSupport:[[dict valueForKey:@"IsQortexSupport"] boolValue]];
+
+	NSMutableArray * mGroupOwners = [[NSMutableArray alloc] init];
+	NSArray * lGroupOwners = [dict valueForKey:@"GroupOwners"];
+	if ([lGroupOwners isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lGroupOwners) {
+			[mGroupOwners addObject: [[QXEmbedUser alloc] initWithDictionary:d]];
+		}
+		[self setGroupOwners:mGroupOwners];
+	}
+
+	id dictSharingInfo = [dict valueForKey:@"SharingInfo"];
+	if ([dictSharingInfo isKindOfClass:[NSDictionary class]]){
+		[self setSharingInfo:[[QXGroupSharingInfo alloc] initWithDictionary:dictSharingInfo]];
+	}
+	[self setGroupEmailAddress:[dict valueForKey:@"GroupEmailAddress"]];
+
+	id dictToDoSettings = [dict valueForKey:@"ToDoSettings"];
+	if ([dictToDoSettings isKindOfClass:[NSDictionary class]]){
+		[self setToDoSettings:[[QXAdvancedToDoSettings alloc] initWithDictionary:dictToDoSettings]];
+	}
+	[self setTodoGroupingRoute:[dict valueForKey:@"TodoGroupingRoute"]];
 
 	return self;
 }
 
 - (NSDictionary*) dictionary {
 	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
-
-	NSMutableArray * mSelectors = [[NSMutableArray alloc] init];
-	for (QXLanguageSelector * p in Selectors) {
-		[mSelectors addObject:[p dictionary]];
-	}
-	[dict setValue:mSelectors forKey:@"Selectors"];
+	[dict setValue:self.Id forKey:@"Id"];
+	[dict setValue:self.Name forKey:@"Name"];
+	[dict setValue:self.Description forKey:@"Description"];
+	[dict setValue:self.GType forKey:@"GType"];
+	[dict setValue:self.LogoURL forKey:@"LogoURL"];
+	[dict setValue:self.IconName forKey:@"IconName"];
+	[dict setValue:self.Link forKey:@"Link"];
+	[dict setValue:self.TaskLink forKey:@"TaskLink"];
+	[dict setValue:self.Slug forKey:@"Slug"];
+	[dict setValue:[self.Author dictionary] forKey:@"Author"];
 	
-	[dict setValue:self.LabelText forKey:@"LabelText"];
+	[dict setValue:[NSNumber numberWithBool:self.IsAdmin] forKey:@"IsAdmin"];
+	[dict setValue:[NSNumber numberWithBool:self.IsPrivate] forKey:@"IsPrivate"];
+	[dict setValue:[NSNumber numberWithBool:self.Editable] forKey:@"Editable"];
+	[dict setValue:[NSNumber numberWithBool:self.Managable] forKey:@"Managable"];
+	[dict setValue:[NSNumber numberWithBool:self.Accessible] forKey:@"Accessible"];
+	[dict setValue:[NSNumber numberWithBool:self.FollowedByMe] forKey:@"FollowedByMe"];
+	[dict setValue:[NSNumber numberWithBool:self.AdministratedByMe] forKey:@"AdministratedByMe"];
+	[dict setValue:[NSNumber numberWithBool:self.IsPreShared] forKey:@"IsPreShared"];
+	[dict setValue:[NSNumber numberWithBool:self.IsShared] forKey:@"IsShared"];
+	[dict setValue:[NSNumber numberWithBool:self.IsDefaultLogoURL] forKey:@"IsDefaultLogoURL"];
+	[dict setValue:self.HostOrgName forKey:@"HostOrgName"];
+	[dict setValue:[NSNumber numberWithBool:self.IsDispayHostOrgName] forKey:@"IsDispayHostOrgName"];
+	[dict setValue:self.EntriesCount forKey:@"EntriesCount"];
+	[dict setValue:self.FollowersCount forKey:@"FollowersCount"];
+	[dict setValue:[NSNumber numberWithBool:self.IsAnnouncement] forKey:@"IsAnnouncement"];
+	[dict setValue:[NSNumber numberWithBool:self.IsQortexSupport] forKey:@"IsQortexSupport"];
+
+	NSMutableArray * mGroupOwners = [[NSMutableArray alloc] init];
+	for (QXEmbedUser * p in GroupOwners) {
+		[mGroupOwners addObject:[p dictionary]];
+	}
+	[dict setValue:mGroupOwners forKey:@"GroupOwners"];
+	
+	[dict setValue:[self.SharingInfo dictionary] forKey:@"SharingInfo"];
+	
+	[dict setValue:self.GroupEmailAddress forKey:@"GroupEmailAddress"];
+	[dict setValue:[self.ToDoSettings dictionary] forKey:@"ToDoSettings"];
+	
+	[dict setValue:self.TodoGroupingRoute forKey:@"TodoGroupingRoute"];
 
 	return dict;
 }
 
 @end
 
-// --- GroupTasksOutline ---
-@implementation QXGroupTasksOutline
+// --- Conversation ---
+@implementation QXConversation
 
-@synthesize Group;
-@synthesize AcksAndPendingToDos;
-@synthesize SimpleToDos;
-@synthesize OpenToDos;
-@synthesize OpenEstimateTotal;
-@synthesize NotStartedToDos;
-@synthesize NotStartedEstimateTotal;
-@synthesize EstimateUnit;
+@synthesize Id;
+@synthesize Title;
+@synthesize UserIds;
+@synthesize Participants;
+@synthesize CreatedAt;
+@synthesize EndedAt;
+@synthesize LocalHumanCreatedAt;
+@synthesize Topic;
+@synthesize Private;
+@synthesize IsClose;
+@synthesize IsShared;
+@synthesize HasOfflineMessage;
+@synthesize OfflineLocalTime;
+@synthesize SharedMessageIds;
+@synthesize MessagesCount;
+@synthesize Messages;
 
 - (id) initWithDictionary:(NSDictionary*)dict{
 	self = [super init];
@@ -3738,89 +3905,72 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
+	[self setId:[dict valueForKey:@"Id"]];
+	[self setTitle:[dict valueForKey:@"Title"]];
+	[self setUserIds:[dict valueForKey:@"UserIds"]];
 
-	id dictGroup = [dict valueForKey:@"Group"];
-	if ([dictGroup isKindOfClass:[NSDictionary class]]){
-		[self setGroup:[[QXEmbedGroup alloc] initWithDictionary:dictGroup]];
-	}
-
-	NSMutableArray * mAcksAndPendingToDos = [[NSMutableArray alloc] init];
-	NSArray * lAcksAndPendingToDos = [dict valueForKey:@"AcksAndPendingToDos"];
-	if ([lAcksAndPendingToDos isKindOfClass:[NSArray class]]) {
-		for (NSDictionary * d in lAcksAndPendingToDos) {
-			[mAcksAndPendingToDos addObject: [[QXTaskOutline alloc] initWithDictionary:d]];
+	NSMutableArray * mParticipants = [[NSMutableArray alloc] init];
+	NSArray * lParticipants = [dict valueForKey:@"Participants"];
+	if ([lParticipants isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lParticipants) {
+			[mParticipants addObject: [[QXEmbedUser alloc] initWithDictionary:d]];
 		}
-		[self setAcksAndPendingToDos:mAcksAndPendingToDos];
+		[self setParticipants:mParticipants];
 	}
+	[self setCreatedAt:[QXQortexapi dateFromString:[dict valueForKey:@"CreatedAt"]]];
+	[self setEndedAt:[QXQortexapi dateFromString:[dict valueForKey:@"EndedAt"]]];
+	[self setLocalHumanCreatedAt:[dict valueForKey:@"LocalHumanCreatedAt"]];
+	[self setTopic:[dict valueForKey:@"Topic"]];
+	[self setPrivate:[[dict valueForKey:@"Private"] boolValue]];
+	[self setIsClose:[[dict valueForKey:@"IsClose"] boolValue]];
+	[self setIsShared:[[dict valueForKey:@"IsShared"] boolValue]];
+	[self setHasOfflineMessage:[[dict valueForKey:@"HasOfflineMessage"] boolValue]];
+	[self setOfflineLocalTime:[dict valueForKey:@"OfflineLocalTime"]];
+	[self setSharedMessageIds:[dict valueForKey:@"SharedMessageIds"]];
+	[self setMessagesCount:[dict valueForKey:@"MessagesCount"]];
 
-	NSMutableArray * mSimpleToDos = [[NSMutableArray alloc] init];
-	NSArray * lSimpleToDos = [dict valueForKey:@"SimpleToDos"];
-	if ([lSimpleToDos isKindOfClass:[NSArray class]]) {
-		for (NSDictionary * d in lSimpleToDos) {
-			[mSimpleToDos addObject: [[QXTaskOutline alloc] initWithDictionary:d]];
+	NSMutableArray * mMessages = [[NSMutableArray alloc] init];
+	NSArray * lMessages = [dict valueForKey:@"Messages"];
+	if ([lMessages isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lMessages) {
+			[mMessages addObject: [[QXMessage alloc] initWithDictionary:d]];
 		}
-		[self setSimpleToDos:mSimpleToDos];
+		[self setMessages:mMessages];
 	}
-
-	NSMutableArray * mOpenToDos = [[NSMutableArray alloc] init];
-	NSArray * lOpenToDos = [dict valueForKey:@"OpenToDos"];
-	if ([lOpenToDos isKindOfClass:[NSArray class]]) {
-		for (NSDictionary * d in lOpenToDos) {
-			[mOpenToDos addObject: [[QXTaskOutline alloc] initWithDictionary:d]];
-		}
-		[self setOpenToDos:mOpenToDos];
-	}
-	[self setOpenEstimateTotal:[dict valueForKey:@"OpenEstimateTotal"]];
-
-	NSMutableArray * mNotStartedToDos = [[NSMutableArray alloc] init];
-	NSArray * lNotStartedToDos = [dict valueForKey:@"NotStartedToDos"];
-	if ([lNotStartedToDos isKindOfClass:[NSArray class]]) {
-		for (NSDictionary * d in lNotStartedToDos) {
-			[mNotStartedToDos addObject: [[QXTaskOutline alloc] initWithDictionary:d]];
-		}
-		[self setNotStartedToDos:mNotStartedToDos];
-	}
-	[self setNotStartedEstimateTotal:[dict valueForKey:@"NotStartedEstimateTotal"]];
-	[self setEstimateUnit:[dict valueForKey:@"EstimateUnit"]];
 
 	return self;
 }
 
 - (NSDictionary*) dictionary {
 	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
-	[dict setValue:[self.Group dictionary] forKey:@"Group"];
-	
+	[dict setValue:self.Id forKey:@"Id"];
+	[dict setValue:self.Title forKey:@"Title"];
+	[dict setValue:self.UserIds forKey:@"UserIds"];
 
-	NSMutableArray * mAcksAndPendingToDos = [[NSMutableArray alloc] init];
-	for (QXTaskOutline * p in AcksAndPendingToDos) {
-		[mAcksAndPendingToDos addObject:[p dictionary]];
+	NSMutableArray * mParticipants = [[NSMutableArray alloc] init];
+	for (QXEmbedUser * p in Participants) {
+		[mParticipants addObject:[p dictionary]];
 	}
-	[dict setValue:mAcksAndPendingToDos forKey:@"AcksAndPendingToDos"];
+	[dict setValue:mParticipants forKey:@"Participants"];
 	
+	[dict setValue:[QXQortexapi stringFromDate:self.CreatedAt] forKey:@"CreatedAt"];
+	[dict setValue:[QXQortexapi stringFromDate:self.EndedAt] forKey:@"EndedAt"];
+	[dict setValue:self.LocalHumanCreatedAt forKey:@"LocalHumanCreatedAt"];
+	[dict setValue:self.Topic forKey:@"Topic"];
+	[dict setValue:[NSNumber numberWithBool:self.Private] forKey:@"Private"];
+	[dict setValue:[NSNumber numberWithBool:self.IsClose] forKey:@"IsClose"];
+	[dict setValue:[NSNumber numberWithBool:self.IsShared] forKey:@"IsShared"];
+	[dict setValue:[NSNumber numberWithBool:self.HasOfflineMessage] forKey:@"HasOfflineMessage"];
+	[dict setValue:self.OfflineLocalTime forKey:@"OfflineLocalTime"];
+	[dict setValue:self.SharedMessageIds forKey:@"SharedMessageIds"];
+	[dict setValue:self.MessagesCount forKey:@"MessagesCount"];
 
-	NSMutableArray * mSimpleToDos = [[NSMutableArray alloc] init];
-	for (QXTaskOutline * p in SimpleToDos) {
-		[mSimpleToDos addObject:[p dictionary]];
+	NSMutableArray * mMessages = [[NSMutableArray alloc] init];
+	for (QXMessage * p in Messages) {
+		[mMessages addObject:[p dictionary]];
 	}
-	[dict setValue:mSimpleToDos forKey:@"SimpleToDos"];
+	[dict setValue:mMessages forKey:@"Messages"];
 	
-
-	NSMutableArray * mOpenToDos = [[NSMutableArray alloc] init];
-	for (QXTaskOutline * p in OpenToDos) {
-		[mOpenToDos addObject:[p dictionary]];
-	}
-	[dict setValue:mOpenToDos forKey:@"OpenToDos"];
-	
-	[dict setValue:self.OpenEstimateTotal forKey:@"OpenEstimateTotal"];
-
-	NSMutableArray * mNotStartedToDos = [[NSMutableArray alloc] init];
-	for (QXTaskOutline * p in NotStartedToDos) {
-		[mNotStartedToDos addObject:[p dictionary]];
-	}
-	[dict setValue:mNotStartedToDos forKey:@"NotStartedToDos"];
-	
-	[dict setValue:self.NotStartedEstimateTotal forKey:@"NotStartedEstimateTotal"];
-	[dict setValue:self.EstimateUnit forKey:@"EstimateUnit"];
 
 	return dict;
 }
@@ -3992,106 +4142,6 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 
 @end
 
-// --- Conversation ---
-@implementation QXConversation
-
-@synthesize Id;
-@synthesize Title;
-@synthesize UserIds;
-@synthesize Participants;
-@synthesize CreatedAt;
-@synthesize EndedAt;
-@synthesize LocalHumanCreatedAt;
-@synthesize Topic;
-@synthesize Private;
-@synthesize IsClose;
-@synthesize IsShared;
-@synthesize HasOfflineMessage;
-@synthesize OfflineLocalTime;
-@synthesize SharedMessageIds;
-@synthesize MessagesCount;
-@synthesize Messages;
-
-- (id) initWithDictionary:(NSDictionary*)dict{
-	self = [super init];
-	if (!self) {
-		return self;
-	}
-	if (![dict isKindOfClass:[NSDictionary class]]) {
-		return self;
-	}
-	[self setId:[dict valueForKey:@"Id"]];
-	[self setTitle:[dict valueForKey:@"Title"]];
-	[self setUserIds:[dict valueForKey:@"UserIds"]];
-
-	NSMutableArray * mParticipants = [[NSMutableArray alloc] init];
-	NSArray * lParticipants = [dict valueForKey:@"Participants"];
-	if ([lParticipants isKindOfClass:[NSArray class]]) {
-		for (NSDictionary * d in lParticipants) {
-			[mParticipants addObject: [[QXEmbedUser alloc] initWithDictionary:d]];
-		}
-		[self setParticipants:mParticipants];
-	}
-	[self setCreatedAt:[QXQortexapi dateFromString:[dict valueForKey:@"CreatedAt"]]];
-	[self setEndedAt:[QXQortexapi dateFromString:[dict valueForKey:@"EndedAt"]]];
-	[self setLocalHumanCreatedAt:[dict valueForKey:@"LocalHumanCreatedAt"]];
-	[self setTopic:[dict valueForKey:@"Topic"]];
-	[self setPrivate:[[dict valueForKey:@"Private"] boolValue]];
-	[self setIsClose:[[dict valueForKey:@"IsClose"] boolValue]];
-	[self setIsShared:[[dict valueForKey:@"IsShared"] boolValue]];
-	[self setHasOfflineMessage:[[dict valueForKey:@"HasOfflineMessage"] boolValue]];
-	[self setOfflineLocalTime:[dict valueForKey:@"OfflineLocalTime"]];
-	[self setSharedMessageIds:[dict valueForKey:@"SharedMessageIds"]];
-	[self setMessagesCount:[dict valueForKey:@"MessagesCount"]];
-
-	NSMutableArray * mMessages = [[NSMutableArray alloc] init];
-	NSArray * lMessages = [dict valueForKey:@"Messages"];
-	if ([lMessages isKindOfClass:[NSArray class]]) {
-		for (NSDictionary * d in lMessages) {
-			[mMessages addObject: [[QXMessage alloc] initWithDictionary:d]];
-		}
-		[self setMessages:mMessages];
-	}
-
-	return self;
-}
-
-- (NSDictionary*) dictionary {
-	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
-	[dict setValue:self.Id forKey:@"Id"];
-	[dict setValue:self.Title forKey:@"Title"];
-	[dict setValue:self.UserIds forKey:@"UserIds"];
-
-	NSMutableArray * mParticipants = [[NSMutableArray alloc] init];
-	for (QXEmbedUser * p in Participants) {
-		[mParticipants addObject:[p dictionary]];
-	}
-	[dict setValue:mParticipants forKey:@"Participants"];
-	
-	[dict setValue:[QXQortexapi stringFromDate:self.CreatedAt] forKey:@"CreatedAt"];
-	[dict setValue:[QXQortexapi stringFromDate:self.EndedAt] forKey:@"EndedAt"];
-	[dict setValue:self.LocalHumanCreatedAt forKey:@"LocalHumanCreatedAt"];
-	[dict setValue:self.Topic forKey:@"Topic"];
-	[dict setValue:[NSNumber numberWithBool:self.Private] forKey:@"Private"];
-	[dict setValue:[NSNumber numberWithBool:self.IsClose] forKey:@"IsClose"];
-	[dict setValue:[NSNumber numberWithBool:self.IsShared] forKey:@"IsShared"];
-	[dict setValue:[NSNumber numberWithBool:self.HasOfflineMessage] forKey:@"HasOfflineMessage"];
-	[dict setValue:self.OfflineLocalTime forKey:@"OfflineLocalTime"];
-	[dict setValue:self.SharedMessageIds forKey:@"SharedMessageIds"];
-	[dict setValue:self.MessagesCount forKey:@"MessagesCount"];
-
-	NSMutableArray * mMessages = [[NSMutableArray alloc] init];
-	for (QXMessage * p in Messages) {
-		[mMessages addObject:[p dictionary]];
-	}
-	[dict setValue:mMessages forKey:@"Messages"];
-	
-
-	return dict;
-}
-
-@end
-
 // --- NotificationItem ---
 @implementation QXNotificationItem
 
@@ -4180,40 +4230,11 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 
 @end
 
-// --- Group ---
-@implementation QXGroup
+// --- LanguageSelectors ---
+@implementation QXLanguageSelectors
 
-@synthesize Id;
-@synthesize Name;
-@synthesize Description;
-@synthesize GType;
-@synthesize LogoURL;
-@synthesize IconName;
-@synthesize Link;
-@synthesize TaskLink;
-@synthesize Slug;
-@synthesize Author;
-@synthesize IsAdmin;
-@synthesize IsPrivate;
-@synthesize Editable;
-@synthesize Managable;
-@synthesize Accessible;
-@synthesize FollowedByMe;
-@synthesize AdministratedByMe;
-@synthesize IsPreShared;
-@synthesize IsShared;
-@synthesize IsDefaultLogoURL;
-@synthesize HostOrgName;
-@synthesize IsDispayHostOrgName;
-@synthesize EntriesCount;
-@synthesize FollowersCount;
-@synthesize IsAnnouncement;
-@synthesize IsQortexSupport;
-@synthesize GroupOwners;
-@synthesize SharingInfo;
-@synthesize GroupEmailAddress;
-@synthesize ToDoSettings;
-@synthesize TodoGroupingRoute;
+@synthesize Selectors;
+@synthesize LabelText;
 
 - (id) initWithDictionary:(NSDictionary*)dict{
 	self = [super init];
@@ -4223,199 +4244,47 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
-	[self setId:[dict valueForKey:@"Id"]];
-	[self setName:[dict valueForKey:@"Name"]];
-	[self setDescription:[dict valueForKey:@"Description"]];
-	[self setGType:[dict valueForKey:@"GType"]];
-	[self setLogoURL:[dict valueForKey:@"LogoURL"]];
-	[self setIconName:[dict valueForKey:@"IconName"]];
-	[self setLink:[dict valueForKey:@"Link"]];
-	[self setTaskLink:[dict valueForKey:@"TaskLink"]];
-	[self setSlug:[dict valueForKey:@"Slug"]];
 
-	id dictAuthor = [dict valueForKey:@"Author"];
-	if ([dictAuthor isKindOfClass:[NSDictionary class]]){
-		[self setAuthor:[[QXEmbedUser alloc] initWithDictionary:dictAuthor]];
-	}
-	[self setIsAdmin:[[dict valueForKey:@"IsAdmin"] boolValue]];
-	[self setIsPrivate:[[dict valueForKey:@"IsPrivate"] boolValue]];
-	[self setEditable:[[dict valueForKey:@"Editable"] boolValue]];
-	[self setManagable:[[dict valueForKey:@"Managable"] boolValue]];
-	[self setAccessible:[[dict valueForKey:@"Accessible"] boolValue]];
-	[self setFollowedByMe:[[dict valueForKey:@"FollowedByMe"] boolValue]];
-	[self setAdministratedByMe:[[dict valueForKey:@"AdministratedByMe"] boolValue]];
-	[self setIsPreShared:[[dict valueForKey:@"IsPreShared"] boolValue]];
-	[self setIsShared:[[dict valueForKey:@"IsShared"] boolValue]];
-	[self setIsDefaultLogoURL:[[dict valueForKey:@"IsDefaultLogoURL"] boolValue]];
-	[self setHostOrgName:[dict valueForKey:@"HostOrgName"]];
-	[self setIsDispayHostOrgName:[[dict valueForKey:@"IsDispayHostOrgName"] boolValue]];
-	[self setEntriesCount:[dict valueForKey:@"EntriesCount"]];
-	[self setFollowersCount:[dict valueForKey:@"FollowersCount"]];
-	[self setIsAnnouncement:[[dict valueForKey:@"IsAnnouncement"] boolValue]];
-	[self setIsQortexSupport:[[dict valueForKey:@"IsQortexSupport"] boolValue]];
-
-	NSMutableArray * mGroupOwners = [[NSMutableArray alloc] init];
-	NSArray * lGroupOwners = [dict valueForKey:@"GroupOwners"];
-	if ([lGroupOwners isKindOfClass:[NSArray class]]) {
-		for (NSDictionary * d in lGroupOwners) {
-			[mGroupOwners addObject: [[QXEmbedUser alloc] initWithDictionary:d]];
+	NSMutableArray * mSelectors = [[NSMutableArray alloc] init];
+	NSArray * lSelectors = [dict valueForKey:@"Selectors"];
+	if ([lSelectors isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lSelectors) {
+			[mSelectors addObject: [[QXLanguageSelector alloc] initWithDictionary:d]];
 		}
-		[self setGroupOwners:mGroupOwners];
+		[self setSelectors:mSelectors];
 	}
-
-	id dictSharingInfo = [dict valueForKey:@"SharingInfo"];
-	if ([dictSharingInfo isKindOfClass:[NSDictionary class]]){
-		[self setSharingInfo:[[QXGroupSharingInfo alloc] initWithDictionary:dictSharingInfo]];
-	}
-	[self setGroupEmailAddress:[dict valueForKey:@"GroupEmailAddress"]];
-
-	id dictToDoSettings = [dict valueForKey:@"ToDoSettings"];
-	if ([dictToDoSettings isKindOfClass:[NSDictionary class]]){
-		[self setToDoSettings:[[QXAdvancedToDoSettings alloc] initWithDictionary:dictToDoSettings]];
-	}
-	[self setTodoGroupingRoute:[dict valueForKey:@"TodoGroupingRoute"]];
+	[self setLabelText:[dict valueForKey:@"LabelText"]];
 
 	return self;
 }
 
 - (NSDictionary*) dictionary {
 	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
-	[dict setValue:self.Id forKey:@"Id"];
-	[dict setValue:self.Name forKey:@"Name"];
-	[dict setValue:self.Description forKey:@"Description"];
-	[dict setValue:self.GType forKey:@"GType"];
-	[dict setValue:self.LogoURL forKey:@"LogoURL"];
-	[dict setValue:self.IconName forKey:@"IconName"];
-	[dict setValue:self.Link forKey:@"Link"];
-	[dict setValue:self.TaskLink forKey:@"TaskLink"];
-	[dict setValue:self.Slug forKey:@"Slug"];
-	[dict setValue:[self.Author dictionary] forKey:@"Author"];
-	
-	[dict setValue:[NSNumber numberWithBool:self.IsAdmin] forKey:@"IsAdmin"];
-	[dict setValue:[NSNumber numberWithBool:self.IsPrivate] forKey:@"IsPrivate"];
-	[dict setValue:[NSNumber numberWithBool:self.Editable] forKey:@"Editable"];
-	[dict setValue:[NSNumber numberWithBool:self.Managable] forKey:@"Managable"];
-	[dict setValue:[NSNumber numberWithBool:self.Accessible] forKey:@"Accessible"];
-	[dict setValue:[NSNumber numberWithBool:self.FollowedByMe] forKey:@"FollowedByMe"];
-	[dict setValue:[NSNumber numberWithBool:self.AdministratedByMe] forKey:@"AdministratedByMe"];
-	[dict setValue:[NSNumber numberWithBool:self.IsPreShared] forKey:@"IsPreShared"];
-	[dict setValue:[NSNumber numberWithBool:self.IsShared] forKey:@"IsShared"];
-	[dict setValue:[NSNumber numberWithBool:self.IsDefaultLogoURL] forKey:@"IsDefaultLogoURL"];
-	[dict setValue:self.HostOrgName forKey:@"HostOrgName"];
-	[dict setValue:[NSNumber numberWithBool:self.IsDispayHostOrgName] forKey:@"IsDispayHostOrgName"];
-	[dict setValue:self.EntriesCount forKey:@"EntriesCount"];
-	[dict setValue:self.FollowersCount forKey:@"FollowersCount"];
-	[dict setValue:[NSNumber numberWithBool:self.IsAnnouncement] forKey:@"IsAnnouncement"];
-	[dict setValue:[NSNumber numberWithBool:self.IsQortexSupport] forKey:@"IsQortexSupport"];
 
-	NSMutableArray * mGroupOwners = [[NSMutableArray alloc] init];
-	for (QXEmbedUser * p in GroupOwners) {
-		[mGroupOwners addObject:[p dictionary]];
+	NSMutableArray * mSelectors = [[NSMutableArray alloc] init];
+	for (QXLanguageSelector * p in Selectors) {
+		[mSelectors addObject:[p dictionary]];
 	}
-	[dict setValue:mGroupOwners forKey:@"GroupOwners"];
+	[dict setValue:mSelectors forKey:@"Selectors"];
 	
-	[dict setValue:[self.SharingInfo dictionary] forKey:@"SharingInfo"];
-	
-	[dict setValue:self.GroupEmailAddress forKey:@"GroupEmailAddress"];
-	[dict setValue:[self.ToDoSettings dictionary] forKey:@"ToDoSettings"];
-	
-	[dict setValue:self.TodoGroupingRoute forKey:@"TodoGroupingRoute"];
+	[dict setValue:self.LabelText forKey:@"LabelText"];
 
 	return dict;
 }
 
 @end
 
-// --- OpenAdvancedToDosPage ---
-@implementation QXOpenAdvancedToDosPage
+// --- GroupTasksOutline ---
+@implementation QXGroupTasksOutline
 
-@synthesize Assignee;
-@synthesize ActionNeededToDos;
-@synthesize ToDosBuckets;
-
-- (id) initWithDictionary:(NSDictionary*)dict{
-	self = [super init];
-	if (!self) {
-		return self;
-	}
-	if (![dict isKindOfClass:[NSDictionary class]]) {
-		return self;
-	}
-
-	id dictAssignee = [dict valueForKey:@"Assignee"];
-	if ([dictAssignee isKindOfClass:[NSDictionary class]]){
-		[self setAssignee:[[QXEmbedUser alloc] initWithDictionary:dictAssignee]];
-	}
-
-	NSMutableArray * mActionNeededToDos = [[NSMutableArray alloc] init];
-	NSArray * lActionNeededToDos = [dict valueForKey:@"ActionNeededToDos"];
-	if ([lActionNeededToDos isKindOfClass:[NSArray class]]) {
-		for (NSDictionary * d in lActionNeededToDos) {
-			[mActionNeededToDos addObject: [[QXTaskOutline alloc] initWithDictionary:d]];
-		}
-		[self setActionNeededToDos:mActionNeededToDos];
-	}
-
-	NSMutableArray * mToDosBuckets = [[NSMutableArray alloc] init];
-	NSArray * lToDosBuckets = [dict valueForKey:@"ToDosBuckets"];
-	if ([lToDosBuckets isKindOfClass:[NSArray class]]) {
-		for (NSDictionary * d in lToDosBuckets) {
-			[mToDosBuckets addObject: [[QXOpenAdvancedToDosBucket alloc] initWithDictionary:d]];
-		}
-		[self setToDosBuckets:mToDosBuckets];
-	}
-
-	return self;
-}
-
-- (NSDictionary*) dictionary {
-	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
-	[dict setValue:[self.Assignee dictionary] forKey:@"Assignee"];
-	
-
-	NSMutableArray * mActionNeededToDos = [[NSMutableArray alloc] init];
-	for (QXTaskOutline * p in ActionNeededToDos) {
-		[mActionNeededToDos addObject:[p dictionary]];
-	}
-	[dict setValue:mActionNeededToDos forKey:@"ActionNeededToDos"];
-	
-
-	NSMutableArray * mToDosBuckets = [[NSMutableArray alloc] init];
-	for (QXOpenAdvancedToDosBucket * p in ToDosBuckets) {
-		[mToDosBuckets addObject:[p dictionary]];
-	}
-	[dict setValue:mToDosBuckets forKey:@"ToDosBuckets"];
-	
-
-	return dict;
-}
-
-@end
-
-// --- Organization ---
-@implementation QXOrganization
-
-@synthesize Id;
-@synthesize Name;
-@synthesize QortexURL;
-@synthesize Summary;
-@synthesize LogoURL;
-@synthesize Address;
-@synthesize Country;
-@synthesize Phone;
-@synthesize Website;
-@synthesize Size;
-@synthesize SizeText;
-@synthesize SharingToken;
-@synthesize Domains;
-@synthesize RestrictSubscriptionMail;
-@synthesize IsActive;
-@synthesize AnyoneCanJoin;
-@synthesize NeedDemo;
-@synthesize ContactWay;
-@synthesize EnableMultilingual;
-@synthesize LanguageSelectors;
-@synthesize SizeOptions;
+@synthesize Group;
+@synthesize AcksAndPendingToDos;
+@synthesize SimpleToDos;
+@synthesize OpenToDos;
+@synthesize OpenEstimateTotal;
+@synthesize NotStartedToDos;
+@synthesize NotStartedEstimateTotal;
+@synthesize EstimateUnit;
 
 - (id) initWithDictionary:(NSDictionary*)dict{
 	self = [super init];
@@ -4425,59 +4294,89 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
-	[self setId:[dict valueForKey:@"Id"]];
-	[self setName:[dict valueForKey:@"Name"]];
-	[self setQortexURL:[dict valueForKey:@"QortexURL"]];
-	[self setSummary:[dict valueForKey:@"Summary"]];
-	[self setLogoURL:[dict valueForKey:@"LogoURL"]];
-	[self setAddress:[dict valueForKey:@"Address"]];
-	[self setCountry:[dict valueForKey:@"Country"]];
-	[self setPhone:[dict valueForKey:@"Phone"]];
-	[self setWebsite:[dict valueForKey:@"Website"]];
-	[self setSize:[dict valueForKey:@"Size"]];
-	[self setSizeText:[dict valueForKey:@"SizeText"]];
-	[self setSharingToken:[dict valueForKey:@"SharingToken"]];
-	[self setDomains:[dict valueForKey:@"Domains"]];
-	[self setRestrictSubscriptionMail:[[dict valueForKey:@"RestrictSubscriptionMail"] boolValue]];
-	[self setIsActive:[[dict valueForKey:@"IsActive"] boolValue]];
-	[self setAnyoneCanJoin:[[dict valueForKey:@"AnyoneCanJoin"] boolValue]];
-	[self setNeedDemo:[[dict valueForKey:@"NeedDemo"] boolValue]];
-	[self setContactWay:[dict valueForKey:@"ContactWay"]];
-	[self setEnableMultilingual:[[dict valueForKey:@"EnableMultilingual"] boolValue]];
 
-	id dictLanguageSelectors = [dict valueForKey:@"LanguageSelectors"];
-	if ([dictLanguageSelectors isKindOfClass:[NSDictionary class]]){
-		[self setLanguageSelectors:[[QXLanguageSelectors alloc] initWithDictionary:dictLanguageSelectors]];
+	id dictGroup = [dict valueForKey:@"Group"];
+	if ([dictGroup isKindOfClass:[NSDictionary class]]){
+		[self setGroup:[[QXEmbedGroup alloc] initWithDictionary:dictGroup]];
 	}
-	[self setSizeOptions:[dict valueForKey:@"SizeOptions"]];
+
+	NSMutableArray * mAcksAndPendingToDos = [[NSMutableArray alloc] init];
+	NSArray * lAcksAndPendingToDos = [dict valueForKey:@"AcksAndPendingToDos"];
+	if ([lAcksAndPendingToDos isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lAcksAndPendingToDos) {
+			[mAcksAndPendingToDos addObject: [[QXTaskOutline alloc] initWithDictionary:d]];
+		}
+		[self setAcksAndPendingToDos:mAcksAndPendingToDos];
+	}
+
+	NSMutableArray * mSimpleToDos = [[NSMutableArray alloc] init];
+	NSArray * lSimpleToDos = [dict valueForKey:@"SimpleToDos"];
+	if ([lSimpleToDos isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lSimpleToDos) {
+			[mSimpleToDos addObject: [[QXTaskOutline alloc] initWithDictionary:d]];
+		}
+		[self setSimpleToDos:mSimpleToDos];
+	}
+
+	NSMutableArray * mOpenToDos = [[NSMutableArray alloc] init];
+	NSArray * lOpenToDos = [dict valueForKey:@"OpenToDos"];
+	if ([lOpenToDos isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lOpenToDos) {
+			[mOpenToDos addObject: [[QXTaskOutline alloc] initWithDictionary:d]];
+		}
+		[self setOpenToDos:mOpenToDos];
+	}
+	[self setOpenEstimateTotal:[dict valueForKey:@"OpenEstimateTotal"]];
+
+	NSMutableArray * mNotStartedToDos = [[NSMutableArray alloc] init];
+	NSArray * lNotStartedToDos = [dict valueForKey:@"NotStartedToDos"];
+	if ([lNotStartedToDos isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lNotStartedToDos) {
+			[mNotStartedToDos addObject: [[QXTaskOutline alloc] initWithDictionary:d]];
+		}
+		[self setNotStartedToDos:mNotStartedToDos];
+	}
+	[self setNotStartedEstimateTotal:[dict valueForKey:@"NotStartedEstimateTotal"]];
+	[self setEstimateUnit:[dict valueForKey:@"EstimateUnit"]];
 
 	return self;
 }
 
 - (NSDictionary*) dictionary {
 	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
-	[dict setValue:self.Id forKey:@"Id"];
-	[dict setValue:self.Name forKey:@"Name"];
-	[dict setValue:self.QortexURL forKey:@"QortexURL"];
-	[dict setValue:self.Summary forKey:@"Summary"];
-	[dict setValue:self.LogoURL forKey:@"LogoURL"];
-	[dict setValue:self.Address forKey:@"Address"];
-	[dict setValue:self.Country forKey:@"Country"];
-	[dict setValue:self.Phone forKey:@"Phone"];
-	[dict setValue:self.Website forKey:@"Website"];
-	[dict setValue:self.Size forKey:@"Size"];
-	[dict setValue:self.SizeText forKey:@"SizeText"];
-	[dict setValue:self.SharingToken forKey:@"SharingToken"];
-	[dict setValue:self.Domains forKey:@"Domains"];
-	[dict setValue:[NSNumber numberWithBool:self.RestrictSubscriptionMail] forKey:@"RestrictSubscriptionMail"];
-	[dict setValue:[NSNumber numberWithBool:self.IsActive] forKey:@"IsActive"];
-	[dict setValue:[NSNumber numberWithBool:self.AnyoneCanJoin] forKey:@"AnyoneCanJoin"];
-	[dict setValue:[NSNumber numberWithBool:self.NeedDemo] forKey:@"NeedDemo"];
-	[dict setValue:self.ContactWay forKey:@"ContactWay"];
-	[dict setValue:[NSNumber numberWithBool:self.EnableMultilingual] forKey:@"EnableMultilingual"];
-	[dict setValue:[self.LanguageSelectors dictionary] forKey:@"LanguageSelectors"];
+	[dict setValue:[self.Group dictionary] forKey:@"Group"];
 	
-	[dict setValue:self.SizeOptions forKey:@"SizeOptions"];
+
+	NSMutableArray * mAcksAndPendingToDos = [[NSMutableArray alloc] init];
+	for (QXTaskOutline * p in AcksAndPendingToDos) {
+		[mAcksAndPendingToDos addObject:[p dictionary]];
+	}
+	[dict setValue:mAcksAndPendingToDos forKey:@"AcksAndPendingToDos"];
+	
+
+	NSMutableArray * mSimpleToDos = [[NSMutableArray alloc] init];
+	for (QXTaskOutline * p in SimpleToDos) {
+		[mSimpleToDos addObject:[p dictionary]];
+	}
+	[dict setValue:mSimpleToDos forKey:@"SimpleToDos"];
+	
+
+	NSMutableArray * mOpenToDos = [[NSMutableArray alloc] init];
+	for (QXTaskOutline * p in OpenToDos) {
+		[mOpenToDos addObject:[p dictionary]];
+	}
+	[dict setValue:mOpenToDos forKey:@"OpenToDos"];
+	
+	[dict setValue:self.OpenEstimateTotal forKey:@"OpenEstimateTotal"];
+
+	NSMutableArray * mNotStartedToDos = [[NSMutableArray alloc] init];
+	for (QXTaskOutline * p in NotStartedToDos) {
+		[mNotStartedToDos addObject:[p dictionary]];
+	}
+	[dict setValue:mNotStartedToDos forKey:@"NotStartedToDos"];
+	
+	[dict setValue:self.NotStartedEstimateTotal forKey:@"NotStartedEstimateTotal"];
+	[dict setValue:self.EstimateUnit forKey:@"EstimateUnit"];
 
 	return dict;
 }
@@ -4542,194 +4441,6 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	[dict setValue:[NSNumber numberWithBool:self.AutoFollowPublicGroup] forKey:@"AutoFollowPublicGroup"];
 	[dict setValue:[NSNumber numberWithBool:self.EnableHTML5Notification] forKey:@"EnableHTML5Notification"];
 	[dict setValue:[self.PreferredLanguageSelectors dictionary] forKey:@"PreferredLanguageSelectors"];
-	
-
-	return dict;
-}
-
-@end
-
-// --- ClosedAdvancedToDoOutline ---
-@implementation QXClosedAdvancedToDoOutline
-
-@synthesize Status;
-@synthesize Count;
-@synthesize WithLoadMoreLink;
-@synthesize Tasks;
-@synthesize Group;
-
-- (id) initWithDictionary:(NSDictionary*)dict{
-	self = [super init];
-	if (!self) {
-		return self;
-	}
-	if (![dict isKindOfClass:[NSDictionary class]]) {
-		return self;
-	}
-
-	id dictStatus = [dict valueForKey:@"Status"];
-	if ([dictStatus isKindOfClass:[NSDictionary class]]){
-		[self setStatus:[[QXTagIndex alloc] initWithDictionary:dictStatus]];
-	}
-	[self setCount:[dict valueForKey:@"Count"]];
-	[self setWithLoadMoreLink:[[dict valueForKey:@"WithLoadMoreLink"] boolValue]];
-
-	NSMutableArray * mTasks = [[NSMutableArray alloc] init];
-	NSArray * lTasks = [dict valueForKey:@"Tasks"];
-	if ([lTasks isKindOfClass:[NSArray class]]) {
-		for (NSDictionary * d in lTasks) {
-			[mTasks addObject: [[QXTaskOutline alloc] initWithDictionary:d]];
-		}
-		[self setTasks:mTasks];
-	}
-
-	id dictGroup = [dict valueForKey:@"Group"];
-	if ([dictGroup isKindOfClass:[NSDictionary class]]){
-		[self setGroup:[[QXGroup alloc] initWithDictionary:dictGroup]];
-	}
-
-	return self;
-}
-
-- (NSDictionary*) dictionary {
-	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
-	[dict setValue:[self.Status dictionary] forKey:@"Status"];
-	
-	[dict setValue:self.Count forKey:@"Count"];
-	[dict setValue:[NSNumber numberWithBool:self.WithLoadMoreLink] forKey:@"WithLoadMoreLink"];
-
-	NSMutableArray * mTasks = [[NSMutableArray alloc] init];
-	for (QXTaskOutline * p in Tasks) {
-		[mTasks addObject:[p dictionary]];
-	}
-	[dict setValue:mTasks forKey:@"Tasks"];
-	
-	[dict setValue:[self.Group dictionary] forKey:@"Group"];
-	
-
-	return dict;
-}
-
-@end
-
-// --- AdvancedTask ---
-@implementation QXAdvancedTask
-
-@synthesize CurrentAssignee;
-@synthesize IsTimeEstimationEnabled;
-@synthesize IsTimeTrackingEnabled;
-@synthesize IsPendingEstimation;
-@synthesize LabelCode;
-@synthesize Label;
-@synthesize StatusCode;
-@synthesize Status;
-@synthesize TimeUnit;
-@synthesize EstimatedTimeValue;
-@synthesize SpentTimeTracking;
-@synthesize TotalSpentTime;
-@synthesize AssignableUsers;
-@synthesize TaskFlowNewStatuses;
-@synthesize TaskFlowOpenStatuses;
-@synthesize TaskFlowClosedStatuses;
-@synthesize TaskLabels;
-@synthesize TaskLogs;
-
-- (id) initWithDictionary:(NSDictionary*)dict{
-	self = [super init];
-	if (!self) {
-		return self;
-	}
-	if (![dict isKindOfClass:[NSDictionary class]]) {
-		return self;
-	}
-
-	id dictCurrentAssignee = [dict valueForKey:@"CurrentAssignee"];
-	if ([dictCurrentAssignee isKindOfClass:[NSDictionary class]]){
-		[self setCurrentAssignee:[[QXEmbedUser alloc] initWithDictionary:dictCurrentAssignee]];
-	}
-	[self setIsTimeEstimationEnabled:[[dict valueForKey:@"IsTimeEstimationEnabled"] boolValue]];
-	[self setIsTimeTrackingEnabled:[[dict valueForKey:@"IsTimeTrackingEnabled"] boolValue]];
-	[self setIsPendingEstimation:[[dict valueForKey:@"IsPendingEstimation"] boolValue]];
-	[self setLabelCode:[dict valueForKey:@"LabelCode"]];
-	[self setLabel:[dict valueForKey:@"Label"]];
-	[self setStatusCode:[dict valueForKey:@"StatusCode"]];
-	[self setStatus:[dict valueForKey:@"Status"]];
-	[self setTimeUnit:[dict valueForKey:@"TimeUnit"]];
-	[self setEstimatedTimeValue:[dict valueForKey:@"EstimatedTimeValue"]];
-
-	NSMutableArray * mSpentTimeTracking = [[NSMutableArray alloc] init];
-	NSArray * lSpentTimeTracking = [dict valueForKey:@"SpentTimeTracking"];
-	if ([lSpentTimeTracking isKindOfClass:[NSArray class]]) {
-		for (NSDictionary * d in lSpentTimeTracking) {
-			[mSpentTimeTracking addObject: [[QXTimeTrackingItem alloc] initWithDictionary:d]];
-		}
-		[self setSpentTimeTracking:mSpentTimeTracking];
-	}
-	[self setTotalSpentTime:[dict valueForKey:@"TotalSpentTime"]];
-
-	NSMutableArray * mAssignableUsers = [[NSMutableArray alloc] init];
-	NSArray * lAssignableUsers = [dict valueForKey:@"AssignableUsers"];
-	if ([lAssignableUsers isKindOfClass:[NSArray class]]) {
-		for (NSDictionary * d in lAssignableUsers) {
-			[mAssignableUsers addObject: [[QXAssignableUser alloc] initWithDictionary:d]];
-		}
-		[self setAssignableUsers:mAssignableUsers];
-	}
-	[self setTaskFlowNewStatuses:[dict valueForKey:@"TaskFlowNewStatuses"]];
-	[self setTaskFlowOpenStatuses:[dict valueForKey:@"TaskFlowOpenStatuses"]];
-	[self setTaskFlowClosedStatuses:[dict valueForKey:@"TaskFlowClosedStatuses"]];
-	[self setTaskLabels:[dict valueForKey:@"TaskLabels"]];
-
-	NSMutableArray * mTaskLogs = [[NSMutableArray alloc] init];
-	NSArray * lTaskLogs = [dict valueForKey:@"TaskLogs"];
-	if ([lTaskLogs isKindOfClass:[NSArray class]]) {
-		for (NSDictionary * d in lTaskLogs) {
-			[mTaskLogs addObject: [[QXTaskLog alloc] initWithDictionary:d]];
-		}
-		[self setTaskLogs:mTaskLogs];
-	}
-
-	return self;
-}
-
-- (NSDictionary*) dictionary {
-	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
-	[dict setValue:[self.CurrentAssignee dictionary] forKey:@"CurrentAssignee"];
-	
-	[dict setValue:[NSNumber numberWithBool:self.IsTimeEstimationEnabled] forKey:@"IsTimeEstimationEnabled"];
-	[dict setValue:[NSNumber numberWithBool:self.IsTimeTrackingEnabled] forKey:@"IsTimeTrackingEnabled"];
-	[dict setValue:[NSNumber numberWithBool:self.IsPendingEstimation] forKey:@"IsPendingEstimation"];
-	[dict setValue:self.LabelCode forKey:@"LabelCode"];
-	[dict setValue:self.Label forKey:@"Label"];
-	[dict setValue:self.StatusCode forKey:@"StatusCode"];
-	[dict setValue:self.Status forKey:@"Status"];
-	[dict setValue:self.TimeUnit forKey:@"TimeUnit"];
-	[dict setValue:self.EstimatedTimeValue forKey:@"EstimatedTimeValue"];
-
-	NSMutableArray * mSpentTimeTracking = [[NSMutableArray alloc] init];
-	for (QXTimeTrackingItem * p in SpentTimeTracking) {
-		[mSpentTimeTracking addObject:[p dictionary]];
-	}
-	[dict setValue:mSpentTimeTracking forKey:@"SpentTimeTracking"];
-	
-	[dict setValue:self.TotalSpentTime forKey:@"TotalSpentTime"];
-
-	NSMutableArray * mAssignableUsers = [[NSMutableArray alloc] init];
-	for (QXAssignableUser * p in AssignableUsers) {
-		[mAssignableUsers addObject:[p dictionary]];
-	}
-	[dict setValue:mAssignableUsers forKey:@"AssignableUsers"];
-	
-	[dict setValue:self.TaskFlowNewStatuses forKey:@"TaskFlowNewStatuses"];
-	[dict setValue:self.TaskFlowOpenStatuses forKey:@"TaskFlowOpenStatuses"];
-	[dict setValue:self.TaskFlowClosedStatuses forKey:@"TaskFlowClosedStatuses"];
-	[dict setValue:self.TaskLabels forKey:@"TaskLabels"];
-
-	NSMutableArray * mTaskLogs = [[NSMutableArray alloc] init];
-	for (QXTaskLog * p in TaskLogs) {
-		[mTaskLogs addObject:[p dictionary]];
-	}
-	[dict setValue:mTaskLogs forKey:@"TaskLogs"];
 	
 
 	return dict;
@@ -4857,25 +4568,104 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 
 @end
 
-// --- SharingInvitation ---
-@implementation QXSharingInvitation
+// --- Organization ---
+@implementation QXOrganization
 
-@synthesize FromOrg;
-@synthesize FromUserId;
-@synthesize SharedGroup;
-@synthesize IsNewAccount;
-@synthesize Email;
-@synthesize Token;
-@synthesize JoinedOrgs;
-@synthesize IsAccepted;
-@synthesize IsRejected;
-@synthesize IsPending;
-@synthesize IsForwarded;
-@synthesize IsCanceled;
-@synthesize IsStopped;
-@synthesize PendingDuration;
-@synthesize ToOrgName;
-@synthesize ToOrgId;
+@synthesize Id;
+@synthesize Name;
+@synthesize QortexURL;
+@synthesize Summary;
+@synthesize LogoURL;
+@synthesize Address;
+@synthesize Country;
+@synthesize Phone;
+@synthesize Website;
+@synthesize Size;
+@synthesize SizeText;
+@synthesize SharingToken;
+@synthesize Domains;
+@synthesize RestrictSubscriptionMail;
+@synthesize IsActive;
+@synthesize AnyoneCanJoin;
+@synthesize NeedDemo;
+@synthesize ContactWay;
+@synthesize EnableMultilingual;
+@synthesize LanguageSelectors;
+@synthesize SizeOptions;
+
+- (id) initWithDictionary:(NSDictionary*)dict{
+	self = [super init];
+	if (!self) {
+		return self;
+	}
+	if (![dict isKindOfClass:[NSDictionary class]]) {
+		return self;
+	}
+	[self setId:[dict valueForKey:@"Id"]];
+	[self setName:[dict valueForKey:@"Name"]];
+	[self setQortexURL:[dict valueForKey:@"QortexURL"]];
+	[self setSummary:[dict valueForKey:@"Summary"]];
+	[self setLogoURL:[dict valueForKey:@"LogoURL"]];
+	[self setAddress:[dict valueForKey:@"Address"]];
+	[self setCountry:[dict valueForKey:@"Country"]];
+	[self setPhone:[dict valueForKey:@"Phone"]];
+	[self setWebsite:[dict valueForKey:@"Website"]];
+	[self setSize:[dict valueForKey:@"Size"]];
+	[self setSizeText:[dict valueForKey:@"SizeText"]];
+	[self setSharingToken:[dict valueForKey:@"SharingToken"]];
+	[self setDomains:[dict valueForKey:@"Domains"]];
+	[self setRestrictSubscriptionMail:[[dict valueForKey:@"RestrictSubscriptionMail"] boolValue]];
+	[self setIsActive:[[dict valueForKey:@"IsActive"] boolValue]];
+	[self setAnyoneCanJoin:[[dict valueForKey:@"AnyoneCanJoin"] boolValue]];
+	[self setNeedDemo:[[dict valueForKey:@"NeedDemo"] boolValue]];
+	[self setContactWay:[dict valueForKey:@"ContactWay"]];
+	[self setEnableMultilingual:[[dict valueForKey:@"EnableMultilingual"] boolValue]];
+
+	id dictLanguageSelectors = [dict valueForKey:@"LanguageSelectors"];
+	if ([dictLanguageSelectors isKindOfClass:[NSDictionary class]]){
+		[self setLanguageSelectors:[[QXLanguageSelectors alloc] initWithDictionary:dictLanguageSelectors]];
+	}
+	[self setSizeOptions:[dict valueForKey:@"SizeOptions"]];
+
+	return self;
+}
+
+- (NSDictionary*) dictionary {
+	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
+	[dict setValue:self.Id forKey:@"Id"];
+	[dict setValue:self.Name forKey:@"Name"];
+	[dict setValue:self.QortexURL forKey:@"QortexURL"];
+	[dict setValue:self.Summary forKey:@"Summary"];
+	[dict setValue:self.LogoURL forKey:@"LogoURL"];
+	[dict setValue:self.Address forKey:@"Address"];
+	[dict setValue:self.Country forKey:@"Country"];
+	[dict setValue:self.Phone forKey:@"Phone"];
+	[dict setValue:self.Website forKey:@"Website"];
+	[dict setValue:self.Size forKey:@"Size"];
+	[dict setValue:self.SizeText forKey:@"SizeText"];
+	[dict setValue:self.SharingToken forKey:@"SharingToken"];
+	[dict setValue:self.Domains forKey:@"Domains"];
+	[dict setValue:[NSNumber numberWithBool:self.RestrictSubscriptionMail] forKey:@"RestrictSubscriptionMail"];
+	[dict setValue:[NSNumber numberWithBool:self.IsActive] forKey:@"IsActive"];
+	[dict setValue:[NSNumber numberWithBool:self.AnyoneCanJoin] forKey:@"AnyoneCanJoin"];
+	[dict setValue:[NSNumber numberWithBool:self.NeedDemo] forKey:@"NeedDemo"];
+	[dict setValue:self.ContactWay forKey:@"ContactWay"];
+	[dict setValue:[NSNumber numberWithBool:self.EnableMultilingual] forKey:@"EnableMultilingual"];
+	[dict setValue:[self.LanguageSelectors dictionary] forKey:@"LanguageSelectors"];
+	
+	[dict setValue:self.SizeOptions forKey:@"SizeOptions"];
+
+	return dict;
+}
+
+@end
+
+// --- OpenAdvancedToDosPage ---
+@implementation QXOpenAdvancedToDosPage
+
+@synthesize Assignee;
+@synthesize ActionNeededToDos;
+@synthesize ToDosBuckets;
 
 - (id) initWithDictionary:(NSDictionary*)dict{
 	self = [super init];
@@ -4886,67 +4676,113 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 		return self;
 	}
 
-	id dictFromOrg = [dict valueForKey:@"FromOrg"];
-	if ([dictFromOrg isKindOfClass:[NSDictionary class]]){
-		[self setFromOrg:[[QXEmbedOrg alloc] initWithDictionary:dictFromOrg]];
+	id dictAssignee = [dict valueForKey:@"Assignee"];
+	if ([dictAssignee isKindOfClass:[NSDictionary class]]){
+		[self setAssignee:[[QXEmbedUser alloc] initWithDictionary:dictAssignee]];
 	}
-	[self setFromUserId:[dict valueForKey:@"FromUserId"]];
 
-	id dictSharedGroup = [dict valueForKey:@"SharedGroup"];
-	if ([dictSharedGroup isKindOfClass:[NSDictionary class]]){
-		[self setSharedGroup:[[QXGroup alloc] initWithDictionary:dictSharedGroup]];
-	}
-	[self setIsNewAccount:[[dict valueForKey:@"IsNewAccount"] boolValue]];
-	[self setEmail:[dict valueForKey:@"Email"]];
-	[self setToken:[dict valueForKey:@"Token"]];
-
-	NSMutableArray * mJoinedOrgs = [[NSMutableArray alloc] init];
-	NSArray * lJoinedOrgs = [dict valueForKey:@"JoinedOrgs"];
-	if ([lJoinedOrgs isKindOfClass:[NSArray class]]) {
-		for (NSDictionary * d in lJoinedOrgs) {
-			[mJoinedOrgs addObject: [[QXEmbedOrg alloc] initWithDictionary:d]];
+	NSMutableArray * mActionNeededToDos = [[NSMutableArray alloc] init];
+	NSArray * lActionNeededToDos = [dict valueForKey:@"ActionNeededToDos"];
+	if ([lActionNeededToDos isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lActionNeededToDos) {
+			[mActionNeededToDos addObject: [[QXTaskOutline alloc] initWithDictionary:d]];
 		}
-		[self setJoinedOrgs:mJoinedOrgs];
+		[self setActionNeededToDos:mActionNeededToDos];
 	}
-	[self setIsAccepted:[[dict valueForKey:@"IsAccepted"] boolValue]];
-	[self setIsRejected:[[dict valueForKey:@"IsRejected"] boolValue]];
-	[self setIsPending:[[dict valueForKey:@"IsPending"] boolValue]];
-	[self setIsForwarded:[[dict valueForKey:@"IsForwarded"] boolValue]];
-	[self setIsCanceled:[[dict valueForKey:@"IsCanceled"] boolValue]];
-	[self setIsStopped:[[dict valueForKey:@"IsStopped"] boolValue]];
-	[self setPendingDuration:[dict valueForKey:@"PendingDuration"]];
-	[self setToOrgName:[dict valueForKey:@"ToOrgName"]];
-	[self setToOrgId:[dict valueForKey:@"ToOrgId"]];
+
+	NSMutableArray * mToDosBuckets = [[NSMutableArray alloc] init];
+	NSArray * lToDosBuckets = [dict valueForKey:@"ToDosBuckets"];
+	if ([lToDosBuckets isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lToDosBuckets) {
+			[mToDosBuckets addObject: [[QXOpenAdvancedToDosBucket alloc] initWithDictionary:d]];
+		}
+		[self setToDosBuckets:mToDosBuckets];
+	}
 
 	return self;
 }
 
 - (NSDictionary*) dictionary {
 	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
-	[dict setValue:[self.FromOrg dictionary] forKey:@"FromOrg"];
+	[dict setValue:[self.Assignee dictionary] forKey:@"Assignee"];
 	
-	[dict setValue:self.FromUserId forKey:@"FromUserId"];
-	[dict setValue:[self.SharedGroup dictionary] forKey:@"SharedGroup"];
-	
-	[dict setValue:[NSNumber numberWithBool:self.IsNewAccount] forKey:@"IsNewAccount"];
-	[dict setValue:self.Email forKey:@"Email"];
-	[dict setValue:self.Token forKey:@"Token"];
 
-	NSMutableArray * mJoinedOrgs = [[NSMutableArray alloc] init];
-	for (QXEmbedOrg * p in JoinedOrgs) {
-		[mJoinedOrgs addObject:[p dictionary]];
+	NSMutableArray * mActionNeededToDos = [[NSMutableArray alloc] init];
+	for (QXTaskOutline * p in ActionNeededToDos) {
+		[mActionNeededToDos addObject:[p dictionary]];
 	}
-	[dict setValue:mJoinedOrgs forKey:@"JoinedOrgs"];
+	[dict setValue:mActionNeededToDos forKey:@"ActionNeededToDos"];
 	
-	[dict setValue:[NSNumber numberWithBool:self.IsAccepted] forKey:@"IsAccepted"];
-	[dict setValue:[NSNumber numberWithBool:self.IsRejected] forKey:@"IsRejected"];
-	[dict setValue:[NSNumber numberWithBool:self.IsPending] forKey:@"IsPending"];
-	[dict setValue:[NSNumber numberWithBool:self.IsForwarded] forKey:@"IsForwarded"];
-	[dict setValue:[NSNumber numberWithBool:self.IsCanceled] forKey:@"IsCanceled"];
-	[dict setValue:[NSNumber numberWithBool:self.IsStopped] forKey:@"IsStopped"];
-	[dict setValue:self.PendingDuration forKey:@"PendingDuration"];
-	[dict setValue:self.ToOrgName forKey:@"ToOrgName"];
-	[dict setValue:self.ToOrgId forKey:@"ToOrgId"];
+
+	NSMutableArray * mToDosBuckets = [[NSMutableArray alloc] init];
+	for (QXOpenAdvancedToDosBucket * p in ToDosBuckets) {
+		[mToDosBuckets addObject:[p dictionary]];
+	}
+	[dict setValue:mToDosBuckets forKey:@"ToDosBuckets"];
+	
+
+	return dict;
+}
+
+@end
+
+// --- ClosedAdvancedToDoOutline ---
+@implementation QXClosedAdvancedToDoOutline
+
+@synthesize Status;
+@synthesize Count;
+@synthesize WithLoadMoreLink;
+@synthesize Tasks;
+@synthesize Group;
+
+- (id) initWithDictionary:(NSDictionary*)dict{
+	self = [super init];
+	if (!self) {
+		return self;
+	}
+	if (![dict isKindOfClass:[NSDictionary class]]) {
+		return self;
+	}
+
+	id dictStatus = [dict valueForKey:@"Status"];
+	if ([dictStatus isKindOfClass:[NSDictionary class]]){
+		[self setStatus:[[QXTagIndex alloc] initWithDictionary:dictStatus]];
+	}
+	[self setCount:[dict valueForKey:@"Count"]];
+	[self setWithLoadMoreLink:[[dict valueForKey:@"WithLoadMoreLink"] boolValue]];
+
+	NSMutableArray * mTasks = [[NSMutableArray alloc] init];
+	NSArray * lTasks = [dict valueForKey:@"Tasks"];
+	if ([lTasks isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lTasks) {
+			[mTasks addObject: [[QXTaskOutline alloc] initWithDictionary:d]];
+		}
+		[self setTasks:mTasks];
+	}
+
+	id dictGroup = [dict valueForKey:@"Group"];
+	if ([dictGroup isKindOfClass:[NSDictionary class]]){
+		[self setGroup:[[QXGroup alloc] initWithDictionary:dictGroup]];
+	}
+
+	return self;
+}
+
+- (NSDictionary*) dictionary {
+	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
+	[dict setValue:[self.Status dictionary] forKey:@"Status"];
+	
+	[dict setValue:self.Count forKey:@"Count"];
+	[dict setValue:[NSNumber numberWithBool:self.WithLoadMoreLink] forKey:@"WithLoadMoreLink"];
+
+	NSMutableArray * mTasks = [[NSMutableArray alloc] init];
+	for (QXTaskOutline * p in Tasks) {
+		[mTasks addObject:[p dictionary]];
+	}
+	[dict setValue:mTasks forKey:@"Tasks"];
+	
+	[dict setValue:[self.Group dictionary] forKey:@"Group"];
+	
 
 	return dict;
 }
@@ -5078,19 +4914,27 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 
 @end
 
-// --- OrgStats ---
-@implementation QXOrgStats
+// --- AdvancedTask ---
+@implementation QXAdvancedTask
 
-@synthesize Organization;
-@synthesize UserCount;
-@synthesize GroupCount;
-@synthesize SharedGroupCount;
-@synthesize EntryCount;
-@synthesize CommentCount;
-@synthesize ChatCount;
-@synthesize CreatedAt;
-@synthesize LastUpdate;
-@synthesize Author;
+@synthesize CurrentAssignee;
+@synthesize IsTimeEstimationEnabled;
+@synthesize IsTimeTrackingEnabled;
+@synthesize IsPendingEstimation;
+@synthesize LabelCode;
+@synthesize Label;
+@synthesize StatusCode;
+@synthesize Status;
+@synthesize TimeUnit;
+@synthesize EstimatedTimeValue;
+@synthesize SpentTimeTracking;
+@synthesize TotalSpentTime;
+@synthesize AssignableUsers;
+@synthesize TaskFlowNewStatuses;
+@synthesize TaskFlowOpenStatuses;
+@synthesize TaskFlowClosedStatuses;
+@synthesize TaskLabels;
+@synthesize TaskLogs;
 
 - (id) initWithDictionary:(NSDictionary*)dict{
 	self = [super init];
@@ -5101,22 +4945,50 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 		return self;
 	}
 
-	id dictOrganization = [dict valueForKey:@"Organization"];
-	if ([dictOrganization isKindOfClass:[NSDictionary class]]){
-		[self setOrganization:[[QXOrganization alloc] initWithDictionary:dictOrganization]];
+	id dictCurrentAssignee = [dict valueForKey:@"CurrentAssignee"];
+	if ([dictCurrentAssignee isKindOfClass:[NSDictionary class]]){
+		[self setCurrentAssignee:[[QXEmbedUser alloc] initWithDictionary:dictCurrentAssignee]];
 	}
-	[self setUserCount:[dict valueForKey:@"UserCount"]];
-	[self setGroupCount:[dict valueForKey:@"GroupCount"]];
-	[self setSharedGroupCount:[dict valueForKey:@"SharedGroupCount"]];
-	[self setEntryCount:[dict valueForKey:@"EntryCount"]];
-	[self setCommentCount:[dict valueForKey:@"CommentCount"]];
-	[self setChatCount:[dict valueForKey:@"ChatCount"]];
-	[self setCreatedAt:[dict valueForKey:@"CreatedAt"]];
-	[self setLastUpdate:[dict valueForKey:@"LastUpdate"]];
+	[self setIsTimeEstimationEnabled:[[dict valueForKey:@"IsTimeEstimationEnabled"] boolValue]];
+	[self setIsTimeTrackingEnabled:[[dict valueForKey:@"IsTimeTrackingEnabled"] boolValue]];
+	[self setIsPendingEstimation:[[dict valueForKey:@"IsPendingEstimation"] boolValue]];
+	[self setLabelCode:[dict valueForKey:@"LabelCode"]];
+	[self setLabel:[dict valueForKey:@"Label"]];
+	[self setStatusCode:[dict valueForKey:@"StatusCode"]];
+	[self setStatus:[dict valueForKey:@"Status"]];
+	[self setTimeUnit:[dict valueForKey:@"TimeUnit"]];
+	[self setEstimatedTimeValue:[dict valueForKey:@"EstimatedTimeValue"]];
 
-	id dictAuthor = [dict valueForKey:@"Author"];
-	if ([dictAuthor isKindOfClass:[NSDictionary class]]){
-		[self setAuthor:[[QXEmbedUser alloc] initWithDictionary:dictAuthor]];
+	NSMutableArray * mSpentTimeTracking = [[NSMutableArray alloc] init];
+	NSArray * lSpentTimeTracking = [dict valueForKey:@"SpentTimeTracking"];
+	if ([lSpentTimeTracking isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lSpentTimeTracking) {
+			[mSpentTimeTracking addObject: [[QXTimeTrackingItem alloc] initWithDictionary:d]];
+		}
+		[self setSpentTimeTracking:mSpentTimeTracking];
+	}
+	[self setTotalSpentTime:[dict valueForKey:@"TotalSpentTime"]];
+
+	NSMutableArray * mAssignableUsers = [[NSMutableArray alloc] init];
+	NSArray * lAssignableUsers = [dict valueForKey:@"AssignableUsers"];
+	if ([lAssignableUsers isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lAssignableUsers) {
+			[mAssignableUsers addObject: [[QXAssignableUser alloc] initWithDictionary:d]];
+		}
+		[self setAssignableUsers:mAssignableUsers];
+	}
+	[self setTaskFlowNewStatuses:[dict valueForKey:@"TaskFlowNewStatuses"]];
+	[self setTaskFlowOpenStatuses:[dict valueForKey:@"TaskFlowOpenStatuses"]];
+	[self setTaskFlowClosedStatuses:[dict valueForKey:@"TaskFlowClosedStatuses"]];
+	[self setTaskLabels:[dict valueForKey:@"TaskLabels"]];
+
+	NSMutableArray * mTaskLogs = [[NSMutableArray alloc] init];
+	NSArray * lTaskLogs = [dict valueForKey:@"TaskLogs"];
+	if ([lTaskLogs isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lTaskLogs) {
+			[mTaskLogs addObject: [[QXTaskLog alloc] initWithDictionary:d]];
+		}
+		[self setTaskLogs:mTaskLogs];
 	}
 
 	return self;
@@ -5124,17 +4996,42 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 
 - (NSDictionary*) dictionary {
 	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
-	[dict setValue:[self.Organization dictionary] forKey:@"Organization"];
+	[dict setValue:[self.CurrentAssignee dictionary] forKey:@"CurrentAssignee"];
 	
-	[dict setValue:self.UserCount forKey:@"UserCount"];
-	[dict setValue:self.GroupCount forKey:@"GroupCount"];
-	[dict setValue:self.SharedGroupCount forKey:@"SharedGroupCount"];
-	[dict setValue:self.EntryCount forKey:@"EntryCount"];
-	[dict setValue:self.CommentCount forKey:@"CommentCount"];
-	[dict setValue:self.ChatCount forKey:@"ChatCount"];
-	[dict setValue:self.CreatedAt forKey:@"CreatedAt"];
-	[dict setValue:self.LastUpdate forKey:@"LastUpdate"];
-	[dict setValue:[self.Author dictionary] forKey:@"Author"];
+	[dict setValue:[NSNumber numberWithBool:self.IsTimeEstimationEnabled] forKey:@"IsTimeEstimationEnabled"];
+	[dict setValue:[NSNumber numberWithBool:self.IsTimeTrackingEnabled] forKey:@"IsTimeTrackingEnabled"];
+	[dict setValue:[NSNumber numberWithBool:self.IsPendingEstimation] forKey:@"IsPendingEstimation"];
+	[dict setValue:self.LabelCode forKey:@"LabelCode"];
+	[dict setValue:self.Label forKey:@"Label"];
+	[dict setValue:self.StatusCode forKey:@"StatusCode"];
+	[dict setValue:self.Status forKey:@"Status"];
+	[dict setValue:self.TimeUnit forKey:@"TimeUnit"];
+	[dict setValue:self.EstimatedTimeValue forKey:@"EstimatedTimeValue"];
+
+	NSMutableArray * mSpentTimeTracking = [[NSMutableArray alloc] init];
+	for (QXTimeTrackingItem * p in SpentTimeTracking) {
+		[mSpentTimeTracking addObject:[p dictionary]];
+	}
+	[dict setValue:mSpentTimeTracking forKey:@"SpentTimeTracking"];
+	
+	[dict setValue:self.TotalSpentTime forKey:@"TotalSpentTime"];
+
+	NSMutableArray * mAssignableUsers = [[NSMutableArray alloc] init];
+	for (QXAssignableUser * p in AssignableUsers) {
+		[mAssignableUsers addObject:[p dictionary]];
+	}
+	[dict setValue:mAssignableUsers forKey:@"AssignableUsers"];
+	
+	[dict setValue:self.TaskFlowNewStatuses forKey:@"TaskFlowNewStatuses"];
+	[dict setValue:self.TaskFlowOpenStatuses forKey:@"TaskFlowOpenStatuses"];
+	[dict setValue:self.TaskFlowClosedStatuses forKey:@"TaskFlowClosedStatuses"];
+	[dict setValue:self.TaskLabels forKey:@"TaskLabels"];
+
+	NSMutableArray * mTaskLogs = [[NSMutableArray alloc] init];
+	for (QXTaskLog * p in TaskLogs) {
+		[mTaskLogs addObject:[p dictionary]];
+	}
+	[dict setValue:mTaskLogs forKey:@"TaskLogs"];
 	
 
 	return dict;
@@ -5142,15 +5039,25 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 
 @end
 
-// --- Member ---
-@implementation QXMember
+// --- SharingInvitation ---
+@implementation QXSharingInvitation
 
-@synthesize Name;
+@synthesize FromOrg;
+@synthesize FromUserId;
+@synthesize SharedGroup;
+@synthesize IsNewAccount;
 @synthesize Email;
-@synthesize ComfirmationSentAt;
-@synthesize SignupConfirmedAt;
-@synthesize SignupStatus;
+@synthesize Token;
 @synthesize JoinedOrgs;
+@synthesize IsAccepted;
+@synthesize IsRejected;
+@synthesize IsPending;
+@synthesize IsForwarded;
+@synthesize IsCanceled;
+@synthesize IsStopped;
+@synthesize PendingDuration;
+@synthesize ToOrgName;
+@synthesize ToOrgId;
 
 - (id) initWithDictionary:(NSDictionary*)dict{
 	self = [super init];
@@ -5160,121 +5067,68 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	if (![dict isKindOfClass:[NSDictionary class]]) {
 		return self;
 	}
-	[self setName:[dict valueForKey:@"Name"]];
+
+	id dictFromOrg = [dict valueForKey:@"FromOrg"];
+	if ([dictFromOrg isKindOfClass:[NSDictionary class]]){
+		[self setFromOrg:[[QXEmbedOrg alloc] initWithDictionary:dictFromOrg]];
+	}
+	[self setFromUserId:[dict valueForKey:@"FromUserId"]];
+
+	id dictSharedGroup = [dict valueForKey:@"SharedGroup"];
+	if ([dictSharedGroup isKindOfClass:[NSDictionary class]]){
+		[self setSharedGroup:[[QXGroup alloc] initWithDictionary:dictSharedGroup]];
+	}
+	[self setIsNewAccount:[[dict valueForKey:@"IsNewAccount"] boolValue]];
 	[self setEmail:[dict valueForKey:@"Email"]];
-	[self setComfirmationSentAt:[dict valueForKey:@"ComfirmationSentAt"]];
-	[self setSignupConfirmedAt:[dict valueForKey:@"SignupConfirmedAt"]];
-	[self setSignupStatus:[dict valueForKey:@"SignupStatus"]];
+	[self setToken:[dict valueForKey:@"Token"]];
 
 	NSMutableArray * mJoinedOrgs = [[NSMutableArray alloc] init];
 	NSArray * lJoinedOrgs = [dict valueForKey:@"JoinedOrgs"];
 	if ([lJoinedOrgs isKindOfClass:[NSArray class]]) {
 		for (NSDictionary * d in lJoinedOrgs) {
-			[mJoinedOrgs addObject: [[QXOrganization alloc] initWithDictionary:d]];
+			[mJoinedOrgs addObject: [[QXEmbedOrg alloc] initWithDictionary:d]];
 		}
 		[self setJoinedOrgs:mJoinedOrgs];
 	}
+	[self setIsAccepted:[[dict valueForKey:@"IsAccepted"] boolValue]];
+	[self setIsRejected:[[dict valueForKey:@"IsRejected"] boolValue]];
+	[self setIsPending:[[dict valueForKey:@"IsPending"] boolValue]];
+	[self setIsForwarded:[[dict valueForKey:@"IsForwarded"] boolValue]];
+	[self setIsCanceled:[[dict valueForKey:@"IsCanceled"] boolValue]];
+	[self setIsStopped:[[dict valueForKey:@"IsStopped"] boolValue]];
+	[self setPendingDuration:[dict valueForKey:@"PendingDuration"]];
+	[self setToOrgName:[dict valueForKey:@"ToOrgName"]];
+	[self setToOrgId:[dict valueForKey:@"ToOrgId"]];
 
 	return self;
 }
 
 - (NSDictionary*) dictionary {
 	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
-	[dict setValue:self.Name forKey:@"Name"];
+	[dict setValue:[self.FromOrg dictionary] forKey:@"FromOrg"];
+	
+	[dict setValue:self.FromUserId forKey:@"FromUserId"];
+	[dict setValue:[self.SharedGroup dictionary] forKey:@"SharedGroup"];
+	
+	[dict setValue:[NSNumber numberWithBool:self.IsNewAccount] forKey:@"IsNewAccount"];
 	[dict setValue:self.Email forKey:@"Email"];
-	[dict setValue:self.ComfirmationSentAt forKey:@"ComfirmationSentAt"];
-	[dict setValue:self.SignupConfirmedAt forKey:@"SignupConfirmedAt"];
-	[dict setValue:self.SignupStatus forKey:@"SignupStatus"];
+	[dict setValue:self.Token forKey:@"Token"];
 
 	NSMutableArray * mJoinedOrgs = [[NSMutableArray alloc] init];
-	for (QXOrganization * p in JoinedOrgs) {
+	for (QXEmbedOrg * p in JoinedOrgs) {
 		[mJoinedOrgs addObject:[p dictionary]];
 	}
 	[dict setValue:mJoinedOrgs forKey:@"JoinedOrgs"];
 	
-
-	return dict;
-}
-
-@end
-
-// --- GroupAdvancedSettingPage ---
-@implementation QXGroupAdvancedSettingPage
-
-@synthesize Group;
-@synthesize Followers;
-@synthesize CurrentOrg;
-@synthesize SharingInfo;
-@synthesize CreatingGroup;
-@synthesize Editable;
-@synthesize ThrowawayStatusSuggestions;
-@synthesize ThrowawayNotYetOpenTagIndexes;
-@synthesize ThrowawayOpenTagIndexes;
-@synthesize ThrowawayClosedTagIndexes;
-
-- (id) initWithDictionary:(NSDictionary*)dict{
-	self = [super init];
-	if (!self) {
-		return self;
-	}
-	if (![dict isKindOfClass:[NSDictionary class]]) {
-		return self;
-	}
-
-	id dictGroup = [dict valueForKey:@"Group"];
-	if ([dictGroup isKindOfClass:[NSDictionary class]]){
-		[self setGroup:[[QXGroup alloc] initWithDictionary:dictGroup]];
-	}
-
-	NSMutableArray * mFollowers = [[NSMutableArray alloc] init];
-	NSArray * lFollowers = [dict valueForKey:@"Followers"];
-	if ([lFollowers isKindOfClass:[NSArray class]]) {
-		for (NSDictionary * d in lFollowers) {
-			[mFollowers addObject: [[QXEmbedUser alloc] initWithDictionary:d]];
-		}
-		[self setFollowers:mFollowers];
-	}
-
-	id dictCurrentOrg = [dict valueForKey:@"CurrentOrg"];
-	if ([dictCurrentOrg isKindOfClass:[NSDictionary class]]){
-		[self setCurrentOrg:[[QXOrganization alloc] initWithDictionary:dictCurrentOrg]];
-	}
-
-	id dictSharingInfo = [dict valueForKey:@"SharingInfo"];
-	if ([dictSharingInfo isKindOfClass:[NSDictionary class]]){
-		[self setSharingInfo:[[QXGroupSharingInfo alloc] initWithDictionary:dictSharingInfo]];
-	}
-	[self setCreatingGroup:[[dict valueForKey:@"CreatingGroup"] boolValue]];
-	[self setEditable:[[dict valueForKey:@"Editable"] boolValue]];
-	[self setThrowawayStatusSuggestions:[dict valueForKey:@"ThrowawayStatusSuggestions"]];
-	[self setThrowawayNotYetOpenTagIndexes:[dict valueForKey:@"ThrowawayNotYetOpenTagIndexes"]];
-	[self setThrowawayOpenTagIndexes:[dict valueForKey:@"ThrowawayOpenTagIndexes"]];
-	[self setThrowawayClosedTagIndexes:[dict valueForKey:@"ThrowawayClosedTagIndexes"]];
-
-	return self;
-}
-
-- (NSDictionary*) dictionary {
-	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
-	[dict setValue:[self.Group dictionary] forKey:@"Group"];
-	
-
-	NSMutableArray * mFollowers = [[NSMutableArray alloc] init];
-	for (QXEmbedUser * p in Followers) {
-		[mFollowers addObject:[p dictionary]];
-	}
-	[dict setValue:mFollowers forKey:@"Followers"];
-	
-	[dict setValue:[self.CurrentOrg dictionary] forKey:@"CurrentOrg"];
-	
-	[dict setValue:[self.SharingInfo dictionary] forKey:@"SharingInfo"];
-	
-	[dict setValue:[NSNumber numberWithBool:self.CreatingGroup] forKey:@"CreatingGroup"];
-	[dict setValue:[NSNumber numberWithBool:self.Editable] forKey:@"Editable"];
-	[dict setValue:self.ThrowawayStatusSuggestions forKey:@"ThrowawayStatusSuggestions"];
-	[dict setValue:self.ThrowawayNotYetOpenTagIndexes forKey:@"ThrowawayNotYetOpenTagIndexes"];
-	[dict setValue:self.ThrowawayOpenTagIndexes forKey:@"ThrowawayOpenTagIndexes"];
-	[dict setValue:self.ThrowawayClosedTagIndexes forKey:@"ThrowawayClosedTagIndexes"];
+	[dict setValue:[NSNumber numberWithBool:self.IsAccepted] forKey:@"IsAccepted"];
+	[dict setValue:[NSNumber numberWithBool:self.IsRejected] forKey:@"IsRejected"];
+	[dict setValue:[NSNumber numberWithBool:self.IsPending] forKey:@"IsPending"];
+	[dict setValue:[NSNumber numberWithBool:self.IsForwarded] forKey:@"IsForwarded"];
+	[dict setValue:[NSNumber numberWithBool:self.IsCanceled] forKey:@"IsCanceled"];
+	[dict setValue:[NSNumber numberWithBool:self.IsStopped] forKey:@"IsStopped"];
+	[dict setValue:self.PendingDuration forKey:@"PendingDuration"];
+	[dict setValue:self.ToOrgName forKey:@"ToOrgName"];
+	[dict setValue:self.ToOrgId forKey:@"ToOrgId"];
 
 	return dict;
 }
@@ -5609,6 +5463,209 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	[dict setValue:[NSNumber numberWithBool:self.NeedShowAppliedText] forKey:@"NeedShowAppliedText"];
 	[dict setValue:[NSNumber numberWithBool:self.NeedToBeEditMode] forKey:@"NeedToBeEditMode"];
 	[dict setValue:[NSNumber numberWithBool:self.IsEditing] forKey:@"IsEditing"];
+
+	return dict;
+}
+
+@end
+
+// --- GroupAdvancedSettingPage ---
+@implementation QXGroupAdvancedSettingPage
+
+@synthesize Group;
+@synthesize Followers;
+@synthesize CurrentOrg;
+@synthesize SharingInfo;
+@synthesize CreatingGroup;
+@synthesize Editable;
+@synthesize ThrowawayStatusSuggestions;
+@synthesize ThrowawayNotYetOpenTagIndexes;
+@synthesize ThrowawayOpenTagIndexes;
+@synthesize ThrowawayClosedTagIndexes;
+
+- (id) initWithDictionary:(NSDictionary*)dict{
+	self = [super init];
+	if (!self) {
+		return self;
+	}
+	if (![dict isKindOfClass:[NSDictionary class]]) {
+		return self;
+	}
+
+	id dictGroup = [dict valueForKey:@"Group"];
+	if ([dictGroup isKindOfClass:[NSDictionary class]]){
+		[self setGroup:[[QXGroup alloc] initWithDictionary:dictGroup]];
+	}
+
+	NSMutableArray * mFollowers = [[NSMutableArray alloc] init];
+	NSArray * lFollowers = [dict valueForKey:@"Followers"];
+	if ([lFollowers isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lFollowers) {
+			[mFollowers addObject: [[QXEmbedUser alloc] initWithDictionary:d]];
+		}
+		[self setFollowers:mFollowers];
+	}
+
+	id dictCurrentOrg = [dict valueForKey:@"CurrentOrg"];
+	if ([dictCurrentOrg isKindOfClass:[NSDictionary class]]){
+		[self setCurrentOrg:[[QXOrganization alloc] initWithDictionary:dictCurrentOrg]];
+	}
+
+	id dictSharingInfo = [dict valueForKey:@"SharingInfo"];
+	if ([dictSharingInfo isKindOfClass:[NSDictionary class]]){
+		[self setSharingInfo:[[QXGroupSharingInfo alloc] initWithDictionary:dictSharingInfo]];
+	}
+	[self setCreatingGroup:[[dict valueForKey:@"CreatingGroup"] boolValue]];
+	[self setEditable:[[dict valueForKey:@"Editable"] boolValue]];
+	[self setThrowawayStatusSuggestions:[dict valueForKey:@"ThrowawayStatusSuggestions"]];
+	[self setThrowawayNotYetOpenTagIndexes:[dict valueForKey:@"ThrowawayNotYetOpenTagIndexes"]];
+	[self setThrowawayOpenTagIndexes:[dict valueForKey:@"ThrowawayOpenTagIndexes"]];
+	[self setThrowawayClosedTagIndexes:[dict valueForKey:@"ThrowawayClosedTagIndexes"]];
+
+	return self;
+}
+
+- (NSDictionary*) dictionary {
+	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
+	[dict setValue:[self.Group dictionary] forKey:@"Group"];
+	
+
+	NSMutableArray * mFollowers = [[NSMutableArray alloc] init];
+	for (QXEmbedUser * p in Followers) {
+		[mFollowers addObject:[p dictionary]];
+	}
+	[dict setValue:mFollowers forKey:@"Followers"];
+	
+	[dict setValue:[self.CurrentOrg dictionary] forKey:@"CurrentOrg"];
+	
+	[dict setValue:[self.SharingInfo dictionary] forKey:@"SharingInfo"];
+	
+	[dict setValue:[NSNumber numberWithBool:self.CreatingGroup] forKey:@"CreatingGroup"];
+	[dict setValue:[NSNumber numberWithBool:self.Editable] forKey:@"Editable"];
+	[dict setValue:self.ThrowawayStatusSuggestions forKey:@"ThrowawayStatusSuggestions"];
+	[dict setValue:self.ThrowawayNotYetOpenTagIndexes forKey:@"ThrowawayNotYetOpenTagIndexes"];
+	[dict setValue:self.ThrowawayOpenTagIndexes forKey:@"ThrowawayOpenTagIndexes"];
+	[dict setValue:self.ThrowawayClosedTagIndexes forKey:@"ThrowawayClosedTagIndexes"];
+
+	return dict;
+}
+
+@end
+
+// --- Member ---
+@implementation QXMember
+
+@synthesize Name;
+@synthesize Email;
+@synthesize ComfirmationSentAt;
+@synthesize SignupConfirmedAt;
+@synthesize SignupStatus;
+@synthesize JoinedOrgs;
+
+- (id) initWithDictionary:(NSDictionary*)dict{
+	self = [super init];
+	if (!self) {
+		return self;
+	}
+	if (![dict isKindOfClass:[NSDictionary class]]) {
+		return self;
+	}
+	[self setName:[dict valueForKey:@"Name"]];
+	[self setEmail:[dict valueForKey:@"Email"]];
+	[self setComfirmationSentAt:[dict valueForKey:@"ComfirmationSentAt"]];
+	[self setSignupConfirmedAt:[dict valueForKey:@"SignupConfirmedAt"]];
+	[self setSignupStatus:[dict valueForKey:@"SignupStatus"]];
+
+	NSMutableArray * mJoinedOrgs = [[NSMutableArray alloc] init];
+	NSArray * lJoinedOrgs = [dict valueForKey:@"JoinedOrgs"];
+	if ([lJoinedOrgs isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lJoinedOrgs) {
+			[mJoinedOrgs addObject: [[QXOrganization alloc] initWithDictionary:d]];
+		}
+		[self setJoinedOrgs:mJoinedOrgs];
+	}
+
+	return self;
+}
+
+- (NSDictionary*) dictionary {
+	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
+	[dict setValue:self.Name forKey:@"Name"];
+	[dict setValue:self.Email forKey:@"Email"];
+	[dict setValue:self.ComfirmationSentAt forKey:@"ComfirmationSentAt"];
+	[dict setValue:self.SignupConfirmedAt forKey:@"SignupConfirmedAt"];
+	[dict setValue:self.SignupStatus forKey:@"SignupStatus"];
+
+	NSMutableArray * mJoinedOrgs = [[NSMutableArray alloc] init];
+	for (QXOrganization * p in JoinedOrgs) {
+		[mJoinedOrgs addObject:[p dictionary]];
+	}
+	[dict setValue:mJoinedOrgs forKey:@"JoinedOrgs"];
+	
+
+	return dict;
+}
+
+@end
+
+// --- OrgStats ---
+@implementation QXOrgStats
+
+@synthesize Organization;
+@synthesize UserCount;
+@synthesize GroupCount;
+@synthesize SharedGroupCount;
+@synthesize EntryCount;
+@synthesize CommentCount;
+@synthesize ChatCount;
+@synthesize CreatedAt;
+@synthesize LastUpdate;
+@synthesize Author;
+
+- (id) initWithDictionary:(NSDictionary*)dict{
+	self = [super init];
+	if (!self) {
+		return self;
+	}
+	if (![dict isKindOfClass:[NSDictionary class]]) {
+		return self;
+	}
+
+	id dictOrganization = [dict valueForKey:@"Organization"];
+	if ([dictOrganization isKindOfClass:[NSDictionary class]]){
+		[self setOrganization:[[QXOrganization alloc] initWithDictionary:dictOrganization]];
+	}
+	[self setUserCount:[dict valueForKey:@"UserCount"]];
+	[self setGroupCount:[dict valueForKey:@"GroupCount"]];
+	[self setSharedGroupCount:[dict valueForKey:@"SharedGroupCount"]];
+	[self setEntryCount:[dict valueForKey:@"EntryCount"]];
+	[self setCommentCount:[dict valueForKey:@"CommentCount"]];
+	[self setChatCount:[dict valueForKey:@"ChatCount"]];
+	[self setCreatedAt:[dict valueForKey:@"CreatedAt"]];
+	[self setLastUpdate:[dict valueForKey:@"LastUpdate"]];
+
+	id dictAuthor = [dict valueForKey:@"Author"];
+	if ([dictAuthor isKindOfClass:[NSDictionary class]]){
+		[self setAuthor:[[QXEmbedUser alloc] initWithDictionary:dictAuthor]];
+	}
+
+	return self;
+}
+
+- (NSDictionary*) dictionary {
+	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
+	[dict setValue:[self.Organization dictionary] forKey:@"Organization"];
+	
+	[dict setValue:self.UserCount forKey:@"UserCount"];
+	[dict setValue:self.GroupCount forKey:@"GroupCount"];
+	[dict setValue:self.SharedGroupCount forKey:@"SharedGroupCount"];
+	[dict setValue:self.EntryCount forKey:@"EntryCount"];
+	[dict setValue:self.CommentCount forKey:@"CommentCount"];
+	[dict setValue:self.ChatCount forKey:@"ChatCount"];
+	[dict setValue:self.CreatedAt forKey:@"CreatedAt"];
+	[dict setValue:self.LastUpdate forKey:@"LastUpdate"];
+	[dict setValue:[self.Author dictionary] forKey:@"Author"];
+	
 
 	return dict;
 }
@@ -16672,6 +16729,77 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 
 @end
 
+// --- QXToDoCSVParams ---
+@implementation QXAuthUserServiceToDoCSVParams : NSObject
+
+@synthesize GroupId;
+
+- (id) initWithDictionary:(NSDictionary*)dict{
+	self = [super init];
+	if (!self) {
+		return self;
+	}
+	if (![dict isKindOfClass:[NSDictionary class]]) {
+		return self;
+	}
+	[self setGroupId:[dict valueForKey:@"GroupId"]];
+
+	return self;
+}
+
+- (NSDictionary*) dictionary {
+	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
+	[dict setValue:self.GroupId forKey:@"GroupId"];
+
+	return dict;
+}
+
+@end
+
+// --- QXToDoCSVResults ---
+@implementation QXAuthUserServiceToDoCSVResults : NSObject
+
+@synthesize Todos;
+@synthesize Err;
+
+- (id) initWithDictionary:(NSDictionary*)dict{
+	self = [super init];
+	if (!self) {
+		return self;
+	}
+	if (![dict isKindOfClass:[NSDictionary class]]) {
+		return self;
+	}
+
+	NSMutableArray * mTodos = [[NSMutableArray alloc] init];
+	NSArray * lTodos = [dict valueForKey:@"Todos"];
+	if ([lTodos isKindOfClass:[NSArray class]]) {
+		for (NSDictionary * d in lTodos) {
+			[mTodos addObject: [[QXToDoCSVItem alloc] initWithDictionary:d]];
+		}
+		[self setTodos:mTodos];
+	}
+	[self setErr:[QXQortexapi errorWithDictionary:[dict valueForKey:@"Err"]]];
+
+	return self;
+}
+
+- (NSDictionary*) dictionary {
+	NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
+
+	NSMutableArray * mTodos = [[NSMutableArray alloc] init];
+	for (QXToDoCSVItem * p in Todos) {
+		[mTodos addObject:[p dictionary]];
+	}
+	[dict setValue:mTodos forKey:@"Todos"];
+	
+	[dict setValue:self.Err forKey:@"Err"];
+
+	return dict;
+}
+
+@end
+
 
 // --- QXGetSessionParams ---
 @implementation QXPublicServiceGetSessionParams : NSObject
@@ -17892,6 +18020,37 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	return results;
 }
 
+- (void) getNewOrganization:(NSString *)memberId success:(void (^)(QXAuthMemberServiceGetNewOrganizationResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthMemberServiceGetNewOrganizationResults *results = [QXAuthMemberServiceGetNewOrganizationResults alloc];
+		QXAuthMemberServiceGetNewOrganizationParams *params = [[QXAuthMemberServiceGetNewOrganizationParams alloc] init];
+		[params setMemberId:memberId];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthMemberService/GetNewOrganization.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthMemberServiceGetNewOrganizationResults *results = [QXAuthMemberServiceGetNewOrganizationResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
+}
+
 // --- GetMyOrganizations ---
 - (QXAuthMemberServiceGetMyOrganizationsResults *) GetMyOrganizations {
 	
@@ -17916,6 +18075,36 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	results = [results initWithDictionary: dict];
 	
 	return results;
+}
+
+- (void) getMyOrganizations:(void (^)(QXAuthMemberServiceGetMyOrganizationsResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthMemberServiceGetMyOrganizationsResults *results = [QXAuthMemberServiceGetMyOrganizationsResults alloc];
+		QXAuthMemberServiceGetMyOrganizationsParams *params = [[QXAuthMemberServiceGetMyOrganizationsParams alloc] init];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthMemberService/GetMyOrganizations.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthMemberServiceGetMyOrganizationsResults *results = [QXAuthMemberServiceGetMyOrganizationsResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
 }
 
 // --- CreateOrganization ---
@@ -17945,6 +18134,37 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	return results;
 }
 
+- (void) createOrganization:(QXOrganizationInput *)input success:(void (^)(QXAuthMemberServiceCreateOrganizationResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthMemberServiceCreateOrganizationResults *results = [QXAuthMemberServiceCreateOrganizationResults alloc];
+		QXAuthMemberServiceCreateOrganizationParams *params = [[QXAuthMemberServiceCreateOrganizationParams alloc] init];
+		[params setInput:input];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthMemberService/CreateOrganization.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthMemberServiceCreateOrganizationResults *results = [QXAuthMemberServiceCreateOrganizationResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
+}
+
 // --- JoinOrganization ---
 - (NSError *) JoinOrganization:(NSString *)orgId {
 	
@@ -17970,6 +18190,37 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	results = [results initWithDictionary: dict];
 	
 	return results.Err;
+}
+
+- (void) joinOrganization:(NSString *)orgId success:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthMemberServiceJoinOrganizationResults *results = [QXAuthMemberServiceJoinOrganizationResults alloc];
+		QXAuthMemberServiceJoinOrganizationParams *params = [[QXAuthMemberServiceJoinOrganizationParams alloc] init];
+		[params setOrgId:orgId];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthMemberService/JoinOrganization.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthMemberServiceJoinOrganizationResults *results = [QXAuthMemberServiceJoinOrganizationResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results.Err);
+			}
+		}];
+	
 }
 
 // --- LeaveOrganization ---
@@ -17999,6 +18250,37 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	return results.Err;
 }
 
+- (void) leaveOrganization:(NSString *)orgId success:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthMemberServiceLeaveOrganizationResults *results = [QXAuthMemberServiceLeaveOrganizationResults alloc];
+		QXAuthMemberServiceLeaveOrganizationParams *params = [[QXAuthMemberServiceLeaveOrganizationParams alloc] init];
+		[params setOrgId:orgId];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthMemberService/LeaveOrganization.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthMemberServiceLeaveOrganizationResults *results = [QXAuthMemberServiceLeaveOrganizationResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results.Err);
+			}
+		}];
+	
+}
+
 // --- SwitchOrganization ---
 - (NSError *) SwitchOrganization:(NSString *)orgId {
 	
@@ -18024,6 +18306,37 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	results = [results initWithDictionary: dict];
 	
 	return results.Err;
+}
+
+- (void) switchOrganization:(NSString *)orgId success:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthMemberServiceSwitchOrganizationResults *results = [QXAuthMemberServiceSwitchOrganizationResults alloc];
+		QXAuthMemberServiceSwitchOrganizationParams *params = [[QXAuthMemberServiceSwitchOrganizationParams alloc] init];
+		[params setOrgId:orgId];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthMemberService/SwitchOrganization.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthMemberServiceSwitchOrganizationResults *results = [QXAuthMemberServiceSwitchOrganizationResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results.Err);
+			}
+		}];
+	
 }
 
 // --- GetAbandonInfo ---
@@ -18054,6 +18367,38 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	return results;
 }
 
+- (void) getAbandonInfo:(NSString *)abandonOrgId memberId:(NSString *)memberId success:(void (^)(QXAuthMemberServiceGetAbandonInfoResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthMemberServiceGetAbandonInfoResults *results = [QXAuthMemberServiceGetAbandonInfoResults alloc];
+		QXAuthMemberServiceGetAbandonInfoParams *params = [[QXAuthMemberServiceGetAbandonInfoParams alloc] init];
+		[params setAbandonOrgId:abandonOrgId];
+		[params setMemberId:memberId];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthMemberService/GetAbandonInfo.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthMemberServiceGetAbandonInfoResults *results = [QXAuthMemberServiceGetAbandonInfoResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
+}
+
 // --- GetShareRequest ---
 - (QXAuthMemberServiceGetShareRequestResults *) GetShareRequest:(NSString *)token {
 	
@@ -18079,6 +18424,37 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	results = [results initWithDictionary: dict];
 	
 	return results;
+}
+
+- (void) getShareRequest:(NSString *)token success:(void (^)(QXAuthMemberServiceGetShareRequestResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthMemberServiceGetShareRequestResults *results = [QXAuthMemberServiceGetShareRequestResults alloc];
+		QXAuthMemberServiceGetShareRequestParams *params = [[QXAuthMemberServiceGetShareRequestParams alloc] init];
+		[params setToken:token];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthMemberService/GetShareRequest.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthMemberServiceGetShareRequestResults *results = [QXAuthMemberServiceGetShareRequestResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
 }
 
 // --- RejectShareRequestByInvitee ---
@@ -18108,6 +18484,37 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	return results.Err;
 }
 
+- (void) rejectShareRequestByInvitee:(NSString *)token success:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthMemberServiceRejectShareRequestByInviteeResults *results = [QXAuthMemberServiceRejectShareRequestByInviteeResults alloc];
+		QXAuthMemberServiceRejectShareRequestByInviteeParams *params = [[QXAuthMemberServiceRejectShareRequestByInviteeParams alloc] init];
+		[params setToken:token];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthMemberService/RejectShareRequestByInvitee.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthMemberServiceRejectShareRequestByInviteeResults *results = [QXAuthMemberServiceRejectShareRequestByInviteeResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results.Err);
+			}
+		}];
+	
+}
+
 // --- AcceptShareRequestByInvitee ---
 - (NSError *) AcceptShareRequestByInvitee:(NSString *)token toOrgId:(NSString *)toOrgId {
 	
@@ -18134,6 +18541,38 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	results = [results initWithDictionary: dict];
 	
 	return results.Err;
+}
+
+- (void) acceptShareRequestByInvitee:(NSString *)token toOrgId:(NSString *)toOrgId success:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthMemberServiceAcceptShareRequestByInviteeResults *results = [QXAuthMemberServiceAcceptShareRequestByInviteeResults alloc];
+		QXAuthMemberServiceAcceptShareRequestByInviteeParams *params = [[QXAuthMemberServiceAcceptShareRequestByInviteeParams alloc] init];
+		[params setToken:token];
+		[params setToOrgId:toOrgId];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthMemberService/AcceptShareRequestByInvitee.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthMemberServiceAcceptShareRequestByInviteeResults *results = [QXAuthMemberServiceAcceptShareRequestByInviteeResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results.Err);
+			}
+		}];
+	
 }
 @end
 
@@ -18190,6 +18629,36 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	return results;
 }
 
+- (void) getTotalStats:(void (^)(QXAuthAdminServiceGetTotalStatsResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthAdminServiceGetTotalStatsResults *results = [QXAuthAdminServiceGetTotalStatsResults alloc];
+		QXAuthAdminServiceGetTotalStatsParams *params = [[QXAuthAdminServiceGetTotalStatsParams alloc] init];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthAdminService/GetTotalStats.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthAdminServiceGetTotalStatsResults *results = [QXAuthAdminServiceGetTotalStatsResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
+}
+
 // --- GetWeeklyTotalStats ---
 - (QXAuthAdminServiceGetWeeklyTotalStatsResults *) GetWeeklyTotalStats {
 	
@@ -18214,6 +18683,36 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	results = [results initWithDictionary: dict];
 	
 	return results;
+}
+
+- (void) getWeeklyTotalStats:(void (^)(QXAuthAdminServiceGetWeeklyTotalStatsResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthAdminServiceGetWeeklyTotalStatsResults *results = [QXAuthAdminServiceGetWeeklyTotalStatsResults alloc];
+		QXAuthAdminServiceGetWeeklyTotalStatsParams *params = [[QXAuthAdminServiceGetWeeklyTotalStatsParams alloc] init];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthAdminService/GetWeeklyTotalStats.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthAdminServiceGetWeeklyTotalStatsResults *results = [QXAuthAdminServiceGetWeeklyTotalStatsResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
 }
 
 // --- GetOrgStats ---
@@ -18242,6 +18741,36 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	return results;
 }
 
+- (void) getOrgStats:(void (^)(QXAuthAdminServiceGetOrgStatsResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthAdminServiceGetOrgStatsResults *results = [QXAuthAdminServiceGetOrgStatsResults alloc];
+		QXAuthAdminServiceGetOrgStatsParams *params = [[QXAuthAdminServiceGetOrgStatsParams alloc] init];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthAdminService/GetOrgStats.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthAdminServiceGetOrgStatsResults *results = [QXAuthAdminServiceGetOrgStatsResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
+}
+
 // --- GetAccessRequests ---
 - (QXAuthAdminServiceGetAccessRequestsResults *) GetAccessRequests {
 	
@@ -18266,6 +18795,36 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	results = [results initWithDictionary: dict];
 	
 	return results;
+}
+
+- (void) getAccessRequests:(void (^)(QXAuthAdminServiceGetAccessRequestsResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthAdminServiceGetAccessRequestsResults *results = [QXAuthAdminServiceGetAccessRequestsResults alloc];
+		QXAuthAdminServiceGetAccessRequestsParams *params = [[QXAuthAdminServiceGetAccessRequestsParams alloc] init];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthAdminService/GetAccessRequests.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthAdminServiceGetAccessRequestsResults *results = [QXAuthAdminServiceGetAccessRequestsResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
 }
 
 // --- ApproveAccess ---
@@ -18295,6 +18854,37 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	return results.Err;
 }
 
+- (void) approveAccess:(NSString *)email success:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthAdminServiceApproveAccessResults *results = [QXAuthAdminServiceApproveAccessResults alloc];
+		QXAuthAdminServiceApproveAccessParams *params = [[QXAuthAdminServiceApproveAccessParams alloc] init];
+		[params setEmail:email];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthAdminService/ApproveAccess.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthAdminServiceApproveAccessResults *results = [QXAuthAdminServiceApproveAccessResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results.Err);
+			}
+		}];
+	
+}
+
 // --- ResendApprovedMail ---
 - (NSError *) ResendApprovedMail:(NSString *)email {
 	
@@ -18322,6 +18912,37 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	return results.Err;
 }
 
+- (void) resendApprovedMail:(NSString *)email success:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthAdminServiceResendApprovedMailResults *results = [QXAuthAdminServiceResendApprovedMailResults alloc];
+		QXAuthAdminServiceResendApprovedMailParams *params = [[QXAuthAdminServiceResendApprovedMailParams alloc] init];
+		[params setEmail:email];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthAdminService/ResendApprovedMail.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthAdminServiceResendApprovedMailResults *results = [QXAuthAdminServiceResendApprovedMailResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results.Err);
+			}
+		}];
+	
+}
+
 // --- GetAllMembers ---
 - (QXAuthAdminServiceGetAllMembersResults *) GetAllMembers {
 	
@@ -18346,6 +18967,36 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	results = [results initWithDictionary: dict];
 	
 	return results;
+}
+
+- (void) getAllMembers:(void (^)(QXAuthAdminServiceGetAllMembersResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthAdminServiceGetAllMembersResults *results = [QXAuthAdminServiceGetAllMembersResults alloc];
+		QXAuthAdminServiceGetAllMembersParams *params = [[QXAuthAdminServiceGetAllMembersParams alloc] init];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthAdminService/GetAllMembers.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthAdminServiceGetAllMembersResults *results = [QXAuthAdminServiceGetAllMembersResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
 }
 
 // --- IgnoreAccess ---
@@ -18375,6 +19026,37 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	return results.Err;
 }
 
+- (void) ignoreAccess:(NSString *)email success:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthAdminServiceIgnoreAccessResults *results = [QXAuthAdminServiceIgnoreAccessResults alloc];
+		QXAuthAdminServiceIgnoreAccessParams *params = [[QXAuthAdminServiceIgnoreAccessParams alloc] init];
+		[params setEmail:email];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthAdminService/IgnoreAccess.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthAdminServiceIgnoreAccessResults *results = [QXAuthAdminServiceIgnoreAccessResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results.Err);
+			}
+		}];
+	
+}
+
 // --- GetAutoApproveAccess ---
 - (QXAuthAdminServiceGetAutoApproveAccessResults *) GetAutoApproveAccess {
 	
@@ -18399,6 +19081,36 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	results = [results initWithDictionary: dict];
 	
 	return results;
+}
+
+- (void) getAutoApproveAccess:(void (^)(QXAuthAdminServiceGetAutoApproveAccessResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthAdminServiceGetAutoApproveAccessResults *results = [QXAuthAdminServiceGetAutoApproveAccessResults alloc];
+		QXAuthAdminServiceGetAutoApproveAccessParams *params = [[QXAuthAdminServiceGetAutoApproveAccessParams alloc] init];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthAdminService/GetAutoApproveAccess.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthAdminServiceGetAutoApproveAccessResults *results = [QXAuthAdminServiceGetAutoApproveAccessResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
 }
 
 // --- SetAutoApproveAccess ---
@@ -18428,6 +19140,37 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	return results.Err;
 }
 
+- (void) setAutoApproveAccess:(BOOL)enable success:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthAdminServiceSetAutoApproveAccessResults *results = [QXAuthAdminServiceSetAutoApproveAccessResults alloc];
+		QXAuthAdminServiceSetAutoApproveAccessParams *params = [[QXAuthAdminServiceSetAutoApproveAccessParams alloc] init];
+		[params setEnable:enable];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthAdminService/SetAutoApproveAccess.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthAdminServiceSetAutoApproveAccessResults *results = [QXAuthAdminServiceSetAutoApproveAccessResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results.Err);
+			}
+		}];
+	
+}
+
 // --- GetMarketableUsers ---
 - (QXAuthAdminServiceGetMarketableUsersResults *) GetMarketableUsers {
 	
@@ -18454,6 +19197,36 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	return results;
 }
 
+- (void) getMarketableUsers:(void (^)(QXAuthAdminServiceGetMarketableUsersResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthAdminServiceGetMarketableUsersResults *results = [QXAuthAdminServiceGetMarketableUsersResults alloc];
+		QXAuthAdminServiceGetMarketableUsersParams *params = [[QXAuthAdminServiceGetMarketableUsersParams alloc] init];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthAdminService/GetMarketableUsers.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthAdminServiceGetMarketableUsersResults *results = [QXAuthAdminServiceGetMarketableUsersResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
+}
+
 // --- GetTotalOnlineUsers ---
 - (QXAuthAdminServiceGetTotalOnlineUsersResults *) GetTotalOnlineUsers {
 	
@@ -18478,6 +19251,36 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	results = [results initWithDictionary: dict];
 	
 	return results;
+}
+
+- (void) getTotalOnlineUsers:(void (^)(QXAuthAdminServiceGetTotalOnlineUsersResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthAdminServiceGetTotalOnlineUsersResults *results = [QXAuthAdminServiceGetTotalOnlineUsersResults alloc];
+		QXAuthAdminServiceGetTotalOnlineUsersParams *params = [[QXAuthAdminServiceGetTotalOnlineUsersParams alloc] init];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthAdminService/GetTotalOnlineUsers.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthAdminServiceGetTotalOnlineUsersResults *results = [QXAuthAdminServiceGetTotalOnlineUsersResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
 }
 @end
 
@@ -18535,6 +19338,37 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	return results;
 }
 
+- (void) getNewEntry:(NSString *)groupId success:(void (^)(QXAuthUserServiceGetNewEntryResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceGetNewEntryResults *results = [QXAuthUserServiceGetNewEntryResults alloc];
+		QXAuthUserServiceGetNewEntryParams *params = [[QXAuthUserServiceGetNewEntryParams alloc] init];
+		[params setGroupId:groupId];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/GetNewEntry.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceGetNewEntryResults *results = [QXAuthUserServiceGetNewEntryResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
+}
+
 // --- GetNewChatEntry ---
 - (QXAuthUserServiceGetNewChatEntryResults *) GetNewChatEntry:(NSString *)chatId {
 	
@@ -18560,6 +19394,37 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	results = [results initWithDictionary: dict];
 	
 	return results;
+}
+
+- (void) getNewChatEntry:(NSString *)chatId success:(void (^)(QXAuthUserServiceGetNewChatEntryResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceGetNewChatEntryResults *results = [QXAuthUserServiceGetNewChatEntryResults alloc];
+		QXAuthUserServiceGetNewChatEntryParams *params = [[QXAuthUserServiceGetNewChatEntryParams alloc] init];
+		[params setChatId:chatId];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/GetNewChatEntry.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceGetNewChatEntryResults *results = [QXAuthUserServiceGetNewChatEntryResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
 }
 
 // --- GetQortexSupportEntries ---
@@ -18591,6 +19456,39 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	return results;
 }
 
+- (void) getQortexSupportEntries:(NSString *)before limit:(NSNumber *)limit withComments:(BOOL)withComments success:(void (^)(QXAuthUserServiceGetQortexSupportEntriesResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceGetQortexSupportEntriesResults *results = [QXAuthUserServiceGetQortexSupportEntriesResults alloc];
+		QXAuthUserServiceGetQortexSupportEntriesParams *params = [[QXAuthUserServiceGetQortexSupportEntriesParams alloc] init];
+		[params setBefore:before];
+		[params setLimit:limit];
+		[params setWithComments:withComments];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/GetQortexSupportEntries.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceGetQortexSupportEntriesResults *results = [QXAuthUserServiceGetQortexSupportEntriesResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
+}
+
 // --- CreateEntry ---
 - (QXAuthUserServiceCreateEntryResults *) CreateEntry:(QXEntryInput *)input {
 	
@@ -18618,6 +19516,37 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	return results;
 }
 
+- (void) createEntry:(QXEntryInput *)input success:(void (^)(QXAuthUserServiceCreateEntryResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceCreateEntryResults *results = [QXAuthUserServiceCreateEntryResults alloc];
+		QXAuthUserServiceCreateEntryParams *params = [[QXAuthUserServiceCreateEntryParams alloc] init];
+		[params setInput:input];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/CreateEntry.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceCreateEntryResults *results = [QXAuthUserServiceCreateEntryResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
+}
+
 // --- CreateTask ---
 - (QXAuthUserServiceCreateTaskResults *) CreateTask:(QXEntryInput *)input {
 	
@@ -18643,6 +19572,37 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	results = [results initWithDictionary: dict];
 	
 	return results;
+}
+
+- (void) createTask:(QXEntryInput *)input success:(void (^)(QXAuthUserServiceCreateTaskResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceCreateTaskResults *results = [QXAuthUserServiceCreateTaskResults alloc];
+		QXAuthUserServiceCreateTaskParams *params = [[QXAuthUserServiceCreateTaskParams alloc] init];
+		[params setInput:input];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/CreateTask.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceCreateTaskResults *results = [QXAuthUserServiceCreateTaskResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
 }
 
 // --- CloseTask ---
@@ -18674,6 +19634,39 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	return results;
 }
 
+- (void) closeTask:(NSString *)entryId groupId:(NSString *)groupId taskId:(NSString *)taskId success:(void (^)(QXAuthUserServiceCloseTaskResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceCloseTaskResults *results = [QXAuthUserServiceCloseTaskResults alloc];
+		QXAuthUserServiceCloseTaskParams *params = [[QXAuthUserServiceCloseTaskParams alloc] init];
+		[params setEntryId:entryId];
+		[params setGroupId:groupId];
+		[params setTaskId:taskId];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/CloseTask.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceCloseTaskResults *results = [QXAuthUserServiceCloseTaskResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
+}
+
 // --- CreateComment ---
 - (QXAuthUserServiceCreateCommentResults *) CreateComment:(QXEntryInput *)input {
 	
@@ -18699,6 +19692,37 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	results = [results initWithDictionary: dict];
 	
 	return results;
+}
+
+- (void) createComment:(QXEntryInput *)input success:(void (^)(QXAuthUserServiceCreateCommentResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceCreateCommentResults *results = [QXAuthUserServiceCreateCommentResults alloc];
+		QXAuthUserServiceCreateCommentParams *params = [[QXAuthUserServiceCreateCommentParams alloc] init];
+		[params setInput:input];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/CreateComment.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceCreateCommentResults *results = [QXAuthUserServiceCreateCommentResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
 }
 
 // --- GetComment ---
@@ -18729,6 +19753,38 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	return results;
 }
 
+- (void) getComment:(NSString *)entryId groupId:(NSString *)groupId success:(void (^)(QXAuthUserServiceGetCommentResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceGetCommentResults *results = [QXAuthUserServiceGetCommentResults alloc];
+		QXAuthUserServiceGetCommentParams *params = [[QXAuthUserServiceGetCommentParams alloc] init];
+		[params setEntryId:entryId];
+		[params setGroupId:groupId];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/GetComment.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceGetCommentResults *results = [QXAuthUserServiceGetCommentResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
+}
+
 // --- UpdateComment ---
 - (QXAuthUserServiceUpdateCommentResults *) UpdateComment:(QXEntryInput *)input {
 	
@@ -18754,6 +19810,37 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	results = [results initWithDictionary: dict];
 	
 	return results;
+}
+
+- (void) updateComment:(QXEntryInput *)input success:(void (^)(QXAuthUserServiceUpdateCommentResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceUpdateCommentResults *results = [QXAuthUserServiceUpdateCommentResults alloc];
+		QXAuthUserServiceUpdateCommentParams *params = [[QXAuthUserServiceUpdateCommentParams alloc] init];
+		[params setInput:input];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/UpdateComment.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceUpdateCommentResults *results = [QXAuthUserServiceUpdateCommentResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
 }
 
 // --- UpdateEntry ---
@@ -18783,6 +19870,37 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	return results;
 }
 
+- (void) updateEntry:(QXEntryInput *)input success:(void (^)(QXAuthUserServiceUpdateEntryResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceUpdateEntryResults *results = [QXAuthUserServiceUpdateEntryResults alloc];
+		QXAuthUserServiceUpdateEntryParams *params = [[QXAuthUserServiceUpdateEntryParams alloc] init];
+		[params setInput:input];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/UpdateEntry.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceUpdateEntryResults *results = [QXAuthUserServiceUpdateEntryResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
+}
+
 // --- GetLatestUpdatedEntryIdByTitle ---
 - (QXAuthUserServiceGetLatestUpdatedEntryIdByTitleResults *) GetLatestUpdatedEntryIdByTitle:(NSString *)title groupId:(NSString *)groupId {
 	
@@ -18809,6 +19927,38 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	results = [results initWithDictionary: dict];
 	
 	return results;
+}
+
+- (void) getLatestUpdatedEntryIdByTitle:(NSString *)title groupId:(NSString *)groupId success:(void (^)(QXAuthUserServiceGetLatestUpdatedEntryIdByTitleResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceGetLatestUpdatedEntryIdByTitleResults *results = [QXAuthUserServiceGetLatestUpdatedEntryIdByTitleResults alloc];
+		QXAuthUserServiceGetLatestUpdatedEntryIdByTitleParams *params = [[QXAuthUserServiceGetLatestUpdatedEntryIdByTitleParams alloc] init];
+		[params setTitle:title];
+		[params setGroupId:groupId];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/GetLatestUpdatedEntryIdByTitle.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceGetLatestUpdatedEntryIdByTitleResults *results = [QXAuthUserServiceGetLatestUpdatedEntryIdByTitleResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
 }
 
 // --- GetEntry ---
@@ -18841,6 +19991,40 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	return results;
 }
 
+- (void) getEntry:(NSString *)entryId groupId:(NSString *)groupId updateAtUnixNanoForVersion:(NSString *)updateAtUnixNanoForVersion hightlightKeywords:(NSString *)hightlightKeywords success:(void (^)(QXAuthUserServiceGetEntryResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceGetEntryResults *results = [QXAuthUserServiceGetEntryResults alloc];
+		QXAuthUserServiceGetEntryParams *params = [[QXAuthUserServiceGetEntryParams alloc] init];
+		[params setEntryId:entryId];
+		[params setGroupId:groupId];
+		[params setUpdateAtUnixNanoForVersion:updateAtUnixNanoForVersion];
+		[params setHightlightKeywords:hightlightKeywords];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/GetEntry.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceGetEntryResults *results = [QXAuthUserServiceGetEntryResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
+}
+
 // --- DeleteEntry ---
 - (QXAuthUserServiceDeleteEntryResults *) DeleteEntry:(NSString *)entryId groupId:(NSString *)groupId dType:(NSString *)dType {
 	
@@ -18868,6 +20052,39 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	results = [results initWithDictionary: dict];
 	
 	return results;
+}
+
+- (void) deleteEntry:(NSString *)entryId groupId:(NSString *)groupId dType:(NSString *)dType success:(void (^)(QXAuthUserServiceDeleteEntryResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceDeleteEntryResults *results = [QXAuthUserServiceDeleteEntryResults alloc];
+		QXAuthUserServiceDeleteEntryParams *params = [[QXAuthUserServiceDeleteEntryParams alloc] init];
+		[params setEntryId:entryId];
+		[params setGroupId:groupId];
+		[params setDType:dType];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/DeleteEntry.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceDeleteEntryResults *results = [QXAuthUserServiceDeleteEntryResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
 }
 
 // --- MuteEntry ---
@@ -18898,6 +20115,38 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	return results.Err;
 }
 
+- (void) muteEntry:(NSString *)entryId groupId:(NSString *)groupId success:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceMuteEntryResults *results = [QXAuthUserServiceMuteEntryResults alloc];
+		QXAuthUserServiceMuteEntryParams *params = [[QXAuthUserServiceMuteEntryParams alloc] init];
+		[params setEntryId:entryId];
+		[params setGroupId:groupId];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/MuteEntry.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceMuteEntryResults *results = [QXAuthUserServiceMuteEntryResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results.Err);
+			}
+		}];
+	
+}
+
 // --- UndoMuteEntry ---
 - (NSError *) UndoMuteEntry:(NSString *)entryId groupId:(NSString *)groupId {
 	
@@ -18926,6 +20175,38 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	return results.Err;
 }
 
+- (void) undoMuteEntry:(NSString *)entryId groupId:(NSString *)groupId success:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceUndoMuteEntryResults *results = [QXAuthUserServiceUndoMuteEntryResults alloc];
+		QXAuthUserServiceUndoMuteEntryParams *params = [[QXAuthUserServiceUndoMuteEntryParams alloc] init];
+		[params setEntryId:entryId];
+		[params setGroupId:groupId];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/UndoMuteEntry.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceUndoMuteEntryResults *results = [QXAuthUserServiceUndoMuteEntryResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results.Err);
+			}
+		}];
+	
+}
+
 // --- GetMachineTranslatableLangauges ---
 - (QXAuthUserServiceGetMachineTranslatableLangaugesResults *) GetMachineTranslatableLangauges {
 	
@@ -18950,6 +20231,36 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	results = [results initWithDictionary: dict];
 	
 	return results;
+}
+
+- (void) getMachineTranslatableLangauges:(void (^)(QXAuthUserServiceGetMachineTranslatableLangaugesResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceGetMachineTranslatableLangaugesResults *results = [QXAuthUserServiceGetMachineTranslatableLangaugesResults alloc];
+		QXAuthUserServiceGetMachineTranslatableLangaugesParams *params = [[QXAuthUserServiceGetMachineTranslatableLangaugesParams alloc] init];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/GetMachineTranslatableLangauges.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceGetMachineTranslatableLangaugesResults *results = [QXAuthUserServiceGetMachineTranslatableLangaugesResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
 }
 
 // --- MachineTranslate ---
@@ -18981,6 +20292,39 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	return results;
 }
 
+- (void) machineTranslate:(NSString *)entryId groupId:(NSString *)groupId targetlang:(NSString *)targetlang success:(void (^)(QXAuthUserServiceMachineTranslateResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceMachineTranslateResults *results = [QXAuthUserServiceMachineTranslateResults alloc];
+		QXAuthUserServiceMachineTranslateParams *params = [[QXAuthUserServiceMachineTranslateParams alloc] init];
+		[params setEntryId:entryId];
+		[params setGroupId:groupId];
+		[params setTargetlang:targetlang];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/MachineTranslate.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceMachineTranslateResults *results = [QXAuthUserServiceMachineTranslateResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
+}
+
 // --- OriginalThread ---
 - (QXAuthUserServiceOriginalThreadResults *) OriginalThread:(NSString *)entryId groupId:(NSString *)groupId {
 	
@@ -19007,6 +20351,38 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	results = [results initWithDictionary: dict];
 	
 	return results;
+}
+
+- (void) originalThread:(NSString *)entryId groupId:(NSString *)groupId success:(void (^)(QXAuthUserServiceOriginalThreadResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceOriginalThreadResults *results = [QXAuthUserServiceOriginalThreadResults alloc];
+		QXAuthUserServiceOriginalThreadParams *params = [[QXAuthUserServiceOriginalThreadParams alloc] init];
+		[params setEntryId:entryId];
+		[params setGroupId:groupId];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/OriginalThread.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceOriginalThreadResults *results = [QXAuthUserServiceOriginalThreadResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
 }
 
 // --- GetEntryAttachments ---
@@ -19037,6 +20413,38 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	return results;
 }
 
+- (void) getEntryAttachments:(NSString *)entryId groupId:(NSString *)groupId success:(void (^)(QXAuthUserServiceGetEntryAttachmentsResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceGetEntryAttachmentsResults *results = [QXAuthUserServiceGetEntryAttachmentsResults alloc];
+		QXAuthUserServiceGetEntryAttachmentsParams *params = [[QXAuthUserServiceGetEntryAttachmentsParams alloc] init];
+		[params setEntryId:entryId];
+		[params setGroupId:groupId];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/GetEntryAttachments.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceGetEntryAttachmentsResults *results = [QXAuthUserServiceGetEntryAttachmentsResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
+}
+
 // --- GetDocViewSession ---
 - (QXAuthUserServiceGetDocViewSessionResults *) GetDocViewSession:(NSString *)doi groupId:(NSString *)groupId attachmentId:(NSString *)attachmentId {
 	
@@ -19064,6 +20472,39 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	results = [results initWithDictionary: dict];
 	
 	return results;
+}
+
+- (void) getDocViewSession:(NSString *)doi groupId:(NSString *)groupId attachmentId:(NSString *)attachmentId success:(void (^)(QXAuthUserServiceGetDocViewSessionResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceGetDocViewSessionResults *results = [QXAuthUserServiceGetDocViewSessionResults alloc];
+		QXAuthUserServiceGetDocViewSessionParams *params = [[QXAuthUserServiceGetDocViewSessionParams alloc] init];
+		[params setDoi:doi];
+		[params setGroupId:groupId];
+		[params setAttachmentId:attachmentId];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/GetDocViewSession.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceGetDocViewSessionResults *results = [QXAuthUserServiceGetDocViewSessionResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
 }
 
 // --- DeleteEntryAttachment ---
@@ -19096,6 +20537,40 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	return results;
 }
 
+- (void) deleteEntryAttachment:(NSString *)doi groupId:(NSString *)groupId attachmentId:(NSString *)attachmentId ownerId:(NSString *)ownerId success:(void (^)(QXAuthUserServiceDeleteEntryAttachmentResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceDeleteEntryAttachmentResults *results = [QXAuthUserServiceDeleteEntryAttachmentResults alloc];
+		QXAuthUserServiceDeleteEntryAttachmentParams *params = [[QXAuthUserServiceDeleteEntryAttachmentParams alloc] init];
+		[params setDoi:doi];
+		[params setGroupId:groupId];
+		[params setAttachmentId:attachmentId];
+		[params setOwnerId:ownerId];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/DeleteEntryAttachment.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceDeleteEntryAttachmentResults *results = [QXAuthUserServiceDeleteEntryAttachmentResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
+}
+
 // --- GetOtherVersionsComments ---
 - (QXAuthUserServiceGetOtherVersionsCommentsResults *) GetOtherVersionsComments:(NSString *)entryId groupId:(NSString *)groupId updateAtUnixNanoForVersion:(NSString *)updateAtUnixNanoForVersion {
 	
@@ -19125,6 +20600,39 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	return results;
 }
 
+- (void) getOtherVersionsComments:(NSString *)entryId groupId:(NSString *)groupId updateAtUnixNanoForVersion:(NSString *)updateAtUnixNanoForVersion success:(void (^)(QXAuthUserServiceGetOtherVersionsCommentsResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceGetOtherVersionsCommentsResults *results = [QXAuthUserServiceGetOtherVersionsCommentsResults alloc];
+		QXAuthUserServiceGetOtherVersionsCommentsParams *params = [[QXAuthUserServiceGetOtherVersionsCommentsParams alloc] init];
+		[params setEntryId:entryId];
+		[params setGroupId:groupId];
+		[params setUpdateAtUnixNanoForVersion:updateAtUnixNanoForVersion];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/GetOtherVersionsComments.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceGetOtherVersionsCommentsResults *results = [QXAuthUserServiceGetOtherVersionsCommentsResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
+}
+
 // --- GetOtherVersionsTaskLogs ---
 - (QXAuthUserServiceGetOtherVersionsTaskLogsResults *) GetOtherVersionsTaskLogs:(NSString *)entryId groupId:(NSString *)groupId updateAtUnixNanoForVersion:(NSString *)updateAtUnixNanoForVersion {
 	
@@ -19152,6 +20660,39 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	results = [results initWithDictionary: dict];
 	
 	return results;
+}
+
+- (void) getOtherVersionsTaskLogs:(NSString *)entryId groupId:(NSString *)groupId updateAtUnixNanoForVersion:(NSString *)updateAtUnixNanoForVersion success:(void (^)(QXAuthUserServiceGetOtherVersionsTaskLogsResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceGetOtherVersionsTaskLogsResults *results = [QXAuthUserServiceGetOtherVersionsTaskLogsResults alloc];
+		QXAuthUserServiceGetOtherVersionsTaskLogsParams *params = [[QXAuthUserServiceGetOtherVersionsTaskLogsParams alloc] init];
+		[params setEntryId:entryId];
+		[params setGroupId:groupId];
+		[params setUpdateAtUnixNanoForVersion:updateAtUnixNanoForVersion];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/GetOtherVersionsTaskLogs.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceGetOtherVersionsTaskLogsResults *results = [QXAuthUserServiceGetOtherVersionsTaskLogsResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
 }
 
 // --- GetGroupEntries ---
@@ -19185,43 +20726,39 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	return results;
 }
 
-- (void)getGroupEntries:(NSString *)groupId
-              entryType:(NSString *)entryType
-                 before:(NSString *)before
-                  limit:(NSNumber *)limit
-           withComments:(BOOL)withComments
-                success:(void (^)(QXAuthUserServiceGetGroupEntriesResults *results))successBlock
-                failure:(void (^)(NSError *error))failureBlock
-{
-	QXAuthUserServiceGetGroupEntriesParams *params = [[QXAuthUserServiceGetGroupEntriesParams alloc] init];
-	[params setGroupId:groupId];
-	[params setEntryType:entryType];
-	[params setBefore:before];
-	[params setLimit:limit];
-	[params setWithComments:withComments];
+- (void) getGroupEntries:(NSString *)groupId entryType:(NSString *)entryType before:(NSString *)before limit:(NSNumber *)limit withComments:(BOOL)withComments success:(void (^)(QXAuthUserServiceGetGroupEntriesResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceGetGroupEntriesResults *results = [QXAuthUserServiceGetGroupEntriesResults alloc];
+		QXAuthUserServiceGetGroupEntriesParams *params = [[QXAuthUserServiceGetGroupEntriesParams alloc] init];
+		[params setGroupId:groupId];
+		[params setEntryType:entryType];
+		[params setBefore:before];
+		[params setLimit:limit];
+		[params setWithComments:withComments];
+		
 
-	QXQortexapi * _api = [QXQortexapi get];
-	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/GetGroupEntries.json", [_api BaseURL]]];
-	if([_api Verbose]) {
-		NSLog(@"Requesting URL: %@", url);
-	}
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/GetGroupEntries.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
 
-    [QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *results, NSError *error) {
-        if (error && failureBlock) {
-            if([_api Verbose]) {
-                NSLog(@"Error: %@", error);
-            }
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
 
-            failureBlock(error);
-        }
+				failureBlock(error);
+			}
 
-        if (successBlock) {
-            QXAuthUserServiceGetGroupEntriesResults *entriesResults = [[QXAuthUserServiceGetGroupEntriesResults alloc] initWithDictionary:results];
-
-            successBlock(entriesResults);
-        }
-
-    }];
+			if (successBlock) {
+				QXAuthUserServiceGetGroupEntriesResults *results = [QXAuthUserServiceGetGroupEntriesResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
 }
 
 // --- GetMyFeedEntries ---
@@ -19254,40 +20791,38 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	return results;
 }
 
-- (void)getMyFeedEntries:(NSString *)entryType
-                  before:(NSString *)before
-                   limit:(NSNumber *)limit
-            withComments:(BOOL)withComments
-                 success:(void (^)(QXAuthUserServiceGetMyFeedEntriesResults *results))successBlock
-                 failure:(void (^)(NSError *error))failureBlock
-{
-    QXAuthUserServiceGetMyFeedEntriesParams *params = [[QXAuthUserServiceGetMyFeedEntriesParams alloc] init];
-    [params setEntryType:entryType];
-    [params setBefore:before];
-    [params setLimit:limit];
-    [params setWithComments:withComments];
+- (void) getMyFeedEntries:(NSString *)entryType before:(NSString *)before limit:(NSNumber *)limit withComments:(BOOL)withComments success:(void (^)(QXAuthUserServiceGetMyFeedEntriesResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceGetMyFeedEntriesResults *results = [QXAuthUserServiceGetMyFeedEntriesResults alloc];
+		QXAuthUserServiceGetMyFeedEntriesParams *params = [[QXAuthUserServiceGetMyFeedEntriesParams alloc] init];
+		[params setEntryType:entryType];
+		[params setBefore:before];
+		[params setLimit:limit];
+		[params setWithComments:withComments];
+		
 
-    QXQortexapi * _api = [QXQortexapi get];
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/GetMyFeedEntries.json", [_api BaseURL]]];
-    if([_api Verbose]) {
-        NSLog(@"Requesting URL: %@", url);
-    }
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/GetMyFeedEntries.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
 
-    [QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *results, NSError *error) {
-        if (error && failureBlock) {
-            if([_api Verbose]) {
-                NSLog(@"Error: %@", error);
-            }
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
 
-            failureBlock(error);
-        }
+				failureBlock(error);
+			}
 
-        if (successBlock) {
-            QXAuthUserServiceGetMyFeedEntriesResults *entryResults = [[QXAuthUserServiceGetMyFeedEntriesResults alloc] initWithDictionary:results];
-
-            successBlock(entryResults);
-        }
-    }];
+			if (successBlock) {
+				QXAuthUserServiceGetMyFeedEntriesResults *results = [QXAuthUserServiceGetMyFeedEntriesResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
 }
 
 // --- GetGroupAside ---
@@ -19314,6 +20849,36 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	results = [results initWithDictionary: dict];
 	
 	return results;
+}
+
+- (void) getGroupAside:(void (^)(QXAuthUserServiceGetGroupAsideResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceGetGroupAsideResults *results = [QXAuthUserServiceGetGroupAsideResults alloc];
+		QXAuthUserServiceGetGroupAsideParams *params = [[QXAuthUserServiceGetGroupAsideParams alloc] init];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/GetGroupAside.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceGetGroupAsideResults *results = [QXAuthUserServiceGetGroupAsideResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
 }
 
 // --- GetNewFeedEntries ---
@@ -19343,6 +20908,39 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	results = [results initWithDictionary: dict];
 	
 	return results;
+}
+
+- (void) getNewFeedEntries:(NSString *)entryType fromTimeUnixNano:(NSString *)fromTimeUnixNano limit:(NSNumber *)limit success:(void (^)(QXAuthUserServiceGetNewFeedEntriesResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceGetNewFeedEntriesResults *results = [QXAuthUserServiceGetNewFeedEntriesResults alloc];
+		QXAuthUserServiceGetNewFeedEntriesParams *params = [[QXAuthUserServiceGetNewFeedEntriesParams alloc] init];
+		[params setEntryType:entryType];
+		[params setFromTimeUnixNano:fromTimeUnixNano];
+		[params setLimit:limit];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/GetNewFeedEntries.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceGetNewFeedEntriesResults *results = [QXAuthUserServiceGetNewFeedEntriesResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
 }
 
 // --- GetUserEntries ---
@@ -19375,6 +20973,40 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	return results;
 }
 
+- (void) getUserEntries:(NSString *)userId entryType:(NSString *)entryType before:(NSString *)before limit:(NSNumber *)limit success:(void (^)(QXAuthUserServiceGetUserEntriesResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceGetUserEntriesResults *results = [QXAuthUserServiceGetUserEntriesResults alloc];
+		QXAuthUserServiceGetUserEntriesParams *params = [[QXAuthUserServiceGetUserEntriesParams alloc] init];
+		[params setUserId:userId];
+		[params setEntryType:entryType];
+		[params setBefore:before];
+		[params setLimit:limit];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/GetUserEntries.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceGetUserEntriesResults *results = [QXAuthUserServiceGetUserEntriesResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
+}
+
 // --- GetMyNotificationItems ---
 - (QXAuthUserServiceGetMyNotificationItemsResults *) GetMyNotificationItems:(NSString *)before limit:(NSNumber *)limit {
 	
@@ -19401,6 +21033,38 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	results = [results initWithDictionary: dict];
 	
 	return results;
+}
+
+- (void) getMyNotificationItems:(NSString *)before limit:(NSNumber *)limit success:(void (^)(QXAuthUserServiceGetMyNotificationItemsResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceGetMyNotificationItemsResults *results = [QXAuthUserServiceGetMyNotificationItemsResults alloc];
+		QXAuthUserServiceGetMyNotificationItemsParams *params = [[QXAuthUserServiceGetMyNotificationItemsParams alloc] init];
+		[params setBefore:before];
+		[params setLimit:limit];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/GetMyNotificationItems.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceGetMyNotificationItemsResults *results = [QXAuthUserServiceGetMyNotificationItemsResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
 }
 
 // --- MarkAllAsRead ---
@@ -19430,6 +21094,37 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	return results;
 }
 
+- (void) markAllAsRead:(NSString *)groupId success:(void (^)(QXAuthUserServiceMarkAllAsReadResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceMarkAllAsReadResults *results = [QXAuthUserServiceMarkAllAsReadResults alloc];
+		QXAuthUserServiceMarkAllAsReadParams *params = [[QXAuthUserServiceMarkAllAsReadParams alloc] init];
+		[params setGroupId:groupId];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/MarkAllAsRead.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceMarkAllAsReadResults *results = [QXAuthUserServiceMarkAllAsReadResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
+}
+
 // --- GetWatchList ---
 - (QXAuthUserServiceGetWatchListResults *) GetWatchList:(NSString *)before limit:(NSNumber *)limit {
 	
@@ -19456,6 +21151,38 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	results = [results initWithDictionary: dict];
 	
 	return results;
+}
+
+- (void) getWatchList:(NSString *)before limit:(NSNumber *)limit success:(void (^)(QXAuthUserServiceGetWatchListResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceGetWatchListResults *results = [QXAuthUserServiceGetWatchListResults alloc];
+		QXAuthUserServiceGetWatchListParams *params = [[QXAuthUserServiceGetWatchListParams alloc] init];
+		[params setBefore:before];
+		[params setLimit:limit];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/GetWatchList.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceGetWatchListResults *results = [QXAuthUserServiceGetWatchListResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
 }
 
 // --- AddToWatchList ---
@@ -19487,6 +21214,39 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	return results;
 }
 
+- (void) addToWatchList:(NSString *)entryId groupId:(NSString *)groupId remindMode:(NSString *)remindMode success:(void (^)(QXAuthUserServiceAddToWatchListResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceAddToWatchListResults *results = [QXAuthUserServiceAddToWatchListResults alloc];
+		QXAuthUserServiceAddToWatchListParams *params = [[QXAuthUserServiceAddToWatchListParams alloc] init];
+		[params setEntryId:entryId];
+		[params setGroupId:groupId];
+		[params setRemindMode:remindMode];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/AddToWatchList.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceAddToWatchListResults *results = [QXAuthUserServiceAddToWatchListResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
+}
+
 // --- StopWatching ---
 - (QXAuthUserServiceStopWatchingResults *) StopWatching:(NSString *)entryId groupId:(NSString *)groupId {
 	
@@ -19513,6 +21273,38 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	results = [results initWithDictionary: dict];
 	
 	return results;
+}
+
+- (void) stopWatching:(NSString *)entryId groupId:(NSString *)groupId success:(void (^)(QXAuthUserServiceStopWatchingResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceStopWatchingResults *results = [QXAuthUserServiceStopWatchingResults alloc];
+		QXAuthUserServiceStopWatchingParams *params = [[QXAuthUserServiceStopWatchingParams alloc] init];
+		[params setEntryId:entryId];
+		[params setGroupId:groupId];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/StopWatching.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceStopWatchingResults *results = [QXAuthUserServiceStopWatchingResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
 }
 
 // --- ReadWatching ---
@@ -19543,6 +21335,38 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	return results.Err;
 }
 
+- (void) readWatching:(NSString *)entryId groupId:(NSString *)groupId success:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceReadWatchingResults *results = [QXAuthUserServiceReadWatchingResults alloc];
+		QXAuthUserServiceReadWatchingParams *params = [[QXAuthUserServiceReadWatchingParams alloc] init];
+		[params setEntryId:entryId];
+		[params setGroupId:groupId];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/ReadWatching.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceReadWatchingResults *results = [QXAuthUserServiceReadWatchingResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results.Err);
+			}
+		}];
+	
+}
+
 // --- RemindMe ---
 - (QXAuthUserServiceRemindMeResults *) RemindMe {
 	
@@ -19567,6 +21391,36 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	results = [results initWithDictionary: dict];
 	
 	return results;
+}
+
+- (void) remindMe:(void (^)(QXAuthUserServiceRemindMeResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceRemindMeResults *results = [QXAuthUserServiceRemindMeResults alloc];
+		QXAuthUserServiceRemindMeParams *params = [[QXAuthUserServiceRemindMeParams alloc] init];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/RemindMe.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceRemindMeResults *results = [QXAuthUserServiceRemindMeResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
 }
 
 // --- StartSmartReminding ---
@@ -19597,6 +21451,38 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	return results;
 }
 
+- (void) startSmartReminding:(NSString *)groupId watchItemId:(NSString *)watchItemId success:(void (^)(QXAuthUserServiceStartSmartRemindingResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceStartSmartRemindingResults *results = [QXAuthUserServiceStartSmartRemindingResults alloc];
+		QXAuthUserServiceStartSmartRemindingParams *params = [[QXAuthUserServiceStartSmartRemindingParams alloc] init];
+		[params setGroupId:groupId];
+		[params setWatchItemId:watchItemId];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/StartSmartReminding.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceStartSmartRemindingResults *results = [QXAuthUserServiceStartSmartRemindingResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
+}
+
 // --- StopReminding ---
 - (QXAuthUserServiceStopRemindingResults *) StopReminding:(NSString *)groupId watchItemId:(NSString *)watchItemId {
 	
@@ -19625,6 +21511,38 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	return results;
 }
 
+- (void) stopReminding:(NSString *)groupId watchItemId:(NSString *)watchItemId success:(void (^)(QXAuthUserServiceStopRemindingResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceStopRemindingResults *results = [QXAuthUserServiceStopRemindingResults alloc];
+		QXAuthUserServiceStopRemindingParams *params = [[QXAuthUserServiceStopRemindingParams alloc] init];
+		[params setGroupId:groupId];
+		[params setWatchItemId:watchItemId];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/StopReminding.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceStopRemindingResults *results = [QXAuthUserServiceStopRemindingResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
+}
+
 // --- UpdateLike ---
 - (QXAuthUserServiceUpdateLikeResults *) UpdateLike:(QXLikeInput *)input {
 	
@@ -19650,6 +21568,37 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	results = [results initWithDictionary: dict];
 	
 	return results;
+}
+
+- (void) updateLike:(QXLikeInput *)input success:(void (^)(QXAuthUserServiceUpdateLikeResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceUpdateLikeResults *results = [QXAuthUserServiceUpdateLikeResults alloc];
+		QXAuthUserServiceUpdateLikeParams *params = [[QXAuthUserServiceUpdateLikeParams alloc] init];
+		[params setInput:input];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/UpdateLike.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceUpdateLikeResults *results = [QXAuthUserServiceUpdateLikeResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
 }
 
 // --- GetDraftList ---
@@ -19680,6 +21629,38 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	return results;
 }
 
+- (void) getDraftList:(NSString *)before limit:(NSNumber *)limit success:(void (^)(QXAuthUserServiceGetDraftListResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceGetDraftListResults *results = [QXAuthUserServiceGetDraftListResults alloc];
+		QXAuthUserServiceGetDraftListParams *params = [[QXAuthUserServiceGetDraftListParams alloc] init];
+		[params setBefore:before];
+		[params setLimit:limit];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/GetDraftList.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceGetDraftListResults *results = [QXAuthUserServiceGetDraftListResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
+}
+
 // --- GetDraft ---
 - (QXAuthUserServiceGetDraftResults *) GetDraft:(NSString *)entryId groupId:(NSString *)groupId {
 	
@@ -19706,6 +21687,38 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	results = [results initWithDictionary: dict];
 	
 	return results;
+}
+
+- (void) getDraft:(NSString *)entryId groupId:(NSString *)groupId success:(void (^)(QXAuthUserServiceGetDraftResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceGetDraftResults *results = [QXAuthUserServiceGetDraftResults alloc];
+		QXAuthUserServiceGetDraftParams *params = [[QXAuthUserServiceGetDraftParams alloc] init];
+		[params setEntryId:entryId];
+		[params setGroupId:groupId];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/GetDraft.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceGetDraftResults *results = [QXAuthUserServiceGetDraftResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
 }
 
 // --- DeleteDraft ---
@@ -19736,6 +21749,38 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	return results.Err;
 }
 
+- (void) deleteDraft:(NSString *)entryId groupId:(NSString *)groupId success:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceDeleteDraftResults *results = [QXAuthUserServiceDeleteDraftResults alloc];
+		QXAuthUserServiceDeleteDraftParams *params = [[QXAuthUserServiceDeleteDraftParams alloc] init];
+		[params setEntryId:entryId];
+		[params setGroupId:groupId];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/DeleteDraft.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceDeleteDraftResults *results = [QXAuthUserServiceDeleteDraftResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results.Err);
+			}
+		}];
+	
+}
+
 // --- ChooseMarkdownEditor ---
 - (NSError *) ChooseMarkdownEditor {
 	
@@ -19760,6 +21805,36 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	results = [results initWithDictionary: dict];
 	
 	return results.Err;
+}
+
+- (void) chooseMarkdownEditor:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceChooseMarkdownEditorResults *results = [QXAuthUserServiceChooseMarkdownEditorResults alloc];
+		QXAuthUserServiceChooseMarkdownEditorParams *params = [[QXAuthUserServiceChooseMarkdownEditorParams alloc] init];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/ChooseMarkdownEditor.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceChooseMarkdownEditorResults *results = [QXAuthUserServiceChooseMarkdownEditorResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results.Err);
+			}
+		}];
+	
 }
 
 // --- ChooseStyledEditor ---
@@ -19788,6 +21863,36 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	return results.Err;
 }
 
+- (void) chooseStyledEditor:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceChooseStyledEditorResults *results = [QXAuthUserServiceChooseStyledEditorResults alloc];
+		QXAuthUserServiceChooseStyledEditorParams *params = [[QXAuthUserServiceChooseStyledEditorParams alloc] init];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/ChooseStyledEditor.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceChooseStyledEditorResults *results = [QXAuthUserServiceChooseStyledEditorResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results.Err);
+			}
+		}];
+	
+}
+
 // --- GetNewGroup ---
 - (QXAuthUserServiceGetNewGroupResults *) GetNewGroup {
 	
@@ -19812,6 +21917,36 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	results = [results initWithDictionary: dict];
 	
 	return results;
+}
+
+- (void) getNewGroup:(void (^)(QXAuthUserServiceGetNewGroupResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceGetNewGroupResults *results = [QXAuthUserServiceGetNewGroupResults alloc];
+		QXAuthUserServiceGetNewGroupParams *params = [[QXAuthUserServiceGetNewGroupParams alloc] init];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/GetNewGroup.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceGetNewGroupResults *results = [QXAuthUserServiceGetNewGroupResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
 }
 
 // --- GetGroup ---
@@ -19841,6 +21976,37 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	return results;
 }
 
+- (void) getGroup:(NSString *)groupId success:(void (^)(QXAuthUserServiceGetGroupResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceGetGroupResults *results = [QXAuthUserServiceGetGroupResults alloc];
+		QXAuthUserServiceGetGroupParams *params = [[QXAuthUserServiceGetGroupParams alloc] init];
+		[params setGroupId:groupId];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/GetGroup.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceGetGroupResults *results = [QXAuthUserServiceGetGroupResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
+}
+
 // --- CreateGroup ---
 - (QXAuthUserServiceCreateGroupResults *) CreateGroup:(QXGroupInput *)input {
 	
@@ -19868,6 +22034,37 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	return results;
 }
 
+- (void) createGroup:(QXGroupInput *)input success:(void (^)(QXAuthUserServiceCreateGroupResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceCreateGroupResults *results = [QXAuthUserServiceCreateGroupResults alloc];
+		QXAuthUserServiceCreateGroupParams *params = [[QXAuthUserServiceCreateGroupParams alloc] init];
+		[params setInput:input];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/CreateGroup.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceCreateGroupResults *results = [QXAuthUserServiceCreateGroupResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
+}
+
 // --- UpdateGroup ---
 - (NSError *) UpdateGroup:(QXGroupInput *)input {
 	
@@ -19893,6 +22090,37 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	results = [results initWithDictionary: dict];
 	
 	return results.Err;
+}
+
+- (void) updateGroup:(QXGroupInput *)input success:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceUpdateGroupResults *results = [QXAuthUserServiceUpdateGroupResults alloc];
+		QXAuthUserServiceUpdateGroupParams *params = [[QXAuthUserServiceUpdateGroupParams alloc] init];
+		[params setInput:input];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/UpdateGroup.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceUpdateGroupResults *results = [QXAuthUserServiceUpdateGroupResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results.Err);
+			}
+		}];
+	
 }
 
 // --- UpdateGroupLogo ---
@@ -19923,6 +22151,38 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	return results.Err;
 }
 
+- (void) updateGroupLogo:(NSString *)groupId logoURL:(NSString *)logoURL success:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceUpdateGroupLogoResults *results = [QXAuthUserServiceUpdateGroupLogoResults alloc];
+		QXAuthUserServiceUpdateGroupLogoParams *params = [[QXAuthUserServiceUpdateGroupLogoParams alloc] init];
+		[params setGroupId:groupId];
+		[params setLogoURL:logoURL];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/UpdateGroupLogo.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceUpdateGroupLogoResults *results = [QXAuthUserServiceUpdateGroupLogoResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results.Err);
+			}
+		}];
+	
+}
+
 // --- DeleteGroup ---
 - (NSError *) DeleteGroup:(NSString *)groupId {
 	
@@ -19948,6 +22208,37 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	results = [results initWithDictionary: dict];
 	
 	return results.Err;
+}
+
+- (void) deleteGroup:(NSString *)groupId success:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceDeleteGroupResults *results = [QXAuthUserServiceDeleteGroupResults alloc];
+		QXAuthUserServiceDeleteGroupParams *params = [[QXAuthUserServiceDeleteGroupParams alloc] init];
+		[params setGroupId:groupId];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/DeleteGroup.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceDeleteGroupResults *results = [QXAuthUserServiceDeleteGroupResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results.Err);
+			}
+		}];
+	
 }
 
 // --- GetGroupBySlug ---
@@ -19977,9 +22268,40 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	return results;
 }
 
+- (void) getGroupBySlug:(NSString *)slug success:(void (^)(QXAuthUserServiceGetGroupBySlugResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceGetGroupBySlugResults *results = [QXAuthUserServiceGetGroupBySlugResults alloc];
+		QXAuthUserServiceGetGroupBySlugParams *params = [[QXAuthUserServiceGetGroupBySlugParams alloc] init];
+		[params setSlug:slug];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/GetGroupBySlug.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceGetGroupBySlugResults *results = [QXAuthUserServiceGetGroupBySlugResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
+}
+
 // --- GetGroups ---
 - (QXAuthUserServiceGetGroupsResults *) GetGroups:(NSString *)keyword {
-
+	
 	QXAuthUserServiceGetGroupsResults *results = [QXAuthUserServiceGetGroupsResults alloc];
 	QXAuthUserServiceGetGroupsParams *params = [[QXAuthUserServiceGetGroupsParams alloc] init];
 	[params setKeyword:keyword];
@@ -20004,34 +22326,35 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	return results;
 }
 
-- (void)getGroupsByKeyword:(NSString *)keyword
-                   success:(void (^)(QXAuthUserServiceGetGroupsResults *results))successBlock
-                   failure:(void (^)(NSError *error))failureBlock
-{
-    QXAuthUserServiceGetGroupsParams *params = [[QXAuthUserServiceGetGroupsParams alloc] init];
-    [params setKeyword:keyword];
+- (void) getGroups:(NSString *)keyword success:(void (^)(QXAuthUserServiceGetGroupsResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceGetGroupsResults *results = [QXAuthUserServiceGetGroupsResults alloc];
+		QXAuthUserServiceGetGroupsParams *params = [[QXAuthUserServiceGetGroupsParams alloc] init];
+		[params setKeyword:keyword];
+		
 
-    QXQortexapi * _api = [QXQortexapi get];
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/GetGroups.json", [_api BaseURL]]];
-    if([_api Verbose]) {
-        NSLog(@"Requesting URL: %@", url);
-    }
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/GetGroups.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
 
-    [QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *results, NSError *error) {
-        if (error && failureBlock) {
-            if([_api Verbose]) {
-                NSLog(@"Error: %@", error);
-            }
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
 
-            failureBlock(error);
-        }
+				failureBlock(error);
+			}
 
-        if (successBlock) {
-            QXAuthUserServiceGetGroupsResults *groupResults = [[QXAuthUserServiceGetGroupsResults alloc] initWithDictionary:results];
-
-            successBlock(groupResults);
-        }
-    }];
+			if (successBlock) {
+				QXAuthUserServiceGetGroupsResults *results = [QXAuthUserServiceGetGroupsResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
 }
 
 // --- GetPublicGroups ---
@@ -20059,6 +22382,37 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	results = [results initWithDictionary: dict];
 	
 	return results;
+}
+
+- (void) getPublicGroups:(NSString *)keyword success:(void (^)(QXAuthUserServiceGetPublicGroupsResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceGetPublicGroupsResults *results = [QXAuthUserServiceGetPublicGroupsResults alloc];
+		QXAuthUserServiceGetPublicGroupsParams *params = [[QXAuthUserServiceGetPublicGroupsParams alloc] init];
+		[params setKeyword:keyword];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/GetPublicGroups.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceGetPublicGroupsResults *results = [QXAuthUserServiceGetPublicGroupsResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
 }
 
 // --- AddUserToGroup ---
@@ -20089,6 +22443,38 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	return results.Err;
 }
 
+- (void) addUserToGroup:(NSString *)groupId userId:(NSString *)userId success:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceAddUserToGroupResults *results = [QXAuthUserServiceAddUserToGroupResults alloc];
+		QXAuthUserServiceAddUserToGroupParams *params = [[QXAuthUserServiceAddUserToGroupParams alloc] init];
+		[params setGroupId:groupId];
+		[params setUserId:userId];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/AddUserToGroup.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceAddUserToGroupResults *results = [QXAuthUserServiceAddUserToGroupResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results.Err);
+			}
+		}];
+	
+}
+
 // --- RemoveUserFromGroup ---
 - (NSError *) RemoveUserFromGroup:(NSString *)groupId userId:(NSString *)userId {
 	
@@ -20117,6 +22503,38 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	return results.Err;
 }
 
+- (void) removeUserFromGroup:(NSString *)groupId userId:(NSString *)userId success:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceRemoveUserFromGroupResults *results = [QXAuthUserServiceRemoveUserFromGroupResults alloc];
+		QXAuthUserServiceRemoveUserFromGroupParams *params = [[QXAuthUserServiceRemoveUserFromGroupParams alloc] init];
+		[params setGroupId:groupId];
+		[params setUserId:userId];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/RemoveUserFromGroup.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceRemoveUserFromGroupResults *results = [QXAuthUserServiceRemoveUserFromGroupResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results.Err);
+			}
+		}];
+	
+}
+
 // --- GetClassifiedGroups ---
 - (QXAuthUserServiceGetClassifiedGroupsResults *) GetClassifiedGroups {
 	
@@ -20141,6 +22559,36 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	results = [results initWithDictionary: dict];
 	
 	return results;
+}
+
+- (void) getClassifiedGroups:(void (^)(QXAuthUserServiceGetClassifiedGroupsResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceGetClassifiedGroupsResults *results = [QXAuthUserServiceGetClassifiedGroupsResults alloc];
+		QXAuthUserServiceGetClassifiedGroupsParams *params = [[QXAuthUserServiceGetClassifiedGroupsParams alloc] init];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/GetClassifiedGroups.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceGetClassifiedGroupsResults *results = [QXAuthUserServiceGetClassifiedGroupsResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
 }
 
 // --- BulkUpdateTasksInGroup ---
@@ -20172,6 +22620,39 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	return results.Err;
 }
 
+- (void) bulkUpdateTasksInGroup:(NSString *)groupId taskPwMap:(NSArray *)taskPwMap taskInputs:(NSArray *)taskInputs success:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceBulkUpdateTasksInGroupResults *results = [QXAuthUserServiceBulkUpdateTasksInGroupResults alloc];
+		QXAuthUserServiceBulkUpdateTasksInGroupParams *params = [[QXAuthUserServiceBulkUpdateTasksInGroupParams alloc] init];
+		[params setGroupId:groupId];
+		[params setTaskPwMap:taskPwMap];
+		[params setTaskInputs:taskInputs];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/BulkUpdateTasksInGroup.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceBulkUpdateTasksInGroupResults *results = [QXAuthUserServiceBulkUpdateTasksInGroupResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results.Err);
+			}
+		}];
+	
+}
+
 // --- GetAuthUser ---
 - (QXAuthUserServiceGetAuthUserResults *) GetAuthUser {
 	
@@ -20196,6 +22677,36 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	results = [results initWithDictionary: dict];
 	
 	return results;
+}
+
+- (void) getAuthUser:(void (^)(QXAuthUserServiceGetAuthUserResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceGetAuthUserResults *results = [QXAuthUserServiceGetAuthUserResults alloc];
+		QXAuthUserServiceGetAuthUserParams *params = [[QXAuthUserServiceGetAuthUserParams alloc] init];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/GetAuthUser.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceGetAuthUserResults *results = [QXAuthUserServiceGetAuthUserResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
 }
 
 // --- GetOrgUsers ---
@@ -20225,6 +22736,39 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	results = [results initWithDictionary: dict];
 	
 	return results;
+}
+
+- (void) getOrgUsers:(NSString *)keyword startFullName:(NSString *)startFullName limit:(NSNumber *)limit success:(void (^)(QXAuthUserServiceGetOrgUsersResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceGetOrgUsersResults *results = [QXAuthUserServiceGetOrgUsersResults alloc];
+		QXAuthUserServiceGetOrgUsersParams *params = [[QXAuthUserServiceGetOrgUsersParams alloc] init];
+		[params setKeyword:keyword];
+		[params setStartFullName:startFullName];
+		[params setLimit:limit];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/GetOrgUsers.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceGetOrgUsersResults *results = [QXAuthUserServiceGetOrgUsersResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
 }
 
 // --- GetGroupUsers ---
@@ -20258,6 +22802,41 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	return results;
 }
 
+- (void) getGroupUsers:(NSString *)groupId keyword:(NSString *)keyword onlyFollowers:(BOOL)onlyFollowers startFullName:(NSString *)startFullName limit:(NSNumber *)limit success:(void (^)(QXAuthUserServiceGetGroupUsersResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceGetGroupUsersResults *results = [QXAuthUserServiceGetGroupUsersResults alloc];
+		QXAuthUserServiceGetGroupUsersParams *params = [[QXAuthUserServiceGetGroupUsersParams alloc] init];
+		[params setGroupId:groupId];
+		[params setKeyword:keyword];
+		[params setOnlyFollowers:onlyFollowers];
+		[params setStartFullName:startFullName];
+		[params setLimit:limit];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/GetGroupUsers.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceGetGroupUsersResults *results = [QXAuthUserServiceGetGroupUsersResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
+}
+
 // --- GetUser ---
 - (QXAuthUserServiceGetUserResults *) GetUser:(NSString *)userId {
 	
@@ -20283,6 +22862,37 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	results = [results initWithDictionary: dict];
 	
 	return results;
+}
+
+- (void) getUser:(NSString *)userId success:(void (^)(QXAuthUserServiceGetUserResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceGetUserResults *results = [QXAuthUserServiceGetUserResults alloc];
+		QXAuthUserServiceGetUserParams *params = [[QXAuthUserServiceGetUserParams alloc] init];
+		[params setUserId:userId];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/GetUser.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceGetUserResults *results = [QXAuthUserServiceGetUserResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
 }
 
 // --- EnableUser ---
@@ -20312,6 +22922,37 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	return results.Err;
 }
 
+- (void) enableUser:(NSString *)userId success:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceEnableUserResults *results = [QXAuthUserServiceEnableUserResults alloc];
+		QXAuthUserServiceEnableUserParams *params = [[QXAuthUserServiceEnableUserParams alloc] init];
+		[params setUserId:userId];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/EnableUser.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceEnableUserResults *results = [QXAuthUserServiceEnableUserResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results.Err);
+			}
+		}];
+	
+}
+
 // --- DisableUser ---
 - (NSError *) DisableUser:(NSString *)userId {
 	
@@ -20337,6 +22978,37 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	results = [results initWithDictionary: dict];
 	
 	return results.Err;
+}
+
+- (void) disableUser:(NSString *)userId success:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceDisableUserResults *results = [QXAuthUserServiceDisableUserResults alloc];
+		QXAuthUserServiceDisableUserParams *params = [[QXAuthUserServiceDisableUserParams alloc] init];
+		[params setUserId:userId];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/DisableUser.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceDisableUserResults *results = [QXAuthUserServiceDisableUserResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results.Err);
+			}
+		}];
+	
 }
 
 // --- DeleteUser ---
@@ -20366,6 +23038,37 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	return results.Err;
 }
 
+- (void) deleteUser:(NSString *)userId success:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceDeleteUserResults *results = [QXAuthUserServiceDeleteUserResults alloc];
+		QXAuthUserServiceDeleteUserParams *params = [[QXAuthUserServiceDeleteUserParams alloc] init];
+		[params setUserId:userId];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/DeleteUser.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceDeleteUserResults *results = [QXAuthUserServiceDeleteUserResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results.Err);
+			}
+		}];
+	
+}
+
 // --- PromoteToSuperUser ---
 - (NSError *) PromoteToSuperUser:(NSString *)userId {
 	
@@ -20391,6 +23094,37 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	results = [results initWithDictionary: dict];
 	
 	return results.Err;
+}
+
+- (void) promoteToSuperUser:(NSString *)userId success:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServicePromoteToSuperUserResults *results = [QXAuthUserServicePromoteToSuperUserResults alloc];
+		QXAuthUserServicePromoteToSuperUserParams *params = [[QXAuthUserServicePromoteToSuperUserParams alloc] init];
+		[params setUserId:userId];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/PromoteToSuperUser.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServicePromoteToSuperUserResults *results = [QXAuthUserServicePromoteToSuperUserResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results.Err);
+			}
+		}];
+	
 }
 
 // --- DemoteFromSuperUser ---
@@ -20420,6 +23154,37 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	return results.Err;
 }
 
+- (void) demoteFromSuperUser:(NSString *)userId success:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceDemoteFromSuperUserResults *results = [QXAuthUserServiceDemoteFromSuperUserResults alloc];
+		QXAuthUserServiceDemoteFromSuperUserParams *params = [[QXAuthUserServiceDemoteFromSuperUserParams alloc] init];
+		[params setUserId:userId];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/DemoteFromSuperUser.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceDemoteFromSuperUserResults *results = [QXAuthUserServiceDemoteFromSuperUserResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results.Err);
+			}
+		}];
+	
+}
+
 // --- FollowUser ---
 - (NSError *) FollowUser:(NSString *)userId {
 	
@@ -20445,6 +23210,37 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	results = [results initWithDictionary: dict];
 	
 	return results.Err;
+}
+
+- (void) followUser:(NSString *)userId success:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceFollowUserResults *results = [QXAuthUserServiceFollowUserResults alloc];
+		QXAuthUserServiceFollowUserParams *params = [[QXAuthUserServiceFollowUserParams alloc] init];
+		[params setUserId:userId];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/FollowUser.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceFollowUserResults *results = [QXAuthUserServiceFollowUserResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results.Err);
+			}
+		}];
+	
 }
 
 // --- UnfollowUser ---
@@ -20474,6 +23270,37 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	return results.Err;
 }
 
+- (void) unfollowUser:(NSString *)userId success:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceUnfollowUserResults *results = [QXAuthUserServiceUnfollowUserResults alloc];
+		QXAuthUserServiceUnfollowUserParams *params = [[QXAuthUserServiceUnfollowUserParams alloc] init];
+		[params setUserId:userId];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/UnfollowUser.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceUnfollowUserResults *results = [QXAuthUserServiceUnfollowUserResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results.Err);
+			}
+		}];
+	
+}
+
 // --- GetMyFollowingUsers ---
 - (QXAuthUserServiceGetMyFollowingUsersResults *) GetMyFollowingUsers {
 	
@@ -20498,6 +23325,36 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	results = [results initWithDictionary: dict];
 	
 	return results;
+}
+
+- (void) getMyFollowingUsers:(void (^)(QXAuthUserServiceGetMyFollowingUsersResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceGetMyFollowingUsersResults *results = [QXAuthUserServiceGetMyFollowingUsersResults alloc];
+		QXAuthUserServiceGetMyFollowingUsersParams *params = [[QXAuthUserServiceGetMyFollowingUsersParams alloc] init];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/GetMyFollowingUsers.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceGetMyFollowingUsersResults *results = [QXAuthUserServiceGetMyFollowingUsersResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
 }
 
 // --- GetPanelStatus ---
@@ -20526,6 +23383,36 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	return results;
 }
 
+- (void) getPanelStatus:(void (^)(QXAuthUserServiceGetPanelStatusResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceGetPanelStatusResults *results = [QXAuthUserServiceGetPanelStatusResults alloc];
+		QXAuthUserServiceGetPanelStatusParams *params = [[QXAuthUserServiceGetPanelStatusParams alloc] init];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/GetPanelStatus.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceGetPanelStatusResults *results = [QXAuthUserServiceGetPanelStatusResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
+}
+
 // --- GetUserPreferences ---
 - (QXAuthUserServiceGetUserPreferencesResults *) GetUserPreferences {
 	
@@ -20550,6 +23437,36 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	results = [results initWithDictionary: dict];
 	
 	return results;
+}
+
+- (void) getUserPreferences:(void (^)(QXAuthUserServiceGetUserPreferencesResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceGetUserPreferencesResults *results = [QXAuthUserServiceGetUserPreferencesResults alloc];
+		QXAuthUserServiceGetUserPreferencesParams *params = [[QXAuthUserServiceGetUserPreferencesParams alloc] init];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/GetUserPreferences.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceGetUserPreferencesResults *results = [QXAuthUserServiceGetUserPreferencesResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
 }
 
 // --- UpdateUserPreferences ---
@@ -20579,6 +23496,37 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	return results;
 }
 
+- (void) updateUserPreferences:(QXPreferencesInput *)input success:(void (^)(QXAuthUserServiceUpdateUserPreferencesResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceUpdateUserPreferencesResults *results = [QXAuthUserServiceUpdateUserPreferencesResults alloc];
+		QXAuthUserServiceUpdateUserPreferencesParams *params = [[QXAuthUserServiceUpdateUserPreferencesParams alloc] init];
+		[params setInput:input];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/UpdateUserPreferences.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceUpdateUserPreferencesResults *results = [QXAuthUserServiceUpdateUserPreferencesResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
+}
+
 // --- GetOrgEmbedUsers ---
 - (QXAuthUserServiceGetOrgEmbedUsersResults *) GetOrgEmbedUsers {
 	
@@ -20605,6 +23553,36 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	return results;
 }
 
+- (void) getOrgEmbedUsers:(void (^)(QXAuthUserServiceGetOrgEmbedUsersResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceGetOrgEmbedUsersResults *results = [QXAuthUserServiceGetOrgEmbedUsersResults alloc];
+		QXAuthUserServiceGetOrgEmbedUsersParams *params = [[QXAuthUserServiceGetOrgEmbedUsersParams alloc] init];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/GetOrgEmbedUsers.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceGetOrgEmbedUsersResults *results = [QXAuthUserServiceGetOrgEmbedUsersResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
+}
+
 // --- GetNonStandardGroupEmbedUsers ---
 - (QXAuthUserServiceGetNonStandardGroupEmbedUsersResults *) GetNonStandardGroupEmbedUsers {
 	
@@ -20629,6 +23607,36 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	results = [results initWithDictionary: dict];
 	
 	return results;
+}
+
+- (void) getNonStandardGroupEmbedUsers:(void (^)(QXAuthUserServiceGetNonStandardGroupEmbedUsersResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceGetNonStandardGroupEmbedUsersResults *results = [QXAuthUserServiceGetNonStandardGroupEmbedUsersResults alloc];
+		QXAuthUserServiceGetNonStandardGroupEmbedUsersParams *params = [[QXAuthUserServiceGetNonStandardGroupEmbedUsersParams alloc] init];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/GetNonStandardGroupEmbedUsers.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceGetNonStandardGroupEmbedUsersResults *results = [QXAuthUserServiceGetNonStandardGroupEmbedUsersResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
 }
 
 // --- UpdateUserProfile ---
@@ -20658,6 +23666,37 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	return results.Err;
 }
 
+- (void) updateUserProfile:(QXUserProfileInput *)input success:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceUpdateUserProfileResults *results = [QXAuthUserServiceUpdateUserProfileResults alloc];
+		QXAuthUserServiceUpdateUserProfileParams *params = [[QXAuthUserServiceUpdateUserProfileParams alloc] init];
+		[params setInput:input];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/UpdateUserProfile.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceUpdateUserProfileResults *results = [QXAuthUserServiceUpdateUserProfileResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results.Err);
+			}
+		}];
+	
+}
+
 // --- SetPreferredLanguages ---
 - (NSError *) SetPreferredLanguages:(NSArray *)languageCodes {
 	
@@ -20685,6 +23724,37 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	return results.Err;
 }
 
+- (void) setPreferredLanguages:(NSArray *)languageCodes success:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceSetPreferredLanguagesResults *results = [QXAuthUserServiceSetPreferredLanguagesResults alloc];
+		QXAuthUserServiceSetPreferredLanguagesParams *params = [[QXAuthUserServiceSetPreferredLanguagesParams alloc] init];
+		[params setLanguageCodes:languageCodes];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/SetPreferredLanguages.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceSetPreferredLanguagesResults *results = [QXAuthUserServiceSetPreferredLanguagesResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results.Err);
+			}
+		}];
+	
+}
+
 // --- GetMyCount ---
 - (QXAuthUserServiceGetMyCountResults *) GetMyCount {
 	
@@ -20709,6 +23779,36 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	results = [results initWithDictionary: dict];
 	
 	return results;
+}
+
+- (void) getMyCount:(void (^)(QXAuthUserServiceGetMyCountResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceGetMyCountResults *results = [QXAuthUserServiceGetMyCountResults alloc];
+		QXAuthUserServiceGetMyCountParams *params = [[QXAuthUserServiceGetMyCountParams alloc] init];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/GetMyCount.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceGetMyCountResults *results = [QXAuthUserServiceGetMyCountResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
 }
 
 // --- ReadEntry ---
@@ -20739,6 +23839,38 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	return results;
 }
 
+- (void) readEntry:(NSString *)entryId groupId:(NSString *)groupId success:(void (^)(QXAuthUserServiceReadEntryResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceReadEntryResults *results = [QXAuthUserServiceReadEntryResults alloc];
+		QXAuthUserServiceReadEntryParams *params = [[QXAuthUserServiceReadEntryParams alloc] init];
+		[params setEntryId:entryId];
+		[params setGroupId:groupId];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/ReadEntry.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceReadEntryResults *results = [QXAuthUserServiceReadEntryResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
+}
+
 // --- GetJoinOrgInvitations ---
 - (QXAuthUserServiceGetJoinOrgInvitationsResults *) GetJoinOrgInvitations {
 	
@@ -20763,6 +23895,36 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	results = [results initWithDictionary: dict];
 	
 	return results;
+}
+
+- (void) getJoinOrgInvitations:(void (^)(QXAuthUserServiceGetJoinOrgInvitationsResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceGetJoinOrgInvitationsResults *results = [QXAuthUserServiceGetJoinOrgInvitationsResults alloc];
+		QXAuthUserServiceGetJoinOrgInvitationsParams *params = [[QXAuthUserServiceGetJoinOrgInvitationsParams alloc] init];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/GetJoinOrgInvitations.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceGetJoinOrgInvitationsResults *results = [QXAuthUserServiceGetJoinOrgInvitationsResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
 }
 
 // --- GetOrganization ---
@@ -20792,6 +23954,37 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	return results;
 }
 
+- (void) getOrganization:(NSString *)orgId success:(void (^)(QXAuthUserServiceGetOrganizationResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceGetOrganizationResults *results = [QXAuthUserServiceGetOrganizationResults alloc];
+		QXAuthUserServiceGetOrganizationParams *params = [[QXAuthUserServiceGetOrganizationParams alloc] init];
+		[params setOrgId:orgId];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/GetOrganization.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceGetOrganizationResults *results = [QXAuthUserServiceGetOrganizationResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
+}
+
 // --- GetOrganizations ---
 - (QXAuthUserServiceGetOrganizationsResults *) GetOrganizations:(NSArray *)orgIds {
 	
@@ -20817,6 +24010,37 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	results = [results initWithDictionary: dict];
 	
 	return results;
+}
+
+- (void) getOrganizations:(NSArray *)orgIds success:(void (^)(QXAuthUserServiceGetOrganizationsResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceGetOrganizationsResults *results = [QXAuthUserServiceGetOrganizationsResults alloc];
+		QXAuthUserServiceGetOrganizationsParams *params = [[QXAuthUserServiceGetOrganizationsParams alloc] init];
+		[params setOrgIds:orgIds];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/GetOrganizations.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceGetOrganizationsResults *results = [QXAuthUserServiceGetOrganizationsResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
 }
 
 // --- GetMyOrgsUnreadInfo ---
@@ -20845,6 +24069,36 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	return results;
 }
 
+- (void) getMyOrgsUnreadInfo:(void (^)(QXAuthUserServiceGetMyOrgsUnreadInfoResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceGetMyOrgsUnreadInfoResults *results = [QXAuthUserServiceGetMyOrgsUnreadInfoResults alloc];
+		QXAuthUserServiceGetMyOrgsUnreadInfoParams *params = [[QXAuthUserServiceGetMyOrgsUnreadInfoParams alloc] init];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/GetMyOrgsUnreadInfo.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceGetMyOrgsUnreadInfoResults *results = [QXAuthUserServiceGetMyOrgsUnreadInfoResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
+}
+
 // --- GetMyJoinedOrganizations ---
 - (QXAuthUserServiceGetMyJoinedOrganizationsResults *) GetMyJoinedOrganizations {
 	
@@ -20871,6 +24125,36 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	return results;
 }
 
+- (void) getMyJoinedOrganizations:(void (^)(QXAuthUserServiceGetMyJoinedOrganizationsResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceGetMyJoinedOrganizationsResults *results = [QXAuthUserServiceGetMyJoinedOrganizationsResults alloc];
+		QXAuthUserServiceGetMyJoinedOrganizationsParams *params = [[QXAuthUserServiceGetMyJoinedOrganizationsParams alloc] init];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/GetMyJoinedOrganizations.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceGetMyJoinedOrganizationsResults *results = [QXAuthUserServiceGetMyJoinedOrganizationsResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
+}
+
 // --- GetCurrentOrganization ---
 - (QXAuthUserServiceGetCurrentOrganizationResults *) GetCurrentOrganization {
 	
@@ -20895,6 +24179,36 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	results = [results initWithDictionary: dict];
 	
 	return results;
+}
+
+- (void) getCurrentOrganization:(void (^)(QXAuthUserServiceGetCurrentOrganizationResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceGetCurrentOrganizationResults *results = [QXAuthUserServiceGetCurrentOrganizationResults alloc];
+		QXAuthUserServiceGetCurrentOrganizationParams *params = [[QXAuthUserServiceGetCurrentOrganizationParams alloc] init];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/GetCurrentOrganization.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceGetCurrentOrganizationResults *results = [QXAuthUserServiceGetCurrentOrganizationResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
 }
 
 // --- SearchOrganizations ---
@@ -20924,6 +24238,37 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	return results;
 }
 
+- (void) searchOrganizations:(NSString *)keyword success:(void (^)(QXAuthUserServiceSearchOrganizationsResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceSearchOrganizationsResults *results = [QXAuthUserServiceSearchOrganizationsResults alloc];
+		QXAuthUserServiceSearchOrganizationsParams *params = [[QXAuthUserServiceSearchOrganizationsParams alloc] init];
+		[params setKeyword:keyword];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/SearchOrganizations.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceSearchOrganizationsResults *results = [QXAuthUserServiceSearchOrganizationsResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
+}
+
 // --- UpdateOrganization ---
 - (QXAuthUserServiceUpdateOrganizationResults *) UpdateOrganization:(QXOrganizationInput *)input {
 	
@@ -20949,6 +24294,37 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	results = [results initWithDictionary: dict];
 	
 	return results;
+}
+
+- (void) updateOrganization:(QXOrganizationInput *)input success:(void (^)(QXAuthUserServiceUpdateOrganizationResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceUpdateOrganizationResults *results = [QXAuthUserServiceUpdateOrganizationResults alloc];
+		QXAuthUserServiceUpdateOrganizationParams *params = [[QXAuthUserServiceUpdateOrganizationParams alloc] init];
+		[params setInput:input];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/UpdateOrganization.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceUpdateOrganizationResults *results = [QXAuthUserServiceUpdateOrganizationResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
 }
 
 // --- SwitchOrganization ---
@@ -20978,6 +24354,37 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	return results.Err;
 }
 
+- (void) switchOrganization:(NSString *)orgId success:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceSwitchOrganizationResults *results = [QXAuthUserServiceSwitchOrganizationResults alloc];
+		QXAuthUserServiceSwitchOrganizationParams *params = [[QXAuthUserServiceSwitchOrganizationParams alloc] init];
+		[params setOrgId:orgId];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/SwitchOrganization.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceSwitchOrganizationResults *results = [QXAuthUserServiceSwitchOrganizationResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results.Err);
+			}
+		}];
+	
+}
+
 // --- AcceptShareRequestByAdmin ---
 - (NSError *) AcceptShareRequestByAdmin:(NSString *)requestId {
 	
@@ -21003,6 +24410,37 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	results = [results initWithDictionary: dict];
 	
 	return results.Err;
+}
+
+- (void) acceptShareRequestByAdmin:(NSString *)requestId success:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceAcceptShareRequestByAdminResults *results = [QXAuthUserServiceAcceptShareRequestByAdminResults alloc];
+		QXAuthUserServiceAcceptShareRequestByAdminParams *params = [[QXAuthUserServiceAcceptShareRequestByAdminParams alloc] init];
+		[params setRequestId:requestId];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/AcceptShareRequestByAdmin.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceAcceptShareRequestByAdminResults *results = [QXAuthUserServiceAcceptShareRequestByAdminResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results.Err);
+			}
+		}];
+	
 }
 
 // --- RejectShareRequestByAdmin ---
@@ -21032,6 +24470,37 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	return results.Err;
 }
 
+- (void) rejectShareRequestByAdmin:(NSString *)requestId success:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceRejectShareRequestByAdminResults *results = [QXAuthUserServiceRejectShareRequestByAdminResults alloc];
+		QXAuthUserServiceRejectShareRequestByAdminParams *params = [[QXAuthUserServiceRejectShareRequestByAdminParams alloc] init];
+		[params setRequestId:requestId];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/RejectShareRequestByAdmin.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceRejectShareRequestByAdminResults *results = [QXAuthUserServiceRejectShareRequestByAdminResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results.Err);
+			}
+		}];
+	
+}
+
 // --- StartTrial ---
 - (NSError *) StartTrial {
 	
@@ -21058,6 +24527,36 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	return results.Err;
 }
 
+- (void) startTrial:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceStartTrialResults *results = [QXAuthUserServiceStartTrialResults alloc];
+		QXAuthUserServiceStartTrialParams *params = [[QXAuthUserServiceStartTrialParams alloc] init];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/StartTrial.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceStartTrialResults *results = [QXAuthUserServiceStartTrialResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results.Err);
+			}
+		}];
+	
+}
+
 // --- GetOrgSettings ---
 - (QXAuthUserServiceGetOrgSettingsResults *) GetOrgSettings {
 	
@@ -21082,6 +24581,36 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	results = [results initWithDictionary: dict];
 	
 	return results;
+}
+
+- (void) getOrgSettings:(void (^)(QXAuthUserServiceGetOrgSettingsResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceGetOrgSettingsResults *results = [QXAuthUserServiceGetOrgSettingsResults alloc];
+		QXAuthUserServiceGetOrgSettingsParams *params = [[QXAuthUserServiceGetOrgSettingsParams alloc] init];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/GetOrgSettings.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceGetOrgSettingsResults *results = [QXAuthUserServiceGetOrgSettingsResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
 }
 
 // --- UpdateOrgSettings ---
@@ -21111,6 +24640,37 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	return results.Err;
 }
 
+- (void) updateOrgSettings:(QXOrgSettingsInput *)orgSettingInput success:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceUpdateOrgSettingsResults *results = [QXAuthUserServiceUpdateOrgSettingsResults alloc];
+		QXAuthUserServiceUpdateOrgSettingsParams *params = [[QXAuthUserServiceUpdateOrgSettingsParams alloc] init];
+		[params setOrgSettingInput:orgSettingInput];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/UpdateOrgSettings.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceUpdateOrgSettingsResults *results = [QXAuthUserServiceUpdateOrgSettingsResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results.Err);
+			}
+		}];
+	
+}
+
 // --- CanCreateGroup ---
 - (QXAuthUserServiceCanCreateGroupResults *) CanCreateGroup {
 	
@@ -21137,6 +24697,36 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	return results;
 }
 
+- (void) canCreateGroup:(void (^)(QXAuthUserServiceCanCreateGroupResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceCanCreateGroupResults *results = [QXAuthUserServiceCanCreateGroupResults alloc];
+		QXAuthUserServiceCanCreateGroupParams *params = [[QXAuthUserServiceCanCreateGroupParams alloc] init];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/CanCreateGroup.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceCanCreateGroupResults *results = [QXAuthUserServiceCanCreateGroupResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
+}
+
 // --- CanInvitePeople ---
 - (QXAuthUserServiceCanInvitePeopleResults *) CanInvitePeople {
 	
@@ -21161,6 +24751,36 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	results = [results initWithDictionary: dict];
 	
 	return results;
+}
+
+- (void) canInvitePeople:(void (^)(QXAuthUserServiceCanInvitePeopleResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceCanInvitePeopleResults *results = [QXAuthUserServiceCanInvitePeopleResults alloc];
+		QXAuthUserServiceCanInvitePeopleParams *params = [[QXAuthUserServiceCanInvitePeopleParams alloc] init];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/CanInvitePeople.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceCanInvitePeopleResults *results = [QXAuthUserServiceCanInvitePeopleResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
 }
 
 // --- InvitePeople ---
@@ -21193,6 +24813,40 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	return results;
 }
 
+- (void) invitePeople:(NSArray *)emails allowEmpty:(BOOL)allowEmpty skipInvalidEmail:(BOOL)skipInvalidEmail customMessage:(NSString *)customMessage success:(void (^)(QXAuthUserServiceInvitePeopleResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceInvitePeopleResults *results = [QXAuthUserServiceInvitePeopleResults alloc];
+		QXAuthUserServiceInvitePeopleParams *params = [[QXAuthUserServiceInvitePeopleParams alloc] init];
+		[params setEmails:emails];
+		[params setAllowEmpty:allowEmpty];
+		[params setSkipInvalidEmail:skipInvalidEmail];
+		[params setCustomMessage:customMessage];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/InvitePeople.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceInvitePeopleResults *results = [QXAuthUserServiceInvitePeopleResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
+}
+
 // --- CancelInvitation ---
 - (NSError *) CancelInvitation:(NSString *)email {
 	
@@ -21218,6 +24872,37 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	results = [results initWithDictionary: dict];
 	
 	return results.Err;
+}
+
+- (void) cancelInvitation:(NSString *)email success:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceCancelInvitationResults *results = [QXAuthUserServiceCancelInvitationResults alloc];
+		QXAuthUserServiceCancelInvitationParams *params = [[QXAuthUserServiceCancelInvitationParams alloc] init];
+		[params setEmail:email];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/CancelInvitation.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceCancelInvitationResults *results = [QXAuthUserServiceCancelInvitationResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results.Err);
+			}
+		}];
+	
 }
 
 // --- ResendInvitation ---
@@ -21247,6 +24932,37 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	return results.Err;
 }
 
+- (void) resendInvitation:(NSString *)email success:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceResendInvitationResults *results = [QXAuthUserServiceResendInvitationResults alloc];
+		QXAuthUserServiceResendInvitationParams *params = [[QXAuthUserServiceResendInvitationParams alloc] init];
+		[params setEmail:email];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/ResendInvitation.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceResendInvitationResults *results = [QXAuthUserServiceResendInvitationResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results.Err);
+			}
+		}];
+	
+}
+
 // --- ChangeLocale ---
 - (NSError *) ChangeLocale:(NSString *)localeName {
 	
@@ -21272,6 +24988,37 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	results = [results initWithDictionary: dict];
 	
 	return results.Err;
+}
+
+- (void) changeLocale:(NSString *)localeName success:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceChangeLocaleResults *results = [QXAuthUserServiceChangeLocaleResults alloc];
+		QXAuthUserServiceChangeLocaleParams *params = [[QXAuthUserServiceChangeLocaleParams alloc] init];
+		[params setLocaleName:localeName];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/ChangeLocale.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceChangeLocaleResults *results = [QXAuthUserServiceChangeLocaleResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results.Err);
+			}
+		}];
+	
 }
 
 // --- UpdateGroupAdvancedToDoSettings ---
@@ -21302,6 +25049,38 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	return results.Err;
 }
 
+- (void) updateGroupAdvancedToDoSettings:(NSString *)gId settings:(NSString *)settings success:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceUpdateGroupAdvancedToDoSettingsResults *results = [QXAuthUserServiceUpdateGroupAdvancedToDoSettingsResults alloc];
+		QXAuthUserServiceUpdateGroupAdvancedToDoSettingsParams *params = [[QXAuthUserServiceUpdateGroupAdvancedToDoSettingsParams alloc] init];
+		[params setGId:gId];
+		[params setSettings:settings];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/UpdateGroupAdvancedToDoSettings.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceUpdateGroupAdvancedToDoSettingsResults *results = [QXAuthUserServiceUpdateGroupAdvancedToDoSettingsResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results.Err);
+			}
+		}];
+	
+}
+
 // --- UpdateMailPreference ---
 - (NSError *) UpdateMailPreference:(QXMailPreferenceInput *)input {
 	
@@ -21327,6 +25106,37 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	results = [results initWithDictionary: dict];
 	
 	return results.Err;
+}
+
+- (void) updateMailPreference:(QXMailPreferenceInput *)input success:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceUpdateMailPreferenceResults *results = [QXAuthUserServiceUpdateMailPreferenceResults alloc];
+		QXAuthUserServiceUpdateMailPreferenceParams *params = [[QXAuthUserServiceUpdateMailPreferenceParams alloc] init];
+		[params setInput:input];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/UpdateMailPreference.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceUpdateMailPreferenceResults *results = [QXAuthUserServiceUpdateMailPreferenceResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results.Err);
+			}
+		}];
+	
 }
 
 // --- PrepareChangingEmail ---
@@ -21356,6 +25166,37 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	return results;
 }
 
+- (void) prepareChangingEmail:(NSString *)newEmail success:(void (^)(QXAuthUserServicePrepareChangingEmailResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServicePrepareChangingEmailResults *results = [QXAuthUserServicePrepareChangingEmailResults alloc];
+		QXAuthUserServicePrepareChangingEmailParams *params = [[QXAuthUserServicePrepareChangingEmailParams alloc] init];
+		[params setNewEmail:newEmail];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/PrepareChangingEmail.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServicePrepareChangingEmailResults *results = [QXAuthUserServicePrepareChangingEmailResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
+}
+
 // --- ConfirmChangingEmail ---
 - (NSError *) ConfirmChangingEmail:(NSString *)token {
 	
@@ -21383,6 +25224,37 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	return results.Err;
 }
 
+- (void) confirmChangingEmail:(NSString *)token success:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceConfirmChangingEmailResults *results = [QXAuthUserServiceConfirmChangingEmailResults alloc];
+		QXAuthUserServiceConfirmChangingEmailParams *params = [[QXAuthUserServiceConfirmChangingEmailParams alloc] init];
+		[params setToken:token];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/ConfirmChangingEmail.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceConfirmChangingEmailResults *results = [QXAuthUserServiceConfirmChangingEmailResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results.Err);
+			}
+		}];
+	
+}
+
 // --- UpdateAccount ---
 - (NSError *) UpdateAccount:(QXMemberAccountInput *)input {
 	
@@ -21408,6 +25280,37 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	results = [results initWithDictionary: dict];
 	
 	return results.Err;
+}
+
+- (void) updateAccount:(QXMemberAccountInput *)input success:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceUpdateAccountResults *results = [QXAuthUserServiceUpdateAccountResults alloc];
+		QXAuthUserServiceUpdateAccountParams *params = [[QXAuthUserServiceUpdateAccountParams alloc] init];
+		[params setInput:input];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/UpdateAccount.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceUpdateAccountResults *results = [QXAuthUserServiceUpdateAccountResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results.Err);
+			}
+		}];
+	
 }
 
 // --- SendShareRequest ---
@@ -21438,6 +25341,38 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	return results;
 }
 
+- (void) sendShareRequest:(NSString *)groupId email:(NSString *)email success:(void (^)(QXAuthUserServiceSendShareRequestResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceSendShareRequestResults *results = [QXAuthUserServiceSendShareRequestResults alloc];
+		QXAuthUserServiceSendShareRequestParams *params = [[QXAuthUserServiceSendShareRequestParams alloc] init];
+		[params setGroupId:groupId];
+		[params setEmail:email];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/SendShareRequest.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceSendShareRequestResults *results = [QXAuthUserServiceSendShareRequestResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
+}
+
 // --- GetShareRequests ---
 - (QXAuthUserServiceGetShareRequestsResults *) GetShareRequests:(NSString *)groupId {
 	
@@ -21463,6 +25398,37 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	results = [results initWithDictionary: dict];
 	
 	return results;
+}
+
+- (void) getShareRequests:(NSString *)groupId success:(void (^)(QXAuthUserServiceGetShareRequestsResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceGetShareRequestsResults *results = [QXAuthUserServiceGetShareRequestsResults alloc];
+		QXAuthUserServiceGetShareRequestsParams *params = [[QXAuthUserServiceGetShareRequestsParams alloc] init];
+		[params setGroupId:groupId];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/GetShareRequests.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceGetShareRequestsResults *results = [QXAuthUserServiceGetShareRequestsResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
 }
 
 // --- CancelShareRequest ---
@@ -21492,6 +25458,37 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	return results.Err;
 }
 
+- (void) cancelShareRequest:(NSString *)requestId success:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceCancelShareRequestResults *results = [QXAuthUserServiceCancelShareRequestResults alloc];
+		QXAuthUserServiceCancelShareRequestParams *params = [[QXAuthUserServiceCancelShareRequestParams alloc] init];
+		[params setRequestId:requestId];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/CancelShareRequest.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceCancelShareRequestResults *results = [QXAuthUserServiceCancelShareRequestResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results.Err);
+			}
+		}];
+	
+}
+
 // --- StopSharingGroup ---
 - (NSError *) StopSharingGroup:(NSString *)requestId {
 	
@@ -21519,6 +25516,37 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	return results.Err;
 }
 
+- (void) stopSharingGroup:(NSString *)requestId success:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceStopSharingGroupResults *results = [QXAuthUserServiceStopSharingGroupResults alloc];
+		QXAuthUserServiceStopSharingGroupParams *params = [[QXAuthUserServiceStopSharingGroupParams alloc] init];
+		[params setRequestId:requestId];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/StopSharingGroup.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceStopSharingGroupResults *results = [QXAuthUserServiceStopSharingGroupResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results.Err);
+			}
+		}];
+	
+}
+
 // --- DismissPresentationTip ---
 - (NSError *) DismissPresentationTip {
 	
@@ -21543,6 +25571,36 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	results = [results initWithDictionary: dict];
 	
 	return results.Err;
+}
+
+- (void) dismissPresentationTip:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceDismissPresentationTipResults *results = [QXAuthUserServiceDismissPresentationTipResults alloc];
+		QXAuthUserServiceDismissPresentationTipParams *params = [[QXAuthUserServiceDismissPresentationTipParams alloc] init];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/DismissPresentationTip.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceDismissPresentationTipResults *results = [QXAuthUserServiceDismissPresentationTipResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results.Err);
+			}
+		}];
+	
 }
 
 // --- GetMyChatEntries ---
@@ -21573,6 +25631,38 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	return results;
 }
 
+- (void) getMyChatEntries:(NSString *)before limit:(NSNumber *)limit success:(void (^)(QXAuthUserServiceGetMyChatEntriesResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceGetMyChatEntriesResults *results = [QXAuthUserServiceGetMyChatEntriesResults alloc];
+		QXAuthUserServiceGetMyChatEntriesParams *params = [[QXAuthUserServiceGetMyChatEntriesParams alloc] init];
+		[params setBefore:before];
+		[params setLimit:limit];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/GetMyChatEntries.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceGetMyChatEntriesResults *results = [QXAuthUserServiceGetMyChatEntriesResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
+}
+
 // --- GetPrivateChat ---
 - (QXAuthUserServiceGetPrivateChatResults *) GetPrivateChat:(NSString *)conversationId searchKeyWords:(NSString *)searchKeyWords {
 	
@@ -21599,6 +25689,38 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	results = [results initWithDictionary: dict];
 	
 	return results;
+}
+
+- (void) getPrivateChat:(NSString *)conversationId searchKeyWords:(NSString *)searchKeyWords success:(void (^)(QXAuthUserServiceGetPrivateChatResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceGetPrivateChatResults *results = [QXAuthUserServiceGetPrivateChatResults alloc];
+		QXAuthUserServiceGetPrivateChatParams *params = [[QXAuthUserServiceGetPrivateChatParams alloc] init];
+		[params setConversationId:conversationId];
+		[params setSearchKeyWords:searchKeyWords];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/GetPrivateChat.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceGetPrivateChatResults *results = [QXAuthUserServiceGetPrivateChatResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
 }
 
 // --- CreateQortexSupport ---
@@ -21628,6 +25750,37 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	return results;
 }
 
+- (void) createQortexSupport:(QXQortexSupportInput *)input success:(void (^)(QXAuthUserServiceCreateQortexSupportResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceCreateQortexSupportResults *results = [QXAuthUserServiceCreateQortexSupportResults alloc];
+		QXAuthUserServiceCreateQortexSupportParams *params = [[QXAuthUserServiceCreateQortexSupportParams alloc] init];
+		[params setInput:input];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/CreateQortexSupport.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceCreateQortexSupportResults *results = [QXAuthUserServiceCreateQortexSupportResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
+}
+
 // --- CreateQortexSupportComment ---
 - (QXAuthUserServiceCreateQortexSupportCommentResults *) CreateQortexSupportComment:(QXQortexSupportInput *)input {
 	
@@ -21653,6 +25806,37 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	results = [results initWithDictionary: dict];
 	
 	return results;
+}
+
+- (void) createQortexSupportComment:(QXQortexSupportInput *)input success:(void (^)(QXAuthUserServiceCreateQortexSupportCommentResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceCreateQortexSupportCommentResults *results = [QXAuthUserServiceCreateQortexSupportCommentResults alloc];
+		QXAuthUserServiceCreateQortexSupportCommentParams *params = [[QXAuthUserServiceCreateQortexSupportCommentParams alloc] init];
+		[params setInput:input];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/CreateQortexSupportComment.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceCreateQortexSupportCommentResults *results = [QXAuthUserServiceCreateQortexSupportCommentResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
 }
 
 // --- GetQortexSupport ---
@@ -21682,6 +25866,37 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	return results;
 }
 
+- (void) getQortexSupport:(NSString *)entryId success:(void (^)(QXAuthUserServiceGetQortexSupportResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceGetQortexSupportResults *results = [QXAuthUserServiceGetQortexSupportResults alloc];
+		QXAuthUserServiceGetQortexSupportParams *params = [[QXAuthUserServiceGetQortexSupportParams alloc] init];
+		[params setEntryId:entryId];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/GetQortexSupport.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceGetQortexSupportResults *results = [QXAuthUserServiceGetQortexSupportResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
+}
+
 // --- GetQortexSupportComment ---
 - (QXAuthUserServiceGetQortexSupportCommentResults *) GetQortexSupportComment:(NSString *)entryId {
 	
@@ -21707,6 +25922,37 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	results = [results initWithDictionary: dict];
 	
 	return results;
+}
+
+- (void) getQortexSupportComment:(NSString *)entryId success:(void (^)(QXAuthUserServiceGetQortexSupportCommentResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceGetQortexSupportCommentResults *results = [QXAuthUserServiceGetQortexSupportCommentResults alloc];
+		QXAuthUserServiceGetQortexSupportCommentParams *params = [[QXAuthUserServiceGetQortexSupportCommentParams alloc] init];
+		[params setEntryId:entryId];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/GetQortexSupportComment.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceGetQortexSupportCommentResults *results = [QXAuthUserServiceGetQortexSupportCommentResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
 }
 
 // --- UpdateQortexSupport ---
@@ -21736,6 +25982,37 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	return results;
 }
 
+- (void) updateQortexSupport:(QXQortexSupportInput *)input success:(void (^)(QXAuthUserServiceUpdateQortexSupportResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceUpdateQortexSupportResults *results = [QXAuthUserServiceUpdateQortexSupportResults alloc];
+		QXAuthUserServiceUpdateQortexSupportParams *params = [[QXAuthUserServiceUpdateQortexSupportParams alloc] init];
+		[params setInput:input];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/UpdateQortexSupport.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceUpdateQortexSupportResults *results = [QXAuthUserServiceUpdateQortexSupportResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
+}
+
 // --- UpdateQortexSupportComment ---
 - (QXAuthUserServiceUpdateQortexSupportCommentResults *) UpdateQortexSupportComment:(QXQortexSupportInput *)input {
 	
@@ -21761,6 +26038,37 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	results = [results initWithDictionary: dict];
 	
 	return results;
+}
+
+- (void) updateQortexSupportComment:(QXQortexSupportInput *)input success:(void (^)(QXAuthUserServiceUpdateQortexSupportCommentResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceUpdateQortexSupportCommentResults *results = [QXAuthUserServiceUpdateQortexSupportCommentResults alloc];
+		QXAuthUserServiceUpdateQortexSupportCommentParams *params = [[QXAuthUserServiceUpdateQortexSupportCommentParams alloc] init];
+		[params setInput:input];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/UpdateQortexSupportComment.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceUpdateQortexSupportCommentResults *results = [QXAuthUserServiceUpdateQortexSupportCommentResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
 }
 
 // --- GetQortexSupportHelpLink ---
@@ -21790,6 +26098,37 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	return results;
 }
 
+- (void) getQortexSupportHelpLink:(NSString *)title success:(void (^)(QXAuthUserServiceGetQortexSupportHelpLinkResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceGetQortexSupportHelpLinkResults *results = [QXAuthUserServiceGetQortexSupportHelpLinkResults alloc];
+		QXAuthUserServiceGetQortexSupportHelpLinkParams *params = [[QXAuthUserServiceGetQortexSupportHelpLinkParams alloc] init];
+		[params setTitle:title];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/GetQortexSupportHelpLink.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceGetQortexSupportHelpLinkResults *results = [QXAuthUserServiceGetQortexSupportHelpLinkResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
+}
+
 // --- NewTask ---
 - (QXAuthUserServiceNewTaskResults *) NewTask:(NSString *)groupId {
 	
@@ -21815,6 +26154,37 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	results = [results initWithDictionary: dict];
 	
 	return results;
+}
+
+- (void) newTask:(NSString *)groupId success:(void (^)(QXAuthUserServiceNewTaskResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceNewTaskResults *results = [QXAuthUserServiceNewTaskResults alloc];
+		QXAuthUserServiceNewTaskParams *params = [[QXAuthUserServiceNewTaskParams alloc] init];
+		[params setGroupId:groupId];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/NewTask.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceNewTaskResults *results = [QXAuthUserServiceNewTaskResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
 }
 
 // --- EditTask ---
@@ -21845,6 +26215,38 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	return results;
 }
 
+- (void) editTask:(NSString *)groupId taskId:(NSString *)taskId success:(void (^)(QXAuthUserServiceEditTaskResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceEditTaskResults *results = [QXAuthUserServiceEditTaskResults alloc];
+		QXAuthUserServiceEditTaskParams *params = [[QXAuthUserServiceEditTaskParams alloc] init];
+		[params setGroupId:groupId];
+		[params setTaskId:taskId];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/EditTask.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceEditTaskResults *results = [QXAuthUserServiceEditTaskResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
+}
+
 // --- GetAdvancedTask ---
 - (QXAuthUserServiceGetAdvancedTaskResults *) GetAdvancedTask:(NSString *)taskId {
 	
@@ -21870,6 +26272,37 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	results = [results initWithDictionary: dict];
 	
 	return results;
+}
+
+- (void) getAdvancedTask:(NSString *)taskId success:(void (^)(QXAuthUserServiceGetAdvancedTaskResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceGetAdvancedTaskResults *results = [QXAuthUserServiceGetAdvancedTaskResults alloc];
+		QXAuthUserServiceGetAdvancedTaskParams *params = [[QXAuthUserServiceGetAdvancedTaskParams alloc] init];
+		[params setTaskId:taskId];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/GetAdvancedTask.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceGetAdvancedTaskResults *results = [QXAuthUserServiceGetAdvancedTaskResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
 }
 
 // --- ClaimTask ---
@@ -21900,6 +26333,38 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	return results;
 }
 
+- (void) claimTask:(NSString *)taskId groupId:(NSString *)groupId success:(void (^)(QXAuthUserServiceClaimTaskResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceClaimTaskResults *results = [QXAuthUserServiceClaimTaskResults alloc];
+		QXAuthUserServiceClaimTaskParams *params = [[QXAuthUserServiceClaimTaskParams alloc] init];
+		[params setTaskId:taskId];
+		[params setGroupId:groupId];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/ClaimTask.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceClaimTaskResults *results = [QXAuthUserServiceClaimTaskResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
+}
+
 // --- UpdateTask ---
 - (QXAuthUserServiceUpdateTaskResults *) UpdateTask:(QXTaskInput *)input {
 	
@@ -21925,6 +26390,37 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	results = [results initWithDictionary: dict];
 	
 	return results;
+}
+
+- (void) updateTask:(QXTaskInput *)input success:(void (^)(QXAuthUserServiceUpdateTaskResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceUpdateTaskResults *results = [QXAuthUserServiceUpdateTaskResults alloc];
+		QXAuthUserServiceUpdateTaskParams *params = [[QXAuthUserServiceUpdateTaskParams alloc] init];
+		[params setInput:input];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/UpdateTask.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceUpdateTaskResults *results = [QXAuthUserServiceUpdateTaskResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
 }
 
 // --- GetTasksForMe ---
@@ -21953,6 +26449,36 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	return results;
 }
 
+- (void) getTasksForMe:(void (^)(QXAuthUserServiceGetTasksForMeResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceGetTasksForMeResults *results = [QXAuthUserServiceGetTasksForMeResults alloc];
+		QXAuthUserServiceGetTasksForMeParams *params = [[QXAuthUserServiceGetTasksForMeParams alloc] init];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/GetTasksForMe.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceGetTasksForMeResults *results = [QXAuthUserServiceGetTasksForMeResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
+}
+
 // --- GetOpenTasksIMade ---
 - (QXAuthUserServiceGetOpenTasksIMadeResults *) GetOpenTasksIMade {
 	
@@ -21977,6 +26503,36 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	results = [results initWithDictionary: dict];
 	
 	return results;
+}
+
+- (void) getOpenTasksIMade:(void (^)(QXAuthUserServiceGetOpenTasksIMadeResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceGetOpenTasksIMadeResults *results = [QXAuthUserServiceGetOpenTasksIMadeResults alloc];
+		QXAuthUserServiceGetOpenTasksIMadeParams *params = [[QXAuthUserServiceGetOpenTasksIMadeParams alloc] init];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/GetOpenTasksIMade.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceGetOpenTasksIMadeResults *results = [QXAuthUserServiceGetOpenTasksIMadeResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
 }
 
 // --- GetClosedTasksIMade ---
@@ -22007,6 +26563,38 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	return results;
 }
 
+- (void) getClosedTasksIMade:(NSString *)before limit:(NSNumber *)limit success:(void (^)(QXAuthUserServiceGetClosedTasksIMadeResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceGetClosedTasksIMadeResults *results = [QXAuthUserServiceGetClosedTasksIMadeResults alloc];
+		QXAuthUserServiceGetClosedTasksIMadeParams *params = [[QXAuthUserServiceGetClosedTasksIMadeParams alloc] init];
+		[params setBefore:before];
+		[params setLimit:limit];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/GetClosedTasksIMade.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceGetClosedTasksIMadeResults *results = [QXAuthUserServiceGetClosedTasksIMadeResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
+}
+
 // --- GetOpenTasksIWorkedOn ---
 - (QXAuthUserServiceGetOpenTasksIWorkedOnResults *) GetOpenTasksIWorkedOn {
 	
@@ -22031,6 +26619,36 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	results = [results initWithDictionary: dict];
 	
 	return results;
+}
+
+- (void) getOpenTasksIWorkedOn:(void (^)(QXAuthUserServiceGetOpenTasksIWorkedOnResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceGetOpenTasksIWorkedOnResults *results = [QXAuthUserServiceGetOpenTasksIWorkedOnResults alloc];
+		QXAuthUserServiceGetOpenTasksIWorkedOnParams *params = [[QXAuthUserServiceGetOpenTasksIWorkedOnParams alloc] init];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/GetOpenTasksIWorkedOn.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceGetOpenTasksIWorkedOnResults *results = [QXAuthUserServiceGetOpenTasksIWorkedOnResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
 }
 
 // --- GetClosedTasksIWorkedOn ---
@@ -22061,6 +26679,38 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	return results;
 }
 
+- (void) getClosedTasksIWorkedOn:(NSString *)before limit:(NSNumber *)limit success:(void (^)(QXAuthUserServiceGetClosedTasksIWorkedOnResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceGetClosedTasksIWorkedOnResults *results = [QXAuthUserServiceGetClosedTasksIWorkedOnResults alloc];
+		QXAuthUserServiceGetClosedTasksIWorkedOnParams *params = [[QXAuthUserServiceGetClosedTasksIWorkedOnParams alloc] init];
+		[params setBefore:before];
+		[params setLimit:limit];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/GetClosedTasksIWorkedOn.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceGetClosedTasksIWorkedOnResults *results = [QXAuthUserServiceGetClosedTasksIWorkedOnResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
+}
+
 // --- GetGroupAdvancedToDoSetting ---
 - (QXAuthUserServiceGetGroupAdvancedToDoSettingResults *) GetGroupAdvancedToDoSetting:(NSString *)gId {
 	
@@ -22086,6 +26736,37 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	results = [results initWithDictionary: dict];
 	
 	return results;
+}
+
+- (void) getGroupAdvancedToDoSetting:(NSString *)gId success:(void (^)(QXAuthUserServiceGetGroupAdvancedToDoSettingResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceGetGroupAdvancedToDoSettingResults *results = [QXAuthUserServiceGetGroupAdvancedToDoSettingResults alloc];
+		QXAuthUserServiceGetGroupAdvancedToDoSettingParams *params = [[QXAuthUserServiceGetGroupAdvancedToDoSettingParams alloc] init];
+		[params setGId:gId];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/GetGroupAdvancedToDoSetting.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceGetGroupAdvancedToDoSettingResults *results = [QXAuthUserServiceGetGroupAdvancedToDoSettingResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
 }
 
 // --- AllOpenAdvancedToDosInGroup ---
@@ -22115,6 +26796,37 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	return results;
 }
 
+- (void) allOpenAdvancedToDosInGroup:(NSString *)groupId success:(void (^)(QXAuthUserServiceAllOpenAdvancedToDosInGroupResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceAllOpenAdvancedToDosInGroupResults *results = [QXAuthUserServiceAllOpenAdvancedToDosInGroupResults alloc];
+		QXAuthUserServiceAllOpenAdvancedToDosInGroupParams *params = [[QXAuthUserServiceAllOpenAdvancedToDosInGroupParams alloc] init];
+		[params setGroupId:groupId];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/AllOpenAdvancedToDosInGroup.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceAllOpenAdvancedToDosInGroupResults *results = [QXAuthUserServiceAllOpenAdvancedToDosInGroupResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
+}
+
 // --- AllOpenAdvancedToDosGroupingByUserInGroup ---
 - (QXAuthUserServiceAllOpenAdvancedToDosGroupingByUserInGroupResults *) AllOpenAdvancedToDosGroupingByUserInGroup:(NSString *)groupId {
 	
@@ -22140,6 +26852,37 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	results = [results initWithDictionary: dict];
 	
 	return results;
+}
+
+- (void) allOpenAdvancedToDosGroupingByUserInGroup:(NSString *)groupId success:(void (^)(QXAuthUserServiceAllOpenAdvancedToDosGroupingByUserInGroupResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceAllOpenAdvancedToDosGroupingByUserInGroupResults *results = [QXAuthUserServiceAllOpenAdvancedToDosGroupingByUserInGroupResults alloc];
+		QXAuthUserServiceAllOpenAdvancedToDosGroupingByUserInGroupParams *params = [[QXAuthUserServiceAllOpenAdvancedToDosGroupingByUserInGroupParams alloc] init];
+		[params setGroupId:groupId];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/AllOpenAdvancedToDosGroupingByUserInGroup.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceAllOpenAdvancedToDosGroupingByUserInGroupResults *results = [QXAuthUserServiceAllOpenAdvancedToDosGroupingByUserInGroupResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
 }
 
 // --- AllOpenAdvancedToDosGroupingByStatusInGroup ---
@@ -22169,6 +26912,37 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	return results;
 }
 
+- (void) allOpenAdvancedToDosGroupingByStatusInGroup:(NSString *)groupId success:(void (^)(QXAuthUserServiceAllOpenAdvancedToDosGroupingByStatusInGroupResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceAllOpenAdvancedToDosGroupingByStatusInGroupResults *results = [QXAuthUserServiceAllOpenAdvancedToDosGroupingByStatusInGroupResults alloc];
+		QXAuthUserServiceAllOpenAdvancedToDosGroupingByStatusInGroupParams *params = [[QXAuthUserServiceAllOpenAdvancedToDosGroupingByStatusInGroupParams alloc] init];
+		[params setGroupId:groupId];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/AllOpenAdvancedToDosGroupingByStatusInGroup.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceAllOpenAdvancedToDosGroupingByStatusInGroupResults *results = [QXAuthUserServiceAllOpenAdvancedToDosGroupingByStatusInGroupResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
+}
+
 // --- AllOpenAdvancedToDosGroupingByLabelInGroup ---
 - (QXAuthUserServiceAllOpenAdvancedToDosGroupingByLabelInGroupResults *) AllOpenAdvancedToDosGroupingByLabelInGroup:(NSString *)groupId {
 	
@@ -22194,6 +26968,37 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	results = [results initWithDictionary: dict];
 	
 	return results;
+}
+
+- (void) allOpenAdvancedToDosGroupingByLabelInGroup:(NSString *)groupId success:(void (^)(QXAuthUserServiceAllOpenAdvancedToDosGroupingByLabelInGroupResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceAllOpenAdvancedToDosGroupingByLabelInGroupResults *results = [QXAuthUserServiceAllOpenAdvancedToDosGroupingByLabelInGroupResults alloc];
+		QXAuthUserServiceAllOpenAdvancedToDosGroupingByLabelInGroupParams *params = [[QXAuthUserServiceAllOpenAdvancedToDosGroupingByLabelInGroupParams alloc] init];
+		[params setGroupId:groupId];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/AllOpenAdvancedToDosGroupingByLabelInGroup.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceAllOpenAdvancedToDosGroupingByLabelInGroupResults *results = [QXAuthUserServiceAllOpenAdvancedToDosGroupingByLabelInGroupResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
 }
 
 // --- AllOpenBasicToDosInGroup ---
@@ -22223,6 +27028,37 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	return results;
 }
 
+- (void) allOpenBasicToDosInGroup:(NSString *)groupId success:(void (^)(QXAuthUserServiceAllOpenBasicToDosInGroupResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceAllOpenBasicToDosInGroupResults *results = [QXAuthUserServiceAllOpenBasicToDosInGroupResults alloc];
+		QXAuthUserServiceAllOpenBasicToDosInGroupParams *params = [[QXAuthUserServiceAllOpenBasicToDosInGroupParams alloc] init];
+		[params setGroupId:groupId];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/AllOpenBasicToDosInGroup.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceAllOpenBasicToDosInGroupResults *results = [QXAuthUserServiceAllOpenBasicToDosInGroupResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
+}
+
 // --- AllOpenBasicToDosGroupingByUserInGroup ---
 - (QXAuthUserServiceAllOpenBasicToDosGroupingByUserInGroupResults *) AllOpenBasicToDosGroupingByUserInGroup:(NSString *)groupId {
 	
@@ -22248,6 +27084,37 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	results = [results initWithDictionary: dict];
 	
 	return results;
+}
+
+- (void) allOpenBasicToDosGroupingByUserInGroup:(NSString *)groupId success:(void (^)(QXAuthUserServiceAllOpenBasicToDosGroupingByUserInGroupResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceAllOpenBasicToDosGroupingByUserInGroupResults *results = [QXAuthUserServiceAllOpenBasicToDosGroupingByUserInGroupResults alloc];
+		QXAuthUserServiceAllOpenBasicToDosGroupingByUserInGroupParams *params = [[QXAuthUserServiceAllOpenBasicToDosGroupingByUserInGroupParams alloc] init];
+		[params setGroupId:groupId];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/AllOpenBasicToDosGroupingByUserInGroup.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceAllOpenBasicToDosGroupingByUserInGroupResults *results = [QXAuthUserServiceAllOpenBasicToDosGroupingByUserInGroupResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
 }
 
 // --- AllClosedBasicToDosInGroup ---
@@ -22278,6 +27145,38 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	return results;
 }
 
+- (void) allClosedBasicToDosInGroup:(NSString *)groupId afterTimeS:(NSString *)afterTimeS success:(void (^)(QXAuthUserServiceAllClosedBasicToDosInGroupResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceAllClosedBasicToDosInGroupResults *results = [QXAuthUserServiceAllClosedBasicToDosInGroupResults alloc];
+		QXAuthUserServiceAllClosedBasicToDosInGroupParams *params = [[QXAuthUserServiceAllClosedBasicToDosInGroupParams alloc] init];
+		[params setGroupId:groupId];
+		[params setAfterTimeS:afterTimeS];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/AllClosedBasicToDosInGroup.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceAllClosedBasicToDosInGroupResults *results = [QXAuthUserServiceAllClosedBasicToDosInGroupResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
+}
+
 // --- AllClosedAdvancedToDosInGroup ---
 - (QXAuthUserServiceAllClosedAdvancedToDosInGroupResults *) AllClosedAdvancedToDosInGroup:(NSString *)groupId {
 	
@@ -22303,6 +27202,37 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	results = [results initWithDictionary: dict];
 	
 	return results;
+}
+
+- (void) allClosedAdvancedToDosInGroup:(NSString *)groupId success:(void (^)(QXAuthUserServiceAllClosedAdvancedToDosInGroupResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceAllClosedAdvancedToDosInGroupResults *results = [QXAuthUserServiceAllClosedAdvancedToDosInGroupResults alloc];
+		QXAuthUserServiceAllClosedAdvancedToDosInGroupParams *params = [[QXAuthUserServiceAllClosedAdvancedToDosInGroupParams alloc] init];
+		[params setGroupId:groupId];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/AllClosedAdvancedToDosInGroup.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceAllClosedAdvancedToDosInGroupResults *results = [QXAuthUserServiceAllClosedAdvancedToDosInGroupResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
 }
 
 // --- MoreClosedAdvancedToDosWithStatusInGroup ---
@@ -22334,6 +27264,39 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	return results;
 }
 
+- (void) moreClosedAdvancedToDosWithStatusInGroup:(NSString *)groupId status:(NSNumber *)status afterTime:(NSString *)afterTime success:(void (^)(QXAuthUserServiceMoreClosedAdvancedToDosWithStatusInGroupResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceMoreClosedAdvancedToDosWithStatusInGroupResults *results = [QXAuthUserServiceMoreClosedAdvancedToDosWithStatusInGroupResults alloc];
+		QXAuthUserServiceMoreClosedAdvancedToDosWithStatusInGroupParams *params = [[QXAuthUserServiceMoreClosedAdvancedToDosWithStatusInGroupParams alloc] init];
+		[params setGroupId:groupId];
+		[params setStatus:status];
+		[params setAfterTime:afterTime];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/MoreClosedAdvancedToDosWithStatusInGroup.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceMoreClosedAdvancedToDosWithStatusInGroupResults *results = [QXAuthUserServiceMoreClosedAdvancedToDosWithStatusInGroupResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
+}
+
 // --- CountOfClosedToDosInGroup ---
 - (QXAuthUserServiceCountOfClosedToDosInGroupResults *) CountOfClosedToDosInGroup:(NSNumber *)ttype groupId:(NSString *)groupId {
 	
@@ -22360,6 +27323,96 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	results = [results initWithDictionary: dict];
 	
 	return results;
+}
+
+- (void) countOfClosedToDosInGroup:(NSNumber *)ttype groupId:(NSString *)groupId success:(void (^)(QXAuthUserServiceCountOfClosedToDosInGroupResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceCountOfClosedToDosInGroupResults *results = [QXAuthUserServiceCountOfClosedToDosInGroupResults alloc];
+		QXAuthUserServiceCountOfClosedToDosInGroupParams *params = [[QXAuthUserServiceCountOfClosedToDosInGroupParams alloc] init];
+		[params setTtype:ttype];
+		[params setGroupId:groupId];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/CountOfClosedToDosInGroup.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceCountOfClosedToDosInGroupResults *results = [QXAuthUserServiceCountOfClosedToDosInGroupResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
+}
+
+// --- ToDoCSV ---
+- (QXAuthUserServiceToDoCSVResults *) ToDoCSV:(NSString *)groupId {
+	
+	QXAuthUserServiceToDoCSVResults *results = [QXAuthUserServiceToDoCSVResults alloc];
+	QXAuthUserServiceToDoCSVParams *params = [[QXAuthUserServiceToDoCSVParams alloc] init];
+	[params setGroupId:groupId];
+	
+	QXQortexapi * _api = [QXQortexapi get];
+	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/ToDoCSV.json", [_api BaseURL]]];
+	if([_api Verbose]) {
+		NSLog(@"Requesting URL: %@", url);
+	}
+	NSError *error;
+	NSDictionary * dict = [QXQortexapi request:url req:[NSDictionary dictionaryWithObjectsAndKeys: [self dictionary], @"This", [params dictionary], @"Params", nil] error:&error];
+	if(error != nil) {
+		if([_api Verbose]) {
+			NSLog(@"Error: %@", error);
+		}
+		results = [results init];
+		[results setErr:error];
+		return results;
+	}
+	results = [results initWithDictionary: dict];
+	
+	return results;
+}
+
+- (void) toDoCSV:(NSString *)groupId success:(void (^)(QXAuthUserServiceToDoCSVResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXAuthUserServiceToDoCSVResults *results = [QXAuthUserServiceToDoCSVResults alloc];
+		QXAuthUserServiceToDoCSVParams *params = [[QXAuthUserServiceToDoCSVParams alloc] init];
+		[params setGroupId:groupId];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/AuthUserService/ToDoCSV.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXAuthUserServiceToDoCSVResults *results = [QXAuthUserServiceToDoCSVResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
 }
 @end
 
@@ -22399,6 +27452,39 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	return results;
 }
 
+- (void) getSession:(NSString *)email password:(NSString *)password locale:(NSString *)locale success:(void (^)(QXPublicServiceGetSessionResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXPublicServiceGetSessionResults *results = [QXPublicServiceGetSessionResults alloc];
+		QXPublicServiceGetSessionParams *params = [[QXPublicServiceGetSessionParams alloc] init];
+		[params setEmail:email];
+		[params setPassword:password];
+		[params setLocale:locale];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/PublicService/GetSession.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXPublicServiceGetSessionResults *results = [QXPublicServiceGetSessionResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
+}
+
 // --- GetAuthUserService ---
 - (QXAuthUserService *) GetAuthUserService:(NSString *)session {
 	
@@ -22406,6 +27492,15 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	[results setSession:session];
 	
 	return results;
+}
+
+- (void) getAuthUserService:(NSString *)session success:(void (^)(QXAuthUserService* AuthUserService))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		QXAuthUserService *results = [QXAuthUserService alloc];
+		
+			[results setSession:session];
+		
+	
 }
 
 // --- GetAuthorizedAdmin ---
@@ -22435,6 +27530,37 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	return results;
 }
 
+- (void) getAuthorizedAdmin:(NSString *)session success:(void (^)(QXPublicServiceGetAuthorizedAdminResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXPublicServiceGetAuthorizedAdminResults *results = [QXPublicServiceGetAuthorizedAdminResults alloc];
+		QXPublicServiceGetAuthorizedAdminParams *params = [[QXPublicServiceGetAuthorizedAdminParams alloc] init];
+		[params setSession:session];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/PublicService/GetAuthorizedAdmin.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXPublicServiceGetAuthorizedAdminResults *results = [QXPublicServiceGetAuthorizedAdminResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
+}
+
 // --- GetAuthAdminService ---
 - (QXAuthAdminService *) GetAuthAdminService:(NSString *)session {
 	
@@ -22442,6 +27568,15 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	[results setSession:session];
 	
 	return results;
+}
+
+- (void) getAuthAdminService:(NSString *)session success:(void (^)(QXAuthAdminService* AuthAdminService))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		QXAuthAdminService *results = [QXAuthAdminService alloc];
+		
+			[results setSession:session];
+		
+	
 }
 
 // --- FindPassword ---
@@ -22471,6 +27606,37 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	return results.Err;
 }
 
+- (void) findPassword:(NSString *)email success:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXPublicServiceFindPasswordResults *results = [QXPublicServiceFindPasswordResults alloc];
+		QXPublicServiceFindPasswordParams *params = [[QXPublicServiceFindPasswordParams alloc] init];
+		[params setEmail:email];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/PublicService/FindPassword.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXPublicServiceFindPasswordResults *results = [QXPublicServiceFindPasswordResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results.Err);
+			}
+		}];
+	
+}
+
 // --- ResetPassword ---
 - (QXPublicServiceResetPasswordResults *) ResetPassword:(NSString *)token password:(NSString *)password confirmedPassword:(NSString *)confirmedPassword {
 	
@@ -22498,6 +27664,39 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	results = [results initWithDictionary: dict];
 	
 	return results;
+}
+
+- (void) resetPassword:(NSString *)token password:(NSString *)password confirmedPassword:(NSString *)confirmedPassword success:(void (^)(QXPublicServiceResetPasswordResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXPublicServiceResetPasswordResults *results = [QXPublicServiceResetPasswordResults alloc];
+		QXPublicServiceResetPasswordParams *params = [[QXPublicServiceResetPasswordParams alloc] init];
+		[params setToken:token];
+		[params setPassword:password];
+		[params setConfirmedPassword:confirmedPassword];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/PublicService/ResetPassword.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXPublicServiceResetPasswordResults *results = [QXPublicServiceResetPasswordResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
 }
 
 // --- PrepareChangingEmail ---
@@ -22530,6 +27729,40 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	return results;
 }
 
+- (void) prepareChangingEmail:(NSString *)memberId newEmail:(NSString *)newEmail sharingToken:(NSString *)sharingToken invitationToken:(NSString *)invitationToken success:(void (^)(QXPublicServicePrepareChangingEmailResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXPublicServicePrepareChangingEmailResults *results = [QXPublicServicePrepareChangingEmailResults alloc];
+		QXPublicServicePrepareChangingEmailParams *params = [[QXPublicServicePrepareChangingEmailParams alloc] init];
+		[params setMemberId:memberId];
+		[params setNewEmail:newEmail];
+		[params setSharingToken:sharingToken];
+		[params setInvitationToken:invitationToken];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/PublicService/PrepareChangingEmail.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXPublicServicePrepareChangingEmailResults *results = [QXPublicServicePrepareChangingEmailResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
+}
+
 // --- ConfirmChangingEmail ---
 - (QXPublicServiceConfirmChangingEmailResults *) ConfirmChangingEmail:(NSString *)token {
 	
@@ -22557,6 +27790,37 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	return results;
 }
 
+- (void) confirmChangingEmail:(NSString *)token success:(void (^)(QXPublicServiceConfirmChangingEmailResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXPublicServiceConfirmChangingEmailResults *results = [QXPublicServiceConfirmChangingEmailResults alloc];
+		QXPublicServiceConfirmChangingEmailParams *params = [[QXPublicServiceConfirmChangingEmailParams alloc] init];
+		[params setToken:token];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/PublicService/ConfirmChangingEmail.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXPublicServiceConfirmChangingEmailResults *results = [QXPublicServiceConfirmChangingEmailResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
+}
+
 // --- CancelChangingEmail ---
 - (NSError *) CancelChangingEmail:(NSString *)token {
 	
@@ -22582,6 +27846,37 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	results = [results initWithDictionary: dict];
 	
 	return results.Err;
+}
+
+- (void) cancelChangingEmail:(NSString *)token success:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXPublicServiceCancelChangingEmailResults *results = [QXPublicServiceCancelChangingEmailResults alloc];
+		QXPublicServiceCancelChangingEmailParams *params = [[QXPublicServiceCancelChangingEmailParams alloc] init];
+		[params setToken:token];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/PublicService/CancelChangingEmail.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXPublicServiceCancelChangingEmailResults *results = [QXPublicServiceCancelChangingEmailResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results.Err);
+			}
+		}];
+	
 }
 
 // --- ChangeEmailToAcceptSharing ---
@@ -22612,6 +27907,38 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	return results.Err;
 }
 
+- (void) changeEmailToAcceptSharing:(NSString *)token newEmail:(NSString *)newEmail success:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXPublicServiceChangeEmailToAcceptSharingResults *results = [QXPublicServiceChangeEmailToAcceptSharingResults alloc];
+		QXPublicServiceChangeEmailToAcceptSharingParams *params = [[QXPublicServiceChangeEmailToAcceptSharingParams alloc] init];
+		[params setToken:token];
+		[params setNewEmail:newEmail];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/PublicService/ChangeEmailToAcceptSharing.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXPublicServiceChangeEmailToAcceptSharingResults *results = [QXPublicServiceChangeEmailToAcceptSharingResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results.Err);
+			}
+		}];
+	
+}
+
 // --- GetShareRequest ---
 - (QXPublicServiceGetShareRequestResults *) GetShareRequest:(NSString *)token memberId:(NSString *)memberId {
 	
@@ -22640,6 +27967,38 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	return results;
 }
 
+- (void) getShareRequest:(NSString *)token memberId:(NSString *)memberId success:(void (^)(QXPublicServiceGetShareRequestResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXPublicServiceGetShareRequestResults *results = [QXPublicServiceGetShareRequestResults alloc];
+		QXPublicServiceGetShareRequestParams *params = [[QXPublicServiceGetShareRequestParams alloc] init];
+		[params setToken:token];
+		[params setMemberId:memberId];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/PublicService/GetShareRequest.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXPublicServiceGetShareRequestResults *results = [QXPublicServiceGetShareRequestResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
+}
+
 // --- ContactUs ---
 - (QXPublicServiceContactUsResults *) ContactUs:(QXContactInput *)input {
 	
@@ -22665,6 +28024,37 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	results = [results initWithDictionary: dict];
 	
 	return results;
+}
+
+- (void) contactUs:(QXContactInput *)input success:(void (^)(QXPublicServiceContactUsResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXPublicServiceContactUsResults *results = [QXPublicServiceContactUsResults alloc];
+		QXPublicServiceContactUsParams *params = [[QXPublicServiceContactUsParams alloc] init];
+		[params setInput:input];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/PublicService/ContactUs.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXPublicServiceContactUsResults *results = [QXPublicServiceContactUsResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
 }
 
 // --- GetBlogEntries ---
@@ -22696,6 +28086,39 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	return results;
 }
 
+- (void) getBlogEntries:(NSString *)doi pageNum:(NSNumber *)pageNum limit:(NSNumber *)limit success:(void (^)(QXPublicServiceGetBlogEntriesResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXPublicServiceGetBlogEntriesResults *results = [QXPublicServiceGetBlogEntriesResults alloc];
+		QXPublicServiceGetBlogEntriesParams *params = [[QXPublicServiceGetBlogEntriesParams alloc] init];
+		[params setDoi:doi];
+		[params setPageNum:pageNum];
+		[params setLimit:limit];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/PublicService/GetBlogEntries.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXPublicServiceGetBlogEntriesResults *results = [QXPublicServiceGetBlogEntriesResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
+}
+
 // --- GetBlogEntryBySlug ---
 - (QXPublicServiceGetBlogEntryBySlugResults *) GetBlogEntryBySlug:(NSString *)doi slug:(NSString *)slug {
 	
@@ -22722,6 +28145,38 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	results = [results initWithDictionary: dict];
 	
 	return results;
+}
+
+- (void) getBlogEntryBySlug:(NSString *)doi slug:(NSString *)slug success:(void (^)(QXPublicServiceGetBlogEntryBySlugResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXPublicServiceGetBlogEntryBySlugResults *results = [QXPublicServiceGetBlogEntryBySlugResults alloc];
+		QXPublicServiceGetBlogEntryBySlugParams *params = [[QXPublicServiceGetBlogEntryBySlugParams alloc] init];
+		[params setDoi:doi];
+		[params setSlug:slug];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/PublicService/GetBlogEntryBySlug.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXPublicServiceGetBlogEntryBySlugResults *results = [QXPublicServiceGetBlogEntryBySlugResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
 }
 
 // --- GenerateBlogEntrySlug ---
@@ -22752,6 +28207,38 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	return results;
 }
 
+- (void) generateBlogEntrySlug:(NSString *)doi slug:(NSString *)slug success:(void (^)(QXPublicServiceGenerateBlogEntrySlugResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXPublicServiceGenerateBlogEntrySlugResults *results = [QXPublicServiceGenerateBlogEntrySlugResults alloc];
+		QXPublicServiceGenerateBlogEntrySlugParams *params = [[QXPublicServiceGenerateBlogEntrySlugParams alloc] init];
+		[params setDoi:doi];
+		[params setSlug:slug];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/PublicService/GenerateBlogEntrySlug.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXPublicServiceGenerateBlogEntrySlugResults *results = [QXPublicServiceGenerateBlogEntrySlugResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
+}
+
 // --- CreateNewsletter ---
 - (QXPublicServiceCreateNewsletterResults *) CreateNewsletter:(QXNewsletterInput *)input {
 	
@@ -22779,6 +28266,37 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	return results;
 }
 
+- (void) createNewsletter:(QXNewsletterInput *)input success:(void (^)(QXPublicServiceCreateNewsletterResults *results))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXPublicServiceCreateNewsletterResults *results = [QXPublicServiceCreateNewsletterResults alloc];
+		QXPublicServiceCreateNewsletterParams *params = [[QXPublicServiceCreateNewsletterParams alloc] init];
+		[params setInput:input];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/PublicService/CreateNewsletter.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXPublicServiceCreateNewsletterResults *results = [QXPublicServiceCreateNewsletterResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results);
+			}
+		}];
+	
+}
+
 // --- RequestNewSignupToken ---
 - (NSError *) RequestNewSignupToken:(NSString *)email {
 	
@@ -22804,6 +28322,37 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	results = [results initWithDictionary: dict];
 	
 	return results.Err;
+}
+
+- (void) requestNewSignupToken:(NSString *)email success:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXPublicServiceRequestNewSignupTokenResults *results = [QXPublicServiceRequestNewSignupTokenResults alloc];
+		QXPublicServiceRequestNewSignupTokenParams *params = [[QXPublicServiceRequestNewSignupTokenParams alloc] init];
+		[params setEmail:email];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/PublicService/RequestNewSignupToken.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXPublicServiceRequestNewSignupTokenResults *results = [QXPublicServiceRequestNewSignupTokenResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results.Err);
+			}
+		}];
+	
 }
 
 // --- RequestNewInvitationToken ---
@@ -22834,6 +28383,38 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	return results.Err;
 }
 
+- (void) requestNewInvitationToken:(NSString *)orgId email:(NSString *)email success:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXPublicServiceRequestNewInvitationTokenResults *results = [QXPublicServiceRequestNewInvitationTokenResults alloc];
+		QXPublicServiceRequestNewInvitationTokenParams *params = [[QXPublicServiceRequestNewInvitationTokenParams alloc] init];
+		[params setOrgId:orgId];
+		[params setEmail:email];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/PublicService/RequestNewInvitationToken.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXPublicServiceRequestNewInvitationTokenResults *results = [QXPublicServiceRequestNewInvitationTokenResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results.Err);
+			}
+		}];
+	
+}
+
 // --- RequestNewSharingToken ---
 - (NSError *) RequestNewSharingToken:(NSString *)email {
 	
@@ -22859,6 +28440,37 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	results = [results initWithDictionary: dict];
 	
 	return results.Err;
+}
+
+- (void) requestNewSharingToken:(NSString *)email success:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXPublicServiceRequestNewSharingTokenResults *results = [QXPublicServiceRequestNewSharingTokenResults alloc];
+		QXPublicServiceRequestNewSharingTokenParams *params = [[QXPublicServiceRequestNewSharingTokenParams alloc] init];
+		[params setEmail:email];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/PublicService/RequestNewSharingToken.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXPublicServiceRequestNewSharingTokenResults *results = [QXPublicServiceRequestNewSharingTokenResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results.Err);
+			}
+		}];
+	
 }
 
 // --- InviteMe ---
@@ -22889,6 +28501,38 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	return results.Err;
 }
 
+- (void) inviteMe:(NSString *)organizationId email:(NSString *)email success:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXPublicServiceInviteMeResults *results = [QXPublicServiceInviteMeResults alloc];
+		QXPublicServiceInviteMeParams *params = [[QXPublicServiceInviteMeParams alloc] init];
+		[params setOrganizationId:organizationId];
+		[params setEmail:email];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/PublicService/InviteMe.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXPublicServiceInviteMeResults *results = [QXPublicServiceInviteMeResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results.Err);
+			}
+		}];
+	
+}
+
 // --- RequestSignup ---
 - (NSError *) RequestSignup:(NSString *)email {
 	
@@ -22915,7 +28559,36 @@ completionHandler:(void (^)(NSDictionary *results, NSError *error))completionHan
 	
 	return results.Err;
 }
+
+- (void) requestSignup:(NSString *)email success:(void (^)(NSError *error))successBlock failure:(void (^)(NSError *error))failureBlock {
+	
+		// QXPublicServiceRequestSignupResults *results = [QXPublicServiceRequestSignupResults alloc];
+		QXPublicServiceRequestSignupParams *params = [[QXPublicServiceRequestSignupParams alloc] init];
+		[params setEmail:email];
+		
+
+		QXQortexapi * _api = [QXQortexapi get];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/PublicService/RequestSignup.json", [_api BaseURL]]];
+		if([_api Verbose]) {
+			NSLog(@"Requesting URL: %@", url);
+		}
+
+		[QXQortexapi request:url parameters:@{@"This": [self dictionary], @"Params": [params dictionary]} completionHandler:^(NSDictionary *data, NSError *error) {
+			if (error && failureBlock) {
+				if([_api Verbose]) {
+					NSLog(@"Error: %@", error);
+				}
+
+				failureBlock(error);
+			}
+
+			if (successBlock) {
+				QXPublicServiceRequestSignupResults *results = [QXPublicServiceRequestSignupResults alloc];
+				results = [results initWithDictionary: data];
+				successBlock(results.Err);
+			}
+		}];
+	
+}
 @end
-
-
 
